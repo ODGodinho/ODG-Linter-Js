@@ -12,12 +12,12 @@
   "author": "Dragons Gamers (https://www.linkedin.com/in/victor-alves-odgodinho/)",
   "license": "MIT",
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^5.12.0",
-    "@typescript-eslint/parser": "^5.12.0",
+    "@typescript-eslint/eslint-plugin": "*",
+    "@typescript-eslint/parser": "*",
     "eslint": "*",
     "eslint-find-rules": "*",
     "eslint-plugin-import": "*",
-    "typescript": "^4.5.5"
+    "typescript": "*"
   },
   "peerDependencies": {
     "eslint": "*",
