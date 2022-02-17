@@ -1,0 +1,27 @@
+{
+  "name": "odg-linter-js",
+  "version": "0.0.1",
+  "description": "Linter configuration for JavaScript style guide",
+  "main": "index.js",
+  "scripts": {
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ODGodinho/ODG-Linter-Js"
+  },
+  "author": "Dragons Gamers (https://www.linkedin.com/in/victor-alves-odgodinho/)",
+  "license": "MIT",
+  "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^5.12.0",
+    "@typescript-eslint/parser": "^5.12.0",
+    "eslint": "*",
+    "eslint-find-rules": "*",
+    "eslint-plugin-import": "*",
+    "typescript": "^4.5.5"
+  },
+  "peerDependencies": {
+    "eslint": "*",
+    "eslint-plugin-import": "*"
+  },
+  "dependencies": {}
+}
