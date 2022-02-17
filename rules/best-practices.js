@@ -21,7 +21,8 @@ module.exports = {
         "no-multi-assign": [ "error" ], // força não usar atribuição múltipla
         "@typescript-eslint/explicit-member-accessibility": [ "error" ], // force visibility of props
         "default-param-last": [ "error" ], // parâmetros default devem ficar no final,
-        "space-before-function-paren": [ "error", "never" ], // não permite espaço antes dos parenteses
+        "space-before-function-paren": [ "off" ], // não permite espaço antes dos parenteses
+        "@typescript-eslint/space-before-function-paren": [ "error", "never" ], // não permite espaço antes dos parenteses
         "array-bracket-spacing": [ "error", "always" ], // força usar espaço entre chaves
         "keyword-spacing": [ "error", {
             "before": true,
