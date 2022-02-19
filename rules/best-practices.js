@@ -22,7 +22,11 @@ module.exports = {
         "@typescript-eslint/explicit-member-accessibility": [ "error" ], // Força visibility para props
         "default-param-last": [ "error" ], // Parâmetros default devem ficar no final,
         "space-before-function-paren": [ "off" ], // Não permite espaço antes dos parenteses
-        "@typescript-eslint/space-before-function-paren": [ "error", "never" ], // Não permite espaço antes dos parenteses
+        "@typescript-eslint/space-before-function-paren": [ "error", {
+            "anonymous": "never",
+            "named": "never",
+            "asyncArrow": "always"
+        } ], // Não permite espaço antes dos parenteses
         "array-bracket-spacing": [ "error", "always" ], // Força usar espaço entre chaves
         "keyword-spacing": [ "error", {
             "before": true,
@@ -51,7 +55,7 @@ module.exports = {
         "capitalized-comments": [ "error" ], // Comentários devem ser iniciados em letras maiúsculas
         "@typescript-eslint/explicit-function-return-type": [ "error" ], // Força tipo de retorno
         "array-bracket-newline": [ "error", "consistent" ],
-        "@typescript-eslint/no-unused-vars": [ "error" ], // Não permite import não usado
+        "@typescript-eslint/no-unused-vars": [ "error",  { "argsIgnorePattern": "^_" } ], // Não permite variáveis não usado
         "@typescript-eslint/default-param-last": [ "error" ], // Parâmetros default devem ficar no final
         "comma-spacing": [ "error", { "before": false, "after": true } ], // Espaço apos a virgula
         "comma-dangle": [ "error", {
