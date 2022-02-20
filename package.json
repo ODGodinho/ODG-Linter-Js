@@ -1,6 +1,6 @@
 {
   "name": "@odg/eslint-config-odg-linter-js",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "Linter configuration for JavaScript style guide",
   "main": "index.js",
   "scripts": {},
@@ -16,6 +16,7 @@
     "eslint": "*",
     "eslint-find-rules": "*",
     "eslint-plugin-import": "*",
+    "eslint-plugin-jsdoc": "*",
     "typescript": "*"
   },
   "peerDependencies": {

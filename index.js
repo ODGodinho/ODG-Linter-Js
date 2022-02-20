@@ -1,7 +1,8 @@
 module.exports = {
     plugins: [
         "@typescript-eslint",
-        "import"
+        "import",
+        "jsdoc",
     ],
     extends: [
         "./rules/best-practices",

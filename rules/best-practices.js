@@ -89,5 +89,6 @@ module.exports = {
         "no-whitespace-before-property": [ "error" ], // Não permite espaço antes de property
         "no-trailing-spaces": [ "error" ], // Não permite espaço apos ou antes do ponto
         "@typescript-eslint/type-annotation-spacing": [ "error", { "before": false, "after": true } ], // Não colocar junto : tipagem
+        "no-extra-boolean-cast": [ "error" ], // Não permite cast de boolean extra !!!
     },
 };
