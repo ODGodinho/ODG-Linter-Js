@@ -119,6 +119,7 @@ module.exports = {
         "no-useless-escape": [ "error" ], // Não permite usar escape desnecessárias
         "yoda": [ "error" ], // Força if Variável === "COMPARATION"
         "no-undef-init": [ "error" ], // Não permite variáveis definidas como undefined ao inicializar
-        "no-new-require": "error" // Não permite usar new require()
+        "no-new-require": [ "error" ], // Não permite usar new require()
+        "prefer-template": [ "error" ], // Prefer template literals over string concatenation
     },
 };
