@@ -78,7 +78,7 @@ module.exports = {
         "multiline-comment-style": [ "error", "starred-block" ], // Força /* comentário */ ao invés de // varias vezes
         "@typescript-eslint/no-throw-literal": [ "error" ], // Não permite throw "string" ou diferente de classe
         "no-unreachable": [ "error" ], // Não permite unreachable code
-        "no-multi-str": [ "error" ],
+        "no-multi-str": [ "error" ], // Não quebre linha dentro de uma string
         "@typescript-eslint/no-unsafe-assignment": [ "error" ], // Não permite atribuição de tipos inválidos
         "consistent-this": [ "error", "that" ], // Não permite this em locais inconsistente.
         "no-irregular-whitespace": [ "error" ], // Não permite espaços entre palavras
@@ -90,5 +90,35 @@ module.exports = {
         "no-trailing-spaces": [ "error" ], // Não permite espaço apos ou antes do ponto
         "@typescript-eslint/type-annotation-spacing": [ "error", { "before": false, "after": true } ], // Não colocar junto : tipagem
         "no-extra-boolean-cast": [ "error" ], // Não permite cast de boolean extra !!!
+        "no-constant-condition": [ "error" ], // Não permite condições constantes if (true)
+        "no-debugger": [ "error" ], // Não permite usar debugger
+        "no-dupe-keys": [ "error" ], // Não permite chaves duplicadas array
+        "no-duplicate-case": [ "error" ], // Não permite duplicar case em switch
+        "no-empty-character-class": [ "error" ], // Não permite classe de caracteres vazia em regex
+        "no-ex-assign": [ "error" ], // Não permite atribuição de exceção
+        "no-extra-parens": [ "error" ], // Não permite parênteses extra
+        "no-extra-semi": [ "error" ], // Não permite ;, duplicadas ou desnecessárias
+        "no-func-assign": [ "error" ], // Não permite atribuição de função
+        "no-inner-declarations": [ "error" ], // Não permite declarações dentro de escopos
+        "no-invalid-regexp": [ "error" ], // Não permite expressões regulares inválidas RegExp()
+        "no-irregular-whitespace": [ "error" ], // Não permite espaços com caracteres especiais
+        "no-negated-in-lhs": [ "error" ], // Não permite negação em IN
+        "no-regex-spaces": [ "error" ], // Não permite múltiplos espaços em regex utilize
+        "no-sparse-arrays": [ "error" ], // Não permite arrays com itens vagos no meio
+        "valid-typeof": [ "error" ], // Não permite typeof inválido
+        "eqeqeq": [ "error", "always" ], // Usa igual e do mesmo tipo
+        "no-eval": [ "error" ], // Não permite usar eval
+        "no-extra-label": [ "error" ], // Não permite usar labels extra desnecessárias
+        "no-floating-decimal": [ "error" ], // Não permite decimais flutuantes sem zero a esquerda.
+        "no-native-reassign": [ "error" ], // Não permite reatribuição de funções/vars nativas
+        "no-new": [ "error" ], // Não permite usar new sem salva-lo
+        "no-new-func": [ "error" ], // Não permite usar new Function()
+        "no-redeclare": [ "error" ], // Não permite redeclarar variáveis
+        "no-self-compare": [ "error" ], // Não permite comparar com seu próprio valor
+        "no-unmodified-loop-condition": [ "error" ], // Não permite loop sem modificar o valor do contador ou check único
+        "no-useless-escape": [ "error" ], // Não permite usar escape desnecessárias
+        "yoda": [ "error" ], // Força if Variável === "COMPARATION"
+        "no-undef-init": [ "error" ], // Não permite variáveis definidas como undefined ao inicializar
+        "no-new-require": "error" // Não permite usar new require()
     },
 };
