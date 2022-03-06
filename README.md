@@ -69,20 +69,6 @@ https://eslint.org/docs/rules/semi#semi
 👍 Examples of correct code
 
 ```typescript
-var name = "ODG"
-
-object.method = function() {
-    // ...
-}
-
-class Foo {
-    bar = 1
-}
-```
-
-👎 Examples of incorrect code
-
-```typescript
 var name = "ODG";
 
 object.method = function() {
@@ -91,6 +77,20 @@ object.method = function() {
 
 class Foo {
     bar = 1;
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var name = "ODG"
+
+object.method = function() {
+    // ...
+}
+
+class Foo {
+    bar = 1
 }
 ```
 
