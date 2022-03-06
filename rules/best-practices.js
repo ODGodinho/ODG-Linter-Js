@@ -3,7 +3,7 @@ module.exports = {
     rules: {
         "semi": [ "error", "always" ], // Força usar ponto-virgula ;
         "quotes": [ "error", "double" ], // Aspas duplas
-        "indent": [ "error", 4 ], // 4 spaces
+        "indent": [ "off" ], // 4 spaces
         "@typescript-eslint/indent": [ "error", 4 ], // Força indent com 4 espaços
         "@typescript-eslint/quotes": [ "error", "double" ], // Força aspas dupla
         "linebreak-style": [ "error", "unix" ], // Força usar \n apenas em vez de \r\n
@@ -32,7 +32,7 @@ module.exports = {
             "before": true,
             "after": true,
         } ], // Requer espaço apos try {}
-        "space-before-blocks": "error", // Requer espaço antes das chaves
+        "space-before-blocks": [ "error" ], // Requer espaço antes das chaves
         "space-unary-ops": [
             2, {
                 "words": true, // Espaço apos Await e palavras chaves
@@ -45,14 +45,10 @@ module.exports = {
         ],
         "unicode-bom": [ "error", "never" ], // Disabled "unicode-bom"
         "space-in-parens": [ "error", "never" ], // Não permite espaço entre parenteses
-        "spaced-comment": [ "error", "always", {
-            "exceptions": [ "-", "+" ],
-        } ], // Força espaço apos do // comentário
         "no-multi-spaces": [ "error" ], // Nao permite vários espaços if(  i  )
         "computed-property-spacing": [ "error", "never" ], // Desabilita espaço ao recuperar array $a[ 'ITEM' ]; ou $a[ ] = 12;
         "no-useless-concat": [ "error" ], // Desabilita concatenação de strings desnecessárias ex: "a" + "b"
         "no-self-assign": [ "error" ], // Nao se atribua seu próprio valor a variável
-        "capitalized-comments": [ "error" ], // Comentários devem ser iniciados em letras maiúsculas
         "@typescript-eslint/explicit-function-return-type": [ "error" ], // Força tipo de retorno
         "array-bracket-newline": [ "error", "consistent" ],
         "@typescript-eslint/no-unused-vars": [ "error",  { "argsIgnorePattern": "^_" } ], // Não permite variáveis não usado

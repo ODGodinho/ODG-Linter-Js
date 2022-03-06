@@ -1,6 +1,10 @@
 /* eslint-disable max-len */
 module.exports = {
     rules: {
+        "spaced-comment": [ "error", "always", {
+            "exceptions": [ "-", "+" ],
+        } ], // Força espaço apos do // comentário
+        "capitalized-comments": [ "error" ], // Comentários devem ser iniciados em letras maiúsculas
         "jsdoc/check-access": [ "error" ],
         "jsdoc/check-alignment": [ "error" ],
         "jsdoc/check-indentation": [ "error" ],
@@ -24,7 +28,7 @@ module.exports = {
         "jsdoc/no-multi-asterisks": [ "error", { "preventAtMiddleLines": true, "preventAtEnd": true } ], // sem asteriscos duplicado na docblock
         "jsdoc/no-defaults": [ "error" ], // não permite [user_id=1] para informar valor padrão
         "jsdoc/no-undefined-types": [ "error" ], // Valida Tipos não existentes
-        "jsdoc/require-asterisk-prefix": [ "error" ], // requer * dockblock multiline
+        "jsdoc/require-asterisk-prefix": [ "error" ], // requer * docblock multiline
 
         "jsdoc/require-param": [ "error" ],
         "jsdoc/require-param-description": [ "error" ],
