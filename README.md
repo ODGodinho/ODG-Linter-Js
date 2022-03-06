@@ -195,7 +195,7 @@ https://eslint.org/docs/rules/eol-last#eol-last
 ```typescript
 function doSmth() {
   var foo = 2;
-}
+} // \n
 
 ```
 
