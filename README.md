@@ -30,38 +30,34 @@
 <h1>Standard Code</h1>
 
 - [Introduction](#introduction)
-- [Format](#format)
-- [### Semi Rule](#-semi-rule)
-- [### Quotes Rule](#-quotes-rule)
-- [### Indent Rule](#-indent-rule)
-- [### Line Break Rule](#-line-break-rule)
-- [### EOL last Rule](#-eol-last-rule)
-- [### Max Line Len Rule](#-max-line-len-rule)
-- [### CamelCase Rule](#-camelcase-rule)
-- [### Padded Block Rule](#-padded-block-rule)
-- [### Lines Between Class Members](#-lines-between-class-members)
-- [### No Multi Assign Rule](#-no-multi-assign-rule)
-- [### Explicit Member Accessibility Rule](#-explicit-member-accessibility-rule)
-- [### Default Param Last Rule](#-default-param-last-rule)
-- [### Space Before Function Paren](#-space-before-function-paren)
-- [### Array Space](#-array-space)
-- [### Key Word Space](#-key-word-space)
-- [### Space Format](#-space-format)
-- [### UTF-8 Only](#-utf-8-only)
-- [### No Space in Parentheses](#-no-space-in-parentheses)
-- [### No Multiple Space](#-no-multiple-space)
-- [### Unless String Concat](#-unless-string-concat)
-- [### No Self Assign](#-no-self-assign)
-- [### Force Return Type](#-force-return-type)
-
+- [Semi Rule](#semi-rule)
+- [Quotes Rule](#quotes-rule)
+- [Indent Rule](#indent-rule)
+- [Line Break Rule](#line-break-rule)
+- [EOL last Rule](#eol-last-rule)
+- [Max Line Len Rule](#max-line-len-rule)
+- [CamelCase Rule](#camelcase-rule)
+- [Padded Block Rule](#padded-block-rule)
+- [Lines Between Class Members](#lines-between-class-members)
+- [No Multi Assign Rule](#no-multi-assign-rule)
+- [Explicit Member Accessibility Rule](#explicit-member-accessibility-rule)
+- [Default Param Last Rule](#default-param-last-rule)
+- [Space Before Function Paren](#space-before-function-paren)
+- [Array Space](#array-space)
+- [Key Word Space](#key-word-space)
+- [Space Format](#space-format)
+- [UTF-8 Only](#utf-8-only)
+- [No Space in Parentheses](#no-space-in-parentheses)
+- [No Multiple Space](#no-multiple-space)
+- [Unless String Concat](#unless-string-concat)
+- [No Self Assign](#no-self-assign)
+- [Force Return Type](#force-return-type)
 
 ## Introduction
 
 introduction code format
 
-## Format
-
-### Semi Rule
+## Semi Rule
 ----------
 
 Requires semicolons at the end of statements
@@ -100,7 +96,7 @@ class Foo {
 
 <br>
 
-### Quotes Rule
+## Quotes Rule
 ----------
 
 Requires the use of double quotes wherever possible
@@ -129,7 +125,7 @@ var backtick = `back\ntick`; // you can use \n in single or double quoted string
 
 <br>
 
-### Indent Rule
+## Indent Rule
 ----------
 
 Requires indent with 4 spaces
@@ -162,7 +158,7 @@ if (a) {
 
 <br>
 
-### Line Break Rule
+## Line Break Rule
 ----------
 
 Enforces the usage of Unix line endings: `\n` for LF.
@@ -185,7 +181,7 @@ var a = 'a'; // \r\n
 
 <br>
 
-### EOL last Rule
+## EOL last Rule
 ----------
 
 Force empty end line
@@ -213,7 +209,7 @@ function doSmth() {
 
 <br>
 
-### Max Line Len Rule
+## Max Line Len Rule
 ----------
 
 Max line len is 120
@@ -240,7 +236,7 @@ var foo = { "bar": "This is a bar.", "baz": { "qux": "This is a qux" }, "difficu
 
 <br>
 
-### CamelCase Rule
+## CamelCase Rule
 ----------
 
 Force use camelcase variable
@@ -274,7 +270,7 @@ function do_something() {
 
 <br>
 
-### Padded Block Rule
+## Padded Block Rule
 ----------
 
 force empty line in blocks
@@ -338,7 +334,7 @@ if (a) {
 
 <br>
 
-### Lines Between Class Members
+## Lines Between Class Members
 ----------
 
 Enforces consistent spacing before function parenthesis.
@@ -380,7 +376,7 @@ class MyClass {
 
 <br>
 
-### No Multi Assign Rule
+## No Multi Assign Rule
 ----------
 
 Chaining the assignment of variables can lead to unexpected results and be difficult to read.
@@ -432,7 +428,7 @@ a = b = "quux";
 
 <br>
 
-### Explicit Member Accessibility Rule
+## Explicit Member Accessibility Rule
 ----------
 
 Force specific public/private or protected visibility
@@ -471,7 +467,7 @@ class ClassName {
 
 <br>
 
-### Default Param Last Rule
+## Default Param Last Rule
 ----------
 
 Enforces default parameters to be last.
@@ -496,7 +492,7 @@ function f(a, c, b = 0) {}
 
 <br>
 
-### Space Before Function Paren
+## Space Before Function Paren
 ----------
 
 Enforces default parameters to be last.
@@ -535,7 +531,7 @@ function foo () {
 
 <br>
 
-### Array Space
+## Array Space
 ----------
 
 requires one or more spaces or newlines inside array brackets, and disallow space inside of computed properties.
@@ -572,7 +568,7 @@ var c = object[ "foo"];
 
 <br>
 
-### Key Word Space
+## Key Word Space
 ----------
 
 Enforces consistent spacing before and after keywords.
@@ -619,7 +615,7 @@ try{
 
 <br>
 
-### Space Format
+## Space Format
 ----------
 
 This rule enforces consistency regarding the spaces after
@@ -670,7 +666,7 @@ const value = + "3";
 
 <br>
 
-### UTF-8 Only
+## UTF-8 Only
 ----------
 
 Disallow the Unicode Byte Order Mark (BOM).
@@ -681,7 +677,7 @@ https://eslint.org/docs/rules/unicode-bom#unicode-bom
 
 <br />
 
-### No Space in Parentheses
+## No Space in Parentheses
 ----------
 
 Disallows or enforce spaces inside of parentheses.
@@ -720,7 +716,7 @@ var foo = ( 1 + 2 ) * 3;
 
 <br />
 
-### No Multiple Space
+## No Multiple Space
 ----------
 
 Disallows multiple consecutive spaces.
@@ -763,7 +759,7 @@ a ?  b  : c
 
 <br />
 
-### Unless String Concat
+## Unless String Concat
 ----------
 
 Disallows unless string concat.
@@ -798,7 +794,7 @@ var a = `1` + `0`;
 
 <br />
 
-### No Self Assign
+## No Self Assign
 ----------
 
 Disallows assignments where both sides are exactly the same.
@@ -844,7 +840,7 @@ foo ??= foo;
 
 <br />
 
-### Force Return Type
+## Force Return Type
 ----------
 
 Force fill return type in typescript
