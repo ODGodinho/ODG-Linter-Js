@@ -36,7 +36,7 @@
 - [Line Break Rule](#line-break-rule)
 - [EOL last Rule](#eol-last-rule)
 - [Max Line Len Rule](#max-line-len-rule)
-- [CamelCase Rule](#camelcase-rule)
+- [CamelCase Rule](#camel-case-rule)
 - [Padded Block Rule](#padded-block-rule)
 - [Lines Between Class Members](#lines-between-class-members)
 - [No Multi Assign Rule](#no-multi-assign-rule)
@@ -49,7 +49,7 @@
 - [UTF-8 Only](#utf-8-only)
 - [No Space in Parentheses](#no-space-in-parentheses)
 - [No Multiple Space](#no-multiple-space)
-- [Unless String Concat](#unless-string-concat)
+- [Useless String Concat](#useless-string-concat)
 - [No Self Assign](#no-self-assign)
 - [Force Return Type](#force-return-type)
 - [Array Bracket Line](#array-bracket-line)
@@ -60,17 +60,19 @@
 - [Arrow Function Body](#arrow-function-body)
 - [No Empty Block](#no-empty-block)
 - [No Long Syntax](#no-long-syntax)
-- [Unless Call Code](#unless-call-code)
-- [Unless Catch Code](#unless-catch-code)
-- [Unless Expression Code](#unless-expression-code)
-- [Unless Return Code](#unless-return-code)
-- [Unless Construct Code](#unless-construct-code)
+- [Useless Call Code](#useless-call-code)
+- [Useless Catch Code](#useless-catch-code)
+- [Useless Expression Code](#useless-expression-code)
+- [Useless Return Code](#useless-return-code)
+- [Useless Construct Code](#useless-construct-code)
+- [Useless Parens](#useless-parens)
+- [Useless Boolean](#useless-boolean)
 - [Return New line](#return-new-line)
 - [Comment Multi Line Prefer](#comment-multi-line-prefer)
 - [No throw Literal](#no-throw-literal)
 - [No Unreachable](#no-unreachable)
 - [No Unreachable](#no-unreachable)
-- [Unless Loop](#unless-loop)
+- [Useless Loop](#useless-loop)
 - [No Multiline String](#no-multiline-string)
 - [No Unsafe Assign](#no-unsafe-assign)
 - [This Pattern](#this-pattern)
@@ -78,7 +80,35 @@
 - [Dot Object Format](#dot-object-format)
 - [No Trailing Space](#no-trailing-space)
 - [Type Format](#type-format)
-
+- [No Constant Condition](#no-constant-condition)
+- [No Debugger](#no-debugger)
+- [Useless Object](#useless-object)
+- [Not Duplicate Case](#not-duplicate-case)
+- [Regex Block](#regex-block)
+- [No Overwrite Exception](#no-overwrite-exception)
+- [No Extra Semi](#no-extra-semi)
+- [No Function Overwrite](#no-function-overwrite)
+- [No Declare in Block](#no-declare-in-block)
+- [Security Negation](#security-negation)
+- [Regex Space](#regex-space)
+- [Array No Space](#array-no-space)
+- [Valid TypeOf](#valid-type-of)
+- [Strict equality](#strict-equality)
+- [Eval Disabled](#eval-disabled)
+- [No Label](#no-label)
+- [Full Decimal Number](#full-decimal-number)
+- [No Global Overwrite](#no-global-overwrite)
+- [Not Used New](#not-used-new)
+- [No New Function](#no-new-function)
+- [No Redeclare](#no-redeclare)
+- [No Self Compare](#no-self-compare)
+- [Loop Valid](#loop-valid)
+- [Useless Scape](#useless-scape)
+- [No Yoda](#no-yoda)
+- [No Undefined declare](#no-undefined-declare)
+- [No New require](#no-new-require)
+- [Prefer Literals](#prefer-literals)
+- [Useless Condition](#useless-condition)
 
 ## Introduction
 
@@ -802,10 +832,10 @@ a ?  b  : c
 
 <br />
 
-## Unless String Concat
+## Useless String Concat
 ----------
 
-Disallows unless string concat.
+Disallows useless string concat.
 
 https://eslint.org/docs/rules/no-useless-concat#no-useless-concat
 
@@ -1302,10 +1332,10 @@ const arr = new Array(0, 1, 2);
 
 <br />
 
-## Unless Call Code
+## Useless Call Code
 ----------
 
-Disallow unless code
+Disallow useless code
 
 https://eslint.org/docs/rules/no-useless-call#no-useless-call
 
@@ -1347,10 +1377,10 @@ a[i++].foo.call(a[i++], 1, 2, 3);
 
 <br />
 
-## Unless Catch Code
+## Useless Catch Code
 ----------
 
-Disallow unless code
+Disallow useless code
 
 https://eslint.org/docs/rules/no-useless-catch#no-useless-catch
 
@@ -1399,10 +1429,10 @@ try {
 
 <br />
 
-## Unless Expression Code
+## Useless Expression Code
 ----------
 
-Disallow unless code
+Disallow useless code
 
 https://eslint.org/docs/rules/no-unused-expressions
 
@@ -1469,10 +1499,10 @@ class Foo {
 
 <br />
 
-## Unless Return Code
+## Useless Return Code
 ----------
 
-Disallow unless code
+Disallow useless code
 
 https://eslint.org/docs/rules/no-useless-return#no-useless-return
 
@@ -1546,10 +1576,10 @@ function foo() {
 
 <br />
 
-## Unless Construct Code
+## Useless Construct Code
 ----------
 
-Disallow unless code
+Disallow useless code
 
 https://eslint.org/docs/rules/no-useless-constructor#options
 
@@ -1593,6 +1623,125 @@ class B extends A {
     constructor (...args) {
       super(...args);
     }
+}
+```
+
+<br/>
+
+## Useless Parens
+----------
+
+Disallows unnecessary parentheses.
+
+https://eslint.org/docs/rules/no-extra-parens#no-extra-parens
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+a = (b * c);
+
+(a * b) + c;
+
+for (a in (b, c));
+
+for (a in (b));
+
+for (a of (b));
+
+typeof (a);
+
+(function(){} ? a() : b());
+
+class A {
+    [(x)] = 1;
+}
+
+class B {
+    x = (y + z);
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+a = (b * c);
+
+(a * b) + c;
+
+for (a in (b, c));
+
+for (a in (b));
+
+for (a of (b));
+
+typeof (a);
+
+(function(){} ? a() : b());
+
+class A {
+    [(x)] = 1;
+}
+
+class B {
+    x = (y + z);
+}
+```
+
+<br />
+
+## Useless Boolean
+----------
+
+Disallow useless code
+
+https://eslint.org/docs/rules/no-useless-constructor#options
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+var foo = !!bar;
+var foo = Boolean(bar);
+
+function foo() {
+    return !!bar;
+}
+
+var foo = bar ? !!baz : !!bat;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = !!!bar;
+
+var foo = !!bar ? baz : bat;
+
+var foo = Boolean(!!bar);
+
+var foo = new Boolean(!!bar);
+
+if (!!foo) {
+    // ...
+}
+
+if (Boolean(foo)) {
+    // ...
+}
+
+while (!!foo) {
+    // ...
+}
+
+do {
+    // ...
+} while (Boolean(foo));
+
+for (; !!foo; ) {
+    // ...
 }
 ```
 
@@ -1900,10 +2049,10 @@ console.log("done");
 
 <br />
 
-## Unless Loop
+## Useless Loop
 ----------
 
-No unless loop
+No useless loop
 
 https://eslint.org/docs/rules/no-unreachable-loop
 
@@ -2216,8 +2365,7 @@ foo
 ## No Trailing Space
 ----------
 
-- The dot in a member expression should be on the same line as the property portion.
-- Disallows whitespace before properties.
+Not allow trailing whitespace
 
 https://eslint.org/docs/rules/dot-location#dot-location
 https://eslint.org/docs/rules/no-whitespace-before-property
@@ -2302,4 +2450,1253 @@ class Foo {
 type Foo = ()=>{};
 type Foo = () =>{};
 type Foo = ()=> {};
+```
+
+<br/>
+
+## No Constant Condition
+----------
+
+Disallows constant expressions in conditions. always use variables instead.
+
+https://eslint.org/docs/rules/no-constant-condition#no-constant-condition
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+if (x === 0) {
+    doSomething();
+}
+
+for (let i = 0; i < 2; i++) {
+
+}
+
+while (typeof x === "undefined") {
+    doSomething();
+}
+
+do {
+    doSomething();
+} while (x);
+
+var result = x !== 0 ? a : b;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+if (false) {
+    doSomethingUnfinished();
+}
+
+if (void x) {
+    doSomethingUnfinished();
+}
+
+if (x &&= false) {
+    doSomethingNever();
+}
+
+if (class {}) {
+    doSomethingAlways();
+}
+
+if (new Boolean(x)) {
+    doSomethingAlways();
+}
+
+if (Boolean(1)) {
+    doSomethingAlways();
+}
+
+if (undefined) {
+    doSomethingUnfinished();
+}
+
+if (x ||= true) {
+    doSomethingAlways();
+}
+
+for (;-2;) {
+    doSomethingForever();
+}
+
+while (typeof x) {
+    doSomethingForever();
+}
+
+do {
+    doSomethingForever();
+} while (x = -1);
+
+var result = 0 ? a : b;
+```
+
+<br/>
+
+## No Debugger
+----------
+
+Debugger not recommended use break point.
+
+https://eslint.org/docs/rules/no-debugger#no-debugger
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+function isTruthy(x) {
+    return Boolean(x); // set a breakpoint at this line
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function isTruthy(x) {
+    debugger;
+    return Boolean(x);
+}
+```
+
+<br/>
+
+## Useless Object
+----------
+
+- No Duplicate Key in Object
+
+https://eslint.org/docs/rules/no-dupe-keys#no-dupe-keys
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+var foo = {
+    bar: "baz",
+    quxx: "qux"
+};
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = {
+    bar: "baz",
+    bar: "qux"
+};
+
+var foo = {
+    "bar": "baz",
+    bar: "qux"
+};
+
+var foo = {
+    0x1: "baz",
+    1: "qux"
+};
+```
+
+<br/>
+
+## Not Duplicate Case
+----------
+
+No Duplicate case in switch
+
+https://eslint.org/docs/rules/no-duplicate-case#no-duplicate-case
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+switch (a) {
+    case 1:
+        break;
+    case 2:
+        break;
+    case 3:
+        break;
+    default:
+        break;
+}
+
+switch (a) {
+    case one:
+        break;
+    case two:
+        break;
+    case three:
+        break;
+    default:
+        break;
+}
+
+switch (a) {
+    case "1":
+        break;
+    case "2":
+        break;
+    case "3":
+        break;
+    default:
+        break;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+switch (a) {
+    case 1:
+        break;
+    case 2:
+        break;
+    case 1:         // duplicate test expression
+        break;
+    default:
+        break;
+}
+
+switch (a) {
+    case one:
+        break;
+    case 2:
+        break;
+    case one:         // duplicate test expression
+        break;
+    default:
+        break;
+}
+
+switch (a) {
+    case "1":
+        break;
+    case "2":
+        break;
+    case "1":         // duplicate test expression
+        break;
+    default:
+        break;
+}
+```
+
+<br/>
+
+## Regex Block
+----------
+
+- Disallows empty character classes in regular expressions.
+- No Invalid Regex
+
+https://eslint.org/docs/rules/no-empty-character-class#no-empty-character-class
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+/^abc/.test("abcdefg"); // true
+"abcdefg".match(/^abc/); // ["abc"]
+
+/^abc[a-z]/.test("abcdefg"); // true
+"abcdefg".match(/^abc[a-z]/); // ["abcd"]
+
+// valid regex
+RegExp('.')
+new RegExp
+this.RegExp('[')
+```
+
+👎 Examples of incorrect code
+
+```typescript
+/^abc[]/.test("abcdefg"); // false
+"abcdefg".match(/^abc[]/); // null
+
+// invalid regex
+RegExp('[')
+RegExp('.', 'z')
+new RegExp('\\')
+```
+
+<br/>
+
+## No Overwrite Exception
+----------
+
+Disallows empty character classes in regular expressions.
+
+https://eslint.org/docs/rules/no-ex-assign#no-ex-assign
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+try {
+    // code
+} catch (e) {
+    var foo = 10;
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+try {
+    // code
+} catch (e) {
+    e = 10;
+}
+```
+
+<br/>
+
+## No Extra Semi
+----------
+
+Disallows unnecessary semicolons.
+
+https://eslint.org/docs/rules/no-extra-semi#no-extra-semi
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+var x = 5;
+
+function foo() {
+    // code
+}
+
+var bar = function() {
+    // code
+};
+
+class C {
+    field;
+
+    method() {
+        // code
+    }
+
+    static {
+        // code
+    }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var x = 5;;
+
+function foo() {
+    // code
+};
+
+class C {
+    field;;
+
+    method() {
+        // code
+    };
+
+    static {
+        // code
+    };
+};
+```
+
+<br/>
+
+## No Function Overwrite
+----------
+
+Disallows reassigning function declarations.
+
+https://eslint.org/docs/rules/no-func-assign#no-func-assign
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+var foo = function () {}
+foo = bar;
+
+function foo(foo) { // `foo` is shadowed.
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function foo() {}
+foo = bar;
+
+function foo() {
+    foo = bar;
+}
+
+var a = function hello() {
+  hello = 123;
+};
+```
+
+<br/>
+
+## No Declare in Block
+----------
+
+Disallows variable or function declarations in nested blocks.
+
+https://eslint.org/docs/rules/no-func-assign#no-func-assign
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+function doSomething() { }
+
+function doSomethingElse() {
+    function doAnotherThing() { }
+}
+
+class C {
+    static {
+        function doSomething() { }
+    }
+}
+
+if (test) {
+    asyncCall(id, function (err, data) { });
+}
+
+var fn;
+if (test) {
+    fn = function fnExpression() { };
+}
+
+if (foo) var a;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+if (test) {
+    function doSomething() { }
+}
+
+function doSomethingElse() {
+    if (test) {
+        function doAnotherThing() { }
+    }
+}
+
+if (foo) function f(){}
+
+class C {
+    static {
+        if (test) {
+            function doSomething() { }
+        }
+    }
+}
+```
+
+<br/>
+
+## Security Negation
+----------
+
+Disallows variable or function declarations in nested blocks.
+
+https://eslint.org/docs/rules/no-negated-in-lhs#no-negated-in-lhs
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+if(!(key in object)) {
+    // key is not in object
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+if(!key in object) {
+    // operator precedence makes it equivalent to (!key) in object
+    // and type conversion makes it equivalent to (key ? "false" : "true") in object
+}
+```
+
+<br/>
+
+## Regex Space
+----------
+
+Disallows multiple spaces in regular expression literals.
+
+https://eslint.org/docs/rules/no-regex-spaces#no-regex-spaces
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+var re = /foo {3}bar/;
+var re = new RegExp("foo {3}bar");
+
+// better
+var re = /foo {3}bar/;
+var re = new RegExp("foo\s{3}bar");
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var re = /foo   bar/;
+var re = new RegExp("foo   bar");
+```
+
+<br/>
+
+## Array No Space
+----------
+
+Disallows sparse arrays.
+
+https://eslint.org/docs/rules/no-sparse-arrays#no-sparse-arrays
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+var items = [];
+var items = new Array(23);
+
+// trailing comma (after the last element) is not a problem
+var colors = [ "red", "blue", ];
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var items = [,];
+var colors = [ "red",, "blue" ];
+```
+
+<br/>
+
+## Valid TypeOf
+----------
+
+Enforces comparing typeof expressions against valid strings.
+
+https://eslint.org/docs/rules/valid-typeof#valid-typeof
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+typeof foo === "string"
+typeof bar == "undefined"
+typeof foo === baz
+typeof bar === typeof qux
+```
+
+👎 Examples of incorrect code
+
+```typescript
+typeof foo === "strnig"
+typeof foo == "undefimed"
+typeof bar != "nunber"
+typeof bar !== "fucntion"
+```
+
+<br/>
+
+## Strict equality
+----------
+
+Requires the use of === and !== instead of == and !=.
+It is considered good practice to use the type-safe equality operators === and !== instead of their regular counterparts == and !=.
+
+https://eslint.org/docs/rules/eqeqeq#eqeqeq
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+a === b
+foo === true
+bananas !== 1
+value === undefined
+typeof foo === 'undefined'
+'hello' !== 'world'
+0 === 0
+true === true
+foo === null
+```
+
+👎 Examples of incorrect code
+
+```typescript
+a == b
+foo == true
+bananas != 1
+value == undefined
+typeof foo == 'undefined'
+'hello' != 'world'
+0 == 0
+true == true
+foo == null
+```
+
+<br/>
+
+## Eval Disabled
+----------
+
+JavaScript's eval() function is potentially dangerous and is often misused.
+Using eval() on untrusted code can open a program up to several different injection attacks.
+The use of eval() in most contexts can be substituted for a better, alternative approach to a problem.
+
+https://eslint.org/docs/rules/no-eval#no-eval
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+var obj = { x: "foo" },
+    key = "x",
+    value = obj[key];
+
+class A {
+    foo() {
+        // This is a user-defined method.
+        this.eval("var a = 0");
+    }
+
+    eval() {
+    }
+
+    static {
+        // This is a user-defined static method.
+        this.eval("var a = 0");
+    }
+
+    static eval() {
+    }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var obj = { x: "foo" },
+    key = "x",
+    value = eval("obj." + key);
+
+(0, eval)("var a = 0");
+
+var foo = eval;
+foo("var a = 0");
+
+// This `this` is the global object.
+this.eval("var a = 0");
+```
+
+<br/>
+
+## No Label
+----------
+
+- Disallows unnecessary labels.
+- Labeled statements in JavaScript are used in conjunction with break and continue to control flow around multiple loops. For example:
+
+https://eslint.org/docs/rules/no-extra-label#no-extra-label
+https://eslint.org/docs/rules/no-labels#no-labels
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+while (a) {
+    break;
+}
+
+for (let i = 0; i < 10; ++i) {
+    break;
+}
+
+switch (a) {
+    case 0:
+        break;
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+A: while (a) {
+    break A;
+}
+
+B: for (let i = 0; i < 10; ++i) {
+    break B;
+}
+
+C: switch (a) {
+    case 0:
+        break C;
+}
+```
+
+<br/>
+
+## Full Decimal Number
+----------
+
+Disallows leading or trailing decimal points in numeric literals.
+
+https://eslint.org/docs/rules/no-floating-decimal#no-floating-decimal
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+var num = 0.5;
+var num = 2.0;
+var num = -0.7;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var num = .5;
+var num = 2.;
+var num = -.7;
+```
+
+<br/>
+
+## No Global Overwrite
+----------
+
+Disallows reassignment of native objects.
+
+https://eslint.org/docs/rules/no-floating-decimal#no-floating-decimal
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+a = 1
+var b = 1
+b = 2
+
+onload = function() {}
+
+/*global a:writable*/
+a = 1
+```
+
+👎 Examples of incorrect code
+
+```typescript
+Object = null;
+undefined = 1;
+window = {};
+length = 1;
+top = 1;
+
+/*global a:readonly*/
+a = 1
+```
+
+<br/>
+
+## Not Used New
+----------
+
+Disallows `new` operators outside of assignments or comparisons.
+
+https://eslint.org/docs/rules/no-new#no-new
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+var thing = new Thing();
+
+Thing();
+```
+
+👎 Examples of incorrect code
+
+```typescript
+new Thing();
+```
+
+<br/>
+
+## No New Function
+----------
+
+Disallows new operators with the Function object.
+It's possible to create functions in JavaScript from strings at runtime using the Function constructor, such as:
+
+https://eslint.org/docs/rules/no-new-func#no-new-func
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+var x = function (a, b) {
+    return a + b;
+};
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var x = new Function("a", "b", "return a + b");
+var x = Function("a", "b", "return a + b");
+var x = Function.call(null, "a", "b", "return a + b");
+var x = Function.apply(null, ["a", "b", "return a + b"]);
+var x = Function.bind(null, "a", "b", "return a + b")();
+var f = Function.bind(null, "a", "b", "return a + b"); // assuming that the result of Function.bind(...) will be eventually called.
+```
+
+<br/>
+
+## No Redeclare
+----------
+
+Disallows variable redeclarations.
+
+https://eslint.org/docs/rules/no-redeclare#no-redeclare
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+var a = 3;
+a = 10;
+
+class C {
+    foo() {
+        var b = 3;
+        b = 10;
+    }
+
+    static {
+        var c = 3;
+        c = 10;
+    }
+}
+
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var a = 3;
+var a = 10;
+
+class C {
+    foo() {
+        var b = 3;
+        var b = 10;
+    }
+
+    static {
+        var c = 3;
+        var c = 10;
+    }
+}
+```
+
+<br/>
+
+## No Self Compare
+----------
+
+Disallows comparisons where both sides are exactly the same.
+
+https://eslint.org/docs/rules/no-self-compare#no-self-compare
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+var x = 10;
+var y = 10;
+if (x === y) {
+    x = 20;
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var x = 10;
+if (x === x) {
+    x = 20;
+}
+```
+
+<br/>
+
+## Loop Valid
+----------
+
+Disallows unmodified conditions of loops.
+
+https://eslint.org/docs/rules/no-unmodified-loop-condition#no-unmodified-loop-condition
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+while (node) {
+    doSomething(node);
+    node = node.parent;
+}
+
+for (var j = 0; j < items.length; ++j) {
+    doSomething(items[j]);
+}
+
+// OK, the result of this binary expression is changed in this loop.
+while (node !== root) {
+    doSomething(node);
+    node = node.parent;
+}
+
+// OK, the result of this ternary expression is changed in this loop.
+while (node ? A : B) {
+    doSomething(node);
+    node = node.parent;
+}
+
+// A property might be a getter which has side effect...
+// Or "doSomething" can modify "obj.foo".
+while (obj.foo) {
+    doSomething(obj);
+}
+
+// A function call can return various values.
+while (check(obj)) {
+    doSomething(obj);
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var node = something;
+
+while (node) {
+    doSomething(node);
+}
+node = other;
+
+for (var j = 0; j < items.length; ++i) {
+    doSomething(items[j]);
+}
+
+while (node !== root) {
+    doSomething(node);
+}
+```
+
+<br/>
+
+## Useless Scape
+----------
+
+Disallows unnecessary escape characters.
+
+https://eslint.org/docs/rules/no-useless-escape#no-useless-escape
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+"\"";
+'\'';
+"\x12";
+"\u00a9";
+"\371";
+"xs\u2111";
+`\``;
+`\${${foo}}`;
+`$\{${foo}}`;
+/\\/g;
+/\t/g;
+/\w\$\*\^\./;
+/[[]/;
+/[\]]/;
+/[a-z-]/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+"\'";
+'\"';
+"\#";
+"\e";
+`\"`;
+`\"${foo}\"`;
+`\#{foo}`;
+/\!/;
+/\@/;
+/[\[]/;
+/[a-z\-]/;
+```
+
+<br/>
+
+## No Yoda
+----------
+
+Disallows "Yoda" conditions.
+
+https://eslint.org/docs/rules/yoda#yoda
+
+> Yoda conditions are so named because the literal value of the condition comes first while the variable comes second. For example, the following is a Yoda condition:
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+if (5 & value) {
+    // ...
+}
+
+if (value === "red") {
+    // ...
+}
+
+if (value === `red`) {
+    // ...
+}
+
+if (`${value}` === `red`) {
+
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+if ("red" === color) {
+    // ...
+}
+
+if (`red` === color) {
+    // ...
+}
+
+if (`red` === `${color}`) {
+    // ...
+}
+
+if (true == flag) {
+    // ...
+}
+
+if (5 > count) {
+    // ...
+}
+
+if (-1 < str.indexOf(substr)) {
+    // ...
+}
+
+if (0 <= x && x < 1) {
+    // ...
+}
+```
+
+<br/>
+
+## No Undefined declare
+----------
+
+Disallows initializing variables to undefined.
+
+https://eslint.org/docs/rules/no-undef-init#no-undef-init
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+var foo;
+let bar;
+
+const foo = undefined;
+
+let { bar = undefined } = baz;
+
+[quux = undefined] = quuux;
+
+(foo = undefined) => {};
+
+class Foo {
+    bar = undefined;
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = undefined;
+let bar = undefined;
+```
+
+<br/>
+
+## No New require
+----------
+
+Disallows new operators with calls to require.
+
+https://eslint.org/docs/rules/no-new-require#no-new-require
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+var AppHeader = require('app-header');
+var appHeader = new AppHeader();
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var appHeader = new require('app-header');
+```
+
+<br/>
+
+## Prefer Literals
+----------
+
+Suggests using template literals instead of string concatenation.
+
+https://eslint.org/docs/rules/prefer-template#prefer-template
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+var str = "Hello World!";
+var str = `Hello, ${name}!`;
+var str = `Time: ${12 * 60 * 60 * 1000}`;
+
+// This is reported by `no-useless-concat`.
+var str = "Hello, " +
+  "World!";
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var str = "Hello, " + name + "!";
+var str = "Time: " + (12 * 60 * 60 * 1000);
+```
+
+<br/>
+
+## Useless Condition
+----------
+
+Prevents conditionals where the type is always truthy or always falsy.
+
+https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-unnecessary-condition.md
+
+<br />
+
+👍 Examples of correct code
+
+```typescript
+function head<T>(items: T[]) {
+  // Necessary, since items.length might be 0
+  if (items.length) {
+    return items[0].toUpperCase();
+  }
+}
+
+function foo(arg: string) {
+  // Necessary, since foo might be ''.
+  if (arg) {
+  }
+}
+
+function bar(arg?: string | null) {
+  // Necessary, since arg might be nullish
+  return arg?.length;
+}
+
+[0, 1, 2, 3].filter(t => t); // number can be truthy or falsy
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function head<T>(items: T[]) {
+  // items can never be nullable, so this is unnecessary
+  if (items) {
+    return items[0].toUpperCase();
+  }
+}
+
+function foo(arg: 'bar' | 'baz') {
+  // arg is never nullable or empty string, so this is unnecessary
+  if (arg) {
+  }
+}
+
+function bar<T>(arg: string) {
+  // arg can never be nullish, so ?. is unnecessary
+  return arg?.length;
+}
+
+// Checks array predicate return types, where possible
+[
+  [1, 2],
+  [3, 4],
+].filter(t => t); // number[] is always truthy
 ```

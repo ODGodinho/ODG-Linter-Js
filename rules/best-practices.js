@@ -98,7 +98,6 @@ module.exports = {
         "no-whitespace-before-property": [ "error" ], // Não permite espaço antes de property
         "no-trailing-spaces": [ "error" ], // Não permite espaço apos ou antes do ponto
         "@typescript-eslint/type-annotation-spacing": [ "error" ], // Não colocar junto : tipagem
-
         "no-extra-boolean-cast": [ "error" ], // Não permite cast de boolean extra !!!
         "no-constant-condition": [ "error" ], // Não permite condições constantes if (true)
         "no-debugger": [ "error" ], // Não permite usar debugger
@@ -107,7 +106,8 @@ module.exports = {
         "no-empty-character-class": [ "error" ], // Não permite classe de caracteres vazia em regex
         "no-ex-assign": [ "error" ], // Não permite atribuição de exceção
         "no-extra-parens": [ "error" ], // Não permite parênteses extra
-        "no-extra-semi": [ "error" ], // Não permite ;, duplicadas ou desnecessárias
+        "no-extra-semi": [ "off" ],
+        "@typescript-eslint/no-extra-semi": ["error"], // Não permite ;, duplicadas ou desnecessárias
         "no-func-assign": [ "error" ], // Não permite atribuição de função
         "no-inner-declarations": [ "error" ], // Não permite declarações dentro de escopos
         "no-invalid-regexp": [ "error" ], // Não permite expressões regulares inválidas RegExp()
@@ -118,6 +118,7 @@ module.exports = {
         "eqeqeq": [ "error", "always" ], // Usa igual e do mesmo tipo
         "no-eval": [ "error" ], // Não permite usar eval
         "no-extra-label": [ "error" ], // Não permite usar labels extra desnecessárias
+        "no-labels": [ "error" ], // Disable Label/GOTO
         "no-floating-decimal": [ "error" ], // Não permite decimais flutuantes sem zero a esquerda.
         "no-native-reassign": [ "error" ], // Não permite reatribuição de funções/vars nativas
         "no-new": [ "error" ], // Não permite usar new sem salva-lo
@@ -130,5 +131,6 @@ module.exports = {
         "no-undef-init": [ "error" ], // Não permite variáveis definidas como undefined ao inicializar
         "no-new-require": [ "error" ], // Não permite usar new require()
         "prefer-template": [ "error" ], // Prefer template literals over string concatenation
+        "@typescript-eslint/no-unnecessary-condition": [ "error" ], // Evita condições sempre true ou false
     },
 };
