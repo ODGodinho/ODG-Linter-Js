@@ -1,5 +1,16 @@
 {
     "extends": "./index.js",
+    "parser": "@typescript-eslint/parser",
+    "plugins": [
+		"@typescript-eslint",
+		"import",
+        "jsdoc"
+	],
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module",
+        "project": [ "tsconfig.json" ] // Specify it only for TypeScript files
+    },
     "rules": {
     }
 }

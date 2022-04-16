@@ -1,8 +1,9 @@
 <h1 align="center">
+  <a href="https://github.com/ODGodinho">
+    <img src="public/images/quality.png" alt="Stanley Imagem" width="200"/>
+  </a>
   <br>
-  <a href="https://github.com/ODGodinho"><img src="public/images/quality.png" alt="Stanley Imagem" width="200"/></a><br>
   ODG Linter Js By Dragons Gamers
-  <br>
 </h1>
 
 <h4 align="center">✴️ Code Quality for typescript ✴️!</h4>
@@ -15,7 +16,7 @@
     <img alt="Made by ODGodinho" src="https://img.shields.io/badge/made%20by-ODGodinho-%2304D361">
   </a>
 
-  <a href="https://github.com/ODGodinho/Prime-Gaming-Crawler/commits/master">
+  <a href="https://github.com/ODGodinho/ODG-Linter-Js/commits/master">
     <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/ODGodinho/ODG-Linter-Js">
   </a>
 
@@ -27,9 +28,10 @@
 
 </p>
 
-<h1>Standard Code</h1>
+# Standard Code
 
 - [Introduction](#introduction)
+  - [Installation](#installation)
 - [Semi Rule](#semi-rule)
 - [Quotes Rule](#quotes-rule)
 - [Indent Rule](#indent-rule)
@@ -71,7 +73,6 @@
 - [Comment Multi Line Prefer](#comment-multi-line-prefer)
 - [No throw Literal](#no-throw-literal)
 - [No Unreachable](#no-unreachable)
-- [No Unreachable](#no-unreachable)
 - [Useless Loop](#useless-loop)
 - [No Multiline String](#no-multiline-string)
 - [No Unsafe Assign](#no-unsafe-assign)
@@ -112,16 +113,41 @@
 
 ## Introduction
 
-introduction code format
+### Installation
+
+Add dependence to package.json
+
+```bash
+npm install eslint @odg/eslint-config-odg-linter-js --save-dev
+# or
+yarn add -D eslint @odg/eslint-config-odg-linter-js
+```
+
+Add extends in your `.eslintrc` file
+
+```json
+{
+    "parser": "@typescript-eslint/parser",
+    "extends": [
+        "@odg/odg-linter-js",
+    ],
+    "parserOptions": {
+        "ecmaVersion": 2018, // Specify your version
+        "sourceType": "module",
+        "project": [ "tsconfig.json" ] // Specify it only for TypeScript files
+    },
+}
+```
+
+Test: `npm run eslint` or `yarn eslint`
 
 ## Semi Rule
+
 ----------
 
 Requires semicolons at the end of statements
 
-https://eslint.org/docs/rules/semi#semi
-
-<br />
+<https://eslint.org/docs/rules/semi#semi>
 
 👍 Examples of correct code
 
@@ -151,16 +177,13 @@ class Foo {
 }
 ```
 
-<br>
-
 ## Quotes Rule
+
 ----------
 
 Requires the use of double quotes wherever possible
 
-https://eslint.org/docs/rules/quotes#quotes
-
-<br />
+<https://eslint.org/docs/rules/quotes#quotes>
 
 👍 Examples of correct code
 
@@ -179,17 +202,13 @@ var unescaped = 'a string containing "double" quotes';
 var backtick = `back\ntick`; // you can use \n in single or double quoted strings
 ```
 
-
-<br>
-
 ## Indent Rule
+
 ----------
 
 Requires indent with 4 spaces
 
-https://eslint.org/docs/rules/indent#indent
-
-<br />
+<https://eslint.org/docs/rules/indent#indent>
 
 👍 Examples of correct code
 
@@ -213,16 +232,13 @@ if (a) {
 }
 ```
 
-<br>
-
 ## Line Break Rule
+
 ----------
 
 Enforces the usage of Unix line endings: `\n` for LF.
 
-https://eslint.org/docs/rules/linebreak-style#linebreak-style
-
-<br />
+<https://eslint.org/docs/rules/linebreak-style#linebreak-style>
 
 👍 Examples of correct code
 
@@ -236,16 +252,13 @@ var a = 'a'; // \n
 var a = 'a'; // \r\n
 ```
 
-<br>
-
 ## EOL last Rule
+
 ----------
 
 Force empty end line
 
-https://eslint.org/docs/rules/eol-last#eol-last
-
-<br />
+<https://eslint.org/docs/rules/eol-last#eol-last>
 
 👍 Examples of correct code
 
@@ -264,16 +277,13 @@ function doSmth() {
 }
 ```
 
-<br>
-
 ## Max Line Len Rule
+
 ----------
 
 Max line len is 120
 
-https://eslint.org/docs/rules/max-len#max-len
-
-<br />
+<https://eslint.org/docs/rules/max-len#max-len>
 
 👍 Examples of correct code
 
@@ -291,16 +301,13 @@ var foo = {
 var foo = { "bar": "This is a bar.", "baz": { "qux": "This is a qux" }, "difficult": "to read" };
 ```
 
-<br>
-
 ## CamelCase Rule
+
 ----------
 
 Force use camelcase variable
 
-https://eslint.org/docs/rules/camelcase#camelcase
-
-<br />
+<https://eslint.org/docs/rules/camelcase#camelcase>
 
 👍 Examples of correct code
 
@@ -325,14 +332,13 @@ function do_something() {
 }
 ```
 
-<br>
-
 ## Padded Block Rule
+
 ----------
 
 force empty line in blocks
 
-https://eslint.org/docs/rules/padded-blocks#padded-blocks
+<https://eslint.org/docs/rules/padded-blocks#padded-blocks>
 
 ```json
 {
@@ -342,8 +348,6 @@ https://eslint.org/docs/rules/padded-blocks#padded-blocks
 }
 ```
 
-<br />
-
 👍 Examples of correct code
 
 ```typescript
@@ -389,16 +393,13 @@ if (a) {
 
 ```
 
-<br>
-
 ## Lines Between Class Members
+
 ----------
 
 Enforces consistent spacing before function parenthesis.
 
-https://eslint.org/docs/rules/lines-between-class-members#lines-between-class-members
-
-<br />
+<https://eslint.org/docs/rules/lines-between-class-members#lines-between-class-members>
 
 👍 Examples of correct code
 
@@ -430,18 +431,14 @@ class MyClass {
 }
 ```
 
-
-<br>
-
 ## No Multi Assign Rule
+
 ----------
 
 Chaining the assignment of variables can lead to unexpected results and be difficult to read.
 Disabled.
 
-https://eslint.org/docs/rules/no-multi-assign#no-multi-assign
-
-<br />
+<https://eslint.org/docs/rules/no-multi-assign#no-multi-assign>
 
 👍 Examples of correct code
 
@@ -483,14 +480,13 @@ class Foo {
 a = b = "quux";
 ```
 
-<br>
-
 ## Explicit Member Accessibility Rule
+
 ----------
 
 Force specific public/private or protected visibility
 
-https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/explicit-member-accessibility.md
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/explicit-member-accessibility.md>
 
 ```json
 {
@@ -499,8 +495,6 @@ https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint
     "asyncArrow": "always"
 }
 ```
-
-<br />
 
 👍 Examples of correct code
 
@@ -522,16 +516,13 @@ class ClassName {
 }
 ```
 
-<br>
-
 ## Default Param Last Rule
+
 ----------
 
 Enforces default parameters to be last.
 
-https://eslint.org/docs/rules/default-param-last#default-param-last
-
-<br />
+<https://eslint.org/docs/rules/default-param-last#default-param-last>
 
 👍 Examples of correct code
 
@@ -563,16 +554,13 @@ class Foo {
 }
 ```
 
-<br>
-
 ## Space Before Function Paren
+
 ----------
 
 Enforces default parameters to be last.
 
-https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/space-before-function-paren.md
-
-<br />
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/space-before-function-paren.md>
 
 👍 Examples of correct code
 
@@ -602,18 +590,15 @@ function foo () {
 (async() => {})()
 ```
 
-<br>
-
 ## Array Space
+
 ----------
 
 requires one or more spaces or newlines inside array brackets, and disallow space inside of computed properties.
 
-https://eslint.org/docs/rules/array-bracket-spacing#array-bracket-spacing
+<https://eslint.org/docs/rules/array-bracket-spacing#array-bracket-spacing>
 
-https://eslint.org/docs/rules/computed-property-spacing#computed-property-spacing
-
-<br />
+<https://eslint.org/docs/rules/computed-property-spacing#computed-property-spacing>
 
 👍 Examples of correct code
 
@@ -638,17 +623,13 @@ var c = object[ "foo"];
 
 ```
 
-
-<br>
-
 ## Key Word Space
+
 ----------
 
 Enforces consistent spacing before and after keywords.
 
-https://eslint.org/docs/rules/keyword-spacing#keyword-spacing
-
-<br />
+<https://eslint.org/docs/rules/keyword-spacing#keyword-spacing>
 
 👍 Examples of correct code
 
@@ -686,16 +667,13 @@ try{
 }
 ```
 
-<br>
-
 ## Space Format
+
 ----------
 
 This rule enforces consistency regarding the spaces after
 
-https://eslint.org/docs/rules/space-unary-ops#space-unary-ops
-
-<br />
+<https://eslint.org/docs/rules/space-unary-ops#space-unary-ops>
 
 👍 Examples of correct code
 
@@ -737,27 +715,21 @@ if (! foo) {
 const value = + "3";
 ```
 
-<br>
-
 ## UTF-8 Only
+
 ----------
 
 Disallow the Unicode Byte Order Mark (BOM).
 
-https://eslint.org/docs/rules/unicode-bom#unicode-bom
-
-<br />
-
-<br />
+<https://eslint.org/docs/rules/unicode-bom#unicode-bom>
 
 ## No Space in Parentheses
+
 ----------
 
 Disallows or enforce spaces inside of parentheses.
 
-https://eslint.org/docs/rules/space-in-parens#space-in-parens
-
-<br />
+<https://eslint.org/docs/rules/space-in-parens#space-in-parens>
 
 👍 Examples of correct code
 
@@ -787,16 +759,13 @@ var foo = ( 1 + 2 ) * 3;
 ( function () { return 'bar'; }() );
 ```
 
-<br />
-
 ## No Multiple Space
+
 ----------
 
 Disallows multiple consecutive spaces.
 
-https://eslint.org/docs/rules/no-multi-spaces#no-multi-spaces
-
-<br />
+<https://eslint.org/docs/rules/no-multi-spaces#no-multi-spaces>
 
 👍 Examples of correct code
 
@@ -830,16 +799,13 @@ var baz =  [];
 a ?  b  : c
 ```
 
-<br />
-
 ## Useless String Concat
+
 ----------
 
 Disallows useless string concat.
 
-https://eslint.org/docs/rules/no-useless-concat#no-useless-concat
-
-<br />
+<https://eslint.org/docs/rules/no-useless-concat#no-useless-concat>
 
 👍 Examples of correct code
 
@@ -865,16 +831,13 @@ var a = `1` + '0';
 var a = `1` + `0`;
 ```
 
-<br />
-
 ## No Self Assign
+
 ----------
 
 Disallows assignments where both sides are exactly the same.
 
-https://eslint.org/docs/rules/no-self-assign#no-self-assign
-
-<br />
+<https://eslint.org/docs/rules/no-self-assign#no-self-assign>
 
 👍 Examples of correct code
 
@@ -911,16 +874,13 @@ foo ||= foo;
 foo ??= foo;
 ```
 
-<br />
-
 ## Force Return Type
+
 ----------
 
 Force fill return type in typescript
 
-https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/explicit-function-return-type.md
-
-<br />
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/explicit-function-return-type.md>
 
 👍 Examples of correct code
 
@@ -968,17 +928,14 @@ class Test {
 }
 ```
 
-<br />
-
 ## Array Bracket Line
+
 ----------
 
 Requires consistent usage of linebreaks for each pair of brackets. It reports an error if one bracket in the pair has a
 linebreak inside it and the other bracket does not.
 
-https://eslint.org/docs/rules/array-bracket-newline#consistent
-
-<br />
+<https://eslint.org/docs/rules/array-bracket-newline#consistent>
 
 👍 Examples of correct code
 
@@ -1012,17 +969,14 @@ var d = [
     }]
 ```
 
-<br />
-
 ## Unused Vars
+
 ----------
 
 Variables that are declared and not used anywhere in the code are most likely an error due to incomplete refactoring.
 Such variables take up space in the code and can lead to confusion by readers.
 
-https://eslint.org/docs/rules/no-unused-vars#no-unused-vars
-
-<br />
+<https://eslint.org/docs/rules/no-unused-vars#no-unused-vars>
 
 👍 Examples of correct code
 
@@ -1084,16 +1038,13 @@ function getY([x, y]) {
 }
 ```
 
-<br />
-
 ## Comma Spacing
+
 ----------
 
 Putting default parameter at last allows function calls to omit optional tail arguments.
 
-https://eslint.org/docs/rules/comma-spacing#options
-
-<br />
+<https://eslint.org/docs/rules/comma-spacing#options>
 
 👍 Examples of correct code
 
@@ -1121,17 +1072,14 @@ function foo(a ,b){}
 a ,b
 ```
 
-<br />
-
 ## Comma Dangle
+
 ----------
 
 This rule enforces consistent use of trailing commas in object and array literals.
 
-https://eslint.org/docs/rules/comma-dangle#comma-dangle
-https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/comma-dangle.md
-
-<br />
+<https://eslint.org/docs/rules/comma-dangle#comma-dangle>
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/comma-dangle.md>
 
 👍 Examples of correct code
 
@@ -1167,16 +1115,13 @@ function baz(
 }
 ```
 
-<br />
-
 ## Prefer Arrow Function
+
 ----------
 
 Requires using arrow functions for callbacks.
 
-https://eslint.org/docs/rules/prefer-arrow-callback#prefer-arrow-callback
-
-<br />
+<https://eslint.org/docs/rules/prefer-arrow-callback#prefer-arrow-callback>
 
 👍 Examples of correct code
 
@@ -1194,16 +1139,13 @@ foo(function(a) { return a; });
 foo(function() { return this.a; }.bind(this));
 ```
 
-<br />
-
 ## Arrow Function Body
+
 ----------
 
 Enforces no braces where they can be omitted
 
-https://eslint.org/docs/rules/arrow-body-style#arrow-body-style
-
-<br />
+<https://eslint.org/docs/rules/arrow-body-style#arrow-body-style>
 
 👍 Examples of correct code
 
@@ -1244,16 +1186,13 @@ let foo = () => {
 };
 ```
 
-<br />
-
 ## No Empty Block
+
 ----------
 
 Disallows empty block statements.
 
-https://eslint.org/docs/rules/no-empty#no-empty
-
-<br />
+<https://eslint.org/docs/rules/no-empty#no-empty>
 
 👍 Examples of correct code
 
@@ -1302,16 +1241,13 @@ try {
 }
 ```
 
-<br />
-
 ## No Long Syntax
+
 ----------
 
 Disallow long syntax
 
-https://eslint.org/docs/rules/no-empty#no-empty
-
-<br />
+<https://eslint.org/docs/rules/no-empty#no-empty>
 
 👍 Examples of correct code
 
@@ -1330,16 +1266,13 @@ const arr = Array(0, 1, 2);
 const arr = new Array(0, 1, 2);
 ```
 
-<br />
-
 ## Useless Call Code
+
 ----------
 
 Disallow useless code
 
-https://eslint.org/docs/rules/no-useless-call#no-useless-call
-
-<br />
+<https://eslint.org/docs/rules/no-useless-call#no-useless-call>
 
 👍 Examples of correct code
 
@@ -1375,16 +1308,13 @@ obj.foo.apply(obj, [1, 2, 3]);
 a[i++].foo.call(a[i++], 1, 2, 3);
 ```
 
-<br />
-
 ## Useless Catch Code
+
 ----------
 
 Disallow useless code
 
-https://eslint.org/docs/rules/no-useless-catch#no-useless-catch
-
-<br />
+<https://eslint.org/docs/rules/no-useless-catch#no-useless-catch>
 
 👍 Examples of correct code
 
@@ -1427,16 +1357,13 @@ try {
 }
 ```
 
-<br />
-
 ## Useless Expression Code
+
 ----------
 
 Disallow useless code
 
-https://eslint.org/docs/rules/no-unused-expressions
-
-<br />
+<https://eslint.org/docs/rules/no-unused-expressions>
 
 👍 Examples of correct code
 
@@ -1497,16 +1424,13 @@ class Foo {
 }
 ```
 
-<br />
-
 ## Useless Return Code
+
 ----------
 
 Disallow useless code
 
-https://eslint.org/docs/rules/no-useless-return#no-useless-return
-
-<br />
+<https://eslint.org/docs/rules/no-useless-return#no-useless-return>
 
 👍 Examples of correct code
 
@@ -1574,16 +1498,13 @@ function foo() {
 }
 ```
 
-<br />
-
 ## Useless Construct Code
+
 ----------
 
 Disallow useless code
 
-https://eslint.org/docs/rules/no-useless-constructor#options
-
-<br />
+<https://eslint.org/docs/rules/no-useless-constructor#options>
 
 👍 Examples of correct code
 
@@ -1626,16 +1547,13 @@ class B extends A {
 }
 ```
 
-<br/>
-
 ## Useless Parens
+
 ----------
 
 Disallows unnecessary parentheses.
 
-https://eslint.org/docs/rules/no-extra-parens#no-extra-parens
-
-<br />
+<https://eslint.org/docs/rules/no-extra-parens#no-extra-parens>
 
 👍 Examples of correct code
 
@@ -1689,16 +1607,13 @@ class B {
 }
 ```
 
-<br />
-
 ## Useless Boolean
+
 ----------
 
 Disallow useless code
 
-https://eslint.org/docs/rules/no-useless-constructor#options
-
-<br />
+<https://eslint.org/docs/rules/no-useless-constructor#options>
 
 👍 Examples of correct code
 
@@ -1745,16 +1660,13 @@ for (; !!foo; ) {
 }
 ```
 
-<br />
-
 ## Return New line
+
 ----------
 
 Force new line before return
 
-https://eslint.org/docs/rules/newline-before-return#newline-before-return
-
-<br />
+<https://eslint.org/docs/rules/newline-before-return#newline-before-return>
 
 👍 Examples of correct code
 
@@ -1792,16 +1704,13 @@ function foo(bar) {
 }
 ```
 
-<br />
-
 ## Comment Multi Line Prefer
+
 ----------
 
 Prefer Multi-line comment formated
 
-https://eslint.org/docs/rules/newline-before-return#newline-before-return
-
-<br />
+<https://eslint.org/docs/rules/newline-before-return#newline-before-return>
 
 👍 Examples of correct code
 
@@ -1844,16 +1753,13 @@ foo();
 */
 ```
 
-<br />
-
 ## No throw Literal
+
 ----------
 
 Create custom class to Throw
 
-https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-throw-literal.md
-
-<br />
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-throw-literal.md>
 
 👍 Examples of correct code
 
@@ -1911,16 +1817,13 @@ const foo = {
 throw foo.bar;
 ```
 
-<br />
-
 ## No Unreachable
+
 ----------
 
 No Unreachable code
 
-https://eslint.org/docs/rules/no-unreachable
-
-<br />
+<https://eslint.org/docs/rules/no-unreachable>
 
 👍 Examples of correct code
 
@@ -1978,85 +1881,14 @@ function baz() {
 for (;;) {}
 console.log("done");
 ```
-
-<br />
-
-## No Unreachable
-----------
-
-No Unreachable code
-
-https://eslint.org/docs/rules/no-unreachable
-
-<br />
-
-👍 Examples of correct code
-
-```typescript
-function foo() {
-    function bar() {
-        return 1;
-    }
-
-    return bar();
-
-}
-
-function bar() {
-    var x;
-    return x;
-}
-
-switch (foo) {
-    case 1:
-        break;
-}
-```
-
-👎 Examples of incorrect code
-
-```typescript
-function foo() {
-    return true;
-    console.log("done");
-}
-
-function bar() {
-    throw new Error("Oops!");
-    console.log("done");
-}
-
-while(value) {
-    break;
-    console.log("done");
-}
-
-throw new Error("Oops!");
-console.log("done");
-
-function baz() {
-    if (Math.random() < 0.5) {
-        return;
-    } else {
-        throw new Error();
-    }
-    console.log("done");
-}
-
-for (;;) {}
-console.log("done");
-```
-
-<br />
 
 ## Useless Loop
+
 ----------
 
 No useless loop
 
-https://eslint.org/docs/rules/no-unreachable-loop
-
-<br />
+<https://eslint.org/docs/rules/no-unreachable-loop>
 
 👍 Examples of correct code
 
@@ -2121,16 +1953,13 @@ for (foo of bar) {
 }
 ```
 
-<br />
-
 ## No Multiline String
+
 ----------
 
 Prevent break line in string
 
-https://eslint.org/docs/rules/no-multi-str#no-multi-str
-
-<br />
+<https://eslint.org/docs/rules/no-multi-str#no-multi-str>
 
 👍 Examples of correct code
 
@@ -2148,16 +1977,13 @@ var x = "some very \
 long text";
 ```
 
-<br />
-
 ## No Unsafe Assign
+
 ----------
 
 Disallows assigning any to variables and properties.
 
-https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-unsafe-assignment.md
-
-<br />
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-unsafe-assignment.md>
 
 👍 Examples of correct code
 
@@ -2207,17 +2033,14 @@ const x: Set<string[]> = new Set<any[]>();
 const x: Set<Set<Set<string>>> = new Set<Set<Set<any>>>();
 ```
 
-<br />
-
 ## This Pattern
+
 ----------
 
 - Enforces consistent naming when capturing the current execution context.
 - Disallows this keywords outside of classes or class-like objects.
 
-https://eslint.org/docs/rules/consistent-this#consistent-this
-
-<br />
+<https://eslint.org/docs/rules/consistent-this#consistent-this>
 
 👍 Examples of correct code
 
@@ -2284,17 +2107,14 @@ var foo = function() {
 };
 ```
 
-<br />
-
 ## Use Dot
+
 ----------
 
 Enforces use dot notation
 
-https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/dot-notation.md
-https://eslint.org/docs/rules/dot-notation
-
-<br />
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/dot-notation.md>
+<https://eslint.org/docs/rules/dot-notation>
 
 👍 Examples of correct code
 
@@ -2310,18 +2130,15 @@ var x = foo[bar];
 var x = foo["bar"];
 ```
 
-<br/>
-
 ## Dot Object Format
+
 ----------
 
 - The dot in a member expression should be on the same line as the property portion.
 - Disallows whitespace before properties.
 
-https://eslint.org/docs/rules/dot-location#dot-location
-https://eslint.org/docs/rules/no-whitespace-before-property
-
-<br />
+<https://eslint.org/docs/rules/dot-location#dot-location>
+<https://eslint.org/docs/rules/no-whitespace-before-property>
 
 👍 Examples of correct code
 
@@ -2360,17 +2177,14 @@ foo
   .bar(). baz()
 ```
 
-<br/>
-
 ## No Trailing Space
+
 ----------
 
 Not allow trailing whitespace
 
-https://eslint.org/docs/rules/dot-location#dot-location
-https://eslint.org/docs/rules/no-whitespace-before-property
-
-<br />
+<https://eslint.org/docs/rules/dot-location#dot-location>
+<https://eslint.org/docs/rules/no-whitespace-before-property>
 
 👍 Examples of correct code
 
@@ -2399,16 +2213,13 @@ class A {
 //••
 ```
 
-<br/>
-
 ## Type Format
+
 ----------
 
 Require consistent spacing around type annotations.
 
-https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/type-annotation-spacing.md
-
-<br />
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/type-annotation-spacing.md>
 
 👍 Examples of correct code
 
@@ -2452,16 +2263,13 @@ type Foo = () =>{};
 type Foo = ()=> {};
 ```
 
-<br/>
-
 ## No Constant Condition
+
 ----------
 
 Disallows constant expressions in conditions. always use variables instead.
 
-https://eslint.org/docs/rules/no-constant-condition#no-constant-condition
-
-<br />
+<https://eslint.org/docs/rules/no-constant-condition#no-constant-condition>
 
 👍 Examples of correct code
 
@@ -2535,16 +2343,13 @@ do {
 var result = 0 ? a : b;
 ```
 
-<br/>
-
 ## No Debugger
+
 ----------
 
 Debugger not recommended use break point.
 
-https://eslint.org/docs/rules/no-debugger#no-debugger
-
-<br />
+<https://eslint.org/docs/rules/no-debugger#no-debugger>
 
 👍 Examples of correct code
 
@@ -2563,16 +2368,13 @@ function isTruthy(x) {
 }
 ```
 
-<br/>
-
 ## Useless Object
+
 ----------
 
 - No Duplicate Key in Object
 
-https://eslint.org/docs/rules/no-dupe-keys#no-dupe-keys
-
-<br />
+<https://eslint.org/docs/rules/no-dupe-keys#no-dupe-keys>
 
 👍 Examples of correct code
 
@@ -2602,16 +2404,13 @@ var foo = {
 };
 ```
 
-<br/>
-
 ## Not Duplicate Case
+
 ----------
 
 No Duplicate case in switch
 
-https://eslint.org/docs/rules/no-duplicate-case#no-duplicate-case
-
-<br />
+<https://eslint.org/docs/rules/no-duplicate-case#no-duplicate-case>
 
 👍 Examples of correct code
 
@@ -2686,17 +2485,14 @@ switch (a) {
 }
 ```
 
-<br/>
-
 ## Regex Block
+
 ----------
 
 - Disallows empty character classes in regular expressions.
 - No Invalid Regex
 
-https://eslint.org/docs/rules/no-empty-character-class#no-empty-character-class
-
-<br />
+<https://eslint.org/docs/rules/no-empty-character-class#no-empty-character-class>
 
 👍 Examples of correct code
 
@@ -2725,16 +2521,13 @@ RegExp('.', 'z')
 new RegExp('\\')
 ```
 
-<br/>
-
 ## No Overwrite Exception
+
 ----------
 
 Disallows empty character classes in regular expressions.
 
-https://eslint.org/docs/rules/no-ex-assign#no-ex-assign
-
-<br />
+<https://eslint.org/docs/rules/no-ex-assign#no-ex-assign>
 
 👍 Examples of correct code
 
@@ -2756,16 +2549,13 @@ try {
 }
 ```
 
-<br/>
-
 ## No Extra Semi
+
 ----------
 
 Disallows unnecessary semicolons.
 
-https://eslint.org/docs/rules/no-extra-semi#no-extra-semi
-
-<br />
+<https://eslint.org/docs/rules/no-extra-semi#no-extra-semi>
 
 👍 Examples of correct code
 
@@ -2815,16 +2605,13 @@ class C {
 };
 ```
 
-<br/>
-
 ## No Function Overwrite
+
 ----------
 
 Disallows reassigning function declarations.
 
-https://eslint.org/docs/rules/no-func-assign#no-func-assign
-
-<br />
+<https://eslint.org/docs/rules/no-func-assign#no-func-assign>
 
 👍 Examples of correct code
 
@@ -2851,16 +2638,13 @@ var a = function hello() {
 };
 ```
 
-<br/>
-
 ## No Declare in Block
+
 ----------
 
 Disallows variable or function declarations in nested blocks.
 
-https://eslint.org/docs/rules/no-func-assign#no-func-assign
-
-<br />
+<https://eslint.org/docs/rules/no-func-assign#no-func-assign>
 
 👍 Examples of correct code
 
@@ -2913,16 +2697,13 @@ class C {
 }
 ```
 
-<br/>
-
 ## Security Negation
+
 ----------
 
 Disallows variable or function declarations in nested blocks.
 
-https://eslint.org/docs/rules/no-negated-in-lhs#no-negated-in-lhs
-
-<br />
+<https://eslint.org/docs/rules/no-negated-in-lhs#no-negated-in-lhs>
 
 👍 Examples of correct code
 
@@ -2941,16 +2722,13 @@ if(!key in object) {
 }
 ```
 
-<br/>
-
 ## Regex Space
+
 ----------
 
 Disallows multiple spaces in regular expression literals.
 
-https://eslint.org/docs/rules/no-regex-spaces#no-regex-spaces
-
-<br />
+<https://eslint.org/docs/rules/no-regex-spaces#no-regex-spaces>
 
 👍 Examples of correct code
 
@@ -2970,16 +2748,13 @@ var re = /foo   bar/;
 var re = new RegExp("foo   bar");
 ```
 
-<br/>
-
 ## Array No Space
+
 ----------
 
 Disallows sparse arrays.
 
-https://eslint.org/docs/rules/no-sparse-arrays#no-sparse-arrays
-
-<br />
+<https://eslint.org/docs/rules/no-sparse-arrays#no-sparse-arrays>
 
 👍 Examples of correct code
 
@@ -2998,16 +2773,13 @@ var items = [,];
 var colors = [ "red",, "blue" ];
 ```
 
-<br/>
-
 ## Valid TypeOf
+
 ----------
 
 Enforces comparing typeof expressions against valid strings.
 
-https://eslint.org/docs/rules/valid-typeof#valid-typeof
-
-<br />
+<https://eslint.org/docs/rules/valid-typeof#valid-typeof>
 
 👍 Examples of correct code
 
@@ -3027,17 +2799,14 @@ typeof bar != "nunber"
 typeof bar !== "fucntion"
 ```
 
-<br/>
-
 ## Strict equality
+
 ----------
 
 Requires the use of === and !== instead of == and !=.
 It is considered good practice to use the type-safe equality operators === and !== instead of their regular counterparts == and !=.
 
-https://eslint.org/docs/rules/eqeqeq#eqeqeq
-
-<br />
+<https://eslint.org/docs/rules/eqeqeq#eqeqeq>
 
 👍 Examples of correct code
 
@@ -3067,18 +2836,15 @@ true == true
 foo == null
 ```
 
-<br/>
-
 ## Eval Disabled
+
 ----------
 
 JavaScript's eval() function is potentially dangerous and is often misused.
 Using eval() on untrusted code can open a program up to several different injection attacks.
 The use of eval() in most contexts can be substituted for a better, alternative approach to a problem.
 
-https://eslint.org/docs/rules/no-eval#no-eval
-
-<br />
+<https://eslint.org/docs/rules/no-eval#no-eval>
 
 👍 Examples of correct code
 
@@ -3122,18 +2888,15 @@ foo("var a = 0");
 this.eval("var a = 0");
 ```
 
-<br/>
-
 ## No Label
+
 ----------
 
 - Disallows unnecessary labels.
 - Labeled statements in JavaScript are used in conjunction with break and continue to control flow around multiple loops. For example:
 
-https://eslint.org/docs/rules/no-extra-label#no-extra-label
-https://eslint.org/docs/rules/no-labels#no-labels
-
-<br />
+<https://eslint.org/docs/rules/no-extra-label#no-extra-label>
+<https://eslint.org/docs/rules/no-labels#no-labels>
 
 👍 Examples of correct code
 
@@ -3169,16 +2932,13 @@ C: switch (a) {
 }
 ```
 
-<br/>
-
 ## Full Decimal Number
+
 ----------
 
 Disallows leading or trailing decimal points in numeric literals.
 
-https://eslint.org/docs/rules/no-floating-decimal#no-floating-decimal
-
-<br />
+<https://eslint.org/docs/rules/no-floating-decimal#no-floating-decimal>
 
 👍 Examples of correct code
 
@@ -3196,16 +2956,13 @@ var num = 2.;
 var num = -.7;
 ```
 
-<br/>
-
 ## No Global Overwrite
+
 ----------
 
 Disallows reassignment of native objects.
 
-https://eslint.org/docs/rules/no-floating-decimal#no-floating-decimal
-
-<br />
+<https://eslint.org/docs/rules/no-floating-decimal#no-floating-decimal>
 
 👍 Examples of correct code
 
@@ -3233,16 +2990,13 @@ top = 1;
 a = 1
 ```
 
-<br/>
-
 ## Not Used New
+
 ----------
 
 Disallows `new` operators outside of assignments or comparisons.
 
-https://eslint.org/docs/rules/no-new#no-new
-
-<br />
+<https://eslint.org/docs/rules/no-new#no-new>
 
 👍 Examples of correct code
 
@@ -3258,17 +3012,14 @@ Thing();
 new Thing();
 ```
 
-<br/>
-
 ## No New Function
+
 ----------
 
 Disallows new operators with the Function object.
 It's possible to create functions in JavaScript from strings at runtime using the Function constructor, such as:
 
-https://eslint.org/docs/rules/no-new-func#no-new-func
-
-<br />
+<https://eslint.org/docs/rules/no-new-func#no-new-func>
 
 👍 Examples of correct code
 
@@ -3289,16 +3040,13 @@ var x = Function.bind(null, "a", "b", "return a + b")();
 var f = Function.bind(null, "a", "b", "return a + b"); // assuming that the result of Function.bind(...) will be eventually called.
 ```
 
-<br/>
-
 ## No Redeclare
+
 ----------
 
 Disallows variable redeclarations.
 
-https://eslint.org/docs/rules/no-redeclare#no-redeclare
-
-<br />
+<https://eslint.org/docs/rules/no-redeclare#no-redeclare>
 
 👍 Examples of correct code
 
@@ -3339,16 +3087,13 @@ class C {
 }
 ```
 
-<br/>
-
 ## No Self Compare
+
 ----------
 
 Disallows comparisons where both sides are exactly the same.
 
-https://eslint.org/docs/rules/no-self-compare#no-self-compare
-
-<br />
+<https://eslint.org/docs/rules/no-self-compare#no-self-compare>
 
 👍 Examples of correct code
 
@@ -3369,16 +3114,13 @@ if (x === x) {
 }
 ```
 
-<br/>
-
 ## Loop Valid
+
 ----------
 
 Disallows unmodified conditions of loops.
 
-https://eslint.org/docs/rules/no-unmodified-loop-condition#no-unmodified-loop-condition
-
-<br />
+<https://eslint.org/docs/rules/no-unmodified-loop-condition#no-unmodified-loop-condition>
 
 👍 Examples of correct code
 
@@ -3435,16 +3177,13 @@ while (node !== root) {
 }
 ```
 
-<br/>
-
 ## Useless Scape
+
 ----------
 
 Disallows unnecessary escape characters.
 
-https://eslint.org/docs/rules/no-useless-escape#no-useless-escape
-
-<br />
+<https://eslint.org/docs/rules/no-useless-escape#no-useless-escape>
 
 👍 Examples of correct code
 
@@ -3482,18 +3221,15 @@ https://eslint.org/docs/rules/no-useless-escape#no-useless-escape
 /[a-z\-]/;
 ```
 
-<br/>
-
 ## No Yoda
+
 ----------
 
 Disallows "Yoda" conditions.
 
-https://eslint.org/docs/rules/yoda#yoda
+<https://eslint.org/docs/rules/yoda#yoda>
 
 > Yoda conditions are so named because the literal value of the condition comes first while the variable comes second. For example, the following is a Yoda condition:
-
-<br />
 
 👍 Examples of correct code
 
@@ -3547,16 +3283,13 @@ if (0 <= x && x < 1) {
 }
 ```
 
-<br/>
-
 ## No Undefined declare
+
 ----------
 
 Disallows initializing variables to undefined.
 
-https://eslint.org/docs/rules/no-undef-init#no-undef-init
-
-<br />
+<https://eslint.org/docs/rules/no-undef-init#no-undef-init>
 
 👍 Examples of correct code
 
@@ -3584,16 +3317,13 @@ var foo = undefined;
 let bar = undefined;
 ```
 
-<br/>
-
 ## No New require
+
 ----------
 
 Disallows new operators with calls to require.
 
-https://eslint.org/docs/rules/no-new-require#no-new-require
-
-<br />
+<https://eslint.org/docs/rules/no-new-require#no-new-require>
 
 👍 Examples of correct code
 
@@ -3608,16 +3338,13 @@ var appHeader = new AppHeader();
 var appHeader = new require('app-header');
 ```
 
-<br/>
-
 ## Prefer Literals
+
 ----------
 
 Suggests using template literals instead of string concatenation.
 
-https://eslint.org/docs/rules/prefer-template#prefer-template
-
-<br />
+<https://eslint.org/docs/rules/prefer-template#prefer-template>
 
 👍 Examples of correct code
 
@@ -3638,16 +3365,13 @@ var str = "Hello, " + name + "!";
 var str = "Time: " + (12 * 60 * 60 * 1000);
 ```
 
-<br/>
-
 ## Useless Condition
+
 ----------
 
 Prevents conditionals where the type is always truthy or always falsy.
 
-https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-unnecessary-condition.md
-
-<br />
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-unnecessary-condition.md>
 
 👍 Examples of correct code
 
