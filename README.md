@@ -110,6 +110,11 @@
 - [No New require](#no-new-require)
 - [Prefer Literals](#prefer-literals)
 - [Useless Condition](#useless-condition)
+- [No Multiple Empty Line](#no-multiple-empty-line)
+- [No Misused Promises](#no-misused-promises)
+- [No Misused New](#no-misused-new)
+- [No Async Promise Executor](#no-async-promise-executor)
+- [No Semicolon Before spacing](#no-semicolon-before-spacing)
 
 ## Introduction
 
@@ -1760,6 +1765,7 @@ foo();
 Create custom class to Throw
 
 <https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-throw-literal.md>
+<https://eslint.org/docs/rules/prefer-promise-reject-errors#prefer-promise-reject-errors>
 
 👍 Examples of correct code
 
@@ -1782,6 +1788,20 @@ const foo = {
   bar: new CustomError();
 }
 throw foo.bar;
+
+// promises
+
+Promise.reject(new CustomError("something bad happened"));
+
+Promise.reject(new TypeError("something bad happened"));
+
+new Promise(function(resolve, reject) {
+  reject(new CustomError("something bad happened"));
+});
+
+var foo = getUnknownValue();
+Promise.reject(foo);
+
 ```
 
 👎 Examples of incorrect code
@@ -1815,6 +1835,22 @@ const foo = {
   bar: '',
 };
 throw foo.bar;
+
+// Promise
+
+Promise.reject("something bad happened");
+
+Promise.reject(5);
+
+Promise.reject();
+
+new Promise(function(resolve, reject) {
+  reject("something bad happened");
+});
+
+new Promise(function(resolve, reject) {
+  reject();
+});
 ```
 
 ## No Unreachable
@@ -3423,4 +3459,186 @@ function bar<T>(arg: string) {
   [1, 2],
   [3, 4],
 ].filter(t => t); // number[] is always truthy
+```
+
+## No multiple empty line
+
+----------
+
+we should avoid using lots of white spaces, this takes up the screen and tries to supply a bad organization with spaces
+
+<https://eslint.org/docs/rules/no-multiple-empty-lines>
+
+👍 Examples of correct code
+
+```typescript
+function foo<T>(items: T[]) {
+
+}
+
+function bar(arg: string) {
+
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function foo<T>(items: T[]) {
+
+
+
+}
+
+
+function bar(arg: string) {
+
+
+
+}
+```
+
+## No Misused Promises
+
+----------
+
+Block misused of promise
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-misused-promises.md>
+
+👍 Examples of correct code
+
+```typescript
+const promise = Promise.resolve('value');
+
+// Always `await` the Promise in a conditional
+if (await promise) {
+  // Do something
+}
+
+const val = (await promise) ? 123 : 456;
+
+while (await promise) {
+  // Do something
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const promise = Promise.resolve('value');
+
+// always true
+if (promise) {
+  // Do something
+}
+
+const val = promise ? 123 : 456;
+
+while (promise) {
+  // Do something
+}
+```
+
+## No Misused New
+
+----------
+
+Block misused new instance
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-misused-new.md>
+
+👍 Examples of correct code
+
+```typescript
+class C {
+  constructor() {}
+}
+interface I {
+  new (): C;
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+class C {
+  new(): C;
+}
+
+interface I {
+  new (): I;
+  constructor(): void;
+}
+```
+
+## No Async Promise Executor
+
+----------
+
+Disallows using an async function as a Promise executor.
+
+<https://eslint.org/docs/rules/no-async-promise-executor>
+
+👍 Examples of correct code
+
+```typescript
+const foo = new Promise((resolve, reject) => {
+  readFile('foo.txt', function(err, result) {
+    if (err) {
+      reject(err);
+    } else {
+      resolve(result);
+    }
+  });
+});
+
+const result = Promise.resolve(foo);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const foo = new Promise(async (resolve, reject) => {
+  readFile('foo.txt', function(err, result) {
+    if (err) {
+      reject(err);
+    } else {
+      resolve(result);
+    }
+  });
+});
+
+const result = new Promise(async (resolve, reject) => {
+  resolve(await foo);
+});
+```
+
+## No Semicolon Before spacing
+
+----------
+
+Disallows space before semicolon.
+
+<https://eslint.org/docs/rules/semi-spacing>
+
+👍 Examples of correct code
+
+```typescript
+var foo;
+var foo; var bar;
+throw new Error("error");
+while (a) { break; }
+for (i = 0; i < 10; i++) {}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo ;
+var foo;var bar;
+throw new Error("error") ;
+while (a) { break ; }
+for (i = 0 ; i < 10 ; i++) {}
+for (i = 0;i < 10;i++) {}
 ```

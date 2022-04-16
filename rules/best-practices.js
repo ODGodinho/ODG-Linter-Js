@@ -132,5 +132,13 @@ module.exports = {
         "no-new-require": [ "error" ], // Não permite usar new require()
         "prefer-template": [ "error" ], // Prefer template literals over string concatenation
         "@typescript-eslint/no-unnecessary-condition": [ "error" ], // Evita condições sempre true ou false
+        "no-multiple-empty-lines": [ "error", { "max": 1 } ], // não permita varias linhas em branco
+        "@typescript-eslint/no-misused-promises": [ "error", {
+            "checksConditionals": false // bloqueia condições if de promises sem await
+        } ],
+        "@typescript-eslint/no-misused-new": [ "error" ], // Não utilize new de forma incorreta em classes/interface
+        "no-async-promise-executor": [ "error" ], // não permita use função async para executar promise
+        "prefer-promise-reject-errors": [ "error" ], // Utilize exception im promise ao invés de string/number ou outra coisa
+        "semi-spacing": ["error", { "before": false, "after": true }] // não permite espaço antes do ;
     },
 };
