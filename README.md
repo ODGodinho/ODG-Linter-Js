@@ -115,6 +115,20 @@
 - [No Misused New](#no-misused-new)
 - [No Async Promise Executor](#no-async-promise-executor)
 - [No Semicolon Before spacing](#no-semicolon-before-spacing)
+- [Documentation](#documentation)
+    - [Space Comment](#spaced-comment)
+    - [Capitalized Comments](#capitalized-comments)
+    - [Comment Align](#comment-align)
+    - [Disallow Space Align](#disallow-space-align)
+    - [Validate Param](#validate-param)
+    - [Validate Syntax](#validate-syntax)
+    - [Validate Tag Name](#validate-tag-name)
+    - [Validate Types](#validate-Types)
+    - [Validate Values](#validate-values)
+    - [Empty Tags](#empty-tags)
+    - [Validate Block](#validate-block)
+    - [Disallow Extra Asterisk](#disallow-extra-asterisk)
+    - [Disallow Default Value](#disallow-default-value)
 
 ## Introduction
 
@@ -3641,4 +3655,356 @@ throw new Error("error") ;
 while (a) { break ; }
 for (i = 0 ; i < 10 ; i++) {}
 for (i = 0;i < 10;i++) {}
+```
+
+## Documentation
+
+### Spaced Comment
+
+----------
+
+Require space after comment block
+
+<https://eslint.org/docs/rules/spaced-comment>
+
+👍 Examples of correct code
+
+```typescript
+// This is a comment with a whitespace at the beginning
+
+/* This is a comment with a whitespace at the beginning */
+
+/*
+ * This is a comment with a whitespace at the beginning
+ */
+```
+
+👎 Examples of incorrect code
+
+```typescript
+//This is a comment with no whitespace at the beginning
+
+/*This is a comment with no whitespace at the beginning */
+```
+
+### Capitalized Comments
+
+----------
+
+Require capitalization of the first letter of a comment.
+
+<https://eslint.org/docs/rules/capitalized-comments>
+
+👍 Examples of correct code
+
+```typescript
+// Capitalized comment
+
+// 1. Non-letter at beginning of comment
+
+// 丈 Non-Latin character at beginning of comment
+```
+
+👎 Examples of incorrect code
+
+```typescript
+// lowercase comment
+```
+
+### Comment Align
+
+----------
+
+Require alignment of JSDoc block asterisks.
+
+<https://github.com/gajus/eslint-plugin-jsdoc#user-content-eslint-plugin-jsdoc-rules-check-alignment>
+
+👍 Examples of correct code
+
+```typescript
+/**
+ * @param {Number} foo
+ */
+```
+
+👎 Examples of incorrect code
+
+```typescript
+/**
+  * @param {Number} foo
+ */
+
+/**
+* @param {Number} foo
+*/
+```
+
+### Disallow Space Align
+
+----------
+
+Disallow use space for align dockblock
+
+<https://github.com/gajus/eslint-plugin-jsdoc#user-content-eslint-plugin-jsdoc-rules-check-alignment>
+
+👍 Examples of correct code
+
+```typescript
+/**
+ * @param {string} lorem Description.
+ * @param {int} sit Description multi words.
+ */
+```
+
+👎 Examples of incorrect code
+
+```typescript
+/**
+ * @param {string} lorem Description.
+ * @param {int}    sit Description multi words.
+ */
+```
+
+### Validate Param
+
+----------
+
+Check is valid @param and exists
+
+<https://github.com/gajus/eslint-plugin-jsdoc#check-param-names>
+
+👍 Examples of correct code
+
+```typescript
+/**
+ * @param {string} a Description.
+ */
+foo(a) {
+}
+
+/**
+ * @param {string} a Description.
+ * @param {string} b Description.
+ */
+foo(a, b) {
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+/**
+ * @param {string} b B iss not exists.
+ */
+foo(a) {
+}
+
+/**
+ * @param {string} b order is not correct
+ * @param {string} a
+ */
+foo(a, b) {
+}
+
+/**
+ * @param {string} a
+ * required b
+ */
+foo(a, b) {
+}
+```
+
+### Validate Syntax
+
+----------
+
+Check is valid syntax docblock
+
+<https://github.com/gajus/eslint-plugin-jsdoc#check-syntax>
+
+👍 Examples of correct code
+
+```typescript
+/**
+ * @param {string} foo
+ */
+function quux (foo) {
+
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+/**
+ * @param {string=} foo
+ */
+function quux (foo) {
+
+}
+
+/**
+ * @param {string} [foo]
+ */
+function quux (foo) {
+
+}
+```
+
+### Validate Tag Name
+
+----------
+
+Check is valid tag docblock
+
+<https://github.com/gajus/eslint-plugin-jsdoc#check-tag-names>
+
+👍 Examples of correct code
+
+```typescript
+/**
+ * @param
+ */
+```
+
+👎 Examples of incorrect code
+
+```typescript
+/**
+ * @notExistTag
+ */
+```
+
+### Validate Type
+
+----------
+
+Check is valid type in docblock
+
+<https://github.com/gajus/eslint-plugin-jsdoc#check-types>
+
+👍 Examples of correct code
+
+```typescript
+/**
+ * @param {string} a
+ */
+```
+
+👎 Examples of incorrect code
+
+```typescript
+/**
+ * @param {strings} a strings is not valid
+ */
+```
+
+### Validate Values
+
+----------
+
+Check is valid values in docblock
+
+<https://github.com/gajus/eslint-plugin-jsdoc#check-values>
+
+👍 Examples of correct code
+
+```typescript
+/**
+ * @version 1.0.0
+ */
+
+/**
+ * @version v1.0.0
+ */
+```
+
+👎 Examples of incorrect code
+
+```typescript
+/**
+ * @version v 1.0.0
+ */
+
+/**
+ * @version it's my version
+ */
+```
+
+### Empty Tags
+
+----------
+
+Require tags is empty
+
+<https://github.com/gajus/eslint-plugin-jsdoc#user-content-eslint-plugin-jsdoc-rules-empty-tags>
+
+👍 Examples of correct code
+
+```typescript
+/**
+ * @global
+ */
+```
+
+👎 Examples of incorrect code
+
+```typescript
+/**
+ * @global this is global
+ */
+```
+
+### Disallow Extra Asterisk
+
+----------
+
+Disallow Extra asterisk in docblock
+
+<https://github.com/gajus/eslint-plugin-jsdoc#no-multi-asterisks>
+
+👍 Examples of correct code
+
+```typescript
+/**
+ * bold text
+ */
+```
+
+👎 Examples of incorrect code
+
+```typescript
+/**
+ * *bold* text
+ */
+```
+
+### Disallow Default Value
+
+----------
+
+Disallow Extra asterisk in docblock
+
+<https://github.com/gajus/eslint-plugin-jsdoc#user-content-eslint-plugin-jsdoc-rules-no-defaults>
+
+👍 Examples of correct code
+
+```typescript
+/**
+ * @param {number} foo
+ */
+function quux(foo) {
+
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+/**
+ * @param {number} [foo="7"]
+ */
+function quux(foo) {
+
+}
 ```

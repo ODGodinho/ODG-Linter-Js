@@ -6,9 +6,9 @@ module.exports = {
         } ], // Força espaço apos do // comentário
         "capitalized-comments": [ "error" ], // Comentários devem ser iniciados em letras maiúsculas
         "jsdoc/check-access": [ "error" ],
-        "jsdoc/check-alignment": [ "error" ],
-        "jsdoc/check-indentation": [ "error" ],
-        "jsdoc/check-line-alignment": [ "error" ], // Não permite alinhar docblock
+        "jsdoc/check-alignment": [ "error" ], // não desalinhe o * da docblock
+        "jsdoc/check-indentation": [ "error" ], // força formatação na docblock
+        "jsdoc/check-line-alignment": [ "error" ], // Não permite alinhar docblock com espaços
         "jsdoc/check-property-names": [ "error" ], // Valida nome de propriedade
         "jsdoc/check-param-names": [ "error" ], // Verifica se o nome do parâmetro e ordem
         "jsdoc/check-syntax": [ "error" ], // Valida Sintaxe do docblock
@@ -17,7 +17,7 @@ module.exports = {
                 "task" // create @task [name](LINK)
             ]
         }],
-        "jsdoc/check-types": [ "error" ],
+        "jsdoc/check-types": [ "error" ], // valida se é um Tipo valido
         "jsdoc/check-values": [ "error" ], // Devemos Padronizar o modelo
         "jsdoc/valid-types": [ "error" ], // Valida Padrão DocBlock
         "jsdoc/empty-tags": [ "error" ], // Não devem existir tags vazias
@@ -44,6 +44,5 @@ module.exports = {
         "jsdoc/require-throws": [ "error" ],
         "jsdoc/require-yields": [ "error" ],
         "jsdoc/require-yields-check": [ "error" ],
-        "jsdoc/tag-lines": [ "error" ], // sem espaços no @param @return comment tag
     },
 };

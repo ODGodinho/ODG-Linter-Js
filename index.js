@@ -7,6 +7,7 @@ module.exports = {
     ],
     extends: [
         "./rules/best-practices",
+        "./rules/js-doc",
     ].map(require.resolve),
     parserOptions: {
         ecmaVersion: 2018,
