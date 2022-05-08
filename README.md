@@ -3881,19 +3881,19 @@ Disallow duplicate imports.
 👍 Examples of correct code
 
 ```typescript
-import { merge, find } from 'module';
+import { merge, find } from "module";
 
-import something from 'another-module';
+import something from "another-module";
 // or
-import * as something from 'module';
+import * as something from "another-module";
 ```
 
 👎 Examples of incorrect code
 
 ```typescript
-import { merge } from 'module';
-import something from 'another-module';
-import { find } from 'module';
+import { merge } from "module";
+import something from "another-module";
+import { find } from "module";
 ```
 
 ## Disallow Unnecessary Type
