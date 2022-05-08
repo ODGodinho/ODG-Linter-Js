@@ -154,5 +154,6 @@ module.exports = {
         "@typescript-eslint/method-signature-style": [ "error", "method" ], // use arrow function em method signature interface
         "@typescript-eslint/no-unnecessary-type-assertion": [ "error" ], // Não permite declaração que não altera expressão
         "@typescript-eslint/no-unsafe-call": [ "error" ], // Não permite chamadas de funções em tipo any
+        "no-var": [ "error" ], // não user var prefira let ou const
     },
 };

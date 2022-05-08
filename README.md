@@ -125,6 +125,7 @@
 - [Method Signature Style](#method-signature-style)
 - [No Unnecessary Type Assertion](#no-unnecessary-type-assertion)
 - [No Unsafe Call](#no-unsafe-call)
+- [No Var](#no-var)
 - [Documentation](#documentation)
   - [Space Comment](#spaced-comment)
   - [Capitalized Comments](#capitalized-comments)
@@ -4204,6 +4205,40 @@ new nestedAny.prop();
 
 anyVar`foo`;
 nestedAny.prop`foo`;
+```
+
+## No Var
+
+----------
+
+Requires let or const instead of var.
+
+<https://eslint.org/docs/rules/no-var>
+
+👍 Examples of correct code
+
+```typescript
+let x = "y";
+const CONFIG = {};
+
+// init var is better
+let y;
+if (CONFIG.y) {
+    y = CONFIG.y;
+}
+console.log(y);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var x = "y";
+var CONFIG = {};
+
+if (CONFIG.y) {
+    var y = CONFIG.y;
+}
+console.log(y);
 ```
 
 ## Documentation
