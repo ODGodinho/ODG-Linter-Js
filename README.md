@@ -115,20 +115,30 @@
 - [No Misused New](#no-misused-new)
 - [No Async Promise Executor](#no-async-promise-executor)
 - [No Semicolon Before spacing](#no-semicolon-before-spacing)
+- [Disallow Type](#disallow-type)
+- [Disallow Empty Function](#disallow-empty-function)
+- [Disallow Duplicate Imports](#disallow-duplicate-imports)
+- [Disallow Unnecessary Type](#disallow-unnecessary-type)
+- [prefer Const](#prefer-const)
+- [Array Type](#array-type)
+- [Disallow Await sync function](#disallow-await-sync-function)
+- [Method Signature Style](#method-signature-style)
+- [No Unnecessary Type Assertion](#no-unnecessary-type-assertion)
+- [No Unsafe Call](#no-unsafe-call)
 - [Documentation](#documentation)
-    - [Space Comment](#spaced-comment)
-    - [Capitalized Comments](#capitalized-comments)
-    - [Comment Align](#comment-align)
-    - [Disallow Space Align](#disallow-space-align)
-    - [Validate Param](#validate-param)
-    - [Validate Syntax](#validate-syntax)
-    - [Validate Tag Name](#validate-tag-name)
-    - [Validate Types](#validate-Types)
-    - [Validate Values](#validate-values)
-    - [Empty Tags](#empty-tags)
-    - [Validate Block](#validate-block)
-    - [Disallow Extra Asterisk](#disallow-extra-asterisk)
-    - [Disallow Default Value](#disallow-default-value)
+  - [Space Comment](#spaced-comment)
+  - [Capitalized Comments](#capitalized-comments)
+  - [Comment Align](#comment-align)
+  - [Disallow Space Align](#disallow-space-align)
+  - [Validate Param](#validate-param)
+  - [Validate Syntax](#validate-syntax)
+  - [Validate Tag Name](#validate-tag-name)
+  - [Validate Types](#validate-Types)
+  - [Validate Values](#validate-values)
+  - [Empty Tags](#empty-tags)
+  - [Validate Block](#validate-block)
+  - [Disallow Extra Asterisk](#disallow-extra-asterisk)
+  - [Disallow Default Value](#disallow-default-value)
 
 ## Introduction
 
@@ -137,9 +147,9 @@
 Add dependence to package.json
 
 ```bash
-npm install eslint @odg/eslint-config-odg-linter-js --save-dev
+npm install eslint @odg/eslint-config-odg-linter-js eslint-plugin-jsdoc@* --save-dev
 # or
-yarn add -D eslint @odg/eslint-config-odg-linter-js
+yarn add -D eslint @odg/eslint-config-odg-linter-js eslint-plugin-jsdoc@*
 ```
 
 Add extends in your `.eslintrc` file
@@ -3655,6 +3665,545 @@ throw new Error("error") ;
 while (a) { break ; }
 for (i = 0 ; i < 10 ; i++) {}
 for (i = 0;i < 10;i++) {}
+```
+
+## Disallow Type
+
+----------
+
+Disallow specific types from being used.
+Disallow any use.
+
+<https://typescript-eslint.io/rules/ban-types>
+<https://typescript-eslint.io/rules/no-explicit-any>
+
+👍 Examples of correct code
+
+```typescript
+// use lower-case primitives for consistency
+const str: string = 'foo';
+const bool: boolean = true;
+const num: number = 1;
+const symb: symbol = Symbol('foo');
+
+// use a proper function type
+const func: () => number = () => 1;
+
+// use safer object types
+const lowerObj: object = {};
+
+const capitalObj1: number = 1;
+const capitalObj2: { a: string } = { a: 'string' };
+
+const curly1: number = 1;
+const curly2: Record<'a', string> = { a: 'string' };
+
+interface ObjInterface {
+    a: number
+}
+const obj: ObjInterface = { a: 1 };
+```
+
+👎 Examples of incorrect code
+
+```typescript
+// use lower-case primitives for consistency
+const str: String = 'foo';
+const bool: Boolean = true;
+const num: Number = 1;
+const symb: Symbol = Symbol('foo');
+
+// use a proper function type
+const func: Function = () => 1;
+
+// use safer object types
+const capitalObj1: Object = 1;
+const capitalObj2: Object = { a: 'string' };
+
+const curly1: {} = 1;
+const curly2: {} = { a: 'string' };
+
+const obj: any = { a: 1 };
+```
+
+## Disallow Empty Function
+
+----------
+
+Disallow empty functions
+
+<https://typescript-eslint.io/rules/no-empty-function>
+
+👍 Examples of correct code
+
+```typescript
+function foo() {
+    // do nothing.
+}
+
+var foo = function() {
+    // any clear comments.
+};
+
+var foo = () => {
+    bar();
+};
+
+function* foo() {
+    // do nothing.
+}
+
+var foo = function*() {
+    // do nothing.
+};
+
+var obj = {
+    foo: function() {
+        // do nothing.
+    },
+
+    foo: function*() {
+        // do nothing.
+    },
+
+    foo() {
+        // do nothing.
+    },
+
+    *foo() {
+        // do nothing.
+    },
+
+    get foo() {
+        // do nothing.
+    },
+
+    set foo(value) {
+        // do nothing.
+    }
+};
+
+class A {
+    constructor() {
+        // do nothing.
+    }
+
+    foo() {
+        // do nothing.
+    }
+
+    *foo() {
+        // do nothing.
+    }
+
+    get foo() {
+        // do nothing.
+    }
+
+    set foo(value) {
+        // do nothing.
+    }
+
+    static foo() {
+        // do nothing.
+    }
+
+    static *foo() {
+        // do nothing.
+    }
+
+    static get foo() {
+        // do nothing.
+    }
+
+    static set foo(value) {
+        // do nothing.
+    }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function foo() {}
+
+var foo = function() {};
+
+var foo = () => {};
+
+function* foo() {}
+
+var foo = function*() {};
+
+var obj = {
+    foo: function() {},
+
+    foo: function*() {},
+
+    foo() {},
+
+    *foo() {},
+
+    get foo() {},
+
+    set foo(value) {}
+};
+
+class A {
+    constructor() {}
+
+    foo() {}
+
+    *foo() {}
+
+    get foo() {}
+
+    set foo(value) {}
+
+    static foo() {}
+
+    static *foo() {}
+
+    static get foo() {}
+
+    static set foo(value) {}
+}
+```
+
+## Disallow Duplicate Imports
+
+----------
+
+Disallow duplicate imports.
+
+<https://typescript-eslint.io/rules/no-duplicate-imports>
+
+👍 Examples of correct code
+
+```typescript
+import { merge, find } from 'module';
+
+import something from 'another-module';
+// or
+import * as something from 'module';
+```
+
+👎 Examples of incorrect code
+
+```typescript
+import { merge } from 'module';
+import something from 'another-module';
+import { find } from 'module';
+```
+
+## Disallow Unnecessary Type
+
+----------
+
+Disallows unnecessary constraints on generic types.
+
+<https://typescript-eslint.io/rules/no-unnecessary-type-constraint>
+
+👍 Examples of correct code
+
+```typescript
+interface Foo<T> {}
+
+type Bar<T> = {};
+
+class Baz<T> {
+    qux<U> { }
+}
+
+const Quux = <T>() => {};
+
+function Quuz<T>() {}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+interface FooAny<T extends any> {}
+interface FooUnknown<T extends unknown> {}
+
+type BarAny<T extends any> = {};
+type BarUnknown<T extends unknown> = {};
+
+class BazAny<T extends any> {
+  quxUnknown<U extends unknown>() {}
+}
+
+class BazUnknown<T extends unknown> {
+  quxUnknown<U extends unknown>() {}
+}
+
+const QuuxAny = <T extends any>() => {};
+const QuuxUnknown = <T extends unknown>() => {};
+
+function QuuzAny<T extends any>() {}
+function QuuzUnknown<T extends unknown>() {}
+```
+
+## Prefer Const
+
+----------
+
+If a variable is never reassigned, using the const declaration is better.
+
+<https://eslint.org/docs/rules/prefer-const>
+<https://typescript-eslint.io/rules/prefer-as-const>
+
+👍 Examples of correct code
+
+```typescript
+const a = 0;
+
+// it's never initialized.
+let a;
+console.log(a);
+
+// it's reassigned after initialized.
+let a;
+a = 0;
+a = 1;
+console.log(a);
+
+// it's initialized in a different block from the declaration.
+let a;
+if (true) {
+    a = 0;
+}
+console.log(a);
+
+// it's initialized in a different scope.
+let a;
+class C {
+    #x;
+    static {
+        a = obj => obj.#x;
+    }
+}
+
+// it's initialized at a place that we cannot write a variable declaration.
+let a;
+if (true) a = 0;
+console.log(a);
+
+// `i` gets a new binding each iteration
+for (const i in [1, 2, 3]) {
+  console.log(i);
+}
+
+// `a` gets a new binding each iteration
+for (const a of [1, 2, 3]) {
+  console.log(a);
+}
+
+let foo = 'bar';
+let foo = 'bar' as const;
+let foo: 'bar' = 'bar' as const;
+let bar = 'bar' as string;
+let foo = <string>'bar';
+let foo = { bar: 'baz' };
+```
+
+👎 Examples of incorrect code
+
+```typescript
+let a = 3;
+console.log(a);
+
+let a;
+a = 0;
+console.log(a);
+
+class C {
+    static {
+        let a;
+        a = 0;
+        console.log(a);
+    }
+}
+
+// `i` is redefined (not reassigned) on each loop step.
+for (let i in [1, 2, 3]) {
+    console.log(i);
+}
+
+// `a` is redefined (not reassigned) on each loop step.
+for (let a of [1, 2, 3]) {
+    console.log(a);
+}
+
+let bar: 2 = 2;
+let foo = <'bar'>'bar';
+let foo = { bar: 'baz' as 'baz' };
+```
+
+## Array Type
+
+----------
+
+Requires using either T[] instead of Array\<T\>.
+
+<https://typescript-eslint.io/rules/array-type>
+
+👍 Examples of correct code
+
+```typescript
+const x: string[] = ['a', 'b'];
+const y: readonly string[] = ['a', 'b'];
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const x: Array<string> = ['a', 'b'];
+const y: ReadonlyArray<string> = ['a', 'b'];
+```
+
+## Disallow Await sync function
+
+----------
+
+Disallows awaiting a value that is not a Thenable.
+
+<https://typescript-eslint.io/rules/await-thenable>
+
+👍 Examples of correct code
+
+```typescript
+await Promise.resolve('value');
+
+const createValue = async () => 'value';
+await createValue();
+```
+
+👎 Examples of incorrect code
+
+```typescript
+await 'value';
+
+const createValue = () => 'value';
+await createValue();
+```
+
+## Method Signature Style
+
+----------
+
+Enforces using a particular method signature syntax.
+
+<https://typescript-eslint.io/rules/method-signature-style>
+
+👍 Examples of correct code
+
+```typescript
+interface T1 {
+  func(arg: string): number;
+}
+type T2 = {
+  func(arg: boolean): void;
+};
+interface T3 {
+  func(arg: number): void;
+  func(arg: string): void;
+  func(arg: boolean): void;
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+interface T1 {
+  func: (arg: string) => number;
+}
+type T2 = {
+  func: (arg: boolean) => void;
+};
+// this is equivalent to the overload
+interface T3 {
+  func: ((arg: number) => void) &
+    ((arg: string) => void) &
+    ((arg: boolean) => void);
+}
+```
+
+## No Unnecessary Type Assertion
+
+----------
+
+Warns if a type assertion does not change the type of an expression.
+
+<https://typescript-eslint.io/rules/no-unnecessary-type-assertion>
+
+👍 Examples of correct code
+
+```typescript
+const foo = <number>3;
+
+const foo = 3 as number;
+const foo: number = 3;
+
+const foo = 'foo' as const;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const foo = 3;
+const bar = foo!;
+
+const foo = <3>3;
+
+type Foo = 3;
+const foo = <Foo>3;
+
+type Foo = 3;
+const foo = 3 as Foo;
+```
+
+## No Unsafe Call
+
+----------
+
+This rule disallows calling any variable that is typed as any.
+
+<https://typescript-eslint.io/rules/no-unsafe-call>
+
+👍 Examples of correct code
+
+```typescript
+declare const typedVar: () => void;
+declare const typedNested: { prop: { a: () => void } };
+
+typedVar();
+typedNested.prop.a();
+
+(() => {})();
+
+new Map();
+
+String.raw`foo`;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+declare const anyVar: any;
+declare const nestedAny: { prop: any };
+
+anyVar();
+anyVar.a.b();
+
+nestedAny.prop();
+nestedAny.prop['a']();
+
+new anyVar();
+new nestedAny.prop();
+
+anyVar`foo`;
+nestedAny.prop`foo`;
 ```
 
 ## Documentation

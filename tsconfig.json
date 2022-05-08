@@ -29,8 +29,5 @@
     ],
     "include": [
         "source/**/*"
-    ],
-    "typedocOptions":{
-        "out": "docs"
-    }
+    ]
 }

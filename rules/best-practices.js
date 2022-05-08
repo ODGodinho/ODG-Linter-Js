@@ -139,6 +139,20 @@ module.exports = {
         "@typescript-eslint/no-misused-new": [ "error" ], // Não utilize new de forma incorreta em classes/interface
         "no-async-promise-executor": [ "error" ], // não permita use função async para executar promise
         "prefer-promise-reject-errors": [ "error" ], // Utilize exception im promise ao invés de string/number ou outra coisa
-        "semi-spacing": ["error", { "before": false, "after": true }] // não permite espaço antes do ;
+        "semi-spacing": [ "error", { "before": false, "after": true } ], // não permite espaço antes do ;
+        "@typescript-eslint/ban-types": [ "error" ], // Troques String -> string, Number -> number e etc
+        "@typescript-eslint/no-explicit-any": [ "error" ], // Não permite usar any
+        "no-empty-function": [ "off" ], // Não permite funções vazias Desliga em Js
+        "@typescript-eslint/no-empty-function": [ "error" ], // Não permite funções vazias
+        "no-duplicate-imports": [ "off" ], // Bloqueia import duplicado
+        "@typescript-eslint/no-duplicate-imports": [ "error" ],// Bloqueia import Duplicado
+        "@typescript-eslint/no-unnecessary-type-constraint": [ "error" ], // Não permite restrições de tipo desnecessárias <T extends any>
+        "prefer-const": [ "error" ], // Preferir constantes
+        "@typescript-eslint/prefer-as-const": [ "error" ], // Preferir constantes
+        "@typescript-eslint/array-type": [ "error" ], // Não permite tipos de array incorretos
+        "@typescript-eslint/await-thenable": [ "error" ], // Não permite await em não promises
+        "@typescript-eslint/method-signature-style": [ "error", "method" ], // use arrow function em method signature interface
+        "@typescript-eslint/no-unnecessary-type-assertion": [ "error" ], // Não permite declaração que não altera expressão
+        "@typescript-eslint/no-unsafe-call": [ "error" ], // Não permite chamadas de funções em tipo any
     },
 };
