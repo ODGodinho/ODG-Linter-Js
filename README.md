@@ -134,6 +134,8 @@
   - [Valid Params](#valid-params)
   - [No Async Promise Executor](#no-async-promise-executor)
   - [No Misused Promises](#no-misused-promises)
+- [Import](#import)
+  - [New Line After Import](#new-line-after-import)
 - [Documentation](#documentation)
   - [Space Comment](#spaced-comment)
   - [Capitalized Comments](#capitalized-comments)
@@ -4389,7 +4391,7 @@ Promise.catch() // is called with 0 or 2+ arguments
 Promise.finally() // is called with 0 or 2+ arguments
 ```
 
-## No Async Promise Executor
+### No Async Promise Executor
 
 ----------
 
@@ -4431,7 +4433,7 @@ const result = new Promise(async (resolve, reject) => {
 });
 ```
 
-## No Misused Promises
+### No Misused Promises
 
 ----------
 
@@ -4471,6 +4473,54 @@ const val = promise ? 123 : 456;
 while (promise) {
   // Do something
 }
+```
+
+## Import
+
+### New Line After Import
+
+----------
+
+Enforces having one empty lines after the last top-level import statement or require call.
+
+<https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/newline-after-import.md>
+
+👍 Examples of correct code
+
+```typescript
+import defaultExport from './foo'
+
+const FOO = 'BAR'
+
+// OR
+import defaultExport from './foo'
+import { bar }  from 'bar-lib'
+
+const FOO = 'BAR'
+
+// OR
+const FOO = require('./foo')
+const BAR = require('./bar')
+
+const BAZ = 1
+```
+
+👎 Examples of incorrect code
+
+```typescript
+import * as foo from 'foo'
+const FOO = 'BAR'
+
+// OR
+import * as foo from 'foo'
+const FOO = 'BAR'
+
+import { bar }  from 'bar-lib'
+
+// OR
+const FOO = require('./foo')
+const BAZ = 1
+const BAR = require('./bar')
 ```
 
 ## Documentation
