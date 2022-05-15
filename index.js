@@ -4,6 +4,7 @@ module.exports = {
         "@typescript-eslint",
         "import",
         "jsdoc",
+        "promise",
     ],
     extends: [
         "./rules/best-practices",

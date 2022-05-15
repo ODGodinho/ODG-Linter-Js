@@ -154,6 +154,13 @@ module.exports = {
         "@typescript-eslint/method-signature-style": [ "error", "method" ], // use arrow function em method signature interface
         "@typescript-eslint/no-unnecessary-type-assertion": [ "error" ], // Não permite declaração que não altera expressão
         "@typescript-eslint/no-unsafe-call": [ "error" ], // Não permite chamadas de funções em tipo any
-        "no-var": [ "error" ], // não user var prefira let ou const
+        "no-var": [ "error" ], // Não user var prefira let ou const
+        "promise/no-new-statics": [ "error" ], // Não permite usar new em static promise
+        "promise/no-return-wrap": [ "error" ], // Não use promise.resolve ou reject dentro de then e catch
+        "promise/param-names": [ "error" ], // Use nome correto para promise
+        "promise/always-return": [ "error" ], // Se a promise não tiver retorno reportar erro
+        "promise/no-nesting": [ "warn" ], // Warn se colocar uma then ou catch dentro de outra promise
+        "promise/no-return-in-finally": [ "error" ], // No Return in finally
+        "promise/valid-params": [ "error" ], // Valida Parâmetros da promise
     },
 };

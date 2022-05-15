@@ -111,9 +111,7 @@
 - [Prefer Literals](#prefer-literals)
 - [Useless Condition](#useless-condition)
 - [No Multiple Empty Line](#no-multiple-empty-line)
-- [No Misused Promises](#no-misused-promises)
 - [No Misused New](#no-misused-new)
-- [No Async Promise Executor](#no-async-promise-executor)
 - [No Semicolon Before spacing](#no-semicolon-before-spacing)
 - [Disallow Type](#disallow-type)
 - [Disallow Empty Function](#disallow-empty-function)
@@ -126,6 +124,16 @@
 - [No Unnecessary Type Assertion](#no-unnecessary-type-assertion)
 - [No Unsafe Call](#no-unsafe-call)
 - [No Var](#no-var)
+- [Promise Rules](#promise-rules)
+  - [No New Statics](#no-new-statics)
+  - [No Return Wrap](#no-return-wrap)
+  - [Param Name](#param-name)
+  - [Always Return](#always-return)
+  - [No Nesting](#no-nesting)
+  - [No Return Finally](#no-return-finally)
+  - [Valid Params](#valid-params)
+  - [No Async Promise Executor](#no-async-promise-executor)
+  - [No Misused Promises](#no-misused-promises)
 - [Documentation](#documentation)
   - [Space Comment](#spaced-comment)
   - [Capitalized Comments](#capitalized-comments)
@@ -3523,48 +3531,6 @@ function bar(arg: string) {
 }
 ```
 
-## No Misused Promises
-
-----------
-
-Block misused of promise
-
-<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-misused-promises.md>
-
-👍 Examples of correct code
-
-```typescript
-const promise = Promise.resolve('value');
-
-// Always `await` the Promise in a conditional
-if (await promise) {
-  // Do something
-}
-
-const val = (await promise) ? 123 : 456;
-
-while (await promise) {
-  // Do something
-}
-```
-
-👎 Examples of incorrect code
-
-```typescript
-const promise = Promise.resolve('value');
-
-// always true
-if (promise) {
-  // Do something
-}
-
-const val = promise ? 123 : 456;
-
-while (promise) {
-  // Do something
-}
-```
-
 ## No Misused New
 
 ----------
@@ -3595,48 +3561,6 @@ interface I {
   new (): I;
   constructor(): void;
 }
-```
-
-## No Async Promise Executor
-
-----------
-
-Disallows using an async function as a Promise executor.
-
-<https://eslint.org/docs/rules/no-async-promise-executor>
-
-👍 Examples of correct code
-
-```typescript
-const foo = new Promise((resolve, reject) => {
-  readFile('foo.txt', function(err, result) {
-    if (err) {
-      reject(err);
-    } else {
-      resolve(result);
-    }
-  });
-});
-
-const result = Promise.resolve(foo);
-```
-
-👎 Examples of incorrect code
-
-```typescript
-const foo = new Promise(async (resolve, reject) => {
-  readFile('foo.txt', function(err, result) {
-    if (err) {
-      reject(err);
-    } else {
-      resolve(result);
-    }
-  });
-});
-
-const result = new Promise(async (resolve, reject) => {
-  resolve(await foo);
-});
 ```
 
 ## No Semicolon Before spacing
@@ -4239,6 +4163,314 @@ if (CONFIG.y) {
     var y = CONFIG.y;
 }
 console.log(y);
+```
+
+## Promise Rules
+
+### No New Statics
+
+----------
+
+Calling a Promise static method with new is invalid, resulting in a TypeError at runtime.
+
+<https://github.com/xjamundx/eslint-plugin-promise/blob/development/docs/rules/no-new-statics.md>
+
+👍 Examples of correct code
+
+```typescript
+Promise.resolve(value)
+Promise.reject(error)
+Promise.race([p1, p2])
+Promise.all([p1, p2])
+```
+
+👎 Examples of incorrect code
+
+```typescript
+new Promise.resolve(value)
+new Promise.reject(error)
+new Promise.race([p1, p2])
+new Promise.all([p1, p2])
+```
+
+### No Return Wrap
+
+----------
+
+Ensure that inside a then() or a catch() we always return or throw a raw value instead of wrapping in Promise.resolve or Promise.reject
+
+<https://github.com/xjamundx/eslint-plugin-promise/blob/development/docs/rules/no-new-statics.md>
+
+👍 Examples of correct code
+
+```typescript
+myPromise.then(function (val) {
+  return val * 2
+})
+myPromise.then(function (val) {
+  throw new Exception("Message");
+})
+```
+
+👎 Examples of incorrect code
+
+```typescript
+myPromise.then(function (val) {
+  return Promise.resolve(val * 2)
+})
+myPromise.then(function (val) {
+  return Promise.reject('bad thing')
+})
+```
+
+### Param Name
+
+----------
+
+Ensure that inside a then() or a catch() we always return or throw a raw value instead of wrapping in Promise.resolve or Promise.reject
+
+<https://github.com/xjamundx/eslint-plugin-promise/blob/development/docs/rules/param-names.md>
+
+👍 Examples of correct code
+
+```typescript
+new Promise(function (resolve) { ... })
+new Promise(function (resolve, reject) { ... })
+new Promise(function (_resolve, _reject) { ... }) // Unused marker for parameters are allowed
+```
+
+👎 Examples of incorrect code
+
+```typescript
+new Promise(function (reject, resolve) { ... }) // incorrect order
+new Promise(function (ok, fail) { ... }) // non-standard parameter names
+new Promise(function (_, reject) { ... }) // a simple underscore is not allowed
+```
+
+### Always Return
+
+----------
+
+Ensure that inside a then() or a catch() we always return or throw a raw value instead of wrapping in Promise.resolve or Promise.reject
+
+<https://github.com/xjamundx/eslint-plugin-promise/blob/development/docs/rules/always-return.md>
+
+👍 Examples of correct code
+
+```typescript
+myPromise.then((val) => val * 2);
+myPromise.then(function(val) { return val * 2; });
+myPromise.then(doSomething); // could be either
+myPromise.then((b) => { if (b) { return "yes" } else { return "no" } });
+```
+
+👎 Examples of incorrect code
+
+```typescript
+myPromise.then(function (val) {})
+myPromise.then(() => {
+  doSomething()
+})
+myPromise.then((b) => {
+  if (b) {
+    return 'yes'
+  } else {
+    forgotToReturn()
+  }
+})
+```
+
+### No Nesting
+
+----------
+
+`Warning` Avoid nested then() or catch() statements (no-nesting)
+
+<https://github.com/xjamundx/eslint-plugin-promise/blob/development/docs/rules/no-nesting.md>
+
+👍 Examples of correct code
+
+```typescript
+myPromise.then(doSomething).then(doSomethingElse).catch(errors)
+```
+
+👎 Examples of incorrect code
+
+```typescript
+myPromise.then((val) => doSomething(val).then(doSomethingElse))
+
+myPromise.then((val) => doSomething(val).catch(errors))
+
+myPromise.catch((err) => doSomething(err).then(doSomethingElse))
+
+myPromise.catch((err) => doSomething(err).catch(errors))
+```
+
+### No Return Finally
+
+----------
+
+Disallow return statements inside a callback passed to finally(), since nothing would consume what's returned.
+
+<https://github.com/xjamundx/eslint-plugin-promise/blob/development/docs/rules/no-return-in-finally.md>
+
+👍 Examples of correct code
+
+```typescript
+myPromise.finally(function (val) {
+  console.log('value:', val)
+})
+```
+
+👎 Examples of incorrect code
+
+```typescript
+myPromise.finally(function (val) {
+  return val
+})
+```
+
+### Valid Params
+
+----------
+
+Disallow return statements inside a callback passed to finally(), since nothing would consume what's returned.
+
+<https://github.com/xjamundx/eslint-plugin-promise/blob/development/docs/rules/valid-params.md>
+
+👍 Examples of correct code
+
+```typescript
+// Promise.all() requires 1 argument
+Promise.all([p1, p2, p3])
+Promise.all(iterable)
+
+// Promise.race() requires 1 argument
+Promise.race([p1, p2, p3])
+Promise.race(iterable)
+
+// Promise.resolve() requires 0 or 1 arguments
+Promise.resolve()
+Promise.resolve({})
+Promise.resolve([1, 2, 3])
+Promise.resolve(referenceToObject)
+
+// Promise.reject() requires 0 or 1 arguments
+Promise.reject()
+Promise.reject(Error())
+Promise.reject(referenceToError)
+
+// Promise.then() requires 1 or 2 arguments
+somePromise().then((value) => doSomething(value))
+somePromise().then(successCallback, errorCallback)
+
+// Promise.catch() requires 1 argument
+somePromise().catch((error) => {
+  handleError(error)
+})
+somePromise().catch(console.error)
+
+// Promise.finally() requires 1 argument
+somePromise().finally(() => {
+  console.log('done!')
+})
+somePromise().finally(console.log)
+```
+
+👎 Examples of incorrect code
+
+```typescript
+Promise.all() // is called with 0 or 2+ arguments
+Promise.race() // is called with 0 or 2+ arguments
+Promise.resolve(a, b) // is called with 2+ arguments
+Promise.reject(a, b) // is called with 2+ arguments
+Promise.then() // is called with 0 or 3+ arguments
+Promise.catch() // is called with 0 or 2+ arguments
+Promise.finally() // is called with 0 or 2+ arguments
+```
+
+## No Async Promise Executor
+
+----------
+
+Disallows using an async function as a Promise executor.
+
+<https://eslint.org/docs/rules/no-async-promise-executor>
+
+👍 Examples of correct code
+
+```typescript
+const foo = new Promise((resolve, reject) => {
+  readFile('foo.txt', function(err, result) {
+    if (err) {
+      reject(err);
+    } else {
+      resolve(result);
+    }
+  });
+});
+
+const result = Promise.resolve(foo);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const foo = new Promise(async (resolve, reject) => {
+  readFile('foo.txt', function(err, result) {
+    if (err) {
+      reject(err);
+    } else {
+      resolve(result);
+    }
+  });
+});
+
+const result = new Promise(async (resolve, reject) => {
+  resolve(await foo);
+});
+```
+
+## No Misused Promises
+
+----------
+
+Block misused of promise
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-misused-promises.md>
+
+👍 Examples of correct code
+
+```typescript
+const promise = Promise.resolve('value');
+
+// Always `await` the Promise in a conditional
+if (await promise) {
+  // Do something
+}
+
+const val = (await promise) ? 123 : 456;
+
+while (await promise) {
+  // Do something
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const promise = Promise.resolve('value');
+
+// always true
+if (promise) {
+  // Do something
+}
+
+const val = promise ? 123 : 456;
+
+while (promise) {
+  // Do something
+}
 ```
 
 ## Documentation
