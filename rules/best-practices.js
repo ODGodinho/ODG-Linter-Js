@@ -163,6 +163,7 @@ module.exports = {
         "promise/no-nesting": [ "warn" ], // Warn se colocar uma then ou catch dentro de outra promise
         "promise/no-return-in-finally": [ "error" ], // No Return in finally
         "promise/valid-params": [ "error" ], // Valida Parâmetros da promise
-        "import/newline-after-import": [ "error", { "count": 1 } ] // Linhas em branco apos o import
+        "import/newline-after-import": [ "error", { "count": 1 } ], // Linhas em branco apos o import
+        "operator-linebreak": ["error", "before", { "overrides": { "+=": "none", "=": "none" } }], // Sem quebra de linha em operadores
     },
 };

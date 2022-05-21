@@ -124,6 +124,7 @@
 - [No Unnecessary Type Assertion](#no-unnecessary-type-assertion)
 - [No Unsafe Call](#no-unsafe-call)
 - [No Var](#no-var)
+- [Operator BreakLine](#operator-break-line)
 - [Promise Rules](#promise-rules)
   - [No New Statics](#no-new-statics)
   - [No Return Wrap](#no-return-wrap)
@@ -1593,6 +1594,7 @@ class B extends A {
 
 Disallows unnecessary parentheses.
 
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-extra-parens.md>
 <https://eslint.org/docs/rules/no-extra-parens#no-extra-parens>
 
 👍 Examples of correct code
@@ -4165,6 +4167,77 @@ if (CONFIG.y) {
     var y = CONFIG.y;
 }
 console.log(y);
+```
+
+## Operator BreakLine
+
+----------
+
+The operator-linebreak rule is aimed at enforcing a particular operator line break style
+
+<https://eslint.org/docs/rules/operator-linebreak>
+
+👍 Examples of correct code
+
+```typescript
+foo = 1 + 2;
+
+foo = 1
+    + 2
+    + 3;
+
+foo = 5;
+
+if (
+  someCondition
+  || otherCondition
+) {
+  // code ...
+}
+
+answer = everything
+  ? 42
+  : foo;
+
+class Foo {
+    a  = 1;
+    [b]  = 2;
+    d = 4;
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+
+foo = 1 +
+      2;
+
+foo =
+    5;
+
+foo
+    = 5;
+
+if (
+    someCondition ||
+    otherCondition
+) {
+}
+
+answer = everything ?
+  42 :
+  foo;
+
+class Foo {
+    a =
+        1;
+    [b] =
+        2;
+    [c
+    ] =
+        3;
+}
 ```
 
 ## Promise Rules
