@@ -105,7 +105,8 @@ module.exports = {
         "no-duplicate-case": [ "error" ], // Não permite duplicar case em switch
         "no-empty-character-class": [ "error" ], // Não permite classe de caracteres vazia em regex
         "no-ex-assign": [ "error" ], // Não permite atribuição de exceção
-        "no-extra-parens": [ "error" ], // Não permite parênteses extra
+        "no-extra-parens": [ "off" ], // Não permite parênteses extra
+        "@typescript-eslint/no-extra-parens": [ "error" ], // Não permite parênteses extra
         "no-extra-semi": [ "off" ],
         "@typescript-eslint/no-extra-semi": ["error"], // Não permite ;, duplicadas ou desnecessárias
         "no-func-assign": [ "error" ], // Não permite atribuição de função
@@ -162,6 +163,6 @@ module.exports = {
         "promise/no-nesting": [ "warn" ], // Warn se colocar uma then ou catch dentro de outra promise
         "promise/no-return-in-finally": [ "error" ], // No Return in finally
         "promise/valid-params": [ "error" ], // Valida Parâmetros da promise
-        "import/newline-after-import": ["error", { "count": 1 }], // Linhas em branco apos o import
+        "import/newline-after-import": [ "error", { "count": 1 } ] // Linhas em branco apos o import
     },
 };
