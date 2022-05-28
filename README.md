@@ -159,9 +159,9 @@
 Add dependence to package.json
 
 ```bash
-npm install eslint @odg/eslint-config-odg-linter-js eslint-plugin-jsdoc@* --save-dev
+npm install eslint @odg/eslint-config-odg-linter-js eslint-plugin-jsdoc@* eslint-plugin-import@* --save-dev
 # or
-yarn add -D eslint @odg/eslint-config-odg-linter-js eslint-plugin-jsdoc@*
+yarn add -D eslint @odg/eslint-config-odg-linter-js eslint-plugin-jsdoc@* eslint-plugin-import@*
 ```
 
 Add extends in your `.eslintrc` file
