@@ -130,5 +130,7 @@ module.exports = {
         "promise/valid-params": [ "error" ], // Valida Parâmetros da promise
         "import/newline-after-import": [ "error", { "count": 1 } ], // Linhas em branco apos o import
         "operator-linebreak": [ "error", "before", { "overrides": { "+=": "none", "=": "none" } } ], // Sem quebra de linha em operadores
+        "array-callback-return": [ "error" ], // Força returno em array callback
+        "space-infix-ops": [ "error" ], // Espaço em operadores
     },
 };

@@ -127,6 +127,8 @@
 - [Operator BreakLine](#operator-break-line)
 - [Generator Function Stars](#generator-function-stars)
 - [No Unsafe Optional Chaining](#no-unsafe-optional-chaining)
+- [Array Callback](#array-callback)
+- [Space Types](#space-types)
 - [Promise Rules](#promise-rules)
   - [No New Statics](#no-new-statics)
   - [No Return Wrap](#no-return-wrap)
@@ -4364,6 +4366,100 @@ async function foo () {
    (await obj?.foo)();
    (await obj?.foo).bar;
 }
+```
+
+## Array Callback
+
+----------
+
+Array has several methods for filtering, mapping, and folding.
+If we forget to write return statement in a callback of those, it's probably a mistake.
+
+<https://eslint.org/docs/rules/array-callback-return>
+
+👍 Examples of correct code
+
+```typescript
+var indexMap = myArray.reduce(function(memo, item, index) {
+    memo[item] = index;
+    return memo;
+}, {});
+
+var foo = Array.from(nodes, function(node) {
+    if (node.tagName === "DIV") {
+        return true;
+    }
+    return false;
+});
+
+var bar = foo.map(node => node.getAttribute("id"));
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var indexMap = myArray.reduce(function(memo, item, index) {
+    memo[item] = index;
+}, {});
+
+var foo = Array.from(nodes, function(node) {
+    if (node.tagName === "DIV") {
+        return true;
+    }
+});
+
+var bar = foo.filter(function(x) {
+    if (x) {
+        return true;
+    } else {
+        return;
+    }
+});
+```
+
+## Space Types
+
+----------
+
+Requires spacing around infix operators.
+
+<https://eslint.org/docs/rules/space-infix-ops>
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/space-infix-ops.md>
+
+👍 Examples of correct code
+
+```typescript
+a + b
+
+a ? b : c
+
+const a = {b:1};
+
+var {a = 0} = bar;
+
+function foo(a = 0) { }
+
+function foo(a = 0): string | number { }
+```
+
+👎 Examples of incorrect code
+
+```typescript
+a+b
+
+a+ b
+
+a +b
+
+a?b:c
+
+const a={b:1};
+
+var {a=0}=bar;
+
+function foo(a=0) { }
+
+function foo(): string|number { }
 ```
 
 ## Promise Rules

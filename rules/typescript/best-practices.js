@@ -72,5 +72,7 @@ module.exports = {
         "@typescript-eslint/method-signature-style": [ "error", "method" ], // Use arrow function em method signature interface
         "@typescript-eslint/no-unnecessary-type-assertion": [ "error" ], // Não permite declaração que não altera expressão
         "@typescript-eslint/no-unsafe-call": [ "error" ], // Não permite chamadas de funções em tipo any
+        "space-infix-ops": [ "off" ], // Espaço na separação operadores
+        "@typescript-eslint/space-infix-ops": [ "error" ], // Espaço na separação operadores
     },
 };
