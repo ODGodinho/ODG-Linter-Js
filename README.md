@@ -125,6 +125,8 @@
 - [No Unsafe Call](#no-unsafe-call)
 - [No Var](#no-var)
 - [Operator BreakLine](#operator-break-line)
+- [Generator Function Stars](#generator-function-stars)
+- [No Unsafe Optional Chaining](#no-unsafe-optional-chaining)
 - [Promise Rules](#promise-rules)
   - [No New Statics](#no-new-statics)
   - [No Return Wrap](#no-return-wrap)
@@ -168,15 +170,21 @@ Add extends in your `.eslintrc` file
 
 ```json
 {
-    "parser": "@typescript-eslint/parser",
     "extends": [
         "@odg/odg-linter-js",
     ],
-    "parserOptions": {
-        "ecmaVersion": 2018, // Specify your version
-        "sourceType": "module",
-        "project": [ "tsconfig.json" ] // Specify it only for TypeScript files
-    },
+    "overrides": [
+        {
+            "files": [ "*.ts", "*.tsx" ],
+            "parser": "@typescript-eslint/parser",
+            "parserOptions": {
+                "ecmaFeatures": { "jsx": true },
+                "ecmaVersion": 2018,
+                "sourceType": "module",
+                "project": [ "tsconfig.json" ], // Specify it only for TypeScript files
+            },
+        },
+    ],
 }
 ```
 
@@ -4237,6 +4245,124 @@ class Foo {
     [c
     ] =
         3;
+}
+```
+
+## Generator Function Stars
+
+----------
+
+Enforces spacing before * in generator functions.
+
+<https://eslint.org/docs/rules/generator-star-spacing>
+
+👍 Examples of correct code
+
+```typescript
+function *generator() {}
+
+var anonymous = function *() {};
+
+var shorthand = { *generator() {} };
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function* generator() {}
+
+var anonymous = function* () {};
+
+var shorthand = { * generator() {} };
+```
+
+## No Unsafe Optional Chaining
+
+----------
+
+Enforces spacing before * in generator functions.
+
+<https://eslint.org/docs/rules/no-unsafe-optional-chaining>
+
+👍 Examples of correct code
+
+```typescript
+(obj?.foo)?.();
+
+obj?.foo();
+
+(obj?.foo ?? bar)();
+
+obj?.foo.bar;
+
+obj.foo?.bar;
+
+foo?.()?.bar;
+
+(obj?.foo ?? bar)`template`;
+
+new (obj?.foo ?? bar)();
+
+var baz = {...obj?.foo};
+
+const { bar } = obj?.foo || baz;
+
+async function foo () {
+  const { bar } = await obj?.foo || baz;
+   (await obj?.foo)?.();
+   (await obj?.foo)?.bar;
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+(obj?.foo)();
+
+(obj?.foo).bar;
+
+(foo?.()).bar;
+
+(foo?.()).bar();
+
+(obj?.foo ?? obj?.bar)();
+
+(foo || obj?.foo)();
+
+(obj?.foo && foo)();
+
+(foo ? obj?.foo : bar)();
+
+(foo, obj?.bar).baz;
+
+(obj?.foo)`template`;
+
+new (obj?.foo)();
+
+[...obj?.foo];
+
+bar(...obj?.foo);
+
+1 in obj?.foo;
+
+bar instanceof obj?.foo;
+
+for (bar of obj?.foo);
+
+const { bar } = obj?.foo;
+
+[{ bar } = obj?.foo] = [];
+
+with (obj?.foo);
+
+class A extends obj?.foo {}
+
+var a = class A extends obj?.foo {};
+
+async function foo () {
+    const { bar } = await obj?.foo;
+   (await obj?.foo)();
+   (await obj?.foo).bar;
 }
 ```
 

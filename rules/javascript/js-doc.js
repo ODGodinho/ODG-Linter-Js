@@ -14,9 +14,9 @@ module.exports = {
         "jsdoc/check-syntax": [ "error" ], // Valida Sintaxe do docblock
         "jsdoc/check-tag-names": [ "error", {
             "definedTags": [
-                "task" // create @task [name](LINK)
+                "task" // Create @task [name](LINK)
             ]
-        }],
+        } ],
         "jsdoc/check-types": [ "error" ], // valida se é um Tipo valido
         "jsdoc/check-values": [ "error" ], // Devemos Padronizar o modelo
         "jsdoc/valid-types": [ "error" ], // Valida Padrão DocBlock
