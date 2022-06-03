@@ -45,6 +45,7 @@
 - [Explicit Member Accessibility Rule](#explicit-member-accessibility-rule)
 - [Default Param Last Rule](#default-param-last-rule)
 - [Space Before Function Paren](#space-before-function-paren)
+- [Exception Handled](#exception-handled)
 - [Array Space](#array-space)
 - [Key Word Space](#key-word-space)
 - [Space Format](#space-format)
@@ -69,6 +70,7 @@
 - [Useless Construct Code](#useless-construct-code)
 - [Useless Parens](#useless-parens)
 - [Useless Boolean](#useless-boolean)
+- [Useless Alias](#useless-alias)
 - [Return New line](#return-new-line)
 - [Comment Multi Line Prefer](#comment-multi-line-prefer)
 - [No throw Literal](#no-throw-literal)
@@ -76,6 +78,9 @@
 - [Useless Loop](#useless-loop)
 - [No Multiline String](#no-multiline-string)
 - [No Unsafe Assign](#no-unsafe-assign)
+- [Disallow Script Url](#disallow-script-url)
+- [Disallow Undefined](#disallow-undefined)
+- [Function Name](#function-name)
 - [This Pattern](#this-pattern)
 - [Use Dot](#use-dot)
 - [Dot Object Format](#dot-object-format)
@@ -117,7 +122,10 @@
 - [Disallow Empty Function](#disallow-empty-function)
 - [Disallow Duplicate Imports](#disallow-duplicate-imports)
 - [Disallow Unnecessary Type](#disallow-unnecessary-type)
-- [prefer Const](#prefer-const)
+- [Disallow Caller](#disallow-caller)
+- [Disallow Underscore](#disallow-underscore)
+- [Disallow Param Reassign](#disallow-param-reassign)
+- [Prefer Const](#prefer-const)
 - [Array Type](#array-type)
 - [Disallow Await sync function](#disallow-await-sync-function)
 - [Method Signature Style](#method-signature-style)
@@ -129,6 +137,8 @@
 - [No Unsafe Optional Chaining](#no-unsafe-optional-chaining)
 - [Array Callback](#array-callback)
 - [Space Types](#space-types)
+- [Curly](#curly)
+- [Quote Props](#quote-props)
 - [Promise Rules](#promise-rules)
   - [No New Statics](#no-new-statics)
   - [No Return Wrap](#no-return-wrap)
@@ -639,6 +649,60 @@ function foo () {
 }
 
 (async() => {})()
+```
+
+## Exception Handled
+
+----------
+
+Enforces callback error handling.
+
+<https://eslint.org/docs/rules/handle-callback-err>
+
+👍 Examples of correct code
+
+```typescript
+function loadData (err, data) {
+    if (err) {
+        console.log(err.stack);
+    }
+    doSomething();
+}
+
+function generateError (err) {
+    if (err) {
+        throw new Exception(err.message);
+    }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function loadData (err, data) {
+    doSomething();
+}
+```
+
+## Class Name
+
+----------
+
+This rule requires constructor names to begin with a capital letter.
+
+<https://eslint.org/docs/rules/new-cap>
+
+👍 Examples of correct code
+
+```typescript
+var friend = new Person();
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var friend = new person();
+var friend = Person();
 ```
 
 ## Array Space
@@ -1707,9 +1771,55 @@ do {
     // ...
 } while (Boolean(foo));
 
-for (; !!foo; ) {
+for ( ;!!foo; ) {
     // ...
 }
+```
+
+## Useless Alias
+
+----------
+
+Disallows renaming import, export, and destructured assignments to the same name.
+
+<https://eslint.org/docs/rules/no-useless-rename>
+
+👍 Examples of correct code
+
+```typescript
+import * as foo from "foo";
+import { foo } from "bar";
+import { foo as bar } from "baz";
+import { "foo" as bar } from "baz";
+
+export { foo };
+export { foo as bar };
+export { foo as bar } from "foo";
+
+let { foo } = bar;
+let { foo: bar } = baz;
+let { [foo]: foo } = bar;
+
+function foo({ bar }) {}
+function foo({ bar: baz }) {}
+
+({ foo }) => {}
+({ foo: bar }) => {}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+import { foo as foo } from "bar";
+import { "foo" as foo } from "bar";
+export { foo as foo };
+export { foo as "foo" };
+export { foo as foo } from "bar";
+export { "foo" as "foo" } from "bar";
+let { foo: foo } = bar;
+let { 'foo': foo } = bar;
+function foo({ bar: bar }) {}
+({ foo: foo }) => {}
 ```
 
 ## Return New line
@@ -2116,6 +2226,81 @@ const x: Set<string[]> = new Set<any[]>();
 const x: Set<Set<Set<string>>> = new Set<Set<Set<any>>>();
 ```
 
+## Disallow Script Url
+
+----------
+
+Using javascript: URLs is considered by some as a form of eval.
+
+<https://eslint.org/docs/rules/no-script-url>
+
+👍 Examples of correct code
+
+```typescript
+location.href = "#";
+```
+
+👎 Examples of incorrect code
+
+```typescript
+location.href = "javascript:void(0)";
+
+location.href = `javascript:void(0)`;
+```
+
+## Disallow Undefined
+
+----------
+
+Disallows the use of undeclared variables unless mentioned in /\*global\*/ comments.
+
+<https://eslint.org/docs/rules/no-undef>
+
+👍 Examples of correct code
+
+```typescript
+/* global someFunction, a */
+
+var foo = someFunction();
+var bar = a + 1;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = someFunction();
+var bar = a + 1;
+```
+
+## Function Name
+
+----------
+
+Requires function expressions to have a name, if the name isn't assigned automatically per the ECMAScript specification.
+
+<https://eslint.org/docs/rules/func-names>
+
+👍 Examples of correct code
+
+```typescript
+/* global someFunction, a */
+
+var foo = someFunction();
+var bar = a + 1;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+Foo.prototype.bar = function() {};
+
+(function() {
+    // ...
+}())
+
+export default function() {}
+```
+
 ## This Pattern
 
 ----------
@@ -2128,36 +2313,24 @@ const x: Set<Set<Set<string>>> = new Set<Set<Set<any>>>();
 👍 Examples of correct code
 
 ```typescript
-var that = this;
+var bar = function() {};
 
-var self = 42;
-
-var self;
-
-that = this;
-
-foo.bar = this;
-
-function Foo() {
-    // OK, this is in a legacy style constructor.
-    this.a = 0;
-    baz(() => this);
+const cat = {
+  meow: function() {}
 }
 
-class Foo {
-    constructor() {
-        // OK, this is in a constructor.
-        this.a = 0;
-        baz(() => this);
-    }
+class C {
+    #bar = function() {};
+    baz = function() {};
 }
 
-var obj = {
-    foo: function foo() {
-        // OK, this is in a method (this function is on object literal).
-        this.a = 0;
-    }
-};
+quux ??= function() {};
+
+(function bar() {
+    // ...
+}())
+
+export default function foo() {}
 ```
 
 👎 Examples of incorrect code
@@ -3883,6 +4056,111 @@ function QuuzAny<T extends any>() {}
 function QuuzUnknown<T extends unknown>() {}
 ```
 
+## Disallow Caller
+
+----------
+
+The use of `arguments.caller` and `arguments.callee` make several code optimizations impossible. They have been deprecated in future versions of JavaScript and their use is forbidden in ECMAScript 5 while in strict mode.
+
+<https://eslint.org/docs/rules/no-caller>
+
+👍 Examples of correct code
+
+```typescript
+function foo(n) {
+    if (n <= 0) {
+        return;
+    }
+
+    foo(n - 1);
+}
+
+[1,2,3,4,5].map(function factorial(n) {
+    return !(n > 1) ? 1 : factorial(n - 1) * n;
+});
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function foo(n) {
+    if (n <= 0) {
+        return;
+    }
+
+    arguments.callee(n - 1);
+}
+
+[1,2,3,4,5].map(function(n) {
+    return !(n > 1) ? 1 : arguments.callee(n - 1) * n;
+});
+```
+
+## Disallow Underscore
+
+----------
+
+This rule disallows dangling underscores in identifiers.
+
+<https://eslint.org/docs/rules/no-underscore-dangle>
+
+👍 Examples of correct code
+
+```typescript
+var _ = require('underscore');
+var obj = _.contains(items, item);
+obj.__proto__ = {};
+var file = __filename;
+function foo(_bar) {};
+const foo = { onClick(_bar) {} };
+const foo = (_bar) => {};
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo_;
+var __proto__ = {};
+foo._bar();
+function _foo(_bar) {};
+```
+
+## Disallow Param Reassign
+
+----------
+
+This rule aims to prevent unintended behavior caused by modification or reassignment of function parameters.
+
+<https://eslint.org/docs/rules/no-param-reassign>
+
+👍 Examples of correct code
+
+```typescript
+function foo(bar) {
+    var baz = bar;
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function foo(bar) {
+    bar = 13;
+}
+
+function foo(bar) {
+    bar++;
+}
+
+function foo(bar) {
+    for (bar in baz) {}
+}
+
+function foo(bar) {
+    for (bar of baz) {}
+}
+```
+
 ## Prefer Const
 
 ----------
@@ -4460,6 +4738,110 @@ var {a=0}=bar;
 function foo(a=0) { }
 
 function foo(): string|number { }
+```
+
+## Curly
+
+----------
+
+Requires following curly brace conventions.
+
+<https://eslint.org/docs/rules/curly>
+
+👍 Examples of correct code
+
+```typescript
+if (foo) {
+    bar();
+    baz();
+} else {
+    buz();
+}
+
+if (foo) {
+    bar();
+} else if (faa) {
+    bor();
+} else {
+    other();
+    things();
+}
+
+if (true)
+    foo();
+else
+    baz();
+
+if (foo)
+    foo++;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+if (foo) {
+    bar();
+    baz();
+} else
+    buz();
+
+if (foo)
+    bar();
+else if (faa)
+    bor();
+else {
+    other();
+    things();
+}
+
+if (true)
+    foo();
+else {
+    baz();
+}
+
+if (foo) {
+    foo++;
+}
+```
+
+## Quote Props
+
+----------
+
+Requires quotes around all object literal property names if any name strictly requires quotes,
+otherwise disallows quotes around object property names.
+
+<https://eslint.org/docs/rules/quote-props>
+
+👍 Examples of correct code
+
+```typescript
+var object1 = {
+    "foo": "bar",
+    "baz": 42,
+    "qux-lorem": true
+};
+
+var object2 = {
+    foo: 'bar',
+    baz: 42
+};
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var object1 = {
+    foo: "bar",
+    "baz": 42,
+    "qux-lorem": true
+};
+
+var object2 = {
+    'foo': 'bar',
+    'baz': 42
+};
 ```
 
 ## Promise Rules

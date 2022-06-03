@@ -16,7 +16,9 @@ module.exports = {
         } ], // Não permite espaço antes dos parenteses
         "@typescript-eslint/explicit-function-return-type": [ "error" ], // Força tipo de retorno
         "no-unused-vars": [ "off" ], // Não permite variáveis não utilizadas
-        "@typescript-eslint/no-unused-vars": [ "error", { "args": "after-used" } ], // Não permite variáveis não usado
+        "@typescript-eslint/no-unused-vars": [ "error", {
+            "args": "after-used",
+        } ], // Não permite variáveis não usado
         "default-param-last": [ "off" ], // Parâmetros default devem ficar no final
         "@typescript-eslint/default-param-last": [ "error" ], // Parâmetros default devem ficar no final
         "comma-spacing": [ "off" ],
@@ -74,5 +76,11 @@ module.exports = {
         "@typescript-eslint/no-unsafe-call": [ "error" ], // Não permite chamadas de funções em tipo any
         "space-infix-ops": [ "off" ], // Espaço na separação operadores
         "@typescript-eslint/space-infix-ops": [ "error" ], // Espaço na separação operadores
+        "keyword-spacing": [ "off" ],
+        "@typescript-eslint/keyword-spacing": [ "error", {
+            "before": true,
+            "after": true,
+        } ],
+        "no-underscore-dangle": [ "error" ], // Não permite _ no nome
     },
 };

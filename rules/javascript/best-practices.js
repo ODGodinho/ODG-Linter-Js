@@ -6,23 +6,23 @@ module.exports = {
         "quotes": [ "error", "double" ], // Aspas duplas
         "lines-between-class-members": [ "error", "always" ], // Força linha em branco entre props classe e funções
         "space-before-function-paren": [ "error", {
-            "anonymous": "never",
-            "named": "never",
+            anonymous: "never",
+            named: "never",
         } ], // Não permite espaço antes dos parenteses
-        "no-unused-vars": [ "error", { "vars": "all", "args": "after-used" } ],
+        "no-unused-vars": [ "error", { vars: "all", args: "after-used" } ],
         "default-param-last": [ "error" ],
         "comma-spacing": [ "error" ],
         "comma-dangle": [ "error", {
-            "arrays": "always-multiline",
-            "objects": "always-multiline",
-            "imports": "always-multiline",
-            "exports": "always-multiline",
-            "functions": "always-multiline",
+            arrays: "always-multiline",
+            objects: "always-multiline",
+            imports: "always-multiline",
+            exports: "always-multiline",
+            functions: "always-multiline",
         } ], // Virgula no final de tudo
         "no-array-constructor": [ "error" ], // Não permite usar new Array()
         "no-unused-expressions": [ "error", {
-            "allowTernary": true,
-            "allowShortCircuit": true,
+            allowTernary: true,
+            allowShortCircuit: true,
         } ],
         "no-useless-constructor": [ "error" ], // Não permite construtores desnecessários
         "no-throw-literal": [ "error" ], // Não permite throw "string" ou diferente de classe
@@ -33,31 +33,32 @@ module.exports = {
         "no-empty-function": [ "error" ], // Não permite funções vazias
         "no-duplicate-imports": [ "error" ], // Bloqueia import duplicado
         "prefer-const": [ "error" ], // Preferir constantes
-        "generator-star-spacing": [ "error", {"before": true, "after": false} ], // Espaço Funções Yield;
+        "generator-star-spacing": [ "error", {before: true, after: false} ], // Espaço Funções Yield;
         "no-unsafe-optional-chaining": [ "error" ], // Protege de optional que pode gerar errors
         "linebreak-style": [ "error", "unix" ], // Força usar \n apenas em vez de \r\n
         "eol-last": [ "error", "always" ], // Força finalizar com \n no final
-        "max-len": [ "error", {
-            "code": 120,
+        "max-len": [ "warn", {
+            code: 120,
+            ignoreUrls: true,
         } ], // Caracteres máximo por linhas
         "camelcase": [ "error" ], // Força camelCase
         "padded-blocks": [ "error", {
-            "classes": "always",
-            "blocks": "never",
-            "switches": "never",
+            classes: "always",
+            blocks: "never",
+            switches: "never",
         } ], // Força não usar blocos com espaços
         "no-multi-assign": [ "error" ], // Força não usar atribuição múltipla
         "array-bracket-spacing": [ "error", "always" ], // Força usar espaço entre chaves
         "keyword-spacing": [ "error", {
-            "before": true,
-            "after": true,
+            before: true,
+            after: true,
         } ], // Requer espaço apos try {}
         "space-before-blocks": [ "error" ], // Requer espaço antes das chaves
         "space-unary-ops": [
             2, {
-                "words": true, // Espaço apos Await e palavras chaves
-                "nonwords": false, // Força nao ter espaço antes de operadores unários !, -, +
-                "overrides": {
+                words: true, // Espaço apos Await e palavras chaves
+                nonwords: false, // Força nao ter espaço antes de operadores unários !, -, +
+                overrides: {
                     "new": false,
                     "++": false, // Nao permite espaço no ++
                 },
@@ -116,10 +117,10 @@ module.exports = {
         "no-undef-init": [ "error" ], // Não permite variáveis definidas como undefined ao inicializar
         "no-new-require": [ "error" ], // Não permite usar new require()
         "prefer-template": [ "error" ], // Prefer template literals over string concatenation
-        "no-multiple-empty-lines": [ "error", { "max": 1 } ], // Não permita varias linhas em branco
+        "no-multiple-empty-lines": [ "error", { max: 1 } ], // Não permita varias linhas em branco
         "no-async-promise-executor": [ "error" ], // Não permita use função async para executar promise
         "prefer-promise-reject-errors": [ "error" ], // Utilize exception im promise ao invés de string/number ou outra coisa
-        "semi-spacing": [ "error", { "before": false, "after": true } ], // Não permite espaço antes do ;
+        "semi-spacing": [ "error", { before: false, after: true } ], // Não permite espaço antes do ;
         "no-var": [ "error" ], // Não user var prefira let ou const
         "promise/no-new-statics": [ "error" ], // Não permite usar new em static promise
         "promise/no-return-wrap": [ "error" ], // Não use promise.resolve ou reject dentro de then e catch
@@ -128,9 +129,19 @@ module.exports = {
         "promise/no-nesting": [ "warn" ], // Warn se colocar uma then ou catch dentro de outra promise
         "promise/no-return-in-finally": [ "error" ], // No Return in finally
         "promise/valid-params": [ "error" ], // Valida Parâmetros da promise
-        "import/newline-after-import": [ "error", { "count": 1 } ], // Linhas em branco apos o import
-        "operator-linebreak": [ "error", "before", { "overrides": { "+=": "none", "=": "none" } } ], // Sem quebra de linha em operadores
+        "import/newline-after-import": [ "error", { count: 1 } ], // Linhas em branco apos o import
+        "operator-linebreak": [ "error", "before", { overrides: { "+=": "none", "=": "none" } } ], // Sem quebra de linha em operadores
         "array-callback-return": [ "error" ], // Força returno em array callback
         "space-infix-ops": [ "error" ], // Espaço em operadores
+        "curly": [ "error", "multi", "consistent" ], // Utilize chaves em multi linhas
+        "no-useless-rename": [ "error" ], // Disable Rename desnecessários
+        "handle-callback-err": [ "error" ], // Funções que recebem error deve ser tratado
+        "new-cap": [ "error", { newIsCap: true } ], // New require first Letter uppercase
+        "no-caller": [ "error" ], // Não permite usar callee
+        "no-script-url": [ "error" ], // Não permite usar script url
+        "no-undef": [ "error" ], // Não chame variáveis não definidas
+        "func-names": [ "error", "as-needed" ], // Nome de funções somente quando necessário
+        "no-param-reassign": [ "error" ], // Não permite reatribuição de parâmetros
+        "quote-props": [ "error", "consistent-as-needed" ], // Aspas no objeto somente se algum for necessário
     },
 };
