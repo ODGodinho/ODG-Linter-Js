@@ -83,6 +83,7 @@
 - [Function Name](#function-name)
 - [This Pattern](#this-pattern)
 - [Use Dot](#use-dot)
+- [Use this](#use-this)
 - [Dot Object Format](#dot-object-format)
 - [No Trailing Space](#no-trailing-space)
 - [Type Format](#type-format)
@@ -139,6 +140,9 @@
 - [Space Types](#space-types)
 - [Curly](#curly)
 - [Quote Props](#quote-props)
+- [Brace Style](#brace-style)
+- [Comma Style](#comma-style)
+- [Object BreakLine](#object-break-line)
 - [Promise Rules](#promise-rules)
   - [No New Statics](#no-new-statics)
   - [No Return Wrap](#no-return-wrap)
@@ -2384,6 +2388,56 @@ var x = foo[bar];
 
 ```typescript
 var x = foo["bar"];
+```
+
+## Use This
+
+----------
+
+Enforces that `this` is used when only `this` type is returned.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/prefer-return-this-type.md>
+
+👍 Examples of correct code
+
+```typescript
+class Foo {
+  f1(): this {
+    return this;
+  }
+  f2() {
+    return this;
+  }
+  f3 = (): this => {
+    return this;
+  };
+  f4 = () => {
+    return this;
+  };
+}
+
+class Base {}
+class Derived extends Base {
+  f(): Base {
+    return this;
+  }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+class Foo {
+  f1(): Foo {
+    return this;
+  }
+  f2 = (): Foo => {
+    return this;
+  };
+  f3(): Foo | undefined {
+    return Math.random() > 0.5 ? this : undefined;
+  }
+}
 ```
 
 ## Dot Object Format
@@ -4703,6 +4757,7 @@ Requires spacing around infix operators.
 
 <https://eslint.org/docs/rules/space-infix-ops>
 <https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/space-infix-ops.md>
+<https://eslint.org/docs/rules/key-spacing>
 
 👍 Examples of correct code
 
@@ -4718,6 +4773,8 @@ var {a = 0} = bar;
 function foo(a = 0) { }
 
 function foo(a = 0): string | number { }
+
+var obj = { "foo": 42 };
 ```
 
 👎 Examples of incorrect code
@@ -4738,6 +4795,9 @@ var {a=0}=bar;
 function foo(a=0) { }
 
 function foo(): string|number { }
+
+var obj = { "foo" : 42 };
+var obj = { "foo" :42 };
 ```
 
 ## Curly
@@ -4841,6 +4901,188 @@ var object1 = {
 var object2 = {
     'foo': 'bar',
     'baz': 42
+};
+```
+
+## Brace Style
+
+----------
+
+Enforces consistent brace style for blocks.
+
+<https://eslint.org/docs/rules/brace-style>
+
+👍 Examples of correct code
+
+```typescript
+function foo() {
+  return true;
+}
+
+if (foo) {
+  bar();
+}
+
+if (foo) {
+  bar();
+} else {
+  baz();
+}
+
+try {
+  somethingRisky();
+} catch(e) {
+  handleError();
+}
+
+class C {
+    static {
+        foo();
+    }
+}
+
+// when there are no braces, there are no problems
+if (foo) bar();
+else if (baz) boom();
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function foo()
+{
+  return true;
+}
+
+if (foo)
+{
+  bar();
+}
+
+try
+{
+  somethingRisky();
+} catch(e)
+{
+  handleError();
+}
+
+if (foo) {
+  bar();
+}
+else {
+  baz();
+}
+
+class C
+{
+    static
+    {
+        foo();
+    }
+}
+```
+
+## Comma Style
+
+----------
+
+This rule enforce consistent comma style in array literals, object literals, and variable declarations.
+
+<https://eslint.org/docs/rules/comma-style>
+
+👍 Examples of correct code
+
+```typescript
+var foo = 1, bar = 2;
+
+var foo = 1,
+    bar = 2;
+
+var foo = ["apples",
+           "oranges"];
+
+function bar() {
+    return {
+        "a": 1,
+        "b:": 2
+    };
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = 1,
+    bar = 2;
+
+var foo = ["apples",
+           "oranges"];
+
+function bar() {
+    return {
+        "a": 1,
+        "b:": 2
+    };
+}
+```
+
+
+## Object BreakLine
+
+----------
+
+Enforces placing object properties on separate lines.
+
+<https://eslint.org/docs/rules/object-property-newline>
+
+👍 Examples of correct code
+
+```typescript
+const obj1 = {
+    foo: "foo",
+    bar: "bar",
+    baz: "baz"
+};
+
+const obj2 = {
+    foo: "foo"
+    , bar: "bar"
+    , baz: "baz"
+};
+
+const user = process.argv[2];
+const obj3 = {
+    user,
+    [process.argv[3] ? "foo" : "bar"]: 0,
+    baz: [
+        1,
+        2,
+        4,
+        8
+    ]
+};
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const obj1 = {
+    foo: "foo", bar: "bar", baz: "baz"
+};
+
+const obj2 = {
+    foo: "foo", bar: "bar",
+    baz: "baz"
+};
+
+const obj3 = {
+    [process.argv[3] ? "foo" : "bar"]: 0, baz: [
+        1,
+        2,
+        4,
+        8
+    ]
 };
 ```
 

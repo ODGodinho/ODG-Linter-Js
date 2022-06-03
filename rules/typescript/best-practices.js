@@ -82,5 +82,6 @@ module.exports = {
             after: true,
         } ],
         "no-underscore-dangle": [ "error" ], // Não permite _ no nome
+        "@typescript-eslint/prefer-return-this-type": [ "error" ], // Não permite _ no nome
     },
 };
