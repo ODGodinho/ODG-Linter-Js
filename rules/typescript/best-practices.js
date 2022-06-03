@@ -10,14 +10,14 @@ module.exports = {
         "@typescript-eslint/explicit-member-accessibility": [ "error" ], // Força visibility para props
         "space-before-function-paren": [ "off" ], // Não permite espaço antes dos parenteses
         "@typescript-eslint/space-before-function-paren": [ "error", {
-            "anonymous": "never",
-            "named": "never",
-            "asyncArrow": "always",
+            anonymous: "never",
+            named: "never",
+            asyncArrow: "always",
         } ], // Não permite espaço antes dos parenteses
         "@typescript-eslint/explicit-function-return-type": [ "error" ], // Força tipo de retorno
         "no-unused-vars": [ "off" ], // Não permite variáveis não utilizadas
         "@typescript-eslint/no-unused-vars": [ "error", {
-            "args": "after-used",
+            args: "after-used",
         } ], // Não permite variáveis não usado
         "default-param-last": [ "off" ], // Parâmetros default devem ficar no final
         "@typescript-eslint/default-param-last": [ "error" ], // Parâmetros default devem ficar no final
@@ -25,22 +25,22 @@ module.exports = {
         "@typescript-eslint/comma-spacing": [ "error" ], // Espaço apos a virgula
         "comma-dangle": [ "off" ],
         "@typescript-eslint/comma-dangle": [ "error", {
-            "arrays": "always-multiline",
-            "objects": "always-multiline",
-            "imports": "always-multiline",
-            "exports": "always-multiline",
-            "functions": "always-multiline",
-            "enums": "always-multiline",
-            "generics": "always-multiline",
-            "tuples": "always-multiline",
+            arrays: "always-multiline",
+            objects: "always-multiline",
+            imports: "always-multiline",
+            exports: "always-multiline",
+            functions: "always-multiline",
+            enums: "always-multiline",
+            generics: "always-multiline",
+            tuples: "always-multiline",
         } ], // Virgula no final de tudo
         "no-array-constructor": [ "off" ], // Não permite usar new Array()
         "@typescript-eslint/no-array-constructor": [ "error" ], // Não permite usar new Array()
         "no-unused-expressions": [ "off" ], // Não permite expressões desnecessárias
         "@typescript-eslint/no-unused-expressions": [ "error", {
-            "allowTernary": true,
-            "enforceForJSX": true,
-            "allowShortCircuit": true,
+            allowTernary: true,
+            enforceForJSX: true,
+            allowShortCircuit: true,
         } ],
         "no-useless-constructor": [ "off" ], // Não permite construtores desnecessários
         "@typescript-eslint/no-useless-constructor": [ "error" ], // Não permite construtores desnecessários
@@ -58,7 +58,7 @@ module.exports = {
         "@typescript-eslint/no-extra-semi": [ "error" ], // Não permite ;, duplicadas ou desnecessárias
         "@typescript-eslint/no-unnecessary-condition": [ "error" ], // Evita condições sempre true ou false
         "@typescript-eslint/no-misused-promises": [ "error", {
-            "checksConditionals": false, // Bloqueia condições if de promises sem await
+            checksConditionals: false, // Bloqueia condições if de promises sem await
         } ],
         "@typescript-eslint/no-misused-new": [ "error" ], // Não utilize new de forma incorreta em classes/interface
         "@typescript-eslint/ban-types": [ "error" ], // Troques String -> string, Number -> number e etc
@@ -78,8 +78,8 @@ module.exports = {
         "@typescript-eslint/space-infix-ops": [ "error" ], // Espaço na separação operadores
         "keyword-spacing": [ "off" ],
         "@typescript-eslint/keyword-spacing": [ "error", {
-            "before": true,
-            "after": true,
+            before: true,
+            after: true,
         } ],
         "no-underscore-dangle": [ "error" ], // Não permite _ no nome
     },

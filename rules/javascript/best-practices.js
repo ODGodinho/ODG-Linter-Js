@@ -133,7 +133,7 @@ module.exports = {
         "operator-linebreak": [ "error", "before", { overrides: { "+=": "none", "=": "none" } } ], // Sem quebra de linha em operadores
         "array-callback-return": [ "error" ], // Força returno em array callback
         "space-infix-ops": [ "error" ], // Espaço em operadores
-        "curly": [ "error", "multi", "consistent" ], // Utilize chaves em multi linhas
+        "curly": [ "off" ], // Utilize chaves em multi linhas
         "no-useless-rename": [ "error" ], // Disable Rename desnecessários
         "handle-callback-err": [ "error" ], // Funções que recebem error deve ser tratado
         "new-cap": [ "error", { newIsCap: true } ], // New require first Letter uppercase
