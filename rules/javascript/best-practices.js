@@ -142,7 +142,7 @@ module.exports = {
         "no-undef": [ "error" ], // Não chame variáveis não definidas
         "func-names": [ "error", "as-needed" ], // Nome de funções somente quando necessário
         "no-param-reassign": [ "error" ], // Não permite reatribuição de parâmetros
-        "quote-props": [ "error", "consistent-as-needed" ], // Aspas no objeto somente se algum for necessário
+        "quote-props": [ "error", "consistent" ], // Aspas no objeto somente se algum for necessário
         "block-scoped-var": [ "error" ], // INFO: Bloqueia Vars for escopo, mas ainda sim prefira Lets
         "brace-style": [ "error" ], // Força formatação {}
         "comma-style": [ "error", "last" ], // Separa variável por virgula alinhando a direita
