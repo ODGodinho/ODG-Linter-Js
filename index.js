@@ -4,6 +4,7 @@ module.exports = {
         "import",
         "jsdoc",
         "promise",
+        "regexp",
     ],
     env: {
         node: true,
@@ -12,6 +13,7 @@ module.exports = {
     extends: [
         "./rules/javascript/best-practices.js",
         "./rules/javascript/js-doc.js",
+        "./rules/javascript/errors.js",
     ],
     overrides: [
         {

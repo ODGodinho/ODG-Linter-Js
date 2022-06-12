@@ -169,6 +169,25 @@
   - [Validate Block](#validate-block)
   - [Disallow Extra Asterisk](#disallow-extra-asterisk)
   - [Disallow Default Value](#disallow-default-value)
+- [Regex Rules](#regex-rules)
+  - [No Optional With Assertion](#no-optional-with-assertion)
+  - [No Control Character](#no-control-character)
+  - [No Dupe Condition](#no-dupe-condition)
+  - [No Empty Alternative](#no-empty-alternative)
+  - [No Empty Capturing Group](#no-empty-capturing-group)
+  - [No Empty Character Class](#no-empty-character-class)
+  - [No Empty Group](#no-empty-group)
+  - [No Empty Look Rounds Assertion](#no-empty-look-rounds-assertion)
+  - [No Escape Backspace](#no-escape-backspace)
+  - [No Invalid Regexp](#no-invalid-regexp)
+  - [No Lazy Ends](#no-lazy-ends)
+  - [No Misleading Unicode Character](#no-misleading-unicode-character)
+  - [No Optional Assertion](#no-optional-assertion)
+  - [No Potentially Useless BackReference](#no-potentially-useless-back-reference)
+  - [No Useless Assertions](#no-useless-assertions)
+  - [No Useless BackReference](#no-useless-back-reference)
+  - [No Useless Dollar Replacements](#no-useless-dollar-replacements)
+  - [strict](#strict)
 
 ## Introduction
 
@@ -5792,4 +5811,497 @@ function quux(foo) {
 function quux(foo) {
 
 }
+```
+
+## Regex Rules
+
+### No Optional With Assertion
+
+----------
+
+This rule reports elements that contradict an assertion. All elements reported by this rule fall into one of two categories:
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-contradiction-with-assertion.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /a\b-a/;
+var foo = /a\ba/; // handled by regexp/no-useless-assertions
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /a\b-?a/;
+var foo = /a\b(a|-)/;
+var foo = /a\ba*-/;
+```
+
+### No Control Character
+
+----------
+
+Control characters are special, invisible characters in the ASCII range 0-31.
+These characters are rarely used in JavaScript strings so a regular expression
+containing elements that explicitly match these characters is most likely a mistake.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-control-character.html>
+<https://eslint.org/docs/rules/no-control-regex>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /\n/;
+var foo = RegExp("\n");
+
+var pattern1 = /\x20/;
+var pattern2 = /\u0020/;
+var pattern3 = /\u{20}/u;
+var pattern4 = /\t/;
+var pattern5 = /\n/;
+var pattern6 = new RegExp("\x20");
+var pattern7 = new RegExp("\\t");
+var pattern8 = new RegExp("\\n");
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /\x1f/;
+var foo = /\x0a/;
+var foo = RegExp('\x0a');
+
+var pattern1 = /\x00/;
+var pattern2 = /\x0C/;
+var pattern3 = /\x1F/;
+var pattern4 = /\u000C/;
+var pattern5 = /\u{C}/u;
+var pattern6 = new RegExp("\x0C"); // raw U+000C character in the pattern
+var pattern7 = new RegExp("\\x0C"); // \x0C pattern
+```
+
+### No Dupe Condition
+
+----------
+
+This rule disallows duplicate disjunctions.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-dupe-disjunctions.html>
+
+👍 Examples of correct code
+
+```typescript
+const foo = /a|b/
+const foo = /(a|b)/
+const foo = /(?:a|b)/
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const foo = /a|a/
+const foo = /(a|a)/
+const foo = /(?:a|a)/
+const foo = /abc|abc/
+const foo = /[ab]|[ba]/
+const foo = /a|abc/
+const foo = /.|abc/
+const foo = /.|a|b|c/
+```
+
+### No Empty Alternative
+
+----------
+
+While (re-)writing long regular expressions,
+it can happen that one forgets to remove the | character of a former alternative.
+This rule tries to point out these potential mistakes by reporting all empty alternatives.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-empty-alternative.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /(?:)/
+var foo = /a+|b*/
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /a+|b+|/
+var foo = /\|\||\|||\|\|\|/
+var foo = /a(?:a|bc|def|h||ij|k)/
+```
+
+### No Empty Capturing Group
+
+----------
+
+This rule reports capturing group that captures assertions.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-empty-capturing-group.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /(?:)/
+var foo = /a+|b*/
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /a+|b+|/
+var foo = /\|\||\|||\|\|\|/
+var foo = /a(?:a|bc|def|h||ij|k)/
+```
+
+### No Empty Character Class
+
+----------
+
+This rule reports character classes that cannot match any characters.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-empty-character-class.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /abc[d]/;
+var foo = /abc[a-z]/;
+var foo = /[^]/;
+var foo = /[\s\S]/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /abc[]/;
+var foo = /[^\s\S]/;
+```
+
+### No Empty Group
+
+----------
+
+This rule reports empty groups.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-empty-group.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /(a)/;
+var foo = /(?:a)/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /()/;
+var foo = /(|)/;
+// non-capturing group
+var foo = /(?:)/;
+var foo = /(?:|)/;
+```
+
+### No Empty Look Rounds Assertion
+
+----------
+
+This rule reports empty lookahead assertion or empty lookbehind assertion.
+
+> What are empty lookarounds?
+
+An empty lookaround is a lookaround for which at least one path in the lookaround expression
+contains only elements that do not consume characters and do not assert characters.
+This means that the lookaround expression will trivially accept any input string.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-empty-lookarounds-assertion.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /x(?=y)/;
+var foo = /x(?!y)/;
+var foo = /(?<=y)x/;
+var foo = /(?<!y)x/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /x(?=)/;
+var foo = /x(?!)/;
+var foo = /(?<=)x/;
+var foo = /(?<!)x/;
+var foo = /(?=b?)\w/;
+var foo = /(?!b?)\w/;
+```
+
+### No Escape Backspace
+
+----------
+
+This rule reports [\b].
+The word boundaries (\b) and the escape backspace ([\b]) are indistinguishable at a glance.
+This rule does not allow backspace ([\b]). Use unicode escapes (\u0008) instead.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-escape-backspace.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /\b/;
+var foo = /\u0008/;
+var foo = /\cH/;
+var foo = /\x08/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /[\b]/;
+```
+
+### No Invalid Regexp
+
+----------
+
+This rule reports invalid regular expression patterns given to RegExp constructors.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-invalid-regexp.html>
+
+👍 Examples of correct code
+
+```typescript
+RegExp('foo')
+RegExp('[a' + ']')
+```
+
+👎 Examples of incorrect code
+
+```typescript
+RegExp('\\')
+RegExp('[a-Z]*')
+RegExp('\\p{Foo}', 'u')
+
+const space = '\\s*'
+RegExp('=' + space + '+(\\w+)', 'u')
+```
+
+### No Lazy Ends
+
+----------
+
+If a lazily quantified element is the last element matched by an expression (e.g. the a{2,3}? in b+a{2,3}?),
+we know that the lazy quantifier will always only match the element the minimum number of times.
+The maximum is completely ignored because the expression can accept after the minimum was reached.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-lazy-ends.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /a+?b*/.test(str)
+var foo = /a??(?:ba+?|c)*/.test(str)
+var foo = /ba*?$/.test(str)
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /a??/.test(str)
+var foo = /a+b+?/.test(str)
+var foo = /a(?:c|ab+?)?/.test(str)
+```
+
+### No Misleading Unicode Character
+
+----------
+
+This rule reports misleading Unicode characters.
+
+Some Unicode characters like '❇️', '🇧🇷', and '👨‍👩‍👦' consist of multiple code points.
+This causes problems in character classes and around quantifiers. E.g.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-misleading-unicode-character.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /👍+/u;
+var foo = /👨‍👩‍👦/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /👍+/;
+var foo = /[❇️👨‍👩‍👦]❤️/;
+```
+
+### No Optional Assertion
+
+----------
+
+Assertions that are quantified (directly or indirectly) can be considered optional
+if the quantifier has a minimum of zero.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-optional-assertion.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /\w+(?::|\b)/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /a(?:$)*b/;
+var foo = /a(?:foo|(?<!-)(?:-|\b))*b/; // The `\b` is optional.
+var foo = /(?:^)?\w+/;   // warns about `^`
+var foo = /\w+(?::|$)?/; // warns about `$`
+```
+
+### No Potentially Useless BackReference
+
+----------
+
+If the referenced group of a backreference is not matched because some other path leads to the backreference,
+the backreference will trivially accept (e.g. /(?:(a)|b)\1/).
+The same will happen if the captured text of the referenced group was reset before reaching the backreference.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-potentially-useless-backreference.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /(a+)b\1/;
+var foo = /(a+)b|\1/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /(?:(a)|b)\1/;
+var foo = /(a)?b\1/;
+var foo = /((a)|c)+b\2/;
+```
+
+### No Useless Assertions
+
+----------
+
+Some assertion are unnecessary because the rest of the pattern forces them to always be accept (or reject).
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-useless-assertions.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /\bfoo\b/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /#\bfoo/;    // \b will always accept
+var foo = /foo\bbar/;  // \b will always reject
+var foo = /$foo/;      // $ will always reject
+var foo = /(?=\w)\d+/; // (?=\w) will always accept
+```
+
+### No Useless BackReference
+
+----------
+
+Backreferences that will always trivially accept serve no function and can be removed.
+
+This rule is a based on the ESLint core no-useless-backreference rule.
+It reports all the ESLint core rule reports and some more.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-useless-backreference.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /(a)b\1/;
+var foo = /(a?)b\1/;
+var foo = /(\b|a)+b\1/;
+var foo = /(a)?(?:a|\1)/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /\1(a)/;
+var foo = /(a\1)/;
+var foo = /(a)|\1/;
+var foo = /(?:(a)|\1)+/;
+var foo = /(?<=(a)\1)/;
+var foo = /(\b)a\1/;
+```
+
+### No Useless Dollar Replacements
+
+----------
+
+This rule aims to detect and disallow useless $ replacements in regular expression replacements.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-useless-dollar-replacements.html>
+
+👍 Examples of correct code
+
+```typescript
+var newStr = str.replace(/(\w+)\s(\w+)/, '$2, $1');
+// newStr = "Smith, John"
+
+var newStr = str.replace(/(?<first>\w+)\s(?<last>\w+)/, '$<last>, $<first>');
+// newStr = "Smith, John"
+
+'123456789012'.replaceAll(/(.)../g, '$1**'); // "1**4**7**0**"
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var newStr = str.replace(/(\w+)\s(\w+)/, '$3, $1 $2');
+// newStr = "$3, John Smith"
+
+var newStr = str.replace(/(?<first>\w+)\s(?<last>\w+)/, '$<last>, $<first> $<middle>');
+// newStr = "Smith, John "
+
+var newStr = str.replace(/(\w+)\s(\w+)/, '$<last>, $<first>');
+// newStr = "$<last>, $<first>"
+```
+
+### Strict
+
+----------
+
+This rule disallows not strictly valid regular expressions.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/strict.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /\}/
+var foo = /\{/
+var foo = /\]/
+var foo = /\u{42}/u; // It matches "B".
+var foo = /u{42}/; // It matches a string followed by 42 "u"s.
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /}/
+var foo = /{/
+var foo = /]/
+var foo = /\u{42}/; // It matches a string followed by 42 "u"s.
 ```
