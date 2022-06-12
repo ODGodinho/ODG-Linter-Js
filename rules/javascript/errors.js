@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 module.exports = {
     rules: {
         "regexp/no-contradiction-with-assertion": [ "error" ], // Não coloque opcional em uma das condições
@@ -20,6 +19,5 @@ module.exports = {
         "regexp/no-useless-backreference": [ "error" ],
         "regexp/no-useless-dollar-replacements": [ "error" ],
         "regexp/strict": [ "error" ],
-
     },
 };
