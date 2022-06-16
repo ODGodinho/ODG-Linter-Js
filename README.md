@@ -231,9 +231,13 @@
 Add dependence to package.json
 
 ```bash
-npm install eslint @odg/eslint-config-odg-linter-js eslint-plugin-jsdoc@* eslint-plugin-import@* eslint-plugin-promise@* --save-dev
+npm install eslint @odg/eslint-config-odg-linter-js \
+    eslint-plugin-jsdoc@* eslint-plugin-import@* \
+    eslint-plugin-promise@* eslint-plugin-regexp@* --save-dev
 # or
-yarn add -D eslint @odg/eslint-config-odg-linter-js eslint-plugin-jsdoc@* eslint-plugin-import@* eslint-plugin-promise@*
+yarn add -D eslint @odg/eslint-config-odg-linter-js \
+    eslint-plugin-jsdoc@* eslint-plugin-import@* \
+    eslint-plugin-promise@* eslint-plugin-regexp@*
 ```
 
 Add extends in your `.eslintrc` file
@@ -5080,7 +5084,6 @@ function bar() {
     };
 }
 ```
-
 
 ## Object BreakLine
 
