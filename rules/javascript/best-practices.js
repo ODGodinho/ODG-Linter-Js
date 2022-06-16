@@ -150,5 +150,50 @@ module.exports = {
         "object-property-newline": [ "error", {
             allowAllPropertiesOnSameLine: true,
         } ], // Quebre todos objetos ou nenhum
+        "regexp/confusing-quantifier": [ "error" ], // No Especifique quantidade em opcional
+        "regexp/control-character-escape": [ "error" ], // Use \r ao invés de \u0009
+        "regexp/negation": [ "error" ], // This rule enforces use of \D, \W, \S and \P on negation.
+        "regexp/no-dupe-characters-character-class": [ "error" ], // Rvita condições duplicada em []
+        "regexp/no-invisible-character": [ "error" ], // Evita colocar tab espaço em regex
+        "regexp/no-legacy-features": [ "error", {
+            staticProperties: [
+                "input", "$_",
+                "lastMatch", "$&",
+                "lastParen", "$+",
+                "leftContext", "$`",
+                "rightContext", "$'",
+                "$1", "$2", "$3", "$4", "$5", "$6", "$7", "$8", "$9",
+            ],
+            prototypeMethods: [ "compile" ],
+        } ],
+        "regexp/no-non-standard-flag": [ "error" ], // Bloqueia flags não padronizada
+        "regexp/no-obscure-range": [ "error" ], // Range regex /[A-\x43]/;
+        "regexp/no-trivially-nested-quantifier": [ "error" ], // Bloqueia flags não padronizada
+        "regexp/no-unused-capturing-group": [ "error" ], // Não crie grupos que não está sendo usado.
+        "regexp/no-useless-character-class": [ "error" ], // Não crie blocos desnecessários
+        "regexp/no-useless-flag": [ "error" ], // Não Use Flag desnecessários
+        "regexp/no-useless-lazy": [ "error" ],
+        "regexp/no-useless-quantifier": [ "error" ], // Não permite Quantifiers sem efeitos
+        "regexp/no-useless-range": [ "error" ], // Não permite Range desnecessários
+        "regexp/no-useless-two-nums-quantifier": [ "error" ], // Não permite Range Iguais
+        "regexp/no-zero-quantifier": [ "error" ], // Não permite Quantidade {0}
+        "regexp/optimal-lookaround-quantifier": [ "error" ],
+        "regexp/optimal-quantifier-concatenation": [ "error" ],
+        "regexp/prefer-quantifier": [ "error" ], // Use {4} ao invés de replicar
+        "regexp/prefer-range": [ "error" ], // Prefira [0-9] ao invés [1234567890]
+        "regexp/sort-alternatives": [ "error" ], // Coloque [a|b|c] ordem alfabética
+        "regexp/hexadecimal-escape": [ "error" ], // \x0a ao invés \u000a
+        "regexp/match-any": [ "error" ], // Não da match com qualquer coisa
+        "regexp/no-useless-escape": [ "error" ], // Não coloca \ contra em local sem efeito
+        "regexp/no-useless-non-capturing-group": [ "error" ], // Grupo não necessário
+        "regexp/prefer-character-class": [ "error" ], // Prefira [] ao invés de |
+        "regexp/prefer-d": [ "error" ], // Prefira \d
+        "regexp/prefer-plus-quantifier": [ "error" ], // Prefira + ao invés de {1, }
+        "regexp/prefer-question-quantifier": [ "error" ], // Prefira ? ao invés de {0,1}
+        "regexp/prefer-star-quantifier": [ "error" ], // Prefira * ao invés de {0,}
+        "regexp/prefer-unicode-codepoint-escapes": [ "error" ], // Use Unicode
+        "regexp/prefer-w": [ "error" ], // Use \w
+        "regexp/sort-character-class-elements": [ "error" ], // Coloque [] em ordem Alfabética
+        "regexp/sort-flags": [ "error" ], // Flag em ordem alfabética
     },
 };

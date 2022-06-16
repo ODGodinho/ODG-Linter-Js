@@ -188,6 +188,41 @@
   - [No Useless BackReference](#no-useless-back-reference)
   - [No Useless Dollar Replacements](#no-useless-dollar-replacements)
   - [strict](#strict)
+  - [Confusing Quantifier](#confusing-quantifier)
+  - [Control Character Escape](#control-character-escape)
+  - [Negation](#negation)
+  - [No Dupe Characters Character Class](#no-dupe-characters-character-class)
+  - [No Invisible Character](#no-invisible-character)
+  - [No Legacy Features](#no-legacy-features)
+  - [No Non Standard Flag](#no-non-standard-flag)
+  - [No Obscure Range](#no-obscure-range)
+  - [No Trivially Nested Quantifier](#no-trivially-nested-quantifier)
+  - [No Unused Capturing Group](#no-unused-capturing-group)
+  - [No Useless Character Class](#no-useless-character-class)
+  - [No Useless Flag](#no-useless-flag)
+  - [No Useless Lazy](#no-useless-lazy)
+  - [No Useless Quantifier](#no-useless-quantifier)
+  - [No Useless Range](#no-useless-range)
+  - [No Useless Two Num Quantifier](#no-useless-two-num-quantifier)
+  - [No Zero Quantifier](#no-zero-quantifier)
+  - [Optimal LookAround Quantifier](#optimal-look-around-quantifier)
+  - [Optimal Quantifier Concatenation](#optimal-quantifier-concatenation)
+  - [Prefer Quantifier](#prefer-quantifier)
+  - [Prefer Range](#prefer-range)
+  - [Sort Alternatives](#sort-alternatives)
+  - [Hexadecimal Escape](#hexadecimal-escape)
+  - [Match Any](#match-any)
+  - [No Useless Escape](#no-useless-escape)
+  - [No Useless Non Capturing Group](#no-useless-non-capturing-group)
+  - [Prefer Character Class](#prefer-character-class)
+  - [Prefer D](#prefer-d)
+  - [Prefer Plus](#prefer-plus)
+  - [Prefer Question Quantifier](#prefer-question-quantifier)
+  - [Prefer Star Quantifier](#prefer-star-quantifier)
+  - [Prefer Unicode CodePoint Escapes](#prefer-unicode-code-point-escapes)
+  - [Prefer W](#prefer-w)
+  - [Sort Character Class Elements](#sort-character-class-elements)
+  - [Sort Flags](#sort-flags)
 
 ## Introduction
 
@@ -6304,4 +6339,899 @@ var foo = /}/
 var foo = /{/
 var foo = /]/
 var foo = /\u{42}/; // It matches a string followed by 42 "u"s.
+```
+
+### Confusing Quantifier
+
+----------
+
+Confusing quantifiers are ones which imply one thing but don't deliver on that.
+
+An example of this is (?:a?b*|c+){4}. The group is quantified with {4} which implies that at least 4 characters
+will be matched but this is not the case. The whole pattern will match the empty string.
+It does that because in the a?b* alternative, it's possible to choose 0 many a and b.
+So rather than {4}, {0,4} should be used to reflect the fact that the empty string can be matched.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/confusing-quantifier.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /a*/;
+var foo = /(a|b|c)+/;
+var foo = /a?/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /(a?){4}/; // warns about `{4}`
+var foo = /(a?b*)+/; // warns about `+`
+```
+
+### Control Character Escape
+
+----------
+
+This rule reports control characters that were not escaped using a control escape (\0, t, \n, \v, f, \r).
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/control-character-escape.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /[\n\r]/;
+var foo = /\t/;
+var foo = RegExp("\t+\n");
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /	/;
+var foo = /\u0009/;
+var foo = /\u{a}/u;
+var foo = RegExp("\\u000a");
+```
+
+### Negation
+
+----------
+
+This rule enforces use of \D, \W, \S and \P on negation.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/negation.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /\D/
+var foo = /\W/
+var foo = /\S/
+var foo = /\P{ASCII}/u
+
+var foo = /\d/
+var foo = /\w/
+var foo = /\s/
+var foo = /\p{ASCII}/u
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /[^\d]/
+var foo = /[^\w]/
+var foo = /[^\s]/
+var foo = /[^\p{ASCII}]/u
+
+var foo = /[^\D]/
+var foo = /[^\W]/
+var foo = /[^\S]/
+var foo = /[^\P{ASCII}]/u
+```
+
+### No Dupe Characters Character Class
+
+----------
+
+Because multiple same character classes in regular expressions only one is useful,
+they might be typing mistakes.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-dupe-characters-character-class.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /[\(\)]/;
+
+var foo = /[a-z\s]/;
+
+var foo = /[\w]/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /[\\(\\)]/;
+//          ^^ ^^        "\\" are duplicated
+var foo = /[a-z\\s]/;
+//          ^^^  ^       "s" are duplicated
+var foo = /[\w0-9]/;
+//          ^^^^^        "0-9" are duplicated
+```
+
+### No Invisible Character
+
+----------
+
+This rule disallows using invisible characters other than SPACE (U+0020) without using escapes.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-invisible-character.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /\t/;
+var foo = /\v/;
+var foo = /\f/;
+var foo = /\u3000/;
+var foo = / /; // SPACE (`U+0020`)
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /	/;
+var foo = //;
+var foo = //;
+var foo = /　/;
+```
+
+### No Legacy Features
+
+----------
+
+This rule disallow legacy RegExp features.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-legacy-features.html>
+
+👍 Examples of correct code
+
+```typescript
+
+```
+
+👎 Examples of incorrect code
+
+```typescript
+RegExp.input
+RegExp.$_
+RegExp.lastMatch
+RegExp["$&"]
+RegExp.lastParen
+RegExp["$+"]
+RegExp.leftContext
+RegExp["$`"]
+RegExp.rightContext
+RegExp["$'"]
+RegExp.$1
+RegExp.$2
+RegExp.$3
+RegExp.$4
+RegExp.$5
+RegExp.$6
+RegExp.$7
+RegExp.$8
+RegExp.$9
+
+const regexObj = new RegExp('foo', 'gi');
+regexObj.compile('new foo', 'g');
+```
+
+### No Non Standard Flag
+
+----------
+
+This rule reports non-standard flags.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-non-standard-flag.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /a*b*c/guy;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = RegExp("a*b*c", "l"); // L don1t exists
+```
+
+### No Obscure Range
+
+----------
+
+The character range operator (the - inside character classes) can easily be misused
+(mostly unintentionally) to construct non-obvious character class.
+This rule will disallow all non-obvious uses of the character range operator.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-obscure-range.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /[a-z]/;
+var foo = /[J-O]/;
+var foo = /[1-9]/;
+var foo = /[\x00-\x40]/;
+var foo = /[\0-\uFFFF]/;
+var foo = /[\0-\u{10FFFF}]/u;
+var foo = /[\1-\5]/;
+var foo = /[\cA-\cZ]/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /[A-\x43]/;
+var foo = /[\41-\x45]/;
+var foo = /[!-$]/;
+var foo = /[😀-😄]/u;
+```
+
+### No Trivially Nested Quantifier
+
+----------
+
+The character range operator (the - inside character classes) can easily be misused
+(mostly unintentionally) to construct non-obvious character class.
+This rule will disallow all non-obvious uses of the character range operator.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-obscure-range.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /[a-z]/;
+var foo = /[J-O]/;
+var foo = /[1-9]/;
+var foo = /[\x00-\x40]/;
+var foo = /[\0-\uFFFF]/;
+var foo = /[\0-\u{10FFFF}]/u;
+var foo = /[\1-\5]/;
+var foo = /[\cA-\cZ]/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /[A-\x43]/;
+var foo = /[\41-\x45]/;
+var foo = /[!-$]/;
+var foo = /[😀-😄]/u;
+```
+
+### No Unused Capturing Group
+
+----------
+
+This rule reports unused capturing groups.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-unused-capturing-group.html>
+
+👍 Examples of correct code
+
+```typescript
+var matches = '2000-12-31 2001-01-01'.match(/(\d{4})-(\d{2})-(\d{2})/)
+var y = matches[1] // "2000"
+var m = matches[2] // "12"
+var d = matches[3] // "31"
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var isDate = /(\d{4})-(\d{2})-(\d{2})/.test('2000-12-31') // true But group never used
+```
+
+### No Useless Character Class
+
+----------
+
+This rule reports character classes that defines only one character.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-useless-character-class.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /abc/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /a[b]c/;
+```
+
+### No Useless Flag
+
+----------
+
+This will point out present regex flags that do not change the pattern.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-useless-character-class.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /a|b/i;
+
+var foo = /^foo$/m;
+
+var foo = /a.*?b/s;
+
+const regex1 = /foo/y;
+const str = 'table football, foosball';
+regex1.lastIndex = 6
+var array = regex1.exec(str)
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /\.{3}/i;
+var foo = /\w+/i;
+
+var foo = /foo|[^\r\n]*/m;
+var foo = /a|b/m;
+
+var foo = /[.:]/s;
+var foo = /^foo$/s;
+
+str.split(/foo/y);
+```
+
+### No Useless Lazy
+
+----------
+
+This rule reports lazy quantifiers that don't need to by lazy.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-useless-lazy.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /a*?/;
+var foo = /a+?/;
+var foo = /a{4,}?/;
+var foo = /a{2,4}?/;
+var foo = /a[\s\S]*?bar/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /a{1}?/;
+var foo = /a{4}?/;
+var foo = /a{2,2}?/;
+var foo = /ab+?c/;
+```
+
+### No Useless Quantifier
+
+----------
+
+This rule reports quantifiers that can trivially be removed without affecting the pattern.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-useless-quantifier.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /a*/;
+var foo = /(?:a|b?)??/;
+var foo = /(?:\b|(?!a))*/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /a{1}/;
+var foo = /(?:\b)+/;
+var foo = /(?:a+b*|c*)?/;
+```
+
+### No Useless Range
+
+----------
+
+This rule reports unnecessary range of characters by using a hyphen. e.g. `[a-a]`
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-useless-range.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /[a]/
+var foo = /[ab]/
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /[a-a]/
+var foo = /[a-b]/
+```
+
+### No Useless Two Num Quantifier
+
+----------
+
+This rule reports unnecessary {n,m} quantifiers.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-useless-two-nums-quantifier.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /a{0,1}/;
+var foo = /a{1,5}/;
+var foo = /a{1,}/;
+var foo = /a{2}/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /a{0,0}/;
+var foo = /a{1,1}/;
+var foo = /a{2,2}/;
+```
+
+### No Zero Quantifier
+
+----------
+
+This rule reports quantifiers with a maximum of zero.
+These quantifiers trivially do not affect the pattern is any way and can be removed.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-zero-quantifier.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /a?/;
+var foo = /a{0,}/;
+var foo = /a{0,1}/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /a{0}/;
+var foo = /a{0,0}?/;
+var foo = /(a){0}/;
+```
+
+### Optimal LookAround Quantifier
+
+----------
+
+Non-constant quantifiers are quantifiers that describe a range.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/optimal-lookaround-quantifier.html>
+
+👍 Examples of correct code
+
+```typescript
+// lookaheads
+var foo = /\w+(?=\s*:)/;
+
+// lookbehinds
+var foo = /(?<=ab+)/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+// lookaheads
+var foo = /(?=ab+)/; // == /(?=ab)/
+var foo = /(?=ab*)/; // == /(?=a)/
+var foo = /(?!ab?)/; // == /(?!a)/
+var foo = /(?!ab{6,})/; // == /(?!ab{6})/
+
+// lookbehinds
+var foo = /(?<=a+b)/; // == /(?<=ab)/
+var foo = /(?<!\w*\s*,)/; // == /(?<!,)/
+```
+
+### Optimal Quantifier Concatenation
+
+----------
+
+If two quantified characters, character classes, or characters are concatenated,
+the quantifiers can be optimized if either of the characters elements is a subset of the other.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/optimal-lookaround-quantifier.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /\w+\d{4}/;
+var foo = /\w{3,5}\d*/;
+var foo = /a+b+c+d+[abc]+/;
+var foo = /a\w*/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /\w+\d+/;
+var foo = /\w+\d?/;
+var foo = /[ab]*(?:a|b)/;
+var foo = /\w+(?:(a)|b)*/;
+```
+
+### Prefer Quantifier
+
+----------
+
+This rule is aimed to use quantifiers instead of consecutive characters in regular expressions.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/optimal-lookaround-quantifier.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /\d{4}-\d{2}-\d{2}/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /\d\d\d\d-\d\d-\d\d/;
+```
+
+### Prefer Range
+
+----------
+
+This rule is aimed to use ranges instead of multiple adjacent characters in character class.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-range.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /[0-9]/
+var foo = /[a-f]/
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /[123456789]/
+var foo = /[a-cd-f]/
+```
+
+### Sort Alternatives
+
+----------
+
+This rule will only sort alternatives if reordering the alternatives doesn't affect the pattern.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/sort-alternatives.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /\b(1|2|3)\b/;
+var foo = /\b(alpha|beta|gamma)\b/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /\b(2|1|3)\b/;
+var foo = /__(?:Foo|Bar)__/;
+var foo = /\((?:TM|R|C)\)/;
+```
+
+### Hexadecimal Escape
+
+----------
+
+This rule aims is enforces the consistent use of hexadecimal escapes.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/hexadecimal-escape.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /\x0a/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /\u000a/;
+var foo = /\u{a}/u;
+```
+
+### Match Any
+
+----------
+
+This rule enforces the regular expression notation to match any character.
+e.g. `[\s\S], [^], /./s` (dotAll) and more.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/match-any.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /[\s\S]/;
+var foo = /./s;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /[\S\s]/;
+var foo = /[^]/;
+var foo = /[\d\D]/;
+var foo = /[\w\W]/;
+```
+
+### No Useless Escape
+
+----------
+
+This rule reports unnecessary escape characters in RegExp.
+You may be able to find another mistake by finding unnecessary escapes.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-useless-escape.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /\[/
+var foo = /\\/
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /\a/
+var foo = /\x7/
+var foo = /\u41/
+var foo = /\u{[41]}/
+```
+
+### No Useless Non Capturing Group
+
+----------
+
+This rule reports unnecessary non-capturing group
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-character-class.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /(?:abcd)?/.test(str)
+var foo = /a(?:ab|cd)/.test(str)
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /(?:ab|cd)/.test(str)
+var foo = /(?:abcd)/.test(str)
+var foo = /(?:[a-d])/.test(str)
+var foo = /(?:[a-d])|e/.test(str)
+var foo = /(?:a|(?:b|c)|d)/.test(str)
+```
+
+### Prefer Character Class
+
+----------
+
+Instead of single-character alternatives
+(e.g. (?:a|b|c)),character classes (e.g. [abc]) should be preferred.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-useless-non-capturing-group.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /[abc]/
+var foo = /(?:a|b)/
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /a|b|c/
+var foo = /(a|b|c)c/
+var foo = /.|\s/
+var foo = /(\w|\d)+:/
+```
+
+### Prefer D
+
+----------
+
+This rule is aimed at using \d instead of [0-9] in regular expressions.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-d.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /\d/;
+var foo = /\D/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /[0-9]/;
+var foo = /[^0-9]/;
+```
+
+### Prefer Plus
+
+----------
+
+This rule is aimed at using + quantifier instead of {1,} in regular expressions.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-plus-quantifier.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /a+/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /a{1,}/;
+```
+
+### Prefer Question Quantifier
+
+----------
+
+This rule is aimed at using ? quantifier instead of {0,1} in regular expressions.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-question-quantifier.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /a?/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /a{0,1}/;
+```
+
+### Prefer Star Quantifier
+
+----------
+
+This rule is aimed at using * quantifier instead of {0,} in regular expressions.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-star-quantifier.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /a*/
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /a{0,}/;
+```
+
+### Prefer Unicode CodePoint Escapes
+
+----------
+
+This rule enforces the use of Unicode codepoint escapes instead of Unicode escapes using surrogate pairs.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-unicode-codepoint-escapes.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /\u{1f600}/u
+var foo = /😀/u
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /\ud83d\ude00/u
+```
+
+### Prefer W
+
+----------
+
+This rule is aimed at using \w in regular expressions.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-w.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /\w/;
+var foo = /\W/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /[0-9a-zA-Z_]/;
+var foo = /[^0-9a-zA-Z_]/;
+var foo = /[0-9a-z_]/i;
+var foo = /[0-9a-z_-]/i;
+```
+
+### Sort Character Class Elements
+
+----------
+
+This rule checks elements of character classes are sorted.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/sort-character-class-elements.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /[abcdef]/
+var foo = /[ab-f]/
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /[bcdefa]/
+var foo = /[b-fa]/
+```
+
+### Sort Flags
+
+----------
+
+The flags of JavaScript regular expressions should be sorted alphabetically because the flags of the
+`.flags` property of `RegExp` objects are always sorted.
+Not sorting flags in regex literals misleads readers into thinking
+that the order may have some purpose which it doesn't.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/sort-flags.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /abc/
+var foo = /abc/iu
+var foo = /abc/gimsuy
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /abc/mi
+var foo = /abc/us
 ```
