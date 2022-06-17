@@ -206,6 +206,6 @@ module.exports = {
             { "blankLine": "always", "prev": "*", "next": "class" }, // Uma linha em branco antes da classe
         ],
         "filenames/match-regex": [ "error", "^[a-zA-Z0-9_-]+$" ], // Nome de arquivo deve ser alfanumérico
-        "filenames/match-exported": [ "error", "^[a-zA-Z0-9_-]+$" ],
+        "filenames/match-exported": [ "error", "^[a-zA-Z0-9_-]+$" ], // Nome do arquivo igual export default
     },
 };
