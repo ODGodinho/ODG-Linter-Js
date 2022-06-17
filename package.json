@@ -1,6 +1,6 @@
 {
   "name": "@odg/eslint-config-odg-linter-js",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "Linter configuration for JavaScript style guide",
   "main": "index.js",
   "scripts": {},
@@ -14,7 +14,7 @@
     "@typescript-eslint/eslint-plugin": "*",
     "@typescript-eslint/parser": "*",
     "eslint": "*",
-    "eslint-find-rules": "*",
+    "eslint-plugin-filenames": "*",
     "eslint-plugin-import": "*",
     "eslint-plugin-jsdoc": "*",
     "eslint-plugin-promise": "*",
@@ -23,7 +23,11 @@
   },
   "peerDependencies": {
     "eslint": "*",
-    "eslint-plugin-import": "*"
+    "eslint-plugin-filenames": "*",
+    "eslint-plugin-import": "*",
+    "eslint-plugin-jsdoc": "*",
+    "eslint-plugin-promise": "*",
+    "eslint-plugin-regexp": "*"
   },
   "bugs": {
     "url": "https://github.com/ODGodinho/ODG-Linter-Js/issues"

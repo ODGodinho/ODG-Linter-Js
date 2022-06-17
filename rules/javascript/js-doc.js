@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 module.exports = {
     rules: {
         "spaced-comment": [ "error", "always", {
@@ -25,7 +24,10 @@ module.exports = {
         "jsdoc/multiline-blocks": [ "error" ], // Valida mútilos blocos
         "jsdoc/newline-after-description": [ "error" ], // Requer linha em branco apos a descrição
         "jsdoc/no-bad-blocks": [ "error" ], // DockBlock deve ter apenas 2 asteriscos
-        "jsdoc/no-multi-asterisks": [ "error", { preventAtMiddleLines: true, preventAtEnd: true } ], // Sem asteriscos duplicado na docblock
+        "jsdoc/no-multi-asterisks": [
+            "error",
+            { preventAtMiddleLines: true, preventAtEnd: true },
+        ], // Sem asteriscos duplicado na docblock
         "jsdoc/no-defaults": [ "error" ], // Não permite [user_id=1] para informar valor padrão
         "jsdoc/no-undefined-types": [ "error" ], // Valida Tipos não existentes
         "jsdoc/require-asterisk-prefix": [ "error" ], // Requer * docblock multiline
