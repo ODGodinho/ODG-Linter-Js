@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 module.exports = {
     rules: {
         "indent": [ "error", 4 ], // 4 spaces
@@ -67,7 +66,7 @@ module.exports = {
         "unicode-bom": [ "error", "never" ], // Disabled "unicode-bom"
         "space-in-parens": [ "error", "never" ], // Não permite espaço entre parenteses
         "no-multi-spaces": [ "error" ], // Nao permite vários espaços if(  i  )
-        "computed-property-spacing": [ "error", "never" ], // Desabilita espaço ao recuperar array $a[ 'ITEM' ]; ou $a[ ] = 12;
+        "computed-property-spacing": [ "error", "never" ], // Desliga espaço ao recuperar item $a[ 'I' ] ou $a[ ] = 12;
         "no-useless-concat": [ "error" ], // Desabilita concatenação de strings desnecessárias ex: "a" + "b"
         "no-self-assign": [ "error" ], // Nao se atribua seu próprio valor a variável
         "array-bracket-newline": [ "error", "consistent" ], // Quebra linha Array
@@ -111,7 +110,7 @@ module.exports = {
         "no-new-func": [ "error" ], // Não permite usar new Function()
         "no-redeclare": [ "error" ], // Não permite redeclarar variáveis
         "no-self-compare": [ "error" ], // Não permite comparar com seu próprio valor
-        "no-unmodified-loop-condition": [ "error" ], // Não permite loop sem modificar o valor do contador ou check único
+        "no-unmodified-loop-condition": [ "error" ], // Loop sem modificar o valor do contador ou check único
         "no-useless-escape": [ "error" ], // Não permite usar escape desnecessárias
         "yoda": [ "error" ], // Força if Variável === "COMPARATION"
         "no-undef-init": [ "error" ], // Não permite variáveis definidas como undefined ao inicializar
@@ -119,7 +118,7 @@ module.exports = {
         "prefer-template": [ "error" ], // Prefer template literals over string concatenation
         "no-multiple-empty-lines": [ "error", { max: 1 } ], // Não permita varias linhas em branco
         "no-async-promise-executor": [ "error" ], // Não permita use função async para executar promise
-        "prefer-promise-reject-errors": [ "error" ], // Utilize exception im promise ao invés de string/number ou outra coisa
+        "prefer-promise-reject-errors": [ "error" ], // Passe uma Exception em promise ao invés de string/number
         "semi-spacing": [ "error", { before: false, after: true } ], // Não permite espaço antes do ;
         "no-var": [ "error" ], // Não user var prefira let ou const
         "promise/no-new-statics": [ "error" ], // Não permite usar new em static promise
@@ -130,7 +129,11 @@ module.exports = {
         "promise/no-return-in-finally": [ "error" ], // No Return in finally
         "promise/valid-params": [ "error" ], // Valida Parâmetros da promise
         "import/newline-after-import": [ "error", { count: 1 } ], // Linhas em branco apos o import
-        "operator-linebreak": [ "error", "before", { overrides: { "+=": "none", "=": "none" } } ], // Sem quebra de linha em operadores
+        "operator-linebreak": [
+            "error",
+            "before",
+            { overrides: { "+=": "none", "=": "none" } },
+        ], // Sem quebra de linha em operadores
         "array-callback-return": [ "error" ], // Força returno em array callback
         "space-infix-ops": [ "error" ], // Espaço em operadores
         "curly": [ "off" ], // Utilize chaves em multi linhas
@@ -202,5 +205,7 @@ module.exports = {
             { "blankLine": "always", "prev": "*", "next": "export" }, // Uma linha em branco antes do export
             { "blankLine": "always", "prev": "*", "next": "class" }, // Uma linha em branco antes da classe
         ],
+        "filenames/match-regex": [ "error", "^[a-zA-Z0-9_-]+$" ], // Nome de arquivo deve ser alfanumérico
+        "filenames/match-exported": [ "error", "^[a-zA-Z0-9_-]+$" ],
     },
 };

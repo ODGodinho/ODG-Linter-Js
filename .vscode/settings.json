@@ -2,6 +2,7 @@
     "conventionalCommits.scopes": [
         "Rules",
         "Regex",
-        "Docs"
+        "Docs",
+        "Convention"
     ]
 }

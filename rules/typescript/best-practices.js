@@ -1,4 +1,3 @@
-/* eslint-disable max-len */
 module.exports = {
     rules: {
         "indent": [ "off" ], // 4 spaces
@@ -6,7 +5,10 @@ module.exports = {
         "quotes": [ "off" ], // Aspas duplas
         "@typescript-eslint/quotes": [ "error", "double" ], // Força aspas dupla
         "lines-between-class-members": [ "off" ], // Força linha em branco entre props classe e funções
-        "@typescript-eslint/lines-between-class-members": [ "error", "always" ], // Força linha em branco entre props classe e funções
+        "@typescript-eslint/lines-between-class-members": [
+            "error",
+            "always",
+        ], // Força linha em branco entre props classe e funções
         "@typescript-eslint/explicit-member-accessibility": [ "error" ], // Força visibility para props
         "space-before-function-paren": [ "off" ], // Não permite espaço antes dos parenteses
         "@typescript-eslint/space-before-function-paren": [ "error", {
@@ -66,12 +68,19 @@ module.exports = {
         "@typescript-eslint/no-empty-function": [ "error" ], // Não permite funções vazias
         "no-duplicate-imports": [ "off" ], // Bloqueia import duplicado
         "@typescript-eslint/no-duplicate-imports": [ "error" ], // Bloqueia import Duplicado
-        "@typescript-eslint/no-unnecessary-type-constraint": [ "error" ], // Não permite restrições de tipo desnecessárias <T extends any>
+        "@typescript-eslint/no-unnecessary-type-constraint": [
+            "error",
+        ], // Não permite restrições de tipo desnecessárias <T extends any>
         "@typescript-eslint/prefer-as-const": [ "error" ], // Preferir constantes
         "@typescript-eslint/array-type": [ "error" ], // Não permite tipos de array incorretos
         "@typescript-eslint/await-thenable": [ "error" ], // Não permite await em não promises
-        "@typescript-eslint/method-signature-style": [ "error", "method" ], // Use arrow function em method signature interface
-        "@typescript-eslint/no-unnecessary-type-assertion": [ "error" ], // Não permite declaração que não altera expressão
+        "@typescript-eslint/method-signature-style": [
+            "error",
+            "method",
+        ], // Use arrow function em method signature interface
+        "@typescript-eslint/no-unnecessary-type-assertion": [
+            "error",
+        ], // Não permite declaração que não altera expressão
         "@typescript-eslint/no-unsafe-call": [ "error" ], // Não permite chamadas de funções em tipo any
         "space-infix-ops": [ "off" ], // Espaço na separação operadores
         "@typescript-eslint/space-infix-ops": [ "error" ], // Espaço na separação operadores
