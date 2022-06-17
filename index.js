@@ -5,6 +5,7 @@ module.exports = {
         "jsdoc",
         "promise",
         "regexp",
+        "filenames",
     ],
     env: {
         node: true,
@@ -23,6 +24,8 @@ module.exports = {
                 "import",
                 "jsdoc",
                 "promise",
+                "regexp",
+                "filenames",
             ],
             extends: [
                 "./rules/typescript/best-practices.js",

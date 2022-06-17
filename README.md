@@ -32,6 +32,7 @@
 
 - [Introduction](#introduction)
   - [Installation](#installation)
+- [File Name Convention](#file-name-convention)
 - [Semi Rule](#semi-rule)
 - [Quotes Rule](#quotes-rule)
 - [Indent Rule](#indent-rule)
@@ -235,11 +236,13 @@ Add dependence to package.json
 ```bash
 npm install eslint @odg/eslint-config-odg-linter-js \
     eslint-plugin-jsdoc@* eslint-plugin-import@* \
-    eslint-plugin-promise@* eslint-plugin-regexp@* --save-dev
+    eslint-plugin-promise@* eslint-plugin-regexp@* \
+    eslint-plugin-filenames@* --save-dev
 # or
 yarn add -D eslint @odg/eslint-config-odg-linter-js \
     eslint-plugin-jsdoc@* eslint-plugin-import@* \
-    eslint-plugin-promise@* eslint-plugin-regexp@*
+    eslint-plugin-promise@* eslint-plugin-regexp@* \
+    eslint-plugin-filenames@*
 ```
 
 Add extends in your `.eslintrc` file
@@ -265,6 +268,30 @@ Add extends in your `.eslintrc` file
 ```
 
 Test: `npm run eslint` or `yarn eslint`
+
+## File Name Convention
+
+----------
+
+File Name Convention
+
+<https://github.com/selaux/eslint-plugin-filenames>
+
+👍 Examples of correct code
+
+```typescript
+// File name Foo.ts
+export default class Foo {
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+// File name FooClass.ts
+export default class Foo {
+}
+```
 
 ## Semi Rule
 
