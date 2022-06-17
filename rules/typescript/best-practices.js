@@ -63,7 +63,6 @@ module.exports = {
         "@typescript-eslint/no-misused-new": [ "error" ], // Não utilize new de forma incorreta em classes/interface
         "@typescript-eslint/ban-types": [ "error" ], // Troques String -> string, Number -> number e etc
         "@typescript-eslint/no-explicit-any": [ "error" ], // Não permite usar any
-        "no-empty-function": [ "off" ], // Não permite funções vazias
         "@typescript-eslint/no-empty-function": [ "error" ], // Não permite funções vazias
         "no-duplicate-imports": [ "off" ], // Bloqueia import duplicado
         "@typescript-eslint/no-duplicate-imports": [ "error" ], // Bloqueia import Duplicado

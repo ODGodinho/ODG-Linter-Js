@@ -61,6 +61,7 @@
 - [Comma Dangle](#comma-dangle)
 - [Prefer Arrow Function](#prefer-arrow-function)
 - [Arrow Function Body](#arrow-function-body)
+- [Arrow Function Parentheses](#arrow-function-parentheses)
 - [No Empty Block](#no-empty-block)
 - [No Long Syntax](#no-long-syntax)
 - [Useless Call Code](#useless-call-code)
@@ -87,6 +88,7 @@
 - [Dot Object Format](#dot-object-format)
 - [No Trailing Space](#no-trailing-space)
 - [Type Format](#type-format)
+- [Max Statements Per Line](#max-statements-per-line)
 - [No Constant Condition](#no-constant-condition)
 - [No Debugger](#no-debugger)
 - [Useless Object](#useless-object)
@@ -1323,6 +1325,36 @@ foo(function() { return this.a; }.bind(this));
 Enforces no braces where they can be omitted
 
 <https://eslint.org/docs/rules/arrow-body-style#arrow-body-style>
+
+👍 Examples of correct code
+
+```typescript
+() => {};
+(a) => {};
+(a) => a;
+(a) => {'\n'}
+a.then((foo) => {});
+a.then((foo) => { if (true) {} });
+```
+
+👎 Examples of incorrect code
+
+```typescript
+a => {};
+a => a;
+a => {'\n'};
+a.then(foo => {});
+a.then(foo => a);
+a(foo => { if (true) {} });
+```
+
+## Arrow Function Parentheses
+
+----------
+
+Enforces parentheses around arguments in all cases.
+
+<https://eslint.org/docs/rules/arrow-parens>
 
 👍 Examples of correct code
 
@@ -2629,6 +2661,38 @@ class Foo {
 type Foo = ()=>{};
 type Foo = () =>{};
 type Foo = ()=> {};
+```
+
+## Max Statements Per Line
+
+----------
+
+This rule enforces a maximum number of statements allowed per line.
+
+<https://eslint.org/docs/rules/max-statements-per-line>
+
+👍 Examples of correct code
+
+```typescript
+var bar, baz;
+if (condition) bar = 1;
+for (var i = 0; i < length; ++i);
+switch (discriminant) { default: }
+function foo() { }
+var foo = function foo() { };
+(function foo() { })();
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var bar; var baz;
+if (condition) { bar = 1; }
+for (var i = 0; i < length; ++i) { bar = 1; }
+switch (discriminant) { default: break; }
+function foo() { bar = 1; }
+var foo = function foo() { bar = 1; };
+(function foo() { bar = 1; })();
 ```
 
 ## No Constant Condition

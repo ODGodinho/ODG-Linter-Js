@@ -195,5 +195,12 @@ module.exports = {
         "regexp/prefer-w": [ "error" ], // Use \w
         "regexp/sort-character-class-elements": [ "error" ], // Coloque [] em ordem Alfabética
         "regexp/sort-flags": [ "error" ], // Flag em ordem alfabética
+        "max-statements-per-line": [ "error", { "max": 1 } ], // Máximo operação em 1 linha
+        "arrow-parens": [ "error", "always" ], // Arrow Function sempre com parentese
+        "padding-line-between-statements": [
+            "error",
+            { "blankLine": "always", "prev": "*", "next": "export" }, // Uma linha em branco antes do export
+            { "blankLine": "always", "prev": "*", "next": "class" }, // Uma linha em branco antes da classe
+        ],
     },
 };
