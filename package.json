@@ -8,17 +8,9 @@
     "type": "git",
     "url": "git+https://github.com/ODGodinho/ODG-Linter-Js.git"
   },
-  "author": "Dragons Gamers (https://www.linkedin.com/in/victor-alves-odgodinho/)",
+  "author": "Dragons Gamers <https://www.linkedin.com/in/victor-alves-odgodinho>",
   "license": "MIT",
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "*",
-    "@typescript-eslint/parser": "*",
-    "eslint": "*",
-    "eslint-plugin-filenames": "*",
-    "eslint-plugin-import": "*",
-    "eslint-plugin-jsdoc": "*",
-    "eslint-plugin-promise": "*",
-    "eslint-plugin-regexp": "*",
     "typescript": "*"
   },
   "peerDependencies": {
@@ -28,6 +20,17 @@
     "eslint-plugin-jsdoc": "*",
     "eslint-plugin-promise": "*",
     "eslint-plugin-regexp": "*"
+  },
+  "dependencies": {
+    "@typescript-eslint/eslint-plugin": "*",
+    "@typescript-eslint/parser": "*",
+    "eslint": "*",
+    "eslint-plugin-filenames": "*",
+    "eslint-plugin-import": "*",
+    "eslint-plugin-jsdoc": "*",
+    "eslint-plugin-promise": "*",
+    "eslint-plugin-regexp": "*",
+    "eslint-plugin-security": "*"
   },
   "bugs": {
     "url": "https://github.com/ODGodinho/ODG-Linter-Js/issues"
