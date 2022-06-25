@@ -8,5 +8,6 @@ module.exports = {
         "security/detect-no-csrf-before-method-override": [ "error" ], // Valida CSRF antes override express
         "security/detect-non-literal-fs-filename": [ "error" ],
         "security/detect-pseudoRandomBytes": [ "error" ], // Não use pseudo Random
+        "unicorn/no-document-cookie": [ "error" ], // Não setCookie pelo document.cookie
     },
 };

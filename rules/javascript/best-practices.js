@@ -227,14 +227,23 @@ module.exports = {
         "unicorn/no-array-method-this-argument": [ "error" ], // Evita this array que pode falhar
         "unicorn/no-array-push-push": [ "error" ], // Faça apenas 1 push ao invés de vários
         "unicorn/no-await-expression-member": [ "error" ], // Não use (await getObject()).property;
-        "unicorn/no-document-cookie": [ "error" ], // Não setCookie pelo document.cookie
         "unicorn/no-empty-file": [ "error" ], // Não crie arquivo vazio
         "unicorn/no-for-loop": [ "error" ], // Use ForOf em vez de for
-        "unicorn/no-instanceof-array": [ "error" ], // Não use instanceof Array
         "unicorn/no-invalid-remove-event-listener": [ "error" ], // Não use removeEventListener Invalid
         "no-lonely-if": [ "error" ], // Não faz if cadeia desnecessário
         "unicorn/no-lonely-if": [ "error" ], // Não faz if cadeia desnecessário
         "unicorn/no-new-buffer": [ "error" ], // Não faz if cadeia desnecessário
         "unicorn/no-this-assignment": [ "error" ], // Desabilita invalido this
+        "unicorn/no-useless-fallback-in-spread": [ "error" ], // Desabilita não usado opcional literals ...
+        "unicorn/no-useless-length-check": [ "error" ], // Desabilita não usado opcional literals ...
+        "unicorn/no-useless-spread": [ "error" ], // Desabilita ... em array desnecessário
+        "unicorn/no-useless-switch-case": [ "error" ], // Desabilita Case não usado
+        "unicorn/no-useless-undefined": [ "error" ], // Desabilita undefined desnecessário
+        "unicorn/number-literal-case": [ "error" ],
+        "unicorn/prefer-add-event-listener": [ "error" ], // Prefira AddEventListener em vez de onclick props
+        "unicorn/prefer-array-find": [ "error" ], // Prefira array Find quando possível
+        "unicorn/prefer-array-index-of": [ "error" ], // Prefira usar IndexOf
+        "unicorn/prefer-array-some": [ "error" ], // Prefira usar Array some invés de length
+        "unicorn/prefer-dom-node-append": [ "error" ], // Prefira append no DOM
     },
 };

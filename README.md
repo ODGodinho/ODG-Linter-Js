@@ -252,6 +252,16 @@
 - [No Nested Ternary](#no-nested-ternary)
 - [No New Buffer](#no-new-buffer)
 - [No This Assignment](#no-this-assignment)
+- [No Useless Fallback In Spread](#no-useless-fallback-in-spread)
+- [No Useless Length Check](#no-useless-length-check)
+- [No Useless Spread](#no-useless-spread)
+- [No Useless Switch Case](#no-useless-switch-case)
+- [No Useless Undefined](#no-useless-undefined)
+- [Prefer Add Event Listener](#prefer-add-event-listener)
+- [Prefer Array Find](#prefer-array-find)
+- [Prefer Array Index Of](#prefer-array-index-of)
+- [Prefer Array Some](#prefer-array-some)
+- [Prefer Dom Node Append](#prefer-dom-node-append)
 
 ## Introduction
 
@@ -6456,7 +6466,7 @@ var foo = RegExp("\t+\n");
 👎 Examples of incorrect code
 
 ```typescript
-var foo = /	/;
+var foo = / /;
 var foo = /\u0009/;
 var foo = /\u{a}/u;
 var foo = RegExp("\\u000a");
@@ -6549,7 +6559,7 @@ var foo = / /; // SPACE (`U+0020`)
 👎 Examples of incorrect code
 
 ```typescript
-var foo = /	/;
+var foo = / /;
 var foo = //;
 var foo = //;
 var foo = /　/;
@@ -7789,7 +7799,6 @@ class MyElement extends HTMLElement {
 ----------
 
 This rule adds onto the built-in no-lonely-if rule, which only disallows if statements in else, not in if.
-It is recommended to use unicorn/no-lonely-if together with the core ESLint no-lonely-if rule.
 
 <https://eslint.org/docs/latest/rules/no-lonely-if>
 <https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-lonely-if.md>
@@ -7928,6 +7937,354 @@ class Bar {
 }
 
 new Bar().method();
+```
+
+## No Useless Fallback In Spread
+
+----------
+
+Disallow useless fallback when spreading in object literals
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-useless-fallback-in-spread.md>
+
+👍 Examples of correct code
+
+```typescript
+const object = {...foo};
+const object = {...(foo && {})};
+const array = [...(foo || [])];
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const object = {...(foo || {})};
+const object = {...(foo ?? {})};
+```
+
+## No Useless Length Check
+
+----------
+
+Disallow useless array length check
+
+Array#some() returns false for an empty array. There is no need to check if the array is not empty.
+Array#every() returns true for an empty array. There is no need to check if the array is empty.
+
+We only check .length === 0, .length !== 0, and .length > 0.
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-useless-length-check.md>
+
+👍 Examples of correct code
+
+```typescript
+if (array.every(Boolean));
+if (array.some(Boolean));
+const isAllTrulyOrEmpty = array.every(Boolean);
+if (array.length === 0 || anotherCheck() || array.every(Boolean));
+const isNonEmptyAllTrulyArray = array.length > 0 && array.every(Boolean);
+const isEmptyArrayOrAllTruly = array.length === 0 || array.some(Boolean);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+if (array.length === 0 || array.every(Boolean));
+if (array.length !== 0 && array.some(Boolean));
+if (array.length > 0 && array.some(Boolean));
+const isAllTrulyOrEmpty = array.length === 0 || array.every(Boolean);
+```
+
+## No Useless Spread
+
+----------
+
+Disallow unnecessary spread
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-useless-spread.md>
+
+👍 Examples of correct code
+
+```typescript
+const array = [firstElement, secondElement, thirdElement];
+const object = {firstProperty, secondProperty, thirdProperty};
+foo(firstArgument, secondArgument, thirdArgument);
+const object = new Foo(firstArgument, secondArgument, thirdArgument);
+const array = [...foo, bar];
+const object = {...foo, bar};
+foo(foo, ...bar);
+const object = new Foo(...foo, bar);
+const set = new Set(iterable);
+const results = await Promise.all(iterable);
+for (const foo of set);
+function * foo() {
+    yield * anotherGenerator();
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+
+const array = [firstElement, ...[secondElement], thirdElement];
+const object = {firstProperty, ...{secondProperty}, thirdProperty};
+foo(firstArgument, ...[secondArgument], thirdArgument);
+const object = new Foo(firstArgument, ...[secondArgument], thirdArgument);
+const set = new Set([...iterable]);
+const results = await Promise.all([...iterable]);
+for (const foo of [...set]);
+function * foo() {
+    yield * [...anotherGenerator()];
+}
+```
+
+## No Useless Switch Case
+
+----------
+
+Disallow useless case in switch statements
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-useless-switch-case.md>
+
+👍 Examples of correct code
+
+```typescript
+switch (foo) {
+    case 1:
+    case 2:
+        handleCase1And2();
+        break;
+}
+switch (foo) {
+    case 1:
+        handleCase1();
+        break;
+    default:
+        handleDefaultCase();
+        break;
+}
+switch (foo) {
+    case 1:
+        handleCase1();
+        // Fallthrough
+    default:
+        handleDefaultCase();
+        break;
+}
+switch (foo) {
+    // This is actually useless, but we only check cases where the last case is the `default` case
+    case 1:
+    default:
+        handleDefaultCase();
+        break;
+    case 2:
+        handleCase2();
+        break;
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+switch (foo) {
+    case 1:
+    default:
+        handleDefaultCase();
+        break;
+}
+```
+
+## No Useless Undefined
+
+----------
+
+Disallow useless undefined
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-useless-undefined.md>
+
+👍 Examples of correct code
+
+```typescript
+let foo;
+const {foo} = bar;
+const noop = () => {};
+function foo() {
+    return;
+}
+function* foo() {
+    yield;
+}
+function foo(bar) {
+}
+function foo({bar}) {
+}
+foo();
+```
+
+👎 Examples of incorrect code
+
+```typescript
+let foo = undefined;
+const {foo = undefined} = bar;
+const noop = () => undefined;
+function foo() {
+    return undefined;
+}
+function* foo() {
+    yield undefined;
+}
+function foo(bar = undefined) {
+}
+function foo({bar = undefined}) {
+}
+foo(undefined);
+```
+
+## Prefer Add Event Listener
+
+----------
+
+Prefer .addEventListener() and .removeEventListener() over on-functions
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-add-event-listener.md>
+
+👍 Examples of correct code
+
+```typescript
+foo.addEventListener('click', () => {});
+foo.addEventListener('keydown', () => {});
+foo.bar.addEventListener('click', onClick);
+foo.removeEventListener('click', onClick);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+foo.onclick = () => {};
+foo.onkeydown = () => {};
+foo.bar.onclick = onClick;
+foo.onclick = null;
+```
+
+## Prefer Array Find
+
+----------
+
+Prefer .find(…) over the first element from .filter(…)
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-array-find.md>
+
+👍 Examples of correct code
+
+```typescript
+const item = array.find(x => callback(x));
+item = array.find(x => callback(x));
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const item = array.filter(x => callback(x))[0];
+const item = array.filter(x => callback(x)).shift();
+const [item] = array.filter(x => callback(x));
+[item] = array.filter(x => callback(x));
+```
+
+## Prefer Array Index Of
+
+----------
+
+Prefer Array#indexOf() over Array#findIndex() when looking for the index of an item
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-array-index-of.md>
+
+👍 Examples of correct code
+
+```typescript
+const index = foo.indexOf('foo');
+const index = foo.findIndex(x => x == undefined);
+const index = foo.findIndex(x => x !== 'foo');
+const index = foo.findIndex((x, index) => x === index);
+const index = foo.findIndex(x => (x === 'foo') && isValid());
+const index = foo.findIndex(x => y === 'foo');
+const index = foo.findIndex(x => y.x === 'foo');
+const index = foo.findIndex(x => {
+    const bar = getBar();
+    return x === bar;
+});
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const index = foo.findIndex(x => x === 'foo');
+const index = foo.findIndex(x => 'foo' === x);
+const index = foo.findIndex(x => {
+    return x === 'foo';
+});
+```
+
+## Prefer Array Some
+
+----------
+
+Prefer .some(…) over .filter(…).length check and .find(…)
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-array-some.md>
+
+👍 Examples of correct code
+
+```tsx
+const hasUnicorn = array.some(element => callback(element));
+if (array.some(element => callback(element))) {
+    // …
+}
+const foo = array.find(element => callback(element)) || bar;
+<template>
+    <div v-if="array.some(element => callback(element))">Vue</div>
+</template>
+```
+
+👎 Examples of incorrect code
+
+```tsx
+const hasUnicorn = array.filter(element => callback(element)).length > 0;
+const hasUnicorn = array.filter(element => callback(element)).length !== 0;
+const hasUnicorn = array.filter(element => callback(element)).length >= 1;
+if (array.find(element => callback(element))) {
+    // …
+}
+const foo = array.find(element => callback(element)) ? bar : baz;
+const hasUnicorn = array.find(element => callback(element) !== undefined);
+const hasUnicorn = array.find(element => callback(element) != null);
+<template>
+    <div v-if="array.find(element => callback(element))">Vue</div>
+</template>
+<template>
+    <div v-if="array.filter(element => callback(element)).length > 0">Vue</div>
+</template>
+```
+
+## Prefer Dom Node Append
+
+----------
+
+Prefer Node#append() over Node#appendChild()
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-dom-node-append.md>
+
+👍 Examples of correct code
+
+```tsx
+foo.append(bar);
+foo.append('bar');
+foo.append(bar, 'baz');
+```
+
+👎 Examples of incorrect code
+
+```tsx
+foo.appendChild(bar);
 ```
 
 ## Security

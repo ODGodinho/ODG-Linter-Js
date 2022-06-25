@@ -18,6 +18,7 @@ module.exports = {
         "regexp/no-useless-assertions": [ "error" ],
         "regexp/no-useless-backreference": [ "error" ],
         "regexp/no-useless-dollar-replacements": [ "error" ],
-        "regexp/strict": [ "error" ],
+        "regexp/strict": [ "error" ], // Regex strict
+        "unicorn/no-instanceof-array": [ "error" ], // Não use instanceof Array
     },
 };
