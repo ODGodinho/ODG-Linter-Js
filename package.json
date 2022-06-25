@@ -19,8 +19,8 @@
     "eslint-plugin-import": "*",
     "eslint-plugin-jsdoc": "*",
     "eslint-plugin-promise": "*",
-    "eslint-plugin-unicorn": "*",
-    "eslint-plugin-regexp": "*"
+    "eslint-plugin-regexp": "*",
+    "eslint-plugin-unicorn": "*"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "*",
@@ -31,7 +31,8 @@
     "eslint-plugin-jsdoc": "*",
     "eslint-plugin-promise": "*",
     "eslint-plugin-regexp": "*",
-    "eslint-plugin-security": "*"
+    "eslint-plugin-security": "*",
+    "eslint-plugin-unicorn": "*"
   },
   "bugs": {
     "url": "https://github.com/ODGodinho/ODG-Linter-Js/issues"
