@@ -3,6 +3,8 @@
         "Rules",
         "Regex",
         "Docs",
-        "Convention"
+        "Convention",
+        "Security",
+        "Merge"
     ]
 }

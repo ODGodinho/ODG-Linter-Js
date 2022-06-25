@@ -6,6 +6,7 @@ module.exports = {
         "promise",
         "regexp",
         "filenames",
+        "security",
         "unicorn",
     ],
     env: {
@@ -16,7 +17,11 @@ module.exports = {
         "./rules/javascript/best-practices.js",
         "./rules/javascript/js-doc.js",
         "./rules/javascript/errors.js",
+        "./rules/javascript/security.js",
     ],
+    parserOptions: {
+        ecmaVersion: 2018,
+    },
     overrides: [
         {
             files: [ "*.ts", "*.tsx", "*.mts", "*.cts" ],

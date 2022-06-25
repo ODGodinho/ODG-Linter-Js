@@ -101,7 +101,6 @@ module.exports = {
         "no-sparse-arrays": [ "error" ], // Não permite arrays com itens vagos no meio
         "valid-typeof": [ "error" ], // Não permite typeof inválido
         "eqeqeq": [ "error", "always" ], // Usa igual e do mesmo tipo
-        "no-eval": [ "error" ], // Não permite usar eval
         "no-extra-label": [ "error" ], // Não permite usar labels extra desnecessárias
         "no-labels": [ "error" ], // Disable Label/GOTO
         "no-floating-decimal": [ "error" ], // Não permite decimais flutuantes sem zero a esquerda.
