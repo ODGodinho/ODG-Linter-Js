@@ -19,6 +19,7 @@
     "eslint-plugin-jsdoc": "*",
     "eslint-plugin-promise": "*",
     "eslint-plugin-regexp": "*",
+    "eslint-plugin-unicorn": "*",
     "typescript": "*"
   },
   "peerDependencies": {

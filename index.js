@@ -6,6 +6,7 @@ module.exports = {
         "promise",
         "regexp",
         "filenames",
+        "unicorn",
     ],
     env: {
         node: true,

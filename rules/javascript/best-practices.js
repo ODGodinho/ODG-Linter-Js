@@ -207,5 +207,35 @@ module.exports = {
         ],
         "filenames/match-regex": [ "error", "^[a-zA-Z0-9_-]+$" ], // Nome de arquivo deve ser alfanumérico
         "filenames/match-exported": [ "error", "^[a-zA-Z0-9_-]+$" ], // Nome do arquivo igual export default
+        "unicorn/catch-error-name": [
+            "error",
+            {
+                "name": "exception",
+                "ignore": [
+                    "^error\\d*$",
+                    "^error$",
+                    "^exception$",
+                ],
+            },
+        ], // Chame todos os catch erros de exception
+        "unicorn/consistent-destructuring": [ "error" ], // Usa destructuring ou usa acesso direto sem alternar
+        "unicorn/consistent-function-scoping": [ "error" ], // Remova sub função quando possível
+        "unicorn/error-message": [ "error" ], // Exception tem q ter mensagem
+        "unicorn/escape-case": [ "error" ], // Ao escapar use letra maiúscula hexadecimal
+        "unicorn/new-for-builtins": [ "error" ], // Use new sempre em Promise, Array, Error, RegExp
+        "unicorn/no-abusive-eslint-disable": [ "error" ], // Não desabilite todas as regras ESLInt
+        "unicorn/no-array-for-each": [ "error" ], // Prefira forOf ao invés Foreach
+        "unicorn/no-array-method-this-argument": [ "error" ], // Evita this array que pode falhar
+        "unicorn/no-array-push-push": [ "error" ], // Faça apenas 1 push ao invés de vários
+        "unicorn/no-await-expression-member": [ "error" ], // Não use (await getObject()).property;
+        "unicorn/no-document-cookie": [ "error" ], // Não setCookie pelo document.cookie
+        "unicorn/no-empty-file": [ "error" ], // Não crie arquivo vazio
+        "unicorn/no-for-loop": [ "error" ], // Use ForOf em vez de for
+        "unicorn/no-instanceof-array": [ "error" ], // Não use instanceof Array
+        "unicorn/no-invalid-remove-event-listener": [ "error" ], // Não use removeEventListener Invalid
+        "no-lonely-if": [ "error" ], // Não faz if cadeia desnecessário
+        "unicorn/no-lonely-if": [ "error" ], // Não faz if cadeia desnecessário
+        "unicorn/no-new-buffer": [ "error" ], // Não faz if cadeia desnecessário
+        "unicorn/no-this-assignment": [ "error" ], // Desabilita invalido this
     },
 };
