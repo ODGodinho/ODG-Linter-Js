@@ -7930,7 +7930,6 @@ class Bar {
 new Bar().method();
 ```
 
-
 ## Security
 
 ### Eval Disabled
