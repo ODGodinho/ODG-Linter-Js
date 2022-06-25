@@ -234,6 +234,24 @@
   - [No Csrf Before Method Override](#no-csrf-before-method-override)
   - [No Literal Fs Filename](#no-literal-fs-filename)
   - [No Pseudo Random Bytes](#no-pseudo-random-bytes)
+- [Catch Error Name](#catch-error-name)
+- [Consistent Destructured](#consistent-destructured)
+- [Consistent Function Scope](#consistent-function-scope)
+- [Exception With Message](#exception-with-message)
+- [Escape Case](#escape-case)
+- [New For Builtin](#new-for-builtin)
+- [No Abusive Eslint Disable](#no-abusive-eslint-disable)
+- [Prefer for…of](#prefer-for-of)
+- [No Array Push Push](#no-array-push-push)
+- [No Await Chased](#no-await-chased)
+- [No Document Cookie](#no-document-cookie)
+- [No Empty File](#no-empty-file)
+- [No InstanceOf Array](#no-instance-of-array)
+- [No Invalid Remove Event Listener](#no-invalid-remove-event-listener)
+- [No Lonely If](#no-lonely-if)
+- [No Nested Ternary](#no-nested-ternary)
+- [No New Buffer](#no-new-buffer)
+- [No This Assignment](#no-this-assignment)
 
 ## Introduction
 
@@ -7285,6 +7303,633 @@ var foo = /abc/gimsuy
 var foo = /abc/mi
 var foo = /abc/us
 ```
+
+## Catch Error Name
+
+----------
+
+Enforce a specific parameter name in catch clauses
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/catch-error-name.md>
+
+👍 Examples of correct code
+
+```typescript
+try {} catch (exception) {}
+promise.catch(exception => {});
+promise.catch(error => {});
+promise.catch(error1 => {});
+promise.catch(error2 => {});
+```
+
+👎 Examples of incorrect code
+
+```typescript
+try {} catch (badName) {}
+// `_` is not allowed if it's used
+try {} catch (_) {
+    console.log(_);
+}
+promise.catch(badName => {});
+promise.then(undefined, badName => {});
+```
+
+## Consistent Destructured
+
+----------
+
+Enforces the use of already destructured objects and their variables over accessing each property individually.
+Previous destructurings are easily missed which leads to an inconsistent code style.
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/consistent-destructuring.md>
+
+👍 Examples of correct code
+
+```typescript
+const {a} = foo;
+console.log(a);
+console.log(foo.a, foo.b);
+const {a} = foo;
+console.log(a, foo.b());
+const {a} = foo.bar;
+console.log(foo.bar);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const {a} = foo;
+console.log(a, foo.b);
+const {a} = foo;
+console.log(foo.a);
+const {
+    a: {
+        b
+    }
+} = foo;
+console.log(foo.a.c);
+const {bar} = foo;
+const {a} = foo.bar;
+```
+
+## Consistent Function Scope
+
+----------
+
+A function definition should be placed as close to the top-level scope as possible without breaking its captured values.
+This improves readability, directly improves performance and allows JavaScript engines to better optimize performance.
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/consistent-function-scoping.md>
+
+👍 Examples of correct code
+
+```typescript
+function doBar(bar) {
+    return bar === 'bar';
+}
+
+export function doFoo(foo) {
+    return doBar;
+}
+
+export function doFoo(foo) {
+    function doBar(bar) {
+        return bar === 'bar' && foo.doBar(bar);
+    }
+
+    return doBar;
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+export function doFoo(foo) {
+    // Does not capture anything from the scope, can be moved to the outer scope
+    function doBar(bar) {
+        return bar === 'bar';
+    }
+
+    return doBar;
+}
+
+function doFoo(foo) {
+    const doBar = bar => {
+        return bar === 'bar';
+    };
+}
+```
+
+## Exception With Message
+
+----------
+
+This rule enforces a message value to be passed in when creating an instance of a built-in Error object,
+which leads to more readable and debuggable code.
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/error-message.md>
+
+👍 Examples of correct code
+
+```typescript
+throw new TypeError('Array expected.');
+const error = new AggregateError(errors, 'Promises rejected.');
+```
+
+👎 Examples of incorrect code
+
+```typescript
+throw Error();
+throw Error('');
+throw new TypeError();
+const error = new AggregateError(errors);
+```
+
+## Escape Case
+
+----------
+
+Enforces defining escape sequence values with uppercase characters rather than lowercase ones.
+This promotes readability by making the escaped value more distinguishable from the identifier.
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/escape-case.md>
+
+👍 Examples of correct code
+
+```typescript
+const foo = '\xA9';
+const foo = '\uD834';
+const foo = '\u{1D306}';
+const foo = '\cA';
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const foo = '\xa9';
+const foo = '\ud834';
+const foo = '\u{1d306}';
+const foo = '\ca';
+```
+
+## New For Builtin
+
+----------
+
+Enforce the use of new for all builtin's, except String, Number, Boolean, Symbol and BigInt
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/new-for-builtins.md>
+
+👍 Examples of correct code
+
+```typescript
+const list = new Array(10);
+const now = new Date();
+const map = new Map([
+    ['foo', 'bar']
+]);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const list = Array(10);
+const now = Date();
+const map = Map([
+    ['foo', 'bar']
+]);
+```
+
+## No Abusive Eslint Disable
+
+----------
+
+This rule makes you specify the rules you want to disable when using eslint-disable,
+eslint-disable-line or eslint-disable-next-line comments.
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-abusive-eslint-disable.md>
+
+👍 Examples of correct code
+
+```typescript
+/* eslint-disable no-console */
+console.log(message);
+
+console.log(message); // eslint-disable-line no-console
+
+// eslint-disable-next-line no-console
+console.log(message);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+/* eslint-disable */
+console.log(message);
+
+console.log(message); // eslint-disable-line
+
+// eslint-disable-next-line
+console.log(message);
+```
+
+## Prefer for…of
+
+----------
+
+Prefer for…of over the forEach method
+Do not use a for loop that can be replaced with a for-of loop
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-array-for-each.md>
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-for-loop.md>
+
+👍 Examples of correct code
+
+```typescript
+for (const element of array) {
+    bar(element);
+}
+for (const [index, element] of array.entries()) {
+    bar(element, index);
+}
+for (const [index, element] of array.entries()) {
+    bar(element, index, array);
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+array.forEach(element => {
+    bar(element);
+});
+array?.forEach(element => {
+    bar(element);
+});
+array.forEach((element, index) => {
+    bar(element, index);
+});
+array.forEach((element, index, array) => {
+    bar(element, index, array);
+});
+
+for (let index = 0; index < array.length; index++) {
+    const element = array[index];
+    console.log(index, element);
+}
+
+```
+
+## No Array Push Push
+
+----------
+
+Enforce combining multiple Array#push() into one call
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-array-push-push.md>
+
+👍 Examples of correct code
+
+```typescript
+foo.push(1, 2, 3);
+
+// or
+const length = foo.push(1);
+foo.push(2);
+
+// or
+foo.push(1);
+bar();
+foo.push(2);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+foo.push(1);
+foo.push(2, 3);
+```
+
+## No Await Chased
+
+----------
+
+Disallow member access from await expression
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-await-expression-member.md>
+
+👍 Examples of correct code
+
+```typescript
+const {default: foo} = await import('./foo.js');
+const [, secondElement] = await getArray();
+const {property} = await getObject();
+const response = await fetch('/foo');
+const data = await response.json();
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const foo = (await import('./foo.js')).default;
+const secondElement = (await getArray())[1];
+const property = (await getObject()).property;
+const data = await (await fetch('/foo')).json();
+```
+
+## No Document Cookie
+
+----------
+
+Do not use document.cookie directly
+It's not recommended to use document.cookie directly as it's easy to get the string wrong.
+Instead, you should use the [Cookie Store API](https://developer.mozilla.org/en-US/docs/Web/API/Cookie_Store_API) or a cookie library.
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-document-cookie.md>
+
+👍 Examples of correct code
+
+```typescript
+await cookieStore.set({
+    name: 'foo',
+    value: 'bar',
+    expires: Date.now() + 24 * 60 * 60 * 1000,
+    domain: 'example.com'
+});
+const array = document.cookie.split('; ');
+import Cookies from 'js-cookie';
+
+Cookies.set('foo', 'bar');
+```
+
+👎 Examples of incorrect code
+
+```typescript
+document.cookie =
+    'foo=bar' +
+    '; Path=/' +
+    '; Domain=example.com' +
+    '; expires=Fri, 31 Dec 9999 23:59:59 GMT' +
+    '; Secure';
+
+document.cookie += '; foo=bar';
+```
+
+## No Empty File
+
+----------
+
+Disallow any files only containing the following:
+    Whitespace
+    Comments
+    Directives
+    Empty statements
+    Empty block statements
+    Hashbang
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-empty-file.md>
+
+👍 Examples of correct code
+
+```typescript
+await cookieStore.set({
+    name: 'foo',
+    value: 'bar',
+    expires: Date.now() + 24 * 60 * 60 * 1000,
+    domain: 'example.com'
+});
+const array = document.cookie.split('; ');
+import Cookies from 'js-cookie';
+
+Cookies.set('foo', 'bar');
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const x = 0;
+```
+
+```typescript
+/* Comment */
+```
+
+```typescript
+;
+```
+
+## No InstanceOf Array
+
+----------
+
+Require Array.isArray() instead of instanceof Array
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-instanceof-array.md>
+
+👍 Examples of correct code
+
+```typescript
+Array.isArray(array);
+Array.isArray([ 1, 2, 3 ]);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+array instanceof Array;
+[ 1, 2, 3 ] instanceof Array;
+```
+
+## No Invalid Remove Event Listener
+
+----------
+
+The removeEventListener function must be called with a reference to the same function that
+was passed to addEventListener. Calling removeEventListener with an inline function or the result of an inline .bind()
+call is indicative of an error, and won't actually remove the listener.
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-invalid-remove-event-listener.md>
+
+👍 Examples of correct code
+
+```typescript
+window.removeEventListener('click', listener);
+window.removeEventListener('click', getListener());
+class MyElement extends HTMLElement {
+    constructor() {
+        super();
+        this.handler = this.handler.bind(this);
+    }
+
+    handler() {}
+
+    disconnectedCallback() {
+        this.removeEventListener('click', this.handler);
+    }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+window.removeEventListener('click', fn.bind(window));
+window.removeEventListener('click', () => {});
+window.removeEventListener('click', function () {});
+class MyElement extends HTMLElement {
+    handler() {}
+
+    disconnectedCallback() {
+        this.removeEventListener('click', this.handler.bind(this));
+    }
+}
+```
+
+## No Lonely If
+
+----------
+
+This rule adds onto the built-in no-lonely-if rule, which only disallows if statements in else, not in if.
+It is recommended to use unicorn/no-lonely-if together with the core ESLint no-lonely-if rule.
+
+<https://eslint.org/docs/latest/rules/no-lonely-if>
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-lonely-if.md>
+
+👍 Examples of correct code
+
+```typescript
+if (foo && bar) {
+    // …
+}
+if (foo) {
+    // …
+} else if (bar && baz) {
+    // …
+}
+if (foo) {
+    // …
+} else if (bar) {
+    if (baz) {
+        // …
+    }
+} else {
+    // …
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+if (foo) {
+    if (bar) {
+        // …
+    }
+}
+if (foo) {
+    // …
+} else if (bar) {
+    if (baz) {
+        // …
+    }
+}
+```
+
+## No Nested Ternary
+
+----------
+
+Improved version of the no-nested-ternary ESLint rule,
+which allows cases where the nested ternary is only one level and wrapped in Parentheses.
+
+<https://eslint.org/docs/latest/rules/no-nested-ternary#rule-details>
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-nested-ternary.md>
+
+👍 Examples of correct code
+
+```typescript
+const foo = i > 5 ? (i < 100 ? true : false) : true;
+const foo = i > 5 ? (i < 100 ? true : false) : (i < 100 ? true : false);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const foo = i > 5 ? i < 100 ? true : false : true;
+const foo = i > 5 ? true : (i < 100 ? true : (i < 1000 ? true : false));
+```
+
+## No New Buffer
+
+----------
+
+Enforce the use of Buffer.from() and Buffer.alloc() instead of the deprecated new Buffer()
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-new-buffer.md>
+
+👍 Examples of correct code
+
+```typescript
+const buffer = Buffer.from('7468697320697320612074c3a97374', 'hex');
+const buffer = Buffer.from([0x62, 0x75, 0x66, 0x66, 0x65, 0x72])
+const buffer = Buffer.alloc(10);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const buffer = new Buffer('7468697320697320612074c3a97374', 'hex');
+const buffer = new Buffer([0x62, 0x75, 0x66, 0x66, 0x65, 0x72]);
+const buffer = new Buffer(10);
+```
+
+## No This Assignment
+
+----------
+
+this should be used directly. If you want a reference to this from a higher scope,
+consider using arrow function expression or Function#bind().
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-this-assignment.md>
+
+👍 Examples of correct code
+
+```typescript
+setTimeout(() => {
+    this.bar();
+}, 1000);
+setTimeout(function () {
+    this.bar();
+}.bind(this), 1000);
+class Bar {
+    constructor(fooInstance) {
+        this.fooInstance = fooInstance;
+    }
+    method() {
+        this.fooInstance.baz();
+    }
+}
+
+new Bar(this).method();
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const foo = this;
+
+setTimeout(function () {
+    foo.bar();
+}, 1000);
+const foo = this;
+
+class Bar {
+    method() {
+        foo.baz();
+    }
+}
+
+new Bar().method();
+```
+
 
 ## Security
 

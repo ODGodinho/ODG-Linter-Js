@@ -19,6 +19,7 @@
     "eslint-plugin-import": "*",
     "eslint-plugin-jsdoc": "*",
     "eslint-plugin-promise": "*",
+    "eslint-plugin-unicorn": "*",
     "eslint-plugin-regexp": "*"
   },
   "dependencies": {

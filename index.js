@@ -7,6 +7,7 @@ module.exports = {
         "regexp",
         "filenames",
         "security",
+        "unicorn",
     ],
     env: {
         node: true,
