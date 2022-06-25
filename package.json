@@ -1,6 +1,6 @@
 {
   "name": "@odg/eslint-config-odg-linter-js",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "Linter configuration for JavaScript style guide",
   "main": "index.js",
   "scripts": {},
