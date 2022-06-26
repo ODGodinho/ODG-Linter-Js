@@ -262,6 +262,24 @@
 - [Prefer Array Index Of](#prefer-array-index-of)
 - [Prefer Array Some](#prefer-array-some)
 - [Prefer Dom Node Append](#prefer-dom-node-append)
+- [Prefer Include](#prefer-include)
+- [Prefer Keyboard Event Key](#prefer-keyboard-event-key)
+- [Prefer Negative Index](#prefer-negative-index)
+- [Prefer Optional Catch Binding](#prefer-optional-catch-binding)
+- [Prefer Prototype Methods](#prefer-prototype-methods)
+- [Prefer Query Selector](#prefer-query-selector)
+- [Prefer Regexp Test](#prefer-regexp-test)
+- [Prefer Spread](#prefer-spread)
+- [Prefer String Replace All](#prefer-string-replace-all)
+- [Prefer String Starts Ends With](#prefer-string-starts-ends-with)
+- [Prefer String Trim Start End](#prefer-string-trim-start-end)
+- [Prefer Switch](#prefer-switch)
+- [Prefer Ternary](#prefer-ternary)
+- [Prevent Abbreviations](#prevent-abbreviations)
+- [Consistent Relative URL](#consistent-relative-url)
+- [Require Array Join Separator](#require-array-join-separator)
+- [Require Number To Fixed Digits Argument](#require-number-to-fixed-digits-argument)
+- [Template String Indent](#template-string-indent)
 
 ## Introduction
 
@@ -8527,4 +8545,628 @@ this.remove();
 ```tsx
 parentNode.removeChild(foo);
 parentNode.removeChild(this);
+```
+
+## Prefer Include
+
+----------
+
+Prefer `.includes()` over `.indexOf()` and Array#some() when checking for existence or non-existence
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-includes.md>
+
+👍 Examples of correct code
+
+```tsx
+const str = 'foobar';
+str.indexOf('foo') !== -n;
+str.indexOf('foo') !== 1;
+!str.indexOf('foo') === 1;
+!str.indexOf('foo') === -n;
+str.includes('foo');
+[1,2,3].includes(4);
+const isFound = foo.includes('foo');
+const isFound = foo.some(x => x == undefined);
+const isFound = foo.some(x => x !== 'foo');
+const isFound = foo.some((x, index) => x === index);
+const isFound = foo.some(x => (x === 'foo') && isValid());
+const isFound = foo.some(x => y === 'foo');
+const isFound = foo.some(x => y.x === 'foo');
+const isFound = foo.some(x => {
+    const bar = getBar();
+    return x === bar;
+});
+```
+
+👎 Examples of incorrect code
+
+```tsx
+[].indexOf('foo') !== -1;
+x.indexOf('foo') != -1;
+str.indexOf('foo') > -1;
+'foobar'.indexOf('foo') >= 0;
+x.indexOf('foo') === -1
+const isFound = foo.some(x => x === 'foo');
+const isFound = foo.some(x => 'foo' === x);
+const isFound = foo.some(x => {
+    return x === 'foo';
+});
+```
+
+## Prefer Keyboard Event Key
+
+----------
+
+Enforces the use of KeyboardEvent#key over KeyboardEvent#keyCode which is deprecated.
+The .key property is also more semantic and readable.
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-keyboard-event-key.md>
+
+👍 Examples of correct code
+
+```tsx
+window.addEventListener("click", event => {
+    console.log(event.key);
+});
+window.addEventListener("keydown", event => {
+    if (event.key === "Backspace") {
+        console.log("Backspace was pressed");
+    }
+});
+```
+
+👎 Examples of incorrect code
+
+```tsx
+window.addEventListener("keydown", event => {
+    console.log(event.keyCode);
+});
+window.addEventListener("keydown", event => {
+    if (event.keyCode === 8) {
+        console.log("Backspace was pressed");
+    }
+});
+```
+
+## Prefer Negative Index
+
+----------
+
+Prefer negative index over .length - index for {String,Array,TypedArray}#slice(), Array#splice() and Array#at()
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-negative-index.md>
+
+👍 Examples of correct code
+
+```tsx
+foo.slice(-2, -1);
+foo.splice(-1, 1);
+foo.at(-1);
+Array.prototype.slice.call(foo, -2, -1);
+Array.prototype.slice.apply(foo, [-2, -1]);
+```
+
+👎 Examples of incorrect code
+
+```tsx
+foo.slice(foo.length - 2, foo.length - 1);
+foo.splice(foo.length - 1, 1);
+foo.at(foo.length - 1);
+Array.prototype.slice.call(foo, foo.length - 2, foo.length - 1);
+Array.prototype.slice.apply(foo, [foo.length - 2, foo.length - 1]);
+```
+
+## Prefer Optional Catch Binding
+
+----------
+
+Prefer omitting the catch binding parameter
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-optional-catch-binding.md>
+
+👍 Examples of correct code
+
+```tsx
+try {} catch {}
+try {} catch (error) {
+    console.error(error);
+}
+```
+
+👎 Examples of incorrect code
+
+```tsx
+try {} catch (notUsedError) {}
+try {} catch ({message}) {}
+```
+
+## Prefer Prototype Methods
+
+----------
+
+Prefer borrowing methods from the prototype instead of the instance
+When “borrowing” a method from Array or Object, it's clearer to get it from the prototype than from an instance.
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-prototype-methods.md>
+
+👍 Examples of correct code
+
+```tsx
+const array = Array.prototype.slice.apply(bar);
+const hasProperty = Object.prototype.hasOwnProperty.call(foo, 'property');
+Reflect.apply(Array.prototype.forEach, arrayLike, [callback]);
+const maxValue = Math.max.apply(Math, numbers);
+```
+
+👎 Examples of incorrect code
+
+```tsx
+const array = [].slice.apply(bar);
+const hasProperty = {}.hasOwnProperty.call(foo, 'property');
+Reflect.apply([].forEach, arrayLike, [callback]);
+```
+
+## Prefer Query Selector
+
+----------
+
+Prefer .querySelector() over .getElementById(),
+.querySelectorAll() over .getElementsByClassName() and .getElementsByTagName()
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-query-selector.md>
+
+👍 Examples of correct code
+
+```tsx
+document.querySelector('#foo');
+document.querySelector('.bar');
+document.querySelector('main #foo .bar');
+document.querySelectorAll('.foo .bar');
+document.querySelectorAll('li a');
+document.querySelector('li').querySelectorAll('a');
+```
+
+👎 Examples of incorrect code
+
+```tsx
+document.getElementById('foo');
+document.getElementsByClassName('foo bar');
+document.getElementsByTagName('main');
+document.getElementsByClassName(fn());
+```
+
+## Prefer Regexp Test
+
+----------
+
+Prefer `RegExp#test()` over `String#match()` and `RegExp#exec()`
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-regexp-test.md>
+
+👍 Examples of correct code
+
+```tsx
+if (/unicorn/.test(string)) {}
+<template>
+    <div v-if="/unicorn/.test(string)">Vue</div>
+</template>
+```
+
+👎 Examples of incorrect code
+
+```tsx
+if (string.match(/unicorn/)) {}
+if (/unicorn/.exec(string)) {}
+<template>
+    <div v-if="/unicorn/.exec(string)">Vue</div>
+</template>
+```
+
+## Prefer Spread
+
+----------
+
+Prefer the spread operator over Array.from(…), Array#concat(…), Array#slice() and String#split('')
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-spread.md>
+
+👍 Examples of correct code
+
+```tsx
+[ ...set ].map(element => foo(element));
+const array = [ ...array1, ...array2 ];
+const tail = array.slice(1);
+const copy = [ ...array ];
+```
+
+👎 Examples of incorrect code
+
+```tsx
+Array.from(set).map(element => foo(element));
+const array = array1.concat(array2);
+const copy = array.slice();
+const characters = string.split('');
+```
+
+## Prefer String Replace All
+
+----------
+
+Prefer String#replaceAll() over regex searches with the global flag
+The String#replaceAll() method is both faster and safer as you don't have to escape the regex
+if the string is not a literal.
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-string-replace-all.md>
+
+👍 Examples of correct code
+
+```tsx
+string.replace(/Non-literal characters .*/g, "");
+string.replace(/Extra flags/gi, "");
+string.replace("Not a regex expression", "")
+string.replaceAll("Literal characters only", "");
+```
+
+👎 Examples of incorrect code
+
+```tsx
+string.replace(/This has no special regex symbols/g, "");
+string.replace(/\(It also checks for escaped regex symbols\)/g, "");
+string.replace(/Works for u flag too/gu, "");
+```
+
+## Prefer String Starts Ends With
+
+----------
+
+Prefer String#startsWith() & String#endsWith() over RegExp#test()
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-string-starts-ends-with.md>
+
+👍 Examples of correct code
+
+```tsx
+const foo = baz.startsWith("bar");
+const foo = baz.endsWith("bar");
+const foo = baz?.startsWith("bar");
+const foo = (baz ?? "").startsWith("bar");
+const foo = String(baz).startsWith("bar");
+const foo = /^bar/i.test(baz);
+```
+
+👎 Examples of incorrect code
+
+```tsx
+const foo = /^bar/.test(baz);
+const foo = /bar$/.test(baz);
+```
+
+## Prefer String Trim Start End
+
+----------
+
+Prefer `String#trimStart()` / `String#trimEnd()` over `String#trimLeft()` / `String#trimRight()`
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-string-trim-start-end.md>
+
+👍 Examples of correct code
+
+```tsx
+const foo = bar.trimStart();
+const foo = bar.trimEnd();
+```
+
+👎 Examples of incorrect code
+
+```tsx
+const foo = bar.trimLeft();
+const foo = bar.trimRight();
+```
+
+## Prefer Switch
+
+----------
+
+Prefer switch over multiple else-if
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-switch.md>
+
+👍 Examples of correct code
+
+```tsx
+if (foo === 1) {
+    // 1
+} else if (foo === 2) {
+    // 2
+}
+switch (foo) {
+    case 1: {
+        // 1
+        break;
+    }
+    case 2: {
+        // 2
+        break;
+    }
+    case 3: {
+        // 3
+        break;
+    }
+    default: {
+        // default
+    }
+}
+```
+
+👎 Examples of incorrect code
+
+```tsx
+if (foo === 1) {
+    // 1
+} else if (foo === 2) {
+    // 2
+} else if (foo === 3) {
+    // 3
+} else {
+    // default
+}
+```
+
+## Prefer Ternary
+
+----------
+
+This rule enforces the use of ternary expressions over 'simple' if-else statements,
+where 'simple' means the consequent and alternate are each one line and have the same basic type and form.
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-ternary.md>
+
+👍 Examples of correct code
+
+```tsx
+function func() {
+    return test ? a : b;
+}
+function* func() {
+    yield (test ? a : b);
+}
+async function func() {
+    await (test ? a() : b());
+}
+const error = test ? new Error('foo') : new Error('bar');
+throw error;
+let foo;
+foo = test ? 1 : 2;
+// Multiple expressions
+let foo;
+let bar;
+if (test) {
+    foo = 1;
+    bar = 2;
+} else{
+    foo = 2;
+}
+// Different expressions
+function func() {
+    if (test) {
+        return a;
+    } else {
+        throw new Error('error');
+    }
+}
+// Assign to different variable
+let foo;
+let bar;
+if (test) {
+    foo = 1;
+} else{
+    baz = 2;
+}
+```
+
+👎 Examples of incorrect code
+
+```tsx
+function func() {
+    if (test) {
+        return a;
+    } else {
+        return b;
+    }
+}
+function* func() {
+    if (test) {
+        yield a;
+    } else {
+        yield b;
+    }
+}
+async function func() {
+    if (test) {
+        await a();
+    } else {
+        await b();
+    }
+}
+if (test) {
+    throw new Error('foo');
+} else {
+    throw new Error('bar');
+}
+let foo;
+if (test) {
+    foo = 1;
+} else {
+    foo = 2;
+}
+```
+
+## Prevent Abbreviations
+
+----------
+
+Using complete words results in more readable code. Not everyone knows all your abbreviations.
+Code is written only once, but read many times.
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prevent-abbreviations.md>
+
+👍 Examples of correct code
+
+```tsx
+const error = new Error();
+const event = document.createEvent('Event');
+const levels = {
+    error: 0
+};
+this.event = 'click';
+class Button {}
+// Property is not checked by default
+const levels = {
+    err: 0
+};
+// Property is not checked by default
+this.evt = 'click';
+```
+
+👎 Examples of incorrect code
+
+```tsx
+const e = new Error();
+const e = document.createEvent('Event');
+class Btn {}
+```
+
+## Consistent Relative URL
+
+----------
+
+Enforce consistent relative URL style
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/relative-url-style.md>
+
+👍 Examples of correct code
+
+```tsx
+const url = new URL('foo', base);
+```
+
+👎 Examples of incorrect code
+
+```tsx
+const url = new URL('./foo', base)
+```
+
+## Require Array Join Separator
+
+----------
+
+Enforce using the separator argument with Array#join()
+It's better to make it clear what the separator is when calling Array#join(),
+instead of relying on the default comma (',') separator.
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/require-array-join-separator.md>
+
+👍 Examples of correct code
+
+```tsx
+const string = array.join(',');
+const string = array.join('|');
+const string = Array.prototype.join.call(arrayLike, '');
+const string = [].join.call(arrayLike, '\n');
+```
+
+👎 Examples of incorrect code
+
+```tsx
+const string = array.join();
+const string = Array.prototype.join.call(arrayLike);
+const string = [].join.call(arrayLike);
+```
+
+## Require Number To Fixed Digits Argument
+
+----------
+
+Enforce using the digits argument with Number#toFixed()
+
+It's better to make it clear what the value of the digits argument is when calling Number#toFixed(),
+instead of relying on the default value of 0.
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/require-number-to-fixed-digits-argument.md>
+
+👍 Examples of correct code
+
+```tsx
+const string = foo.toFixed(0);
+const string = foo.toFixed(2);
+const integer = Math.floor(foo);
+const integer = Math.ceil(foo);
+const integer = Math.round(foo);
+const integer = Math.trunc(foo);
+```
+
+👎 Examples of incorrect code
+
+```tsx
+const string = number.toFixed();
+```
+
+## Template String Indent
+
+----------
+
+Fix whitespace-insensitive template indentation
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/template-indent.md>
+
+👍 Examples of correct code
+
+```tsx
+function foo() {
+    const sqlQuery = sql`
+        select *
+        from students
+        where first_name = ${x}
+        and last_name = ${y}
+    `;
+
+    const gqlQuery = gql`
+        query user(id: 5) {
+            firstName
+            lastName
+        }
+    `;
+
+    const html = /* HTML */ `
+        <div>
+            <span>hello</span>
+        </div>
+    `;
+}
+```
+
+👎 Examples of incorrect code
+
+```tsx
+function foo() {
+    const sqlQuery = sql`
+select *
+from students
+where first_name = ${x}
+and last_name = ${y}
+    `;
+
+    const gqlQuery = gql`
+                                    query user(id: 5) {
+                                        firstName
+                                        lastName
+                                    }
+                                `;
+
+    const html = /* HTML */ `
+                <div>
+                        <span>hello</span>
+                </div>
+    `;
+}
 ```

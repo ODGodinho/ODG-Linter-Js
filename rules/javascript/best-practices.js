@@ -245,6 +245,23 @@ module.exports = {
         "unicorn/prefer-array-index-of": [ "error" ], // Prefira usar IndexOf
         "unicorn/prefer-array-some": [ "error" ], // Prefira usar Array some invés de length
         "unicorn/prefer-dom-node-append": [ "error" ], // Prefira append no DOM
-        "unicorn/prefer-dom-node-remove": [ "error" ], // Prefira remove em vez removeChild
+        "unicorn/prefer-dom-node-remove": [ "error" ], // Prefira remove invés removeChild
+        "unicorn/prefer-includes": [ "error" ], // Prefira usar include ao invés IndexOf
+        "unicorn/prefer-keyboard-event-key": [ "error" ], // Prefira use Key invés de KeyCode
+        "unicorn/prefer-optional-catch-binding": [ "error" ], // Omita o parâmetro .catch se não usado
+        "unicorn/prefer-prototype-methods": [ "error" ], // Omita o parâmetro .catch se não usado
+        "unicorn/prefer-query-selector": [ "error" ], // Prefira QuerySelector
+        "unicorn/prefer-regexp-test": [ "error" ], // Prefira Regex test invés match
+        "unicorn/prefer-spread": [ "error" ], // Prefira destructuring
+        "unicorn/prefer-string-replace-all": [ "error" ], // Prefira replace ao invés de regex
+        "unicorn/prefer-string-starts-ends-with": [ "error" ], // Prefira startWith ao invés de regex
+        "unicorn/prefer-string-trim-start-end": [ "error" ], // Prefira trim Start/End invés de Left/Right
+        "unicorn/prefer-switch": [ "error" ], // Prefira switch
+        "unicorn/prefer-ternary": [ "error" ], // Prefira ternário em vez de if else
+        "unicorn/prevent-abbreviations": [ "error" ], // Prefira ternário em vez de if else
+        "unicorn/relative-url-style": [ "error" ], // Não coloque ./ em new URL
+        "unicorn/require-array-join-separator": [ "error" ], // Sempre passe parâmetro Array#join
+        "unicorn/require-number-to-fixed-digits-argument": [ "error" ], // Passe quantidade em ToFixed
+        "unicorn/template-indent": [ "error" ], // Indenter em template string
     },
 };
