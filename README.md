@@ -7314,6 +7314,226 @@ var foo = /abc/mi
 var foo = /abc/us
 ```
 
+## Security
+
+### Eval Disabled
+
+----------
+
+JavaScript's eval() function is potentially dangerous and is often misused.
+Using eval() on untrusted code can open a program up to several different injection attacks.
+The use of eval() in most contexts can be substituted for a better, alternative approach to a problem.
+
+<https://eslint.org/docs/rules/no-eval#no-eval>
+
+👍 Examples of correct code
+
+```typescript
+var obj = { x: "foo" },
+    key = "x",
+    value = obj[key];
+
+class A {
+    foo() {
+        // This is a user-defined method.
+        this.eval("var a = 0");
+    }
+
+    eval() {
+    }
+
+    static {
+        // This is a user-defined static method.
+        this.eval("var a = 0");
+    }
+
+    static eval() {
+    }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var obj = { x: "foo" },
+    key = "x",
+    value = eval("obj." + key);
+
+(0, eval)("var a = 0");
+
+var foo = eval;
+foo("var a = 0");
+
+// This `this` is the global object.
+this.eval("var a = 0");
+```
+
+### Detect Unsafe Regex
+
+----------
+
+There are many ways to block the event loop, one way an attacker can do that
+is with Regular Expression Denial of Service (ReDoS).
+
+<https://github.com/nodesecurity/eslint-plugin-security/blob/main/docs/regular-expression-dos-and-node.md>
+
+👍 Examples of correct code
+
+```typescript
+ var expression = /^[\w+\-.]+@[\d\-A-Za-z]+\.[\d\-.A-Za-z]+$/
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var expression = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+```
+
+### Buffer No Assert
+
+----------
+
+Detect calls to buffer with noAssert flag set.
+
+From the Node.js API docs: "Setting noAssert to true skips validation of the offset. This allows the offset to be beyond the end of the Buffer."
+
+<https://github.com/nodesecurity/eslint-plugin-security#detect-buffer-noassert>
+
+👍 Examples of correct code
+
+```typescript
+```
+
+👎 Examples of incorrect code
+
+```typescript
+/** https://nodejs.org/api/buffer.html */
+```
+
+### No Exec Child Process
+
+----------
+
+Detect instances of child_process & non-literal exec()
+
+<https://github.com/nodesecurity/eslint-plugin-security/blob/main/docs/avoid-command-injection-node.md>
+
+👍 Examples of correct code
+
+```typescript
+var child_process = require('child_process');
+
+var path = '.';
+child_process.execFile('/bin/ls', ['-l', path], function (err, result) {
+  console.log(result);
+});
+
+// Or
+
+var child_process = require('child_process');
+
+var path = '.';
+var ls = child_process.spawn('/bin/ls', ['-l', path]);
+ls.stdout.on('data', function (data) {
+  console.log(data.toString());
+});
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var path = 'user input';
+child_process.exec('ls -l ' + path, function (err, data) {
+  console.log(data);
+});
+```
+
+### No Mustache Scape
+
+----------
+
+Detects object.escapeMarkup = false, which can be used with some template engines to disable
+escaping of HTML entities. This can lead to Cross-Site Scripting (XSS) vulnerabilities.
+
+More information: [OWASP XSS](https://owasp.org/www-community/attacks/xss/)
+
+<https://github.com/nodesecurity/eslint-plugin-security#detect-disable-mustache-escape>
+
+👍 Examples of correct code
+
+```typescript
+// No remove object.escapeMarkup = false
+```
+
+👎 Examples of incorrect code
+
+```typescript
+object.escapeMarkup = false
+```
+
+### No Csrf Before Method Override
+
+----------
+
+As the declaration order of middlewares determines the execution stack in Connect,
+it is possible to abuse this functionality in order to bypass the standard Connect's anti-CSRF protection.
+
+<https://github.com/nodesecurity/eslint-plugin-security/blob/main/docs/bypass-connect-csrf-protection-by-abusing.md>
+
+👍 Examples of correct code
+
+```typescript
+app.use(express.csrf())
+app.use(express.methodOverride())
+```
+
+👎 Examples of incorrect code
+
+```typescript
+app.use(express.methodOverride())
+app.use(express.csrf())
+```
+
+### No Literal Fs Filename
+
+----------
+
+Detects variable in filename argument of fs calls, which might allow an attacker to access anything on your system.
+
+<https://github.com/nodesecurity/eslint-plugin-security#detect-non-literal-fs-filename>
+
+👍 Examples of correct code
+
+```typescript
+```
+
+👎 Examples of incorrect code
+
+```typescript
+```
+
+### No Pseudo Random Bytes
+
+----------
+
+Detects if pseudoRandomBytes() is in use, which might not give you the randomness you need and expect.
+
+<https://github.com/nodesecurity/eslint-plugin-security#detect-non-literal-fs-filename>
+
+👍 Examples of correct code
+
+```typescript
+var crypto = require("crypto")
+
+const random = crypto.randomBytes(60);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const random = Math.random();
+```
+
 ## Catch Error Name
 
 ----------
@@ -8287,222 +8507,24 @@ foo.append(bar, 'baz');
 foo.appendChild(bar);
 ```
 
-## Security
-
-### Eval Disabled
+## Prefer Dom Node Remove
 
 ----------
 
-JavaScript's eval() function is potentially dangerous and is often misused.
-Using eval() on untrusted code can open a program up to several different injection attacks.
-The use of eval() in most contexts can be substituted for a better, alternative approach to a problem.
+Prefer `childNode.remove()` over `parentNode.removeChild(childNode)`
 
-<https://eslint.org/docs/rules/no-eval#no-eval>
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-dom-node-dataset.md>
 
 👍 Examples of correct code
 
-```typescript
-var obj = { x: "foo" },
-    key = "x",
-    value = obj[key];
-
-class A {
-    foo() {
-        // This is a user-defined method.
-        this.eval("var a = 0");
-    }
-
-    eval() {
-    }
-
-    static {
-        // This is a user-defined static method.
-        this.eval("var a = 0");
-    }
-
-    static eval() {
-    }
-}
+```tsx
+foo.remove();
+this.remove();
 ```
 
 👎 Examples of incorrect code
 
-```typescript
-var obj = { x: "foo" },
-    key = "x",
-    value = eval("obj." + key);
-
-(0, eval)("var a = 0");
-
-var foo = eval;
-foo("var a = 0");
-
-// This `this` is the global object.
-this.eval("var a = 0");
-```
-
-### Detect Unsafe Regex
-
-----------
-
-There are many ways to block the event loop, one way an attacker can do that
-is with Regular Expression Denial of Service (ReDoS).
-
-<https://github.com/nodesecurity/eslint-plugin-security/blob/main/docs/regular-expression-dos-and-node.md>
-
-👍 Examples of correct code
-
-```typescript
- var expression = /^[\w+\-.]+@[\d\-A-Za-z]+\.[\d\-.A-Za-z]+$/
-```
-
-👎 Examples of incorrect code
-
-```typescript
-var expression = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-```
-
-### Buffer No Assert
-
-----------
-
-Detect calls to buffer with noAssert flag set.
-
-From the Node.js API docs: "Setting noAssert to true skips validation of the offset. This allows the offset to be beyond the end of the Buffer."
-
-<https://github.com/nodesecurity/eslint-plugin-security#detect-buffer-noassert>
-
-👍 Examples of correct code
-
-```typescript
-```
-
-👎 Examples of incorrect code
-
-```typescript
-/** https://nodejs.org/api/buffer.html */
-```
-
-### No Exec Child Process
-
-----------
-
-Detect instances of child_process & non-literal exec()
-
-<https://github.com/nodesecurity/eslint-plugin-security/blob/main/docs/avoid-command-injection-node.md>
-
-👍 Examples of correct code
-
-```typescript
-var child_process = require('child_process');
-
-var path = '.';
-child_process.execFile('/bin/ls', ['-l', path], function (err, result) {
-  console.log(result);
-});
-
-// Or
-
-var child_process = require('child_process');
-
-var path = '.';
-var ls = child_process.spawn('/bin/ls', ['-l', path]);
-ls.stdout.on('data', function (data) {
-  console.log(data.toString());
-});
-```
-
-👎 Examples of incorrect code
-
-```typescript
-var path = 'user input';
-child_process.exec('ls -l ' + path, function (err, data) {
-  console.log(data);
-});
-```
-
-### No Mustache Scape
-
-----------
-
-Detects object.escapeMarkup = false, which can be used with some template engines to disable
-escaping of HTML entities. This can lead to Cross-Site Scripting (XSS) vulnerabilities.
-
-More information: [OWASP XSS](https://owasp.org/www-community/attacks/xss/)
-
-<https://github.com/nodesecurity/eslint-plugin-security#detect-disable-mustache-escape>
-
-👍 Examples of correct code
-
-```typescript
-// No remove object.escapeMarkup = false
-```
-
-👎 Examples of incorrect code
-
-```typescript
-object.escapeMarkup = false
-```
-
-### No Csrf Before Method Override
-
-----------
-
-As the declaration order of middlewares determines the execution stack in Connect,
-it is possible to abuse this functionality in order to bypass the standard Connect's anti-CSRF protection.
-
-<https://github.com/nodesecurity/eslint-plugin-security/blob/main/docs/bypass-connect-csrf-protection-by-abusing.md>
-
-👍 Examples of correct code
-
-```typescript
-app.use(express.csrf())
-app.use(express.methodOverride())
-```
-
-👎 Examples of incorrect code
-
-```typescript
-app.use(express.methodOverride())
-app.use(express.csrf())
-```
-
-### No Literal Fs Filename
-
-----------
-
-Detects variable in filename argument of fs calls, which might allow an attacker to access anything on your system.
-
-<https://github.com/nodesecurity/eslint-plugin-security#detect-non-literal-fs-filename>
-
-👍 Examples of correct code
-
-```typescript
-```
-
-👎 Examples of incorrect code
-
-```typescript
-```
-
-### No Pseudo Random Bytes
-
-----------
-
-Detects if pseudoRandomBytes() is in use, which might not give you the randomness you need and expect.
-
-<https://github.com/nodesecurity/eslint-plugin-security#detect-non-literal-fs-filename>
-
-👍 Examples of correct code
-
-```typescript
-var crypto = require("crypto")
-
-const random = crypto.randomBytes(60);
-```
-
-👎 Examples of incorrect code
-
-```typescript
-const random = Math.random();
+```tsx
+parentNode.removeChild(foo);
+parentNode.removeChild(this);
 ```

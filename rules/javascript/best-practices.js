@@ -245,5 +245,6 @@ module.exports = {
         "unicorn/prefer-array-index-of": [ "error" ], // Prefira usar IndexOf
         "unicorn/prefer-array-some": [ "error" ], // Prefira usar Array some invés de length
         "unicorn/prefer-dom-node-append": [ "error" ], // Prefira append no DOM
+        "unicorn/prefer-dom-node-remove": [ "error" ], // Prefira remove em vez removeChild
     },
 };
