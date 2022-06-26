@@ -8,6 +8,8 @@ module.exports = {
         "filenames",
         "security",
         "unicorn",
+        "html",
+        "php-markup",
     ],
     env: {
         node: true,
@@ -19,8 +21,13 @@ module.exports = {
         "./rules/javascript/errors.js",
         "./rules/javascript/security.js",
     ],
+    settings: {
+        "html/report-bad-indent": "error",
+        "html/indent": "+4",
+    },
     parserOptions: {
-        ecmaVersion: 2018,
+        sourceType: "module",
+        ecmaVersion: 2022,
     },
     overrides: [
         {
@@ -38,8 +45,10 @@ module.exports = {
             ],
             parser: "@typescript-eslint/parser",
             parserOptions: {
-                ecmaFeatures: { jsx: true },
-                ecmaVersion: 2018,
+                ecmaFeatures: {
+                    jsx: true,
+                },
+                ecmaVersion: 2022,
                 sourceType: "module",
                 project: [ "tsconfig.json" ], // Specify it only for TypeScript files
             },
