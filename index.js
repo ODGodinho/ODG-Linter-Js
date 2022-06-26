@@ -17,7 +17,7 @@ module.exports = {
     },
     extends: [
         "./rules/javascript/best-practices.js",
-        "./rules/javascript/js-doc.js",
+        "./rules/javascript/js-documentation.js",
         "./rules/javascript/errors.js",
         "./rules/javascript/security.js",
     ],
