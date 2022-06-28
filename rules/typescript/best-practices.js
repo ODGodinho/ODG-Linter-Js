@@ -92,5 +92,7 @@ module.exports = {
         "no-underscore-dangle": [ "error" ], // Não permite _ no nome
         "@typescript-eslint/prefer-return-this-type": [ "error" ], // Não permite _ no nome
         "for-direction": [ "error" ], // Não faça for contador infinito.
+        "no-shadow": [ "off" ], // Erro caso ja esteja declarado escopo a cima
+        "@typescript-eslint/no-shadow": [ "error" ], // Erro caso ja esteja declarado escopo a cima
     },
 };

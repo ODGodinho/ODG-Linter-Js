@@ -265,5 +265,6 @@ module.exports = {
         "unicorn/require-array-join-separator": [ "error" ], // Sempre passe parâmetro Array#join
         "unicorn/require-number-to-fixed-digits-argument": [ "error" ], // Passe quantidade em ToFixed
         "unicorn/template-indent": [ "error" ], // Indenter em template string
+        "no-shadow": [ "error" ], // Erro caso ja esteja declarado escopo a cima
     },
 };

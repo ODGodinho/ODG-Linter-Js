@@ -145,6 +145,7 @@
 - [Brace Style](#brace-style)
 - [Comma Style](#comma-style)
 - [Object BreakLine](#object-break-line)
+- [No Shadow](#no-shadow)
 - [Promise Rules](#promise-rules)
   - [No New Statics](#no-new-statics)
   - [No Return Wrap](#no-return-wrap)
@@ -5186,7 +5187,7 @@ function bar() {
 }
 ```
 
-## Object BreakLine
+## Object Break Line
 
 ----------
 
@@ -5242,6 +5243,54 @@ const obj3 = {
         8
     ]
 };
+```
+
+## No Shadow
+
+----------
+
+Enforces placing object properties on separate lines.
+
+<https://eslint.org/docs/rules/object-property-newline>
+
+👍 Examples of correct code
+
+```typescript
+var a = 3;
+function b() {
+    var c = 10;
+}
+
+var b = function () {
+    var c = 10;
+}
+
+function b(a) {
+    var c = 10;
+}
+b(a);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var a = 3;
+function b() {
+    var a = 10;
+}
+
+var b = function () {
+    var a = 10;
+}
+
+function b(a) {
+    a = 10;
+}
+b(a);
+
+if (true) {
+    let a = 5;
+}
 ```
 
 ## Promise Rules
