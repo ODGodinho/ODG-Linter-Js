@@ -32,7 +32,7 @@ module.exports = {
         "no-empty-function": [ "error" ], // Não permite funções vazias
         "no-duplicate-imports": [ "error" ], // Bloqueia import duplicado
         "prefer-const": [ "error" ], // Preferir constantes
-        "generator-star-spacing": [ "error", {before: true, after: false} ], // Espaço Funções Yield;
+        "generator-star-spacing": [ "error", { before: true, after: false } ], // Espaço Funções Yield;
         "no-unsafe-optional-chaining": [ "error" ], // Protege de optional que pode gerar errors
         "linebreak-style": [ "error", "unix" ], // Força usar \n apenas em vez de \r\n
         "eol-last": [ "error", "always" ], // Força finalizar com \n no final

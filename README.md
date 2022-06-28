@@ -280,6 +280,14 @@
 - [Require Array Join Separator](#require-array-join-separator)
 - [Require Number To Fixed Digits Argument](#require-number-to-fixed-digits-argument)
 - [Template String Indent](#template-string-indent)
+- [Errors](#errors)
+  - [Construtor Super Invalid](#construtor-super-invalid)
+  - [Getter Return](#getter-return)
+  - [No Class Assign](#no-class-assign)
+  - [No Compare Neg Zero](#no-compare-neg-zero)
+  - [No Setter Return](#no-compare-neg-zero)
+- [Possible Errors](#possible-errors)
+  - [For Direction](#for-direction)
 
 ## Introduction
 
@@ -9168,5 +9176,215 @@ and last_name = ${y}
                         <span>hello</span>
                 </div>
     `;
+}
+```
+
+## Errors
+
+## Construtor Super Invalid
+
+----------
+
+Verifies calls of super() in constructors.
+
+<https://eslint.org/docs/latest/rules/constructor-super>
+
+👍 Examples of correct code
+
+```typescript
+class A {
+    constructor() { }
+}
+
+class A extends B {
+    constructor() {
+        super();
+    }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+class A {
+    constructor() {
+        super();  // This is a SyntaxError.
+    }
+}
+
+class A extends B {
+    constructor() { }  // Would throw a ReferenceError.
+}
+
+// Classes which inherits from a non constructor are always problems.
+class A extends null {
+    constructor() {
+        super();  // Would throw a TypeError.
+    }
+}
+
+class A extends null {
+    constructor() { }  // Would throw a ReferenceError.
+}
+```
+
+## Getter Return
+
+----------
+
+Enforces that a return statement is present in property getters.
+
+<https://eslint.org/docs/latest/rules/getter-return>
+
+👍 Examples of correct code
+
+```typescript
+p = {
+    get name(){
+        return "nicholas";
+    }
+};
+
+Object.defineProperty(p, "age", {
+    get: function (){
+        return 18;
+    }
+});
+
+class P{
+    get name(){
+        return "nicholas";
+    }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+p = {
+    get name(){
+        // no returns.
+    }
+};
+
+Object.defineProperty(p, "age", {
+    get: function (){
+        // no returns.
+    }
+});
+
+class P{
+    get name(){
+        // no returns.
+    }
+}
+```
+
+## No Class Assign
+
+----------
+
+Disallows modifying variables of class declarations.
+
+<https://eslint.org/docs/latest/rules/no-class-assign>
+
+👍 Examples of correct code
+
+```typescript
+let A = class {
+    b() {
+        A = 0; // A is a variable.
+    }
+}
+
+// OR
+
+class A {
+    b(A) {
+        A = 0; // A is a parameter.
+    }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+class A { }
+A = 0;
+
+// OR
+
+A = 0;
+class A { }
+
+// OR
+
+class A {
+    b() {
+        A = 0;
+    }
+}
+
+// OR
+
+let A = class A {
+    b() {
+        A = 0;
+        // `let A` is shadowed by the class name.
+    }
+}
+```
+
+## No Compare Neg Zero
+
+----------
+
+Disallows comparing against -0.
+
+<https://eslint.org/docs/latest/rules/no-compare-neg-zero>
+
+👍 Examples of correct code
+
+```typescript
+if (x === 0) {
+    // doSomething()...
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+if (x === -0) {
+    // doSomething()...
+}
+```
+
+## Possible Errors
+
+### For Direction
+
+----------
+
+Enforces for loop update clause moving the counter in the right direction.
+
+<https://eslint.org/docs/latest/rules/for-direction>
+
+👍 Examples of correct code
+
+```typescript
+for (var i = 0; i < 10; i++) {
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+for (var i = 0; i < 10; i--) {
+}
+
+for (var i = 10; i >= 0; i++) {
+}
+
+for (var i = 0; i > 10; i++) {
 }
 ```

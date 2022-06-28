@@ -20,5 +20,10 @@ module.exports = {
         "regexp/no-useless-dollar-replacements": [ "error" ],
         "regexp/strict": [ "error" ], // Regex strict
         "unicorn/no-instanceof-array": [ "error" ], // Não use instanceof Array
+        "constructor-super": [ "error" ], // Bloqueia Super construtor quando invalido
+        "getter-return": [ "error" ], // Getter tem q ter return
+        "no-class-assign": [ "error" ], // Não atribua variável com nome classe
+        "no-compare-neg-zero": [ "error" ], // Não compare com zero negativo
+        "no-setter-return": [ "error" ], // Não return em um setter
     },
 };

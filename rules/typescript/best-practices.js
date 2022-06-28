@@ -91,5 +91,6 @@ module.exports = {
         } ],
         "no-underscore-dangle": [ "error" ], // Não permite _ no nome
         "@typescript-eslint/prefer-return-this-type": [ "error" ], // Não permite _ no nome
+        "for-direction": [ "error" ], // Não faça for contador infinito.
     },
 };
