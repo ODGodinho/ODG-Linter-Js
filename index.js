@@ -42,6 +42,7 @@ module.exports = {
             ],
             extends: [
                 "./rules/typescript/best-practices.js",
+                "./rules/typescript/errors.js",
             ],
             parser: "@typescript-eslint/parser",
             parserOptions: {
