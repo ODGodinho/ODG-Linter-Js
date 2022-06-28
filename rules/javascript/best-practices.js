@@ -202,7 +202,9 @@ module.exports = {
         "padding-line-between-statements": [
             "error",
             { "blankLine": "always", "prev": "*", "next": "export" }, // Uma linha em branco antes do export
+            { "blankLine": "always", "prev": "export", "next": "*" }, // Uma linha em branco apos do export
             { "blankLine": "always", "prev": "*", "next": "class" }, // Uma linha em branco antes da classe
+            { "blankLine": "always", "prev": "class", "next": "*" }, // Uma linha em branco Apos da classe
         ],
         "filenames/match-regex": [ "error", "^[a-zA-Z0-9_-]+$" ], // Nome de arquivo deve ser alfanumérico
         "filenames/match-exported": [ "error", "^[a-zA-Z0-9_-]+$" ], // Nome do arquivo igual export default
