@@ -206,16 +206,19 @@ module.exports = {
             { "blankLine": "always", "prev": "*", "next": "class" }, // Uma linha em branco antes da classe
             { "blankLine": "always", "prev": "class", "next": "*" }, // Uma linha em branco Apos da classe
         ],
-        "filenames/match-regex": [ "error", "^[a-zA-Z0-9_-]+$" ], // Nome de arquivo deve ser alfanumérico
+        "filenames/match-regex": [
+            "error",
+            "^[a-zA-Z][a-zA-Z0-9_-]+((\\.[a-z]+)?)+$",
+        ], // Nome de arquivo deve ser alfanumérico
         "filenames/match-exported": [ "error", "^[a-zA-Z0-9_-]+$" ], // Nome do arquivo igual export default
         "unicorn/catch-error-name": [
             "error",
             {
                 "name": "exception",
                 "ignore": [
-                    "^error\\d*$",
+                    "^error\\w*$",
                     "^error$",
-                    "^exception$",
+                    "^exception\\w*$",
                 ],
             },
         ], // Chame todos os catch erros de exception
