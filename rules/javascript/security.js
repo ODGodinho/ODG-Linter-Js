@@ -1,6 +1,7 @@
 module.exports = {
     rules: {
         "no-eval": [ "error" ], // Não permite usar eval
+        "no-implied-eval": [ "error" ], // Bloqueia eval implícito
         "security/detect-unsafe-regex": [ "error" ], // Bloqueia Algumas regex que podem gerar Falhas Segurança
         "security/detect-buffer-noassert": [ "error" ], // Buffer sem noAssert não são permitidos
         "security/detect-child-process": [ "error" ], // Não use exec ProcessChild

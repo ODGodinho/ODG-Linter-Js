@@ -10,6 +10,7 @@ module.exports = {
         "unicorn",
         "html",
         "php-markup",
+        "n",
     ],
     env: {
         node: true,
@@ -20,6 +21,8 @@ module.exports = {
         "./rules/javascript/js-documentation.js",
         "./rules/javascript/errors.js",
         "./rules/javascript/security.js",
+        "./rules/javascript/performance.js",
+        "./rules/javascript/possible-errors.js",
     ],
     settings: {
         "html/report-bad-indent": "error",
@@ -43,6 +46,21 @@ module.exports = {
             extends: [
                 "./rules/typescript/best-practices.js",
                 "./rules/typescript/errors.js",
+            ],
+            parser: "@typescript-eslint/parser",
+            parserOptions: {
+                ecmaFeatures: {
+                    jsx: true,
+                },
+                ecmaVersion: 2022,
+                sourceType: "module",
+                project: [ "tsconfig.json" ], // Specify it only for TypeScript files
+            },
+        },
+        {
+            files: [ "**/tests/**.ts" ],
+            extends: [
+                "./rules/typescript/tests.js",
             ],
             parser: "@typescript-eslint/parser",
             parserOptions: {

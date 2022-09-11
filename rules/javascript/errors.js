@@ -25,5 +25,13 @@ module.exports = {
         "no-class-assign": [ "error" ], // Não atribua variável com nome classe
         "no-compare-neg-zero": [ "error" ], // Não compare com zero negativo
         "no-setter-return": [ "error" ], // Não return em um setter
+        "no-const-assign": [ "error" ], // Não re-atribua uma constant
+        "no-dupe-class-members": [ "error" ], // Sem métodos duplicados na classe
+        "no-dupe-keys": [ "error" ], // Não permite chaves duplicadas array
+        "no-dupe-args": [ "error" ], // Não permite argumentos duplicados
+        "no-unsafe-finally": [ "error" ], // Finally possivelmente errado
+        "no-import-assign": [ "error" ], // Não reatribua variável de import
+        "no-loss-of-precision": [ "error" ], // Não permite numero que pode quebrar precisão
+        "no-unreachable-loop": [ "error" ], // Não permite unreachable loop
     },
 };

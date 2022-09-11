@@ -79,7 +79,6 @@ module.exports = {
         "newline-before-return": [ "error" ], // Força retorno de função com \n antes
         "multiline-comment-style": [ "error", "starred-block" ], // Força /* comentário */ ao invés de // varias vezes
         "no-unreachable": [ "error" ], // Não permite unreachable code
-        "no-unreachable-loop": [ "error" ], // Não permite unreachable loop
         "no-multi-str": [ "error" ], // Não quebre linha dentro de uma string
         "consistent-this": [ "error", "that" ], // Não permite this em locais inconsistente.
         "no-irregular-whitespace": [ "error" ], // Não permite espaços entre palavras
@@ -89,7 +88,6 @@ module.exports = {
         "no-extra-boolean-cast": [ "error" ], // Não permite cast de boolean extra !!!
         "no-constant-condition": [ "error" ], // Não permite condições constantes if (true)
         "no-debugger": [ "error" ], // Não permite usar debugger
-        "no-dupe-keys": [ "error" ], // Não permite chaves duplicadas array
         "no-duplicate-case": [ "error" ], // Não permite duplicar case em switch
         "no-empty-character-class": [ "error" ], // Não permite classe de caracteres vazia em regex
         "no-ex-assign": [ "error" ], // Não permite atribuição de exceção
@@ -114,8 +112,9 @@ module.exports = {
         "yoda": [ "error" ], // Força if Variável === "COMPARATION"
         "no-undef-init": [ "error" ], // Não permite variáveis definidas como undefined ao inicializar
         "no-new-require": [ "error" ], // Não permite usar new require()
+        "no-new-object": [ "error" ], // Não permite usar new Object
         "prefer-template": [ "error" ], // Prefer template literals over string concatenation
-        "no-multiple-empty-lines": [ "error", { max: 1 } ], // Não permita varias linhas em branco
+        "no-multiple-empty-lines": [ "error", { "max": 1 } ], // Não permita varias linhas em branco
         "no-async-promise-executor": [ "error" ], // Não permita use função async para executar promise
         "prefer-promise-reject-errors": [ "error" ], // Passe uma Exception em promise ao invés de string/number
         "semi-spacing": [ "error", { before: false, after: true } ], // Não permite espaço antes do ;
@@ -138,6 +137,10 @@ module.exports = {
         "curly": [ "off" ], // Utilize chaves em multi linhas
         "no-useless-rename": [ "error" ], // Disable Rename desnecessários
         "handle-callback-err": [ "error" ], // Funções que recebem error deve ser tratado
+        "n/handle-callback-err": [
+            "error",
+            "^(err|error|\\w+Error|\\w+Exception|exception)$",
+        ], // Funções que recebem error deve ser tratado
         "new-cap": [ "error", { newIsCap: true } ], // New require first Letter uppercase
         "no-caller": [ "error" ], // Não permite usar callee
         "no-script-url": [ "error" ], // Não permite usar script url
@@ -197,6 +200,7 @@ module.exports = {
         "regexp/prefer-w": [ "error" ], // Use \w
         "regexp/sort-character-class-elements": [ "error" ], // Coloque [] em ordem Alfabética
         "regexp/sort-flags": [ "error" ], // Flag em ordem alfabética
+        "regexp/prefer-named-capture-group": [ "error" ], // Prefira group com nomes
         "max-statements-per-line": [ "error", { "max": 1 } ], // Máximo operação em 1 linha
         "arrow-parens": [ "error", "always" ], // Arrow Function sempre com parentese
         "padding-line-between-statements": [
@@ -269,5 +273,22 @@ module.exports = {
         "unicorn/require-number-to-fixed-digits-argument": [ "error" ], // Passe quantidade em ToFixed
         "unicorn/template-indent": [ "error" ], // Indenter em template string
         "no-shadow": [ "error" ], // Erro caso ja esteja declarado escopo a cima
+        "no-delete-var": [ "error" ], // Não delete variáveis
+        "no-lone-blocks": [ "error" ], // Não crie bloco desnecessários
+        "no-proto": [ "error" ], // Não use __proto__ depreciada desde ECMA 3.1
+        "id-length": [ "error", { "min": 3 } ], // Tamanho mínimo das variáveis
+        "max-depth": [ "error", { "max": 3 } ], // Tamanho máximo do Hadouken
+        "max-params": [ "error", { "max": 3 } ], // Máximo de parâmetros
+        "max-statements": [ "error" ], // Máximo atribuição em função
+        "operator-assignment": [ "error", "always" ], // Prefira atribuição curtas +=
+        "prefer-rest-params": [ "error" ], // Prefira ..args em vez de arguments
+        "no-useless-computed-key": [ "error" ], // Chave de objeto computada de forma desnecessária
+        "symbol-description": [ "error" ], // Symbol deve ter descrição
+        "no-return-await": [ "error" ], // Não coloque await no return
+        "max-classes-per-file": [ "error", 1 ], // Apenas 1 classe por arquivo
+        "no-constructor-return": [ "error" ], // Construtor não deve ter um retorno
+        "prefer-exponentiation-operator": [ "error" ], // Prefira ** em vez de Math.pow
+        "prefer-object-spread": [ "error" ], // Prefira Desestruturar para concatenar objetos
+        "default-case-last": [ "error" ], // Default switch case por ultimo
     },
 };

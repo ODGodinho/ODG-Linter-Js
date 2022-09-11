@@ -77,7 +77,6 @@
 - [Comment Multi Line Prefer](#comment-multi-line-prefer)
 - [No throw Literal](#no-throw-literal)
 - [No Unreachable](#no-unreachable)
-- [Useless Loop](#useless-loop)
 - [No Multiline String](#no-multiline-string)
 - [No Unsafe Assign](#no-unsafe-assign)
 - [Disallow Script Url](#disallow-script-url)
@@ -92,12 +91,15 @@
 - [Max Statements Per Line](#max-statements-per-line)
 - [No Constant Condition](#no-constant-condition)
 - [No Debugger](#no-debugger)
-- [Useless Object](#useless-object)
 - [Not Duplicate Case](#not-duplicate-case)
 - [Regex Block](#regex-block)
 - [No Overwrite Exception](#no-overwrite-exception)
 - [No Extra Semi](#no-extra-semi)
 - [No Function Overwrite](#no-function-overwrite)
+- [No Delete Var](#no-delete-var)
+- [No Lone Blocks](#no-lone-blocks)
+- [No Proto](#no-proto)
+- [No Useless Computed Key](#no-useless-computed-key)
 - [No Declare in Block](#no-declare-in-block)
 - [Security Negation](#security-negation)
 - [Regex Space](#regex-space)
@@ -116,6 +118,22 @@
 - [No Yoda](#no-yoda)
 - [No Undefined declare](#no-undefined-declare)
 - [No New require](#no-new-require)
+- [No New Object](#no-new-object)
+- [Var Size](#var-size)
+- [Max Depth](#max-depth)
+- [Max Params](#max-params)
+- [Max Statements](#max-statements)
+- [Operator Assignment](#operator-assignment)
+- [Require Yield](#require-yield)
+- [Prefer Rest Params](#prefer-rest-params)
+- [Symbol Description](#symbol-description)
+- [No Await Return](#no-await-return)
+- [Max Class Per File](#max-class-per-file)
+- [No Constructor Return](#no-constructor-return)
+- [Prefer Exponentiation Operator](#prefer-exponentiation-operator)
+- [Prefer Object Spread](#prefer-object-spread)
+- [Accessor Pairs](#accessor-pairs)
+- [Default Case Last](#default-case-last)
 - [Prefer Literals](#prefer-literals)
 - [Useless Condition](#useless-condition)
 - [No Multiple Empty Line](#no-multiple-empty-line)
@@ -208,7 +226,7 @@
   - [No Useless Range](#no-useless-range)
   - [No Useless Two Num Quantifier](#no-useless-two-num-quantifier)
   - [No Zero Quantifier](#no-zero-quantifier)
-  - [Optimal LookAround Quantifier](#optimal-look-around-quantifier)
+  - [Optimal LookAround Quantifier](#optimal-lookaround-quantifier)
   - [Optimal Quantifier Concatenation](#optimal-quantifier-concatenation)
   - [Prefer Quantifier](#prefer-quantifier)
   - [Prefer Range](#prefer-range)
@@ -222,10 +240,11 @@
   - [Prefer Plus](#prefer-plus)
   - [Prefer Question Quantifier](#prefer-question-quantifier)
   - [Prefer Star Quantifier](#prefer-star-quantifier)
-  - [Prefer Unicode CodePoint Escapes](#prefer-unicode-code-point-escapes)
+  - [Prefer Unicode Code Point Escapes](#prefer-unicode-code-point-escapes)
   - [Prefer W](#prefer-w)
   - [Sort Character Class Elements](#sort-character-class-elements)
   - [Sort Flags](#sort-flags)
+  - [Prefer Named Capture Group](#prefer-named-capture-group)
 - [Security](#security)
   - [Eval Disabled](#eval-disabled)
   - [Detect Unsafe Regex](#detect-unsafe-regex)
@@ -242,7 +261,7 @@
 - [Escape Case](#escape-case)
 - [New For Builtin](#new-for-builtin)
 - [No Abusive Eslint Disable](#no-abusive-eslint-disable)
-- [Prefer for…of](#prefer-for-of)
+- [Prefer for-of](#prefer-for-of)
 - [No Array Push Push](#no-array-push-push)
 - [No Await Chased](#no-await-chased)
 - [No Document Cookie](#no-document-cookie)
@@ -281,14 +300,21 @@
 - [Require Array Join Separator](#require-array-join-separator)
 - [Require Number To Fixed Digits Argument](#require-number-to-fixed-digits-argument)
 - [Template String Indent](#template-string-indent)
+- [Performance](#performance)
+  - [No Alert](#no-alert)
+  - [No Loop Func](#no-loop-func)
 - [Errors](#errors)
   - [Construtor Super Invalid](#construtor-super-invalid)
   - [Getter Return](#getter-return)
   - [No Class Assign](#no-class-assign)
   - [No Compare Neg Zero](#no-compare-neg-zero)
-  - [No Setter Return](#no-compare-neg-zero)
+  - [No Setter Return](#no-setter-return)
+  - [Useless Loop](#useless-loop)
+  - [No Dupe Class Members](#no-dupe-class-members)
+  - [No Dupe Keys](#no-dupe-keys)
 - [Possible Errors](#possible-errors)
   - [For Direction](#for-direction)
+  - [No Extra Bind](#no-extra-bind)
 
 ## Introduction
 
@@ -812,6 +838,7 @@ function foo () {
 Enforces callback error handling.
 
 <https://eslint.org/docs/rules/handle-callback-err>
+<https://github.com/weiran-zsd/eslint-plugin-node/blob/HEAD/docs/rules/handle-callback-err.md>
 
 👍 Examples of correct code
 
@@ -819,6 +846,13 @@ Enforces callback error handling.
 function loadData (err, data) {
     if (err) {
         console.log(err.stack);
+    }
+    doSomething();
+}
+
+function loadData (exception, data) {
+    if (exception) {
+        console.log(exception);
     }
     doSomething();
 }
@@ -834,6 +868,9 @@ function generateError (err) {
 
 ```typescript
 function loadData (err, data) {
+    doSomething();
+}
+function loadData (exception, data) {
     doSomething();
 }
 ```
@@ -1544,9 +1581,9 @@ try {
 
 ----------
 
-Disallow long syntax
+Disallow Array constructors
 
-<https://eslint.org/docs/rules/no-empty#no-empty>
+<https://eslint.org/docs/latest/rules/no-array-constructor>
 
 👍 Examples of correct code
 
@@ -2259,77 +2296,6 @@ for (;;) {}
 console.log("done");
 ```
 
-## Useless Loop
-
-----------
-
-No useless loop
-
-<https://eslint.org/docs/rules/no-unreachable-loop>
-
-👍 Examples of correct code
-
-```typescript
-do {
-    doSomething();
-} while (false)
-
-for (let i = 0; i < 1; i++) {
-    doSomething(i);
-}
-
-for (const a of [1]) {
-    doSomething(a);
-}
-```
-
-👎 Examples of incorrect code
-
-```typescript
-while (foo) {
-    doSomething(foo);
-    foo = foo.parent;
-    break;
-}
-
-function verifyList(head) {
-    let item = head;
-    do {
-        if (verify(item)) {
-            return true;
-        } else {
-            return false;
-        }
-    } while (item);
-}
-
-function findSomething(arr) {
-    for (var i = 0; i < arr.length; i++) {
-        if (isSomething(arr[i])) {
-            return arr[i];
-        } else {
-            throw new Error("Doesn't exist.");
-        }
-    }
-}
-
-for (key in obj) {
-    if (key.startsWith("_")) {
-        break;
-    }
-    firstKey = key;
-    firstValue = obj[key];
-    break;
-}
-
-for (foo of bar) {
-    if (foo.id === id) {
-        doSomething(foo);
-    }
-    break;
-}
-```
-
 ## No Multiline String
 
 ----------
@@ -2890,42 +2856,6 @@ function isTruthy(x) {
 }
 ```
 
-## Useless Object
-
-----------
-
-- No Duplicate Key in Object
-
-<https://eslint.org/docs/rules/no-dupe-keys#no-dupe-keys>
-
-👍 Examples of correct code
-
-```typescript
-var foo = {
-    bar: "baz",
-    quxx: "qux"
-};
-```
-
-👎 Examples of incorrect code
-
-```typescript
-var foo = {
-    bar: "baz",
-    bar: "qux"
-};
-
-var foo = {
-    "bar": "baz",
-    bar: "qux"
-};
-
-var foo = {
-    0x1: "baz",
-    1: "qux"
-};
-```
-
 ## Not Duplicate Case
 
 ----------
@@ -3158,6 +3088,173 @@ function foo() {
 var a = function hello() {
   hello = 123;
 };
+```
+
+## No Delete Var
+
+----------
+
+Disallow deleting variables.
+
+<https://eslint.org/docs/latest/rules/no-delete-var>
+
+👍 Examples of correct code
+
+```typescript
+// don't remove
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var x;
+delete x;
+```
+
+## No Lone Blocks
+
+----------
+
+Disallow unnecessary nested blocks
+
+<https://eslint.org/docs/latest/rules/no-lone-blocks>
+
+👍 Examples of correct code
+
+```typescript
+
+while (foo) {
+    bar();
+}
+
+if (foo) {
+    if (bar) {
+        baz();
+    }
+}
+
+function bar() {
+    baz();
+}
+
+{
+    let x = 1;
+}
+
+{
+    const y = 1;
+}
+
+{
+    class Foo {}
+}
+
+aLabel: {
+}
+
+class C {
+    static {
+        lbl: {
+            if (something) {
+                break lbl;
+            }
+
+            foo();
+        }
+    }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+if (foo) {
+    bar();
+    {
+        baz();
+    }
+}
+
+function bar() {
+    {
+        baz();
+    }
+}
+
+{
+    function foo() {}
+}
+
+{
+    aLabel: {
+    }
+}
+
+class C {
+    static {
+        {
+            foo();
+        }
+    }
+}
+```
+
+### No Proto
+
+----------
+
+Disallow the use of the __proto__ property
+
+<https://eslint.org/docs/latest/rules/no-proto>
+
+👍 Examples of correct code
+
+```typescript
+var a = Object.getPrototypeOf(obj);
+
+Object.setPrototypeOf(obj, b);
+
+var c = { __proto__: a };
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var a = obj.__proto__;
+
+var a = obj["__proto__"];
+
+obj.__proto__ = b;
+
+obj["__proto__"] = b;
+```
+
+### No Useless Computed Key
+
+----------
+
+Disallow unnecessary computed property keys in objects and classes
+
+<https://eslint.org/docs/latest/rules/no-useless-computed-key>
+
+👍 Examples of correct code
+
+```typescript
+var c = { 'a': 0 };
+var c = { 0: 0 };
+var a = { x() {} };
+var c = { a: 0 };
+var c = { '0+1,234': 0 };
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var a = { ['0']: 0 };
+var a = { ['0+1,234']: 0 };
+var a = { [0]: 0 };
+var a = { ['x']: 0 };
+var a = { ['x']() {} };
 ```
 
 ## No Declare in Block
@@ -3806,6 +3903,692 @@ var appHeader = new AppHeader();
 
 ```typescript
 var appHeader = new require('app-header');
+```
+
+## No New Object
+
+----------
+
+Disallow Object constructors
+
+<https://eslint.org/docs/rules/no-new-object>
+
+👍 Examples of correct code
+
+```typescript
+var myObject = new CustomObject();
+
+var myObject = {};
+
+var Object = function Object() {};
+new Object();
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var myObject = new Object();
+
+new Object();
+```
+
+## Var Size
+
+----------
+
+Enforce minimum identifier lengths
+
+<https://eslint.org/docs/latest/rules/id-length>
+
+👍 Examples of correct code
+
+```typescript
+var num = 5;
+function _f() { return 42; }
+function _func() { return 42; }
+obj.el = document.body;
+var foo = function (evt) { /* do stuff */ };
+try {
+    dangerousStuff();
+} catch (error) {
+    // ignore as many do
+}
+var myObj = { apple: 1 };
+(num) => { num * num };
+function foo(num = 0) { }
+class MyClass { }
+class Foo { method() {} }
+class Foo { #method() {} }
+class Foo { field = 1 }
+class Foo { #field = 1 }
+function foo(...args) { }
+function foo([longName]) { }
+var { prop } = {};
+var { prop: [longName] } = {};
+var [longName] = arr;
+function foo({ prop }) { }
+function foo({ a: prop }) { }
+var { prop } = {};
+var { a: prop } = {};
+({ prop: obj.longName } = {});
+var data = { "x": 1 };  // excused because of quotes
+data["y"] = 3;  // excused because of calculated property access
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var x = 5;
+obj.e = document.body;
+var foo = function (e) { };
+try {
+    dangerousStuff();
+} catch (e) {
+    // ignore as many do
+}
+var myObj = { a: 1 };
+(a) => { a * a };
+class x { }
+class Foo { x() {} }
+class Foo { #x() {} }
+class Foo { x = 1 }
+class Foo { #x = 1 }
+function foo(...x) { }
+function foo([x]) { }
+var [x] = arr;
+var { prop: [x]} = {};
+function foo({x}) { }
+var { x } = {};
+var { prop: a} = {};
+({ prop: obj.x } = {});
+```
+
+## Max Depth
+
+----------
+
+Enforce a maximum depth that blocks can be nested
+
+<https://eslint.org/docs/latest/rules/max-depth>
+
+👍 Examples of correct code
+
+```typescript
+function foo() {
+    for (;;) { // Nested 1 deep
+        while (true) { // Nested 2 deep
+            if (true) { // Nested 3 deep
+            }
+        }
+    }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function foo() {
+    for (;;) { // Nested 1 deep
+        while (true) { // Nested 2 deep
+            if (true) { // Nested 3 deep
+                if (true) { // Nested 4 deep
+                    if (true) { // Nested 5 deep
+                    }
+                }
+            }
+        }
+    }
+}
+```
+
+## Max Params
+
+----------
+
+Enforce a maximum number of parameters in function definitions
+
+<https://eslint.org/docs/latest/rules/max-params>
+
+👍 Examples of correct code
+
+```typescript
+function foo (bar, baz, qux) {
+    doSomething();
+}
+
+let foo = (bar, baz, qux) => {
+    doSomething();
+};
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function foo (bar, baz, qux, qxx) {
+    doSomething();
+}
+
+let foo = (bar, baz, qux, qxx) => {
+    doSomething();
+};
+```
+
+## Max Statements
+
+----------
+
+Enforce a maximum number of parameters in function definitions
+
+<https://eslint.org/docs/latest/rules/max-params>
+
+👍 Examples of correct code
+
+```typescript
+function foo() {
+  var foo1 = 1;
+  var foo2 = 2;
+  var foo3 = 3;
+  var foo4 = 4;
+  var foo5 = 5;
+  var foo6 = 6;
+  var foo7 = 7;
+  var foo8 = 8;
+  var foo9 = 9;
+  var foo10 = 10;
+  return function () {
+
+    // The number of statements in the inner function does not count toward the
+    // statement maximum.
+
+    return 42;
+  };
+}
+
+let foo = () => {
+  var foo1 = 1;
+  var foo2 = 2;
+  var foo3 = 3;
+  var foo4 = 4;
+  var foo5 = 5;
+  var foo6 = 6;
+  var foo7 = 7;
+  var foo8 = 8;
+  var foo9 = 9;
+  var foo10 = 10;
+  return function () {
+
+    // The number of statements in the inner function does not count toward the
+    // statement maximum.
+
+    return 42;
+  };
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function foo() {
+  var foo1 = 1;
+  var foo2 = 2;
+  var foo3 = 3;
+  var foo4 = 4;
+  var foo5 = 5;
+  var foo6 = 6;
+  var foo7 = 7;
+  var foo8 = 8;
+  var foo9 = 9;
+  var foo10 = 10;
+
+  var foo11 = 11; // Too many.
+}
+
+let foo = () => {
+  var foo1 = 1;
+  var foo2 = 2;
+  var foo3 = 3;
+  var foo4 = 4;
+  var foo5 = 5;
+  var foo6 = 6;
+  var foo7 = 7;
+  var foo8 = 8;
+  var foo9 = 9;
+  var foo10 = 10;
+
+  var foo11 = 11; // Too many.
+};
+```
+
+## Operator Assignment
+
+----------
+
+Require or disallow assignment operator shorthand where possible
+
+<https://eslint.org/docs/latest/rules/operator-assignment>
+
+👍 Examples of correct code
+
+```typescript
+x = y;
+x += y;
+x = y * z;
+x = (x * y) * z;
+x[0] /= y;
+x[foo()] = x[foo()] % 2;
+x = y + x; // `+` is not always commutative (e.g. x = "abc")
+```
+
+👎 Examples of incorrect code
+
+```typescript
+x = x + y;
+x = y * x;
+x[0] = x[0] / y;
+x.y = x.y << z;
+```
+
+## Require Yield
+
+----------
+
+Require generator functions to contain yield
+
+<https://eslint.org/docs/latest/rules/require-yield>
+
+👍 Examples of correct code
+
+```typescript
+function* foo() {
+  yield 5;
+  return 10;
+}
+
+function foo() {
+  return 10;
+}
+
+// This rule does not warn on empty generator functions.
+function* foo() { }
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function* foo() {
+  return 10;
+}
+```
+
+## Prefer Rest Params
+
+----------
+
+Require rest parameters instead of arguments
+
+<https://eslint.org/docs/latest/rules/prefer-rest-params>
+
+👍 Examples of correct code
+
+```typescript
+function foo(...args) {
+    console.log(args);
+}
+
+function foo(action, ...args) {
+    action.apply(null, args); // or `action(...args)`, related to the `prefer-spread` rule.
+}
+
+// Note: the implicit arguments can be overwritten.
+function foo(arguments) {
+    console.log(arguments); // This is the first argument.
+}
+function foo() {
+    var arguments = 0;
+    console.log(arguments); // This is a local variable.
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function foo() {
+    console.log(arguments);
+}
+
+function foo(action) {
+    var args = Array.prototype.slice.call(arguments, 1);
+    action.apply(null, args);
+}
+
+function foo(action) {
+    var args = [].slice.call(arguments, 1);
+    action.apply(null, args);
+}
+```
+
+## Symbol Description
+
+----------
+
+Require symbol descriptions
+
+<https://eslint.org/docs/latest/rules/symbol-description>
+
+👍 Examples of correct code
+
+```typescript
+var foo = Symbol("some description");
+
+// or
+
+var someString = "some description";
+var bar = Symbol(someString);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = Symbol();
+```
+
+## No Await Return
+
+----------
+
+Disallow unnecessary return await
+
+<https://eslint.org/docs/latest/rules/no-return-await>
+
+👍 Examples of correct code
+
+```typescript
+async function foo() {
+    return bar();
+}
+
+async function foo() {
+    await bar();
+    return;
+}
+
+// This is essentially the same as `return await bar();`, but the rule checks only `await` in `return` statements
+async function foo() {
+    const x = await bar();
+    return x;
+}
+
+// In this example the `await` is necessary to be able to catch errors thrown from `bar()`
+async function foo() {
+    try {
+        return await bar();
+    } catch (error) {}
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+async function foo() {
+    return await bar();
+}
+```
+
+## Max Class Per File
+
+----------
+
+Enforce a maximum 1 classes per file
+
+<https://eslint.org/docs/latest/rules/max-classes-per-file>
+
+👍 Examples of correct code
+
+```typescript
+class Foo {}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+class Foo {}
+class Bar {}
+```
+
+## No Constructor Return
+
+----------
+
+Disallow returning value from constructor
+
+<https://eslint.org/docs/latest/rules/no-constructor-return>
+
+👍 Examples of correct code
+
+```typescript
+class C {
+    constructor(c) {
+        this.c = c;
+    }
+}
+
+class D {
+    constructor(f) {
+        if (!f) {
+            return;  // Flow control.
+        }
+
+        f();
+    }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+class A {
+    constructor(a) {
+        this.a = a;
+        return a;
+    }
+}
+
+class B {
+    constructor(f) {
+        if (!f) {
+            return 'falsy';
+        }
+    }
+}
+```
+
+## Prefer Exponentiation Operator
+
+----------
+
+Prefira o operador de exponencial
+
+<https://eslint.org/docs/latest/rules/prefer-exponentiation-operator>
+
+👍 Examples of correct code
+
+```typescript
+const foo = 2 ** 8;
+
+const bar = a ** b;
+
+let baz = (a + b) ** (c + d);
+
+let quux = (-1) ** n;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const foo = Math.pow(2, 8);
+
+const bar = Math.pow(a, b);
+
+let baz = Math.pow(a + b, c + d);
+
+let quux = Math.pow(-1, n);
+```
+
+## Prefer Object Spread
+
+----------
+
+Disallow using Object.assign with an object literal as the first argument and
+prefer the use of object spread instead.
+
+<https://eslint.org/docs/latest/rules/prefer-object-spread>
+
+👍 Examples of correct code
+
+```typescript
+({ ...foo });
+
+({ ...baz, foo: 'bar' });
+
+// Any Object.assign call without an object literal as the first argument
+Object.assign(foo, { bar: baz });
+
+Object.assign(foo, bar);
+
+Object.assign(foo, { bar, baz });
+
+Object.assign(foo, { ...baz });
+```
+
+👎 Examples of incorrect code
+
+```typescript
+Object.assign({}, foo);
+
+Object.assign({}, {foo: 'bar'});
+
+Object.assign({ foo: 'bar'}, baz);
+
+Object.assign({}, baz, { foo: 'bar' });
+
+Object.assign({}, { ...baz });
+
+// Object.assign with a single argument that is an object literal
+Object.assign({});
+
+Object.assign({ foo: bar });
+```
+
+## Accessor Pairs
+
+----------
+
+Enforce getter and setter pairs in objects and classes
+
+<https://eslint.org/docs/latest/rules/accessor-pairs>
+
+👍 Examples of correct code
+
+```typescript
+var o = {
+    set a(value) {
+        this.val = value;
+    },
+    get a() {
+        return this.val;
+    }
+};
+
+var myObject = { d: 1 };
+Object.defineProperty(myObject, 'c', {
+    set: function(value) {
+        this.val = value;
+    },
+    get: function() {
+        return this.val;
+    }
+});
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var o = {
+    set a(value) {
+        this.val = value;
+    }
+};
+
+
+var myObject = { d: 1 };
+Object.defineProperty(myObject, 'c', {
+    set: function(value) {
+        this.val = value;
+    }
+});
+```
+
+## Default Case Last
+
+----------
+
+Enforce default clauses in switch statements to be last
+
+<https://eslint.org/docs/latest/rules/default-case-last>
+
+👍 Examples of correct code
+
+```typescript
+```
+
+👎 Examples of incorrect code
+
+```typescript
+switch (foo) {
+    default:
+        bar();
+        break;
+    case "a":
+        baz();
+        break;
+}
+
+switch (foo) {
+    case 1:
+        bar();
+        break;
+    default:
+        baz();
+        break;
+    case 2:
+        quux();
+        break;
+}
+
+switch (foo) {
+    case "x":
+        bar();
+        break;
+    default:
+    case "y":
+        baz();
+        break;
+}
+
+switch (foo) {
+    default:
+        break;
+    case -1:
+        bar();
+        break;
+}
+
+switch (foo) {
+  default:
+    doSomethingIfNotZero();
+  case 0:
+    doSomethingAnyway();
+}
 ```
 
 ## Prefer Literals
@@ -6364,6 +7147,7 @@ the backreference will trivially accept (e.g. /(?:(a)|b)\1/).
 The same will happen if the captured text of the referenced group was reset before reaching the backreference.
 
 <https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-potentially-useless-backreference.html>
+<https://eslint.org/docs/latest/rules/no-useless-backreference>
 
 👍 Examples of correct code
 
@@ -7296,7 +8080,7 @@ var foo = /a*/
 var foo = /a{0,}/;
 ```
 
-### Prefer Unicode CodePoint Escapes
+### Prefer Unicode Code Point Escapes
 
 ----------
 
@@ -7389,6 +8173,27 @@ var foo = /abc/mi
 var foo = /abc/us
 ```
 
+### Prefer Named Capture Group
+
+----------
+
+This rule reports capturing groups without a name.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-named-capture-group.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /(?<foo>ba+r)/;
+var foo = /\b(?:foo)+\b/;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /\b(foo)+\b/;
+```
+
 ## Security
 
 ### Eval Disabled
@@ -7398,8 +8203,10 @@ var foo = /abc/us
 JavaScript's eval() function is potentially dangerous and is often misused.
 Using eval() on untrusted code can open a program up to several different injection attacks.
 The use of eval() in most contexts can be substituted for a better, alternative approach to a problem.
+Disallow the use of eval()-like methods
 
 <https://eslint.org/docs/rules/no-eval#no-eval>
+<https://eslint.org/docs/rules/no-implied-eval>
 
 👍 Examples of correct code
 
@@ -7838,7 +8645,7 @@ console.log(message); // eslint-disable-line
 console.log(message);
 ```
 
-## Prefer for…of
+## Prefer for-of
 
 ----------
 
@@ -9228,9 +10035,100 @@ and last_name = ${y}
 }
 ```
 
+## Performance
+
+### No Alert
+
+----------
+
+Disallow the use of alert, confirm, and prompt
+
+<https://eslint.org/docs/latest/rules/no-alert>
+
+👍 Examples of correct code
+
+```typescript
+// Example Switch Alerts
+Swal.fire(
+  'Good job!',
+  'You clicked the button!',
+  'success'
+)
+
+customAlert("Something happened!");
+
+customConfirm("Are you sure?");
+
+customPrompt("Who are you?");
+
+function foo() {
+    var alert = myCustomLib.customAlert;
+    alert();
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+alert("here!");
+
+confirm("Are you sure?");
+
+prompt("What's your name?", "John Doe");
+```
+
+### No Loop Func
+
+----------
+
+Disallow function declarations that contain unsafe references inside loop statements
+
+<https://eslint.org/docs/latest/rules/no-loop-func>
+
+👍 Examples of correct code
+
+```typescript
+var a = function() {};
+
+for (var i=10; i; i--) {
+    a();
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+for (var i=10; i; i--) {
+    (function() { return i; })();
+}
+
+while(i) {
+    var a = function() { return i; };
+    a();
+}
+
+do {
+    function a() { return i; };
+    a();
+} while (i);
+
+let foo = 0;
+for (let i = 0; i < 10; ++i) {
+    //Bad, `foo` is not in the loop-block's scope and `foo` is modified in/after the loop
+    setTimeout(() => console.log(foo));
+    foo += 1;
+}
+
+for (let i = 0; i < 10; ++i) {
+    //Bad, `foo` is not in the loop-block's scope and `foo` is modified in/after the loop
+    setTimeout(() => console.log(foo));
+}
+foo = 100;
+```
+
 ## Errors
 
-## Construtor Super Invalid
+### Construtor Super Invalid
 
 ----------
 
@@ -9277,7 +10175,7 @@ class A extends null {
 }
 ```
 
-## Getter Return
+### Getter Return
 
 ----------
 
@@ -9329,7 +10227,7 @@ class P{
 }
 ```
 
-## No Class Assign
+### No Class Assign
 
 ----------
 
@@ -9384,7 +10282,7 @@ let A = class A {
 }
 ```
 
-## No Compare Neg Zero
+### No Compare Neg Zero
 
 ----------
 
@@ -9406,6 +10304,399 @@ if (x === 0) {
 if (x === -0) {
     // doSomething()...
 }
+```
+
+### No Const Assign
+
+----------
+
+Disallow reassigning const variables
+
+<https://eslint.org/docs/latest/rules/no-const-assign>
+
+👍 Examples of correct code
+
+```typescript
+const a = 0;
+console.log(a);
+
+// or
+
+let a = 0;
+a = 1;
+
+// or
+
+// `a` is re-defined (not modified) on each loop step.
+for (const a in [ 1, 2, 3 ]) {
+    console.log(a);
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const a = 0;
+a = 1;
+
+// or
+
+const a = 0;
+a += 1;
+
+// or
+
+const a = 0;
+++a;
+```
+
+### No Dupe Class Members
+
+----------
+
+Disallow duplicate class members
+
+<https://eslint.org/docs/latest/rules/no-dupe-class-members>
+
+👍 Examples of correct code
+
+```typescript
+class Foo {
+  bar() { }
+  qux() { }
+}
+
+class Foo {
+  get bar() { }
+  set bar(value) { }
+}
+
+class Foo {
+  bar;
+  qux;
+}
+
+class Foo {
+  bar;
+  qux() { }
+}
+
+class Foo {
+  static bar() { }
+  bar() { }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+class Foo {
+  bar() { }
+  bar() { }
+}
+
+class Foo {
+  bar() { }
+  get bar() { }
+}
+
+class Foo {
+  bar;
+  bar;
+}
+
+class Foo {
+  bar;
+  bar() { }
+}
+
+class Foo {
+  static bar() { }
+  static bar() { }
+}
+```
+
+### No Dupe Keys
+
+----------
+
+- No Duplicate Key in Object
+
+<https://eslint.org/docs/rules/no-dupe-keys#no-dupe-keys>
+
+👍 Examples of correct code
+
+```typescript
+var foo = {
+    bar: "baz",
+    quxx: "qux"
+};
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = {
+    bar: "baz",
+    bar: "qux"
+};
+
+var foo = {
+    "bar": "baz",
+    bar: "qux"
+};
+
+var foo = {
+    0x1: "baz",
+    1: "qux"
+};
+```
+
+### No Dupe Args
+
+----------
+
+Disallow duplicate arguments in function definitions
+
+<https://eslint.org/docs/latest/rules/no-dupe-args#rule-details>
+
+👍 Examples of correct code
+
+```typescript
+function foo(a, b, c) {
+    console.log(a, b, c);
+}
+
+var bar = function (a, b, c) {
+    console.log(a, b, c);
+};
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function foo(a, b, a) {
+    console.log("value of the second a:", a);
+}
+
+var bar = function (a, b, a) {
+    console.log("value of the second a:", a);
+};
+```
+
+### No Unsafe Finally
+
+----------
+
+Disallow control flow statements in finally blocks
+
+<https://eslint.org/docs/latest/rules/no-unsafe-finally>
+
+👍 Examples of correct code
+
+```typescript
+let foo = function() {
+    try {
+        return 1;
+    } catch(err) {
+        return 2;
+    } finally {
+        console.log("hola!");
+    }
+};
+
+let foo = function() {
+    try {
+        return 1;
+    } catch(err) {
+        return 2;
+    } finally {
+        let a = function() {
+            return "hola!";
+        }
+    }
+};
+
+let foo = function(a) {
+    try {
+        return 1;
+    } catch(err) {
+        return 2;
+    } finally {
+        switch(a) {
+            case 1: {
+                console.log("hola!")
+                break;
+            }
+        }
+    }
+};
+```
+
+👎 Examples of incorrect code
+
+```typescript
+let foo = function() {
+    try {
+        return 1;
+    } catch(err) {
+        return 2;
+    } finally {
+        return 3;
+    }
+};
+
+let foo = function() {
+    try {
+        return 1;
+    } catch(err) {
+        return 2;
+    } finally {
+        throw new Error;
+    }
+};
+```
+
+### No Import Assign
+
+----------
+
+Disallow control flow statements in finally blocks
+
+<https://eslint.org/docs/latest/rules/no-unsafe-finally>
+
+👍 Examples of correct code
+
+```typescript
+import mod, { named } from "./mod.mjs"
+import * as mod_ns from "./mod.mjs"
+
+mod.prop = 1
+named.prop = 2
+mod_ns.named.prop = 3
+
+// Known Limitation
+function test(obj) {
+    obj.named = 4 // Not errored because 'obj' is not namespace objects.
+}
+test(mod_ns) // Not errored because it doesn't know that 'test' updates the member of the argument.
+```
+
+👎 Examples of incorrect code
+
+```typescript
+import mod, { named } from "./mod.mjs"
+import * as mod_ns from "./mod.mjs"
+
+mod = 1          // ERROR: 'mod' is readonly.
+named = 2        // ERROR: 'named' is readonly.
+mod_ns.named = 3 // ERROR: The members of 'mod_ns' are readonly.
+mod_ns = {}      // ERROR: 'mod_ns' is readonly.
+// Can't extend 'mod_ns'
+Object.assign(mod_ns, { foo: "foo" }) // ERROR: The members of 'mod_ns' are readonly.
+```
+
+### No Loss Of Precision
+
+### Useless Loop
+
+----------
+
+No useless loop
+
+<https://eslint.org/docs/rules/no-unreachable-loop>
+
+👍 Examples of correct code
+
+```typescript
+do {
+    doSomething();
+} while (false)
+
+for (let i = 0; i < 1; i++) {
+    doSomething(i);
+}
+
+for (const a of [1]) {
+    doSomething(a);
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+while (foo) {
+    doSomething(foo);
+    foo = foo.parent;
+    break;
+}
+
+function verifyList(head) {
+    let item = head;
+    do {
+        if (verify(item)) {
+            return true;
+        } else {
+            return false;
+        }
+    } while (item);
+}
+
+function findSomething(arr) {
+    for (var i = 0; i < arr.length; i++) {
+        if (isSomething(arr[i])) {
+            return arr[i];
+        } else {
+            throw new Error("Doesn't exist.");
+        }
+    }
+}
+
+for (key in obj) {
+    if (key.startsWith("_")) {
+        break;
+    }
+    firstKey = key;
+    firstValue = obj[key];
+    break;
+}
+
+for (foo of bar) {
+    if (foo.id === id) {
+        doSomething(foo);
+    }
+    break;
+}
+```
+
+
+----------
+
+Disallow literal numbers that lose precision
+
+<https://eslint.org/docs/latest/rules/no-loss-of-precision>
+
+👍 Examples of correct code
+
+```typescript
+const x = 12345
+const x = 123.456
+const x = 123e34
+const x = 12300000000000000000000000
+const x = 0x1FFFFFFFFFFFFF
+const x = 9007199254740991
+const x = 9007_1992547409_91
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const x = 9007199254740993
+const x = 5123000000000000000000000000001
+const x = 1230000000000000000000000.0
+const x = .1230000000000000000000000
+const x = 0X20000000000001
+const x = 0X2_000000000_0001;
 ```
 
 ## Possible Errors
@@ -9435,5 +10726,154 @@ for (var i = 10; i >= 0; i++) {
 }
 
 for (var i = 0; i > 10; i++) {
+}
+```
+
+### No Extra Bind
+
+----------
+
+Disallow unnecessary calls to .bind()
+
+<https://eslint.org/docs/latest/rules/no-extra-bind>
+
+👍 Examples of correct code
+
+```typescript
+var x = function () {
+    this.foo();
+}.bind(bar);
+
+var x = function (a) {
+    return a + 1;
+}.bind(foo, bar);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var x = function () {
+    foo();
+}.bind(bar);
+
+var x = (() => {
+    foo();
+}).bind(bar);
+
+var x = (() => {
+    this.foo();
+}).bind(bar);
+
+var x = function () {
+    (function () {
+      this.foo();
+    }());
+}.bind(bar);
+
+var x = function () {
+    function foo() {
+      this.bar();
+    }
+}.bind(baz);
+```
+
+### No Template Curly In String
+
+----------
+
+Disallow template literal placeholder syntax in regular strings
+
+<https://eslint.org/docs/latest/rules/no-template-curly-in-string>
+
+👍 Examples of correct code
+
+```typescript
+`Hello ${name}!`;
+`Time: ${12 * 60 * 60 * 1000}`;
+
+templateFunction`Hello ${name}`;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+"Hello ${name}!";
+'Hello ${name}!';
+"Time: ${12 * 60 * 60 * 1000}";
+```
+
+### No Dupe Else If
+
+----------
+
+Disallow duplicate conditions in if-else-if chains
+
+<https://eslint.org/docs/latest/rules/no-dupe-else-if>
+
+👍 Examples of correct code
+
+```typescript
+if (isSomething(x)) {
+    foo();
+} else if (isSomethingElse(x)) {
+    bar();
+}
+
+if (a) {
+    foo();
+} else if (b) {
+    bar();
+} else if (c && d) {
+    baz();
+} else if (c && e) {
+    quux();
+} else {
+    quuux();
+}
+
+if (n === 1) {
+    foo();
+} else if (n === 2) {
+    bar();
+} else if (n === 3) {
+    baz();
+} else if (n === 4) {
+    quux();
+} else if (n === 5) {
+    quuux();
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+if (isSomething(x)) {
+    foo();
+} else if (isSomething(x)) {
+    bar();
+}
+
+if (a) {
+    foo();
+} else if (b) {
+    bar();
+} else if (c && d) {
+    baz();
+} else if (c && d) {
+    quux();
+} else {
+    quuux();
+}
+
+if (n === 1) {
+    foo();
+} else if (n === 2) {
+    bar();
+} else if (n === 3) {
+    baz();
+} else if (n === 2) {
+    quux();
+} else if (n === 5) {
+    quuux();
 }
 ```
