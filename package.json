@@ -1,7 +1,7 @@
 {
   "name": "@odg/eslint-config-odg-linter-js",
-  "version": "0.7.4",
-  "description": "Linter configuration for JavaScript style guide",
+  "version": "0.8.0",
+  "description": "Linter for JavaScript And Typescript project",
   "main": "index.js",
   "scripts": {},
   "repository": {
@@ -14,18 +14,13 @@
     "typescript": "*"
   },
   "peerDependencies": {
-    "eslint": "*",
-    "eslint-plugin-filenames": "*",
-    "eslint-plugin-import": "*",
-    "eslint-plugin-jsdoc": "*",
-    "eslint-plugin-promise": "*",
-    "eslint-plugin-regexp": "*",
-    "eslint-plugin-unicorn": "*"
+    "eslint": "*"
   },
   "dependencies": {
     "@typescript-eslint/eslint-plugin": "*",
     "@typescript-eslint/parser": "*",
     "eslint": "*",
+    "eslint-plugin-array-func": "*",
     "eslint-plugin-filenames": "*",
     "eslint-plugin-html": "*",
     "eslint-plugin-import": "*",

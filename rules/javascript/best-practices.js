@@ -8,7 +8,13 @@ module.exports = {
             anonymous: "never",
             named: "never",
         } ], // Não permite espaço antes dos parenteses
-        "no-unused-vars": [ "error", { vars: "all", args: "after-used" } ],
+        "no-unused-vars": [ "error", {
+            "vars": "all",
+            "args": "after-used",
+            "caughtErrors": "all",
+            "varsIgnorePattern": "^_",
+            "argsIgnorePattern": "^_",
+        } ],
         "default-param-last": [ "error" ],
         "comma-spacing": [ "error" ],
         "comma-dangle": [ "error", {
@@ -22,6 +28,7 @@ module.exports = {
         "no-unused-expressions": [ "error", {
             allowTernary: true,
             allowShortCircuit: true,
+            enforceForJSX: true,
         } ],
         "no-useless-constructor": [ "error" ], // Não permite construtores desnecessários
         "no-throw-literal": [ "error" ], // Não permite throw "string" ou diferente de classe
@@ -31,9 +38,13 @@ module.exports = {
         "no-extra-semi": [ "error" ], // Não permite ;, duplicadas ou desnecessárias
         "no-empty-function": [ "error" ], // Não permite funções vazias
         "no-duplicate-imports": [ "error" ], // Bloqueia import duplicado
+        "import/no-duplicates": [ "error" ], // Bloqueia import duplicado
         "prefer-const": [ "error" ], // Preferir constantes
         "generator-star-spacing": [ "error", { before: true, after: false } ], // Espaço Funções Yield;
-        "no-unsafe-optional-chaining": [ "error" ], // Protege de optional que pode gerar errors
+        "no-unsafe-optional-chaining": [
+            "error",
+            { disallowArithmeticOperators: true },
+        ], // Protege de optional que pode gerar errors
         "linebreak-style": [ "error", "unix" ], // Força usar \n apenas em vez de \r\n
         "eol-last": [ "error", "always" ], // Força finalizar com \n no final
         "max-len": [ "warn", {
@@ -85,7 +96,10 @@ module.exports = {
         "dot-notation": "off",
         "no-whitespace-before-property": [ "error" ], // Não permite espaço antes de property
         "no-trailing-spaces": [ "error" ], // Não permite espaço apos ou antes do ponto
-        "no-extra-boolean-cast": [ "error" ], // Não permite cast de boolean extra !!!
+        "no-extra-boolean-cast": [
+            "error",
+            { "enforceForLogicalOperands": true },
+        ], // Não permite cast de boolean extra !!!
         "no-constant-condition": [ "error" ], // Não permite condições constantes if (true)
         "no-debugger": [ "error" ], // Não permite usar debugger
         "no-duplicate-case": [ "error" ], // Não permite duplicar case em switch
@@ -144,7 +158,7 @@ module.exports = {
         "new-cap": [ "error", { newIsCap: true } ], // New require first Letter uppercase
         "no-caller": [ "error" ], // Não permite usar callee
         "no-script-url": [ "error" ], // Não permite usar script url
-        "no-undef": [ "error" ], // Não chame variáveis não definidas
+        "no-undef": [ "error", { "typeof": true } ], // Não chame variáveis não definidas
         "func-names": [ "error", "as-needed" ], // Nome de funções somente quando necessário
         "no-param-reassign": [ "error" ], // Não permite reatribuição de parâmetros
         "quote-props": [ "error", "consistent" ], // Aspas no objeto somente se algum for necessário
@@ -290,5 +304,112 @@ module.exports = {
         "prefer-exponentiation-operator": [ "error" ], // Prefira ** em vez de Math.pow
         "prefer-object-spread": [ "error" ], // Prefira Desestruturar para concatenar objetos
         "default-case-last": [ "error" ], // Default switch case por ultimo
+        "no-new-symbol": [ "error" ], // Use apenas Symbol()
+        "accessor-pairs": [ "error" ], // Crie o get e set
+        "no-promise-executor-return": [ "error" ], // Não coloque um retorno em new Promise()
+        "no-nonoctal-decimal-escape": [ "error" ], // Não coloque scape em numero decimais
+        "prefer-destructuring": [ "error" ], // Prefira desestruturar array ao invés
+        "no-magic-numbers": [
+            "warn",
+            { "ignore": [ 0, 1, -1 ], "enforceConst": true, "ignoreDefaultValues": true },
+        ], // Não permite numero mágicos
+        "complexity": [ "error", { "max": 10 } ], // Complexidade código
+        "func-style": [ "error", "declaration" ], // Declare function name() em vez de var = function()
+        "no-else-return": [ "error" ], // Não use else se tem retorno
+        "use-isnan": [
+            "error",
+            { "enforceForSwitchCase": true, "enforceForIndexOf": true },
+        ], // Use a função isNan
+        "prefer-regex-literals": [ "error", { "disallowRedundantWrapping": true } ], // Use a função isNan
+        "import/no-absolute-path": [ "error" ], // Não informa caminho absoluto
+        "import/no-webpack-loader-syntax": [ "error" ], // Bloqueia syntax webpack import
+        "import/no-named-as-default": [ "error" ],
+        "import/no-named-as-default-member": [ "error" ],
+        "import/no-mutable-exports": [ "error" ], // Não export var nem let
+        "import/no-amd": [ "error" ], // Não require, define array
+        "import/max-dependencies": [ "error", {
+            "max": 25,
+            "ignoreTypeImports": false,
+        } ], // Máximo de 25 dependências
+        "import/no-import-module-exports": [ "error" ], // Import e export CommanJs bloqueado
+        "import/no-useless-path-segments": [ "error", { "commonjs": true } ], // Não volte pasta desnecessária import
+        "import/no-extraneous-dependencies": [
+            "error",
+            {
+                "devDependencies": [
+                    "**/*.e2e-spec.*",
+                    "**/*.e2e.*",
+                    "**/*.spec.*",
+                    "**/*.test.*",
+                    "**/.eslintrc.{js,cjs,ts}",
+                    "**/Gruntfile{,.js,.ts}",
+                    "**/__mocks__/**",
+                    "**/__tests__/**",
+                    "**/cypress.config.{js,ts}",
+                    "**/gulpfile.*.{js,ts}",
+                    "**/gulpfile.{js,ts}",
+                    "**/jest.config.{js,ts}",
+                    "**/jest.setup.{js,ts}",
+                    "**/karma.conf.{js,ts}",
+                    "**/nuxt.config.{js,ts}",
+                    "**/protractor.conf.*.{js,ts}",
+                    "**/protractor.conf.{js,ts}",
+                    "**/rollup.config.*.{js,ts}",
+                    "**/rollup.config.{js,ts}",
+                    "**/setupTests.{js,ts}",
+                    "**/spec/**",
+                    "**/test/**",
+                    "**/tests/**",
+                    "**/vite.config.{js,ts}",
+                    "**/vue.config.{js,ts}",
+                    "**/webpack.config.*.{js,ts}",
+                    "**/webpack.config.{js,ts}",
+                ],
+                "optionalDependencies": true,
+                "peerDependencies": false,
+                "bundledDependencies": false,
+            },
+        ], // Não dependa de pacotes em devDependencies
+        "import/order": [
+            "error",
+            {
+                "groups": [
+                    "builtin",
+                    "external",
+                    "internal",
+                    "unknown",
+                    "parent",
+                    "sibling",
+                    "index",
+                ],
+                "newlines-between": "always",
+            },
+        ], // Força essa ordem no import
+        "import/no-anonymous-default-export": [
+            "error",
+            { "allowCallExpression": false },
+        ],
+        "unicorn/no-console-spaces": [ "error" ], // Separe por virgula em vez de colocar espaço no console
+        "unicorn/no-hex-escape": [ "error" ], // Use \u001B em vez de \x1B
+        "unicorn/prefer-array-flat-map": [ "error" ], // Prefira FlatMap in vez de map().flat().
+        "unicorn/prefer-array-flat": [ "error" ], // Prefira usar array Flat
+        "array-func/prefer-flat": [ "error" ], // Não passe parâmetro desnecessário
+        "unicorn/prefer-string-slice": [ "error" ], // Use slice em vez de substr ou substring
+        "unicorn/prefer-negative-index": [ "error" ], // Use slice em vez de substr ou substring
+        "unicorn/prefer-modern-dom-apis": [ "error" ], // Prefira usar o DOM moderno
+        "unicorn/prefer-number-properties": [ "error" ], // Prefira Number.numberVar() in vez de numberVar()
+        "unicorn/numeric-separators-style": [ "error" ], // Separe Numero com Underline
+        "unicorn/prefer-default-parameters": [ "error" ], // Prefira parâmetros padrões
+        "unicorn/prefer-node-protocol": [ "error" ], // Prefira node: antes do import
+        "unicorn/prefer-code-point": [ "error" ], // Prefira codePointAt no lugar de charCodeAt
+        "unicorn/no-thenable": [ "error" ], // Não crie os nome com o nome Then
+        "unicorn/no-unreadable-iife": [ "error" ], // Ternários não legíveis com funções
+        "unicorn/prefer-native-coercion-functions": [ "error" ], // Prefira função cast nativa
+        "unicorn/prefer-logical-operator-over-ternary": [ "error" ], // Mude "a ? a : b" para "a || b"
+        "unicorn/prefer-event-target": [ "error" ], // Use EventTarget no Lugar de EventEmitter
+        "unicorn/prefer-export-from": [ "error", { "ignoreUsedVariables": true } ], // Prefira Export From
+        "array-func/from-map": [ "error" ], // Use .map invés do segundo parâmetro do From
+        "array-func/no-unnecessary-this-arg": [ "error" ], // Não passe parâmetro desnecessário
+        "array-func/avoid-reverse": [ "error" ], // Não passe parâmetro desnecessário
     },
 };

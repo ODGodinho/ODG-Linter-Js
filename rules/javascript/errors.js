@@ -32,6 +32,16 @@ module.exports = {
         "no-unsafe-finally": [ "error" ], // Finally possivelmente errado
         "no-import-assign": [ "error" ], // Não reatribua variável de import
         "no-loss-of-precision": [ "error" ], // Não permite numero que pode quebrar precisão
-        "no-unreachable-loop": [ "error" ], // Não permite unreachable loop
+        "no-unreachable-loop": [ "error" ], // Não permite unreachable loop,
+        "import/no-self-import": [ "error" ], // Não import o próprio arquivo
+        "import/export": [ "error" ], // Não permite export de mesmo nome
+        "import/no-unresolved": [
+            "error",
+            {
+                "commonjs": true,
+                "caseSensitiveStrict": true,
+            },
+        ], // Import não encontrado
+        "import/named": [ "error", { "commonjs": true } ], // Import apenas objetos existente no modulo
     },
 };

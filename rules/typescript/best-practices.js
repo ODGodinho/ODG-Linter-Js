@@ -95,5 +95,7 @@ module.exports = {
         "for-direction": [ "error" ], // Não faça for contador infinito.
         "no-shadow": [ "off" ], // Erro caso ja esteja declarado escopo a cima
         "@typescript-eslint/no-shadow": [ "error" ], // Erro caso ja esteja declarado escopo a cima
+        "import/no-commonjs": [ "error" ], // Não use module.exports
+        "unicorn/prefer-module": [ "error" ], // Prefira module js
     },
 };

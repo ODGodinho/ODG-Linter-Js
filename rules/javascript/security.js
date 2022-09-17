@@ -10,5 +10,11 @@ module.exports = {
         "security/detect-non-literal-fs-filename": [ "error" ],
         "security/detect-pseudoRandomBytes": [ "error" ], // Não use pseudo Random
         "unicorn/no-document-cookie": [ "error" ], // Não setCookie pelo document.cookie
+        "security/detect-eval-with-expression": [ "error" ], // Não permite eval com expressões
+        "security/detect-new-buffer": [ "error" ], // Bloqueia New Buffer
+        "security/detect-non-literal-regexp": [ "error" ], // Regex Protect
+        "security/detect-non-literal-require": [ "error" ], // Require Protect
+        "security/detect-possible-timing-attacks": [ "error" ], // Previne Tokens no código
+        "import/no-dynamic-require": [ "error", { "esmodule": true } ], // Sem import dinâmicos
     },
 };

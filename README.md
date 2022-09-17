@@ -61,6 +61,7 @@
 - [Comma Spacing](#comma-spacing)
 - [Comma Dangle](#comma-dangle)
 - [Prefer Arrow Function](#prefer-arrow-function)
+- [Prefer Destructuring](#prefer-destructuring)
 - [Arrow Function Body](#arrow-function-body)
 - [Arrow Function Parentheses](#arrow-function-parentheses)
 - [No Empty Block](#no-empty-block)
@@ -82,9 +83,30 @@
 - [Disallow Script Url](#disallow-script-url)
 - [Disallow Undefined](#disallow-undefined)
 - [Function Name](#function-name)
+- [Function Style](#function-style)
+- [No Else Return](#no-else-return)
+- [No Console Spaces](#no-console-spaces)
+- [No Hex Escape](#no-hex-escape)
+- [Prefer Array Flat Map](#prefer-array-flat-map)
+- [Prefer String Slice](#prefer-string-slice)
+- [Prefer Modern DOM](#prefer-modern-dom)
+- [Prefer Prefix Number](#prefer-prefix-number)
+- [Numeric Separators Style](#numeric-separators-style)
+- [Prefer Default Parame](#prefer-default-parame)
+- [No Avoid Reverse](#no-avoid-reverse)
+- [Prefer Code Point](#prefer-code-point)
+- [No Thenable](#no-thenable)
+- [No Unreadable Iife](#no-unreadable-iife)
+- [Prefer Native Cast](#prefer-native-cast)
+- [Prefer Logical Operator Over Ternary](#prefer-logical-operator-over-ternary)
+- [Prefer Event Target](#prefer-event-target)
+- [Prefer Object From Entries](#prefer-object-from-entries)
+- [Prefer Array From.Map](#prefer-array-from-map)
+- [Prefer Array Flat](#prefer-array-flat)
 - [This Pattern](#this-pattern)
 - [Use Dot](#use-dot)
 - [Use this](#use-this)
+- [Use IsNan](#use-is-nan)
 - [Dot Object Format](#dot-object-format)
 - [No Trailing Space](#no-trailing-space)
 - [Type Format](#type-format)
@@ -101,6 +123,10 @@
 - [No Proto](#no-proto)
 - [No Useless Computed Key](#no-useless-computed-key)
 - [No Declare in Block](#no-declare-in-block)
+- [No Nonoctal Decimal Escape](#no-nonoctal-decimal-escape)
+- [No Import Absolute Path](#no-import-absolute-path)
+- [No Webpack Loader Syntax](#no-webpack-loader-syntax)
+- [No Magic Number](#no-magic-number)
 - [Security Negation](#security-negation)
 - [Regex Space](#regex-space)
 - [Array No Space](#array-no-space)
@@ -119,6 +145,7 @@
 - [No Undefined declare](#no-undefined-declare)
 - [No New require](#no-new-require)
 - [No New Object](#no-new-object)
+- [No New Symbol](#no-new-symbol)
 - [Var Size](#var-size)
 - [Max Depth](#max-depth)
 - [Max Params](#max-params)
@@ -176,6 +203,18 @@
   - [No Misused Promises](#no-misused-promises)
 - [Import](#import)
   - [New Line After Import](#new-line-after-import)
+  - [Import Deprecated](#import-deprecated)
+  - [No Mutable Export](#no-mutable-export)
+  - [No Amd](#no-amd)
+  - [Prefer Default Export](#prefer-default-export)
+  - [Max Imports](#max-imports)
+  - [No CommanJs Export](#no-comman-js-export)
+  - [No Useless Path Import](#no-useless-path-import)
+  - [No Extraneous Dependencies](#no-extraneous-dependencies)
+  - [Import Order](#import-order)
+  - [No Anonymous Default Export](#no-anonymous-default-export)
+  - [Prefer Node Protocol](#prefer-node-protocol)
+  - [Prefer export…from](#prefer-export-from)
 - [Documentation](#documentation)
   - [Space Comment](#spaced-comment)
   - [Capitalized Comments](#capitalized-comments)
@@ -254,6 +293,9 @@
   - [No Csrf Before Method Override](#no-csrf-before-method-override)
   - [No Literal Fs Filename](#no-literal-fs-filename)
   - [No Pseudo Random Bytes](#no-pseudo-random-bytes)
+  - [Prevent Secret Token](#prevent-secret-token)
+  - [Prevent Literal Code](#prevent-literal-code)
+  - [No Import Dynamic](#no-import-dynamic)
 - [Catch Error Name](#catch-error-name)
 - [Consistent Destructured](#consistent-destructured)
 - [Consistent Function Scope](#consistent-function-scope)
@@ -266,7 +308,7 @@
 - [No Await Chased](#no-await-chased)
 - [No Document Cookie](#no-document-cookie)
 - [No Empty File](#no-empty-file)
-- [No InstanceOf Array](#no-instance-of-array)
+- [No Instance Of Array](#no-instance-of-array)
 - [No Invalid Remove Event Listener](#no-invalid-remove-event-listener)
 - [No Lonely If](#no-lonely-if)
 - [No Nested Ternary](#no-nested-ternary)
@@ -310,11 +352,26 @@
   - [No Compare Neg Zero](#no-compare-neg-zero)
   - [No Setter Return](#no-setter-return)
   - [Useless Loop](#useless-loop)
+  - [No Loss Of Precision](#no-loss-of-precision)
   - [No Dupe Class Members](#no-dupe-class-members)
   - [No Dupe Keys](#no-dupe-keys)
+  - [Import Default Not Fount](#import-default-not-fount)
+  - [Import Namespace](#import-namespace)
+  - [No Self Import](#no-self-import)
+  - [Export Name](#export-name)
+  - [Import Namespace](#import-namespace)
+  - [No Import Resolve](#no-import-resolve)
+  - [Import Not Found](#import-not-found)
 - [Possible Errors](#possible-errors)
   - [For Direction](#for-direction)
   - [No Extra Bind](#no-extra-bind)
+  - [No Template Curly In String](#no-template-curly-in-string)
+  - [No Dupe Else If](#no-dupe-else-if)
+  - [No Unused Private Class Members](#no-unused-private-class-members)
+  - [No Constant Binary Expression](#no-constant-binary-expression)
+  - [No Unneeded Ternary](#no-unneeded-ternary)
+  - [No Unsafe Negation](#no-unsafe-negation)
+  - [Text Encoding Identifier Case](#text-encoding-identifier-case)
 
 ## Introduction
 
@@ -1445,6 +1502,40 @@ foo(function(a) { return a; });
 foo(function() { return this.a; }.bind(this));
 ```
 
+## Prefer Destructuring
+
+----------
+
+Require destructuring from arrays and/or objects
+
+<https://eslint.org/docs/latest/rules/prefer-destructuring>
+
+👍 Examples of correct code
+
+```typescript
+var [ foo ] = array;
+var foo = array[someIndex];
+
+var { foo } = object;
+
+var foo = object.bar;
+
+let foo;
+({ foo } = object);
+
+```
+
+👎 Examples of incorrect code
+
+```typescript
+// With `array` enabled
+var foo = array[0];
+
+// With `object` enabled
+var foo = object.foo;
+var foo = object['foo'];
+```
+
 ## Arrow Function Body
 
 ----------
@@ -2451,6 +2542,702 @@ Foo.prototype.bar = function() {};
 export default function() {}
 ```
 
+## Function Style
+
+----------
+
+Enforce the consistent use of either function declarations or expressions
+
+<https://eslint.org/docs/latest/rules/func-style>
+
+👍 Examples of correct code
+
+```typescript
+function foo() {
+    // ...
+}
+
+// Methods (functions assigned to objects) are not checked by this rule
+SomeObject.foo = function() {
+    // ...
+};
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = function() {
+    // ...
+};
+
+var foo = () => {};
+```
+
+## No Else Return
+
+----------
+
+Disallow else blocks after return statements in if statements
+
+<https://eslint.org/docs/latest/rules/no-else-return>
+
+👍 Examples of correct code
+
+```typescript
+function foo() {
+    if (x) {
+        return y;
+    }
+
+    return z;
+}
+
+function foo() {
+    if (x) {
+        return y;
+    } else if (z) {
+        var t = "foo";
+    } else {
+        return w;
+    }
+}
+
+function foo() {
+    if (x) {
+        if (z) {
+            return y;
+        }
+    } else {
+        return z;
+    }
+}
+
+function foo() {
+    if (error) {
+        return 'It failed';
+    } else if (loading) {
+        return "It's still loading";
+    }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function foo() {
+    if (x) {
+        return y;
+    } else {
+        return z;
+    }
+}
+
+function foo() {
+    if (x) {
+        return y;
+    } else if (z) {
+        return w;
+    } else {
+        return t;
+    }
+}
+
+function foo() {
+    if (x) {
+        return y;
+    } else {
+        var t = "foo";
+    }
+
+    return t;
+}
+
+function foo() {
+    if (error) {
+        return 'It failed';
+    } else {
+        if (loading) {
+            return "It's still loading";
+        }
+    }
+}
+
+// Two warnings for nested occurrences
+function foo() {
+    if (x) {
+        if (y) {
+            return y;
+        } else {
+            return x;
+        }
+    } else {
+        return z;
+    }
+}
+```
+
+## No Console Spaces
+
+----------
+
+The console.log() method and similar methods joins the parameters with a space,
+so adding a leading/trailing space to a parameter, results in two spaces being added.
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-console-spaces.md>
+
+👍 Examples of correct code
+
+```typescript
+console.log('abc');
+console.log('abc', 'def');
+
+console.log('abc ');
+console.log(' abc');
+
+console.log('abc  ', 'def');
+console.log('abc\t', 'def');
+console.log('abc\n', 'def');
+
+console.log(`
+    abc
+`);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+console.log('abc ', 'def');
+console.log('abc', ' def');
+
+console.log("abc ", " def");
+console.log(`abc `, ` def`);
+
+console.debug('abc ', 'def');
+console.info('abc ', 'def');
+console.warn('abc ', 'def');
+console.error('abc ', 'def');
+```
+
+## No Hex Escape
+
+----------
+
+Enforce the use of Unicode escapes instead of hexadecimal escapes
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-hex-escape.md>
+
+👍 Examples of correct code
+
+```typescript
+const foo = '\u001B';
+const foo = `\u001B${bar}`;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const foo = '\x1B';
+const foo = `\x1B${bar}`;
+```
+
+## Prefer Array Flat Map
+
+----------
+
+Prefer .flatMap(…) over .map(…).flat()
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-array-flat-map.md>
+
+👍 Examples of correct code
+
+```typescript
+const foo = bar.flatMap(element => unicorn(element));
+const foo = bar.map(element => unicorn(element)).flat(2);
+const foo = bar.map(element => unicorn(element)).foo().flat();
+const foo = bar.flat().map(element => unicorn(element));
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const foo = bar.map(element => unicorn(element)).flat();
+const foo = bar.map(element => unicorn(element)).flat(1);
+```
+
+## Prefer String Slice
+
+----------
+
+Prefer String#slice() over String#substr() and String#substring()
+
+String#substr() and String#substring() are the two lesser known legacy ways to slice a string.
+It's better to use String#slice() as it's a more popular option with clearer
+behavior that has a consistent Array counterpart.
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-string-slice.md>
+
+👍 Examples of correct code
+
+```typescript
+foo.slice(beginIndex, endIndex);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+foo.substr(start, length);
+foo.substring(indexStart, indexEnd);
+```
+
+## Prefer Modern DOM
+
+----------
+
+Prefer .before() over .insertBefore(), .replaceWith() over .replaceChild(),
+prefer one of .before(), .after(), .append() or .prepend() over insertAdjacentText() and insertAdjacentElement()
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-modern-dom-apis.md>
+
+👍 Examples of correct code
+
+```typescript
+foo.replaceWith(bar);
+foo.replaceWith('bar');
+foo.replaceWith(bar, 'baz'));
+
+foo.before(bar)
+foo.before('bar')
+foo.before(bar, 'baz')
+
+foo.prepend(bar)
+foo.prepend('bar')
+foo.prepend(bar, 'baz')
+
+foo.append(bar)
+foo.append('bar')
+foo.append(bar, 'baz')
+
+foo.after(bar)
+foo.after('bar')
+foo.after(bar, 'baz')
+```
+
+👎 Examples of incorrect code
+
+```typescript
+foo.replaceChild(baz, bar);
+
+foo.insertBefore(baz, bar);
+
+foo.insertAdjacentText('position', bar);
+
+foo.insertAdjacentElement('position', bar);
+```
+
+## Prefer Prefix Number
+
+----------
+
+Prefer Number static properties over global ones
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-number-properties.md>
+
+👍 Examples of correct code
+
+```typescript
+const foo = Number.parseInt('10', 2);
+
+const foo = Number.parseFloat('10.5');
+
+const foo = Number.isNaN(10);
+
+const foo = Number.isFinite(10);
+
+if (Object.is(foo, Number.NaN)) {}
+
+const isPositiveZero = value => value === 0 && 1 / value === Number.POSITIVE_INFINITY;
+
+const isNegativeZero = value => value === 0 && 1 / value === Number.NEGATIVE_INFINITY;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const foo = parseInt('10', 2);
+
+const foo = parseFloat('10.5');
+
+const foo = isNaN(10);
+
+const foo = isFinite(10);
+
+if (Object.is(foo, NaN)) {}
+
+const isPositiveZero = value => value === 0 && 1 / value === Infinity;
+
+const isNegativeZero = value => value === 0 && 1 / value === -Infinity;
+
+const {parseInt} = Number;
+const foo = parseInt('10', 2);
+```
+
+## Numeric Separators Style
+
+----------
+
+Enforce the style of numeric separators by correctly grouping digits
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/numeric-separators-style.md>
+
+👍 Examples of correct code
+
+```typescript
+const foo = 1_234_444;
+const foo = 1_234.567_89;
+const foo = 0xAB_CD_EF;
+const foo = 0b1000_1111;
+const foo = 0o10_4421;
+const foo = 1_294_287_712n;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const foo = 1_23_4444;
+const foo = 1_234.56789;
+const foo = 0xAB_C_D_EF;
+const foo = 0b10_00_1111;
+const foo = 0o1_0_44_21;
+const foo = 1_294_28771_2n;
+```
+
+## Prefer Default Parame
+
+----------
+
+Prefer default parameters over reassignment
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-default-parameters.md>
+
+👍 Examples of correct code
+
+```typescript
+function abc(foo = 'bar') {}
+function abc(foo) {
+    const parameter = foo || bar();
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function abc(foo) {
+    foo = foo || 'bar';
+}
+function abc(foo) {
+    const bar = foo || 'bar';
+}
+```
+
+## No Avoid Reverse
+
+----------
+
+Prefer Array#flat() over legacy techniques to flatten arrays
+
+<https://github.com/freaktechnik/eslint-plugin-array-func#avoid-reverse>
+
+👍 Examples of correct code
+
+```typescript
+const string = array.reduceRight((p, c) => p + c, "");
+
+const reverseString = array.reduce((p, c) => p + c, "");
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const string = array.reverse().reduce((p, c) => p + c, '');
+
+const reverseString = array.reverse().reduceRight((p, c) => p + c, '');
+```
+
+## Prefer Code Point
+
+----------
+
+Prefer String#codePointAt(…) over String#charCodeAt(…) and String.fromCodePoint(…) over String.fromCharCode(…)
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-code-point.md>
+
+👍 Examples of correct code
+
+```typescript
+const unicorn = '🦄'.codePointAt(0).toString(16);
+const unicorn = String.fromCodePoint(0x1f984);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const unicorn = '🦄'.charCodeAt(0).toString(16);
+const unicorn = String.fromCharCode(0x1f984);
+```
+
+## No Thenable
+
+----------
+
+If an object is defined as "thenable", once it's accidentally used in an await expression, it may cause problems:
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-thenable.md>
+
+👍 Examples of correct code
+
+```typescript
+export {then as success};
+const foo = {
+    success() {}
+};
+class Foo {
+    success() {}
+}
+const foo = bar.then;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+export {then};
+const foo = {
+    then() {}
+};
+const foo = {
+    get then() {}
+};
+foo.then = function () {}
+class Foo {
+    then() {}
+}
+class Foo {
+    static then() {}
+}
+```
+
+## No Unreadable Iife
+
+----------
+
+IIFE with parenthesized arrow function body is considered unreadable.
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-unreadable-iife.md>
+
+👍 Examples of correct code
+
+```typescript
+const bar = getBar();
+const foo = bar ? bar.baz : baz;
+
+const getBaz = bar => (bar ? bar.baz : baz);
+const foo = getBaz(getBar());
+
+const foo = (bar => {
+    return bar ? bar.baz : baz;
+})(getBar());
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const foo = (bar => (bar ? bar.baz : baz))(getBar());
+const foo = ((bar, baz) => ({bar, baz}))(bar, baz);
+```
+
+## Prefer Native Cast
+
+----------
+
+Prefer using String, Number, BigInt, Boolean, and Symbol directly
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-native-coercion-functions.md>
+
+👍 Examples of correct code
+
+```typescript
+const toBoolean = Boolean;
+
+if (Number(foo) === 1) {}
+
+const hasTruthyValue = array.some(Boolean);
+
+const toStringObject = value => new String(value);
+
+const toObject = value => Object(value);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const toBoolean = value => Boolean(value);
+function toNumber(value) {
+    return Number(value);
+}
+
+if (toNumber(foo) === 1) {}
+const hasTruthyValue = array.some(element => element);
+```
+
+## Prefer Logical Operator Over Ternary
+
+----------
+
+Prefer using a logical operator over a ternary
+
+Ideally, most reported cases have an equivalent Logical OR(||) expression.
+The rule intentionally provides suggestions instead of auto-fixes, because in many cases,
+the nullish coalescing operator (??) should be preferred.
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-logical-operator-over-ternary.md>
+
+👍 Examples of correct code
+
+```typescript
+foo ?? bar;
+foo || bar;
+foo ? bar : baz;
+foo.bar ?? foo.baz
+foo?.bar ?? baz
+```
+
+👎 Examples of incorrect code
+
+```typescript
+foo ? foo : bar;
+foo.bar ? foo.bar : foo.baz
+foo?.bar ? foo.bar : baz
+!bar ? foo : bar;
+```
+
+## Prefer Event Target
+
+----------
+
+Prefer EventTarget over EventEmitter
+
+While EventEmitter is only available in Node.js, EventTarget is also available in Deno and browsers.
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-event-target.md>
+
+👍 Examples of correct code
+
+```typescript
+class Foo extends EventTarget {}
+
+const target = new EventTarget();
+```
+
+👎 Examples of incorrect code
+
+```typescript
+import {EventEmitter} from 'node:event';
+class Foo extends EventEmitter {}
+
+const emitter = new EventEmitter();
+```
+
+## Prefer Object From Entries
+
+----------
+
+Prefer using Object.fromEntries(…) to transform a list of key-value pairs into an object
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-object-from-entries.md>
+
+👍 Examples of correct code
+
+```typescript
+const object = Object.fromEntries(pairs);
+
+const object = new Map(pairs);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const object = pairs.reduce(
+    (object, [key, value]) => ({...object, [key]: value}),
+    {}
+);
+
+const object = pairs.reduce(
+    (object, [key, value]) => ({...object, [key]: value}),
+    Object.create(null)
+);
+
+const object = pairs.reduce(
+    (object, [key, value]) => Object.assign(object, {[key]: value}),
+    {}
+);
+
+const object = _.fromPairs(pairs);
+```
+
+## Prefer Array From.Map
+
+----------
+
+Prefer using the mapFn callback of Array.from over an immediate .map() call on the Array.from result.
+
+<https://github.com/freaktechnik/eslint-plugin-array-func#from-map>
+
+👍 Examples of correct code
+
+```typescript
+Array.from(iterable).map((t) => t.id);
+
+Array.from(iterable, (t) => t.id).map((id) => id[0]);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+Array.from(iterable, (t) => t.id);
+
+Array.from(iterable, function(t) { this.format(t); }, this);
+
+const arr = Array.from(iterable);
+const mappedArray = arr.map((t) => t.id);
+```
+
+## Prefer Array Flat
+
+----------
+
+Use .flat() to flatten an array of arrays. This rule currently recognizes two patterns and can replace them with a .flat() call:
+
+<https://github.com/freaktechnik/eslint-plugin-array-func#prefer-flat>
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-array-flat.md>
+
+
+👍 Examples of correct code
+
+```typescript
+const concatFlat = array.flat();
+
+const reverseFlat = array.reduce((p, n) => n.concat(p), []);
+
+const otherReduce = array.reduce((p, n) => n + p, 0);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const concatFlat = [].concat(...array);
+
+const reduceFlat = array.reduce((p, n) => p.concat(n), []);
+```
+
 ## This Pattern
 
 ----------
@@ -2583,6 +3370,46 @@ class Foo {
   f3(): Foo | undefined {
     return Math.random() > 0.5 ? this : undefined;
   }
+}
+```
+
+## Use IsNan
+
+----------
+
+Require calls to isNaN() when checking for NaN
+
+<https://eslint.org/docs/latest/rules/use-isnan>
+
+👍 Examples of correct code
+
+```typescript
+if (isNaN(foo)) {
+    // ...
+}
+
+if (!isNaN(foo)) {
+    // ...
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+if (foo == NaN) {
+    // ...
+}
+
+if (foo != NaN) {
+    // ...
+}
+
+if (foo == Number.NaN) {
+    // ...
+}
+
+if (foo != Number.NaN) {
+    // ...
 }
 ```
 
@@ -3316,6 +4143,134 @@ class C {
 }
 ```
 
+## No Nonoctal Decimal Escape
+
+----------
+
+Disallow \8 and \9 escape sequences in string literals
+
+<https://eslint.org/docs/latest/rules/no-nonoctal-decimal-escape>
+
+👍 Examples of correct code
+
+```typescript
+"8";
+
+"9";
+
+var foo = "w8less";
+
+var bar = "December 19";
+
+var baz = "Don't use \\8 and \\9 escapes.";
+
+var quux = "\0\u0038";
+```
+
+👎 Examples of incorrect code
+
+```typescript
+"\8";
+
+"\9";
+
+var foo = "w\8less";
+
+var bar = "December 1\9";
+
+var baz = "Don't use \8 and \9 escapes.";
+
+var quux = "\0\8";
+```
+
+## No Import Absolute Path
+
+----------
+
+Node.js allows the import of modules using an absolute path such as /home/xyz/file.js. That is a bad practice as it ties the code using it to your computer, and therefore makes it unusable in packages distributed on npm for instance.
+
+<https://github.com/import-js/eslint-plugin-import/blob/HEAD/docs/rules/no-absolute-path.md>
+
+👍 Examples of correct code
+
+```typescript
+import _ from 'lodash';
+import foo from 'foo';
+import foo from './foo';
+
+var _ = require('lodash');
+var foo = require('foo');
+var foo = require('./foo');
+```
+
+👎 Examples of incorrect code
+
+```typescript
+import f from '/foo';
+import f from '/some/path';
+
+var f = require('/foo');
+var f = require('/some/path');
+```
+
+## No Webpack Loader Syntax
+
+----------
+
+Forbid Webpack loader syntax in imports.
+
+<https://github.com/import-js/eslint-plugin-import/blob/HEAD/docs/rules/no-webpack-loader-syntax.md>
+
+👍 Examples of correct code
+
+```typescript
+import myModule from 'my-module';
+import theme from './theme.css';
+
+var myModule = require('my-module');
+var theme = require('./theme.css');
+```
+
+👎 Examples of incorrect code
+
+```typescript
+import myModule from 'my-loader!my-module';
+import theme from 'style!css!./theme.css';
+
+var myModule = require('my-loader!./my-module');
+var theme = require('style!css!./theme.css');
+```
+
+## No Magic Number
+
+----------
+
+Disallow magic numbers
+
+<https://eslint.org/docs/latest/rules/no-magic-numbers>
+
+👍 Examples of correct code
+
+```typescript
+var TAX = 0.25;
+
+var dutyFreePrice = 100,
+    finalPrice = dutyFreePrice + (dutyFreePrice * TAX);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var dutyFreePrice = 100,
+    finalPrice = dutyFreePrice + (dutyFreePrice * 0.25);
+
+// or
+
+var data = ['foo', 'bar', 'baz'];
+
+var dataLast = data[2];
+```
+
 ## Security Negation
 
 ----------
@@ -3930,6 +4885,31 @@ new Object();
 var myObject = new Object();
 
 new Object();
+```
+
+## No New Symbol
+
+----------
+
+Disallow new operators with the Symbol object
+
+<https://eslint.org/docs/latest/rules/no-new-symbol>
+
+👍 Examples of correct code
+
+```typescript
+var foo = Symbol('foo');
+
+// Ignores shadowed Symbol.
+function bar(Symbol) {
+    const baz = new Symbol("baz");
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = new Symbol('foo');
 ```
 
 ## Var Size
@@ -4986,6 +5966,7 @@ class A {
 Disallow duplicate imports.
 
 <https://typescript-eslint.io/rules/no-duplicate-imports>
+<https://github.com/import-js/eslint-plugin-import/blob/HEAD/docs/rules/no-duplicates.md>
 
 👍 Examples of correct code
 
@@ -6430,6 +7411,403 @@ import { bar }  from 'bar-lib'
 const FOO = require('./foo')
 const BAZ = 1
 const BAR = require('./bar')
+```
+
+### Import Deprecated
+
+----------
+
+Reports use of a deprecated name, as indicated by a JSDoc block with a @deprecated tag or TomDoc Deprecated: comment.
+
+<https://github.com/import-js/eslint-plugin-import/blob/HEAD/docs/rules/no-deprecated.md>
+
+👍 Examples of correct code
+
+```typescript
+
+```
+
+👎 Examples of incorrect code
+
+```typescript
+// @file: ./answer.js
+
+/**
+ * this is what you get when you trust a mouse talk show
+ * @deprecated need to restart the experiment
+ * @returns {Number} nonsense
+ */
+export function multiply(six, nine) {
+  return 42
+}
+
+
+import { multiply } from './answer';
+```
+
+### No Mutable Export
+
+----------
+
+Forbids the use of mutable exports with var or let.
+
+<https://github.com/import-js/eslint-plugin-import/blob/HEAD/docs/rules/no-mutable-exports.md>
+
+👍 Examples of correct code
+
+```typescript
+export const count = 1
+export function getCount() {}
+export class Counter {}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+export let count = 2
+export var count = 3
+
+let count = 4
+export { count } // reported here
+```
+
+### No Amd
+
+----------
+
+Reports require([array], ...) and define([array], ...) function calls at the module scope.
+
+<https://github.com/import-js/eslint-plugin-import/blob/HEAD/docs/rules/no-amd.md>
+
+👍 Examples of correct code
+
+```typescript
+```
+
+👎 Examples of incorrect code
+
+```typescript
+define(["a", "b"], function (a, b) { /* ... */ })
+
+require(["b", "c"], function (b, c) { /* ... */ })
+```
+
+### Prefer Default Export
+
+----------
+
+When there is only a single export from a module, prefer using default export over named export.
+
+<https://github.com/import-js/eslint-plugin-import/blob/HEAD/docs/rules/prefer-default-export.md>
+
+👍 Examples of correct code
+
+```typescript
+// There is a default export.
+export const foo = 'foo';
+const bar = 'bar';
+export default bar;
+
+// or
+
+// good2.js
+// There is more than one named export in the module.
+export const foo = 'foo';
+export const bar = 'bar';
+
+// or
+
+// good3.js
+// There is more than one named export in the module
+const foo = 'foo';
+const bar = 'bar';
+export { foo, bar }
+
+// or
+
+// good4.js
+// There is a default export.
+const foo = 'foo';
+export { foo as default }
+
+// or
+
+// export-star.js
+// Any batch export will disable this rule. The remote module is not inspected.
+export * from './other-module'
+```
+
+👎 Examples of incorrect code
+
+```typescript
+// There is only a single module export and it's a named export.
+export const foo = 'foo';
+```
+
+### Max Imports
+
+----------
+
+Forbid modules to have too many dependencies (import or require statements).
+
+<https://github.com/import-js/eslint-plugin-import/blob/HEAD/docs/rules/max-dependencies.md>
+
+👍 Examples of correct code
+
+```typescript
+import a from './a'; // 1
+const b = require('./b'); // 2
+// ...
+import y from './y'; // 25 - No exceeds!
+```
+
+👎 Examples of incorrect code
+
+```typescript
+import a from './a'; // 1
+const b = require('./b'); // 2
+// ...
+import z from './z'; // 26 - exceeds max!
+```
+
+### No CommanJs Export
+
+----------
+
+Reports the use of import declarations with CommonJS exports in any module except for the main module.
+
+<https://github.com/import-js/eslint-plugin-import/blob/HEAD/docs/rules/no-import-module-exports.md>
+
+👍 Examples of correct code
+
+```typescript
+import thing from 'other-thing'
+export default thing
+
+const thing = require('thing')
+module.exports = thing
+
+const thing = require('thing')
+exports.foo = bar
+
+import thing from 'otherthing'
+console.log(thing.module.exports)
+
+// in lib/index.js
+import foo from 'path';
+module.exports = foo;
+
+```
+
+👎 Examples of incorrect code
+
+```typescript
+import { stuff } from 'starwars'
+module.exports = thing
+
+import * as allThings from 'starwars'
+exports.bar = thing
+
+import thing from 'other-thing'
+exports.foo = bar
+
+import thing from 'starwars'
+const baz = module.exports = thing
+console.log(baz)
+```
+
+### No Useless Path Import
+
+----------
+
+Use this rule to prevent unnecessary path segments in import and require statements.
+
+<https://github.com/import-js/eslint-plugin-import/blob/HEAD/docs/rules/no-useless-path-segments.md>
+
+👍 Examples of correct code
+
+```typescript
+import "./header.js";
+import "./pages";
+import "./pages/about";
+import ".";
+import "..";
+import fs from "fs";
+```
+
+👎 Examples of incorrect code
+
+```typescript
+import "./../my-project/pages/about.js"; // should be "./pages/about.js"
+import "./../my-project/pages/about"; // should be "./pages/about"
+import "../my-project/pages/about.js"; // should be "./pages/about.js"
+import "../my-project/pages/about"; // should be "./pages/about"
+import "./pages//about"; // should be "./pages/about"
+import "./pages/"; // should be "./pages"
+import "./pages/index"; // should be "./pages" (except if there is a ./pages.js file)
+import "./pages/index.js"; // should be "./pages" (except if there is a ./pages.js file)
+```
+
+### No Extraneous Dependencies
+
+----------
+
+Disable import dependencies if no exists in package.json dependencies
+
+<https://github.com/import-js/eslint-plugin-import/blob/HEAD/docs/rules/no-extraneous-dependencies.md>
+
+👍 Examples of correct code
+
+```typescript
+import anything from "anything"; // exists in dependencies
+```
+
+👎 Examples of incorrect code
+
+```typescript
+import typescript from "typescript"; // exists in dev dependency package.json
+```
+
+### Import Order
+
+----------
+
+Enforce a convention in the order of require() / import statements
+
+<https://github.com/import-js/eslint-plugin-import/blob/HEAD/docs/rules/order.md>
+
+👍 Examples of correct code
+
+```typescript
+import fs from "fs"
+import file from "./file";
+import file2 from "./file2";
+```
+
+👎 Examples of incorrect code
+
+```typescript
+import file from "./file";
+import fs from "fs"
+import file2 from "./file2";
+```
+
+### No Anonymous Default Export
+
+----------
+
+Reports if a module's default export is unnamed.
+
+<https://github.com/import-js/eslint-plugin-import/blob/HEAD/docs/rules/no-anonymous-default-export.md>
+
+👍 Examples of correct code
+
+```typescript
+const foo = 123;
+export default foo;
+
+export default class MyClass() {};
+
+export default function foo() {};
+```
+
+👎 Examples of incorrect code
+
+```typescript
+export default []
+
+export default () => {}
+
+export default class {}
+
+export default function () {}
+
+export default 123
+
+export default {}
+
+export default new Foo()
+```
+
+### Prefer Node Protocol
+
+----------
+
+Prefer using the node: protocol when importing Node.js builtin modules
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-node-protocol.md>
+
+👍 Examples of correct code
+
+```typescript
+import dgram from 'node:dgram';
+export {strict as default} from 'node:assert';
+import fs from 'node:fs/promises';
+const fs = require('fs');
+import _ from 'lodash';
+import fs from './fs.js';
+const fs = require('node:fs/promises');
+```
+
+👎 Examples of incorrect code
+
+```typescript
+import dgram from 'dgram';
+export {strict as default} from 'assert';
+import fs from 'fs/promises';
+const fs = require('fs/promises');
+```
+
+### Prefer export…from
+
+----------
+
+Prefer export…from when re-exporting
+
+When re-exporting from a module, it's unnecessary to import and then export.
+It can be done in a single export…from declaration.
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-export-from.md>
+
+👍 Examples of correct code
+
+```typescript
+export {default} from './foo.js';
+
+export {named} from './foo.js';
+
+export * as namespace from './foo.js';
+export {
+    default,
+    default as renamedDefault,
+    named,
+    named as renamedNamed,
+} from './foo.js';
+
+// There is no substitution
+import * as namespace from './foo.js';
+export default namespace;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+import defaultExport from './foo.js';
+export default defaultExport;
+
+import {named} from './foo.js';
+export {named};
+
+import * as namespace from './foo.js';
+export {namespace};
+
+import defaultExport, {named} from './foo.js';
+export default defaultExport;
+export {
+    defaultExport as renamedDefault,
+    named,
+    named as renamedNamed,
+};
 ```
 
 ## Documentation
@@ -8416,6 +9794,73 @@ const random = crypto.randomBytes(60);
 const random = Math.random();
 ```
 
+### Prevent Secret Token
+
+----------
+
+Prevent commit with token, passwords, keys etc.
+
+👍 Examples of correct code
+
+```typescript
+const apiKey = process.env.apiKey;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const apiKey = "123456"
+
+```
+
+### Prevent Literal Code
+
+----------
+
+Prevent attack in your code
+
+<https://github.com/nodesecurity/eslint-plugin-security/blob/HEAD/docs/regular-expression-dos-and-node.md>
+
+👍 Examples of correct code
+
+```typescript
+require('../name');
+require(`../name`);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+require(name);
+require('../' + name);
+require(`../${name}`);
+require(name());
+```
+
+### No Import Dynamic
+
+----------
+
+This rule checks every call to require() that uses expressions for the module name argument.
+
+<https://github.com/import-js/eslint-plugin-import/blob/HEAD/docs/rules/no-dynamic-require.md>
+
+👍 Examples of correct code
+
+```typescript
+require('../name');
+require(`../name`);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+require(name);
+require('../' + name);
+require(`../${name}`);
+require(name());
+```
+
 ## Catch Error Name
 
 ----------
@@ -8830,7 +10275,7 @@ const x = 0;
 ;
 ```
 
-## No InstanceOf Array
+## No Instance Of Array
 
 ----------
 
@@ -10596,7 +12041,70 @@ mod_ns = {}      // ERROR: 'mod_ns' is readonly.
 Object.assign(mod_ns, { foo: "foo" }) // ERROR: The members of 'mod_ns' are readonly.
 ```
 
-### No Loss Of Precision
+### No Self Import
+
+----------
+
+Forbid a module from importing itself.
+
+<https://github.com/import-js/eslint-plugin-import/blob/HEAD/docs/rules/no-self-import.md>
+
+👍 Examples of correct code
+
+```typescript
+// foo.js
+import bar from './bar';
+
+const bar = require('./bar');
+```
+
+👎 Examples of incorrect code
+
+```typescript
+// foo.js
+import foo from './foo';
+const foo = require('./foo');
+
+// index.js
+import index from '.';
+const index = require('.');
+```
+
+### Export Name
+
+----------
+
+Reports funny business with exports, like repeated exports of names or defaults.
+
+<https://github.com/import-js/eslint-plugin-import/blob/HEAD/docs/rules/export.md>
+
+👍 Examples of correct code
+
+```typescript
+// foo.js
+export default class MyClass { /*...*/ } // Multiple default exports.
+
+function makeFunction() { return new MyClass(...arguments) }
+
+export default makeFunction // Multiple default exports.
+```
+
+👎 Examples of incorrect code
+
+```typescript
+export default class MyClass { /*...*/ } // Multiple default exports.
+
+function makeClass() { return new MyClass(...arguments) }
+
+export default makeClass // Multiple default exports.
+
+// OR
+
+export const foo = function () { /*...*/ } // Multiple exports of name 'foo'.
+
+function bar() { /*...*/ }
+export { bar as foo } // Multiple exports of name 'foo'.
+```
 
 ### Useless Loop
 
@@ -10669,6 +12177,7 @@ for (foo of bar) {
 }
 ```
 
+### No Loss Of Precision
 
 ----------
 
@@ -10697,6 +12206,97 @@ const x = 1230000000000000000000000.0
 const x = .1230000000000000000000000
 const x = 0X20000000000001
 const x = 0X2_000000000_0001;
+```
+
+### Import Default Not Fount
+
+----------
+
+If a default import is requested, report if there is no default export in the imported module.
+
+<https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/default.md>
+
+👍 Examples of correct code
+
+```typescript
+// ./foo.js
+export class Example {}
+```
+
+```typescript
+import foo from './foo'
+
+// assuming 'node_modules' are ignored (true by default)
+import someModule from 'some-module'
+```
+
+👎 Examples of incorrect code
+
+```typescript
+import bar from './bar' // no default export found in ./bar
+import baz from './baz' // no default export found in ./baz
+```
+
+### Import Namespace
+
+### No Import Resolve
+
+----------
+
+Ensures an imported module can be resolved to a module on the local filesystem, as defined by standard Node require.resolve behavior.
+
+<https://github.com/import-js/eslint-plugin-import/blob/HEAD/docs/rules/no-unresolved.md>
+
+👍 Examples of correct code
+
+```typescript
+import x from './bar' // file found
+```
+
+👎 Examples of incorrect code
+
+```typescript
+import x from './foo' // File not found
+```
+
+### Import Not Found
+
+----------
+
+Verifies that all named imports are part of the set of named exports in the referenced module.
+
+<https://github.com/import-js/eslint-plugin-import/blob/HEAD/docs/rules/named.md>
+
+👍 Examples of correct code
+
+```typescript
+// ./foo.js
+export const foo = "I'm so foo"
+
+// -------------------
+
+// ./bar.js
+import { foo } from './foo';
+
+// ES7 proposal
+export { foo as bar } from './foo';
+
+// node_modules without jsnext:main are not analyzed by default
+// (import/ignore setting)
+import { SomeNonsenseThatDoesntExist } from 'react';
+```
+
+👎 Examples of incorrect code
+
+```typescript
+// ./baz.js
+import { notFoo } from './foo';
+
+// ES7 proposal
+export { notFoo as defNotBar } from './foo';
+
+// will follow 'jsnext:main', if available
+import { dontCreateStore } from 'redux';
 ```
 
 ## Possible Errors
@@ -10876,4 +12476,203 @@ if (n === 1) {
 } else if (n === 5) {
     quuux();
 }
+```
+
+### No Unused Private Class Members
+
+----------
+
+Disallow unused private class members
+
+<https://eslint.org/docs/latest/rules/no-unused-private-class-members>
+
+👍 Examples of correct code
+
+```typescript
+class Foo {
+    #usedMember = 42;
+    method() {
+        return this.#usedMember;
+    }
+}
+
+class Foo {
+    #usedMethod() {
+        return 42;
+    }
+    anotherMethod() {
+        return this.#usedMethod();
+    }
+}
+
+class Foo {
+    get #usedAccessor() {}
+    set #usedAccessor(value) {}
+
+    method() {
+        this.#usedAccessor = 42;
+    }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+class Foo {
+    #unusedMember = 5;
+}
+
+class Foo {
+    #usedOnlyInWrite = 5;
+    method() {
+        this.#usedOnlyInWrite = 42;
+    }
+}
+
+class Foo {
+    #usedOnlyToUpdateItself = 5;
+    method() {
+        this.#usedOnlyToUpdateItself++;
+    }
+}
+
+class Foo {
+    #unusedMethod() {}
+}
+
+class Foo {
+    get #unusedAccessor() {}
+    set #unusedAccessor(value) {}
+}
+```
+
+### No Constant Binary Expression
+
+----------
+
+Disallow expressions where the operation doesn't affect the value
+
+<https://eslint.org/docs/latest/rules/no-constant-binary-expression>
+
+👍 Examples of correct code
+
+```typescript
+const value1 = x == null;
+
+const value2 = (condition ? x : {}) || DEFAULT;
+
+const value3 = !(foo == null);
+
+const value4 = Boolean(foo) === true;
+
+const objIsEmpty = Object.keys(someObj).length === 0;
+
+const arrIsEmpty = someArr.length === 0;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const value1 = +x == null;
+
+const value2 = condition ? x : {} || DEFAULT;
+
+const value3 = !foo == null;
+
+const value4 = new Boolean(foo) === true;
+
+const objIsEmpty = someObj === {};
+
+const arrIsEmpty = someArr === [];
+```
+
+### No Unneeded Ternary
+
+----------
+
+Disallow ternary operators when simpler alternatives exist
+
+<https://eslint.org/docs/latest/rules/no-unneeded-ternary>
+
+👍 Examples of correct code
+
+```typescript
+var a = x === 2 ? "Yes" : "No";
+
+var a = x !== false;
+
+var a = x ? "Yes" : "No";
+
+var a = x ? y : x;
+
+f(x || 1);
+
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var a = x === 2 ? true : false;
+
+var a = x ? true : false;
+
+f(x ? x : 1);
+```
+
+### No Unsafe Negation
+
+----------
+
+Disallow negating the left operand of relational operators
+
+<https://eslint.org/docs/latest/rules/no-unsafe-negation>
+
+👍 Examples of correct code
+
+```typescript
+if (!(key in object)) {
+    // key is not in object
+}
+
+if (!(obj instanceof Ctor)) {
+    // obj is not an instance of Ctor
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+if (!key in object) {
+    // operator precedence makes it equivalent to (!key) in object
+    // and type conversion makes it equivalent to (key ? "false" : "true") in object
+}
+
+if (!obj instanceof Ctor) {
+    // operator precedence makes it equivalent to (!obj) instanceof Ctor
+    // and it equivalent to always false since boolean values are not objects.
+}
+```
+
+### Text Encoding Identifier Case
+
+----------
+
+Enforce consistent case for text encoding identifiers
+
+<https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/text-encoding-identifier-case.md>
+
+👍 Examples of correct code
+
+```typescript
+await fs.readFile(file, 'utf8');
+await fs.readFile(file, 'ascii');
+const string = buffer.toString('utf8');
+```
+
+👎 Examples of incorrect code
+
+```typescript
+await fs.readFile(file, 'UTF-8');
+await fs.readFile(file, 'ASCII');
+const string = buffer.toString('utf-8');
 ```

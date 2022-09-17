@@ -11,6 +11,7 @@ module.exports = {
         "html",
         "php-markup",
         "n",
+        "array-func",
     ],
     env: {
         node: true,
@@ -27,6 +28,22 @@ module.exports = {
     settings: {
         "html/report-bad-indent": "error",
         "html/indent": "+4",
+        "import/resolver": {
+            "node": {
+                "extensions": [ ".mjs", ".js", ".jsx", ".json", ".ts", ".tsx", ".d.ts" ],
+            },
+        },
+        "import/extensions": [
+            ".js",
+            ".mjs",
+            ".jsx",
+        ],
+        "import/core-modules": [
+        ],
+        "import/ignore": [
+            "node_modules",
+            "\\.(coffee|scss|css|less|hbs|svg|json)$",
+        ],
     },
     parserOptions: {
         sourceType: "module",
@@ -58,7 +75,7 @@ module.exports = {
             },
         },
         {
-            files: [ "**/tests/**.ts" ],
+            files: [ "**/tests/**" ],
             extends: [
                 "./rules/typescript/tests.js",
             ],
