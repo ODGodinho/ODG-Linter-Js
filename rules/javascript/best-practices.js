@@ -411,5 +411,13 @@ module.exports = {
         "array-func/from-map": [ "error" ], // Use .map invés do segundo parâmetro do From
         "array-func/no-unnecessary-this-arg": [ "error" ], // Não passe parâmetro desnecessário
         "array-func/avoid-reverse": [ "error" ], // Não passe parâmetro desnecessário
+        "sonar/array-callback-without-return": [ "error" ], // Não use new Array
+        "sonar/bool-param-default": [ "error" ], // Param do tipo boolean deve ter um valor padrão e não optional
+        "sonar/call-argument-line": [ "error" ], // Chamada função anonima auto executável deve ter ;
+        "sonar/class-name": [ "error", { format: "^[A-Z][a-zA-Z0-9]*$" } ], // Convenção nome Classe
+        "sonar/class-prototype": [ "error" ], // No Prototype in class
+        "sonar/comma-or-logical-or-case": [ "error" ], // Switch Case logica invalida
+        "sonar/conditional-indentation": [ "error" ], // Formatação IF
+        "sonar/deprecation": [ "warn" ], // Alerta em funções depreciadas
     },
 };

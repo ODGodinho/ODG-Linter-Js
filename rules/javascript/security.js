@@ -16,5 +16,19 @@ module.exports = {
         "security/detect-non-literal-require": [ "error" ], // Require Protect
         "security/detect-possible-timing-attacks": [ "error" ], // Previne Tokens no código
         "import/no-dynamic-require": [ "error", { "esmodule": true } ], // Sem import dinâmicos
+        "sonar/aws-s3-bucket-insecure-http": [ "error" ], // S3 Aws devem usar ssl
+        "sonar/content-security-policy": [ "error" ], // Força usar ContentSecurityPolicy
+        "sonar/aws-s3-bucket-public-access": [ "error" ], // S3 segurança
+        "sonar/aws-s3-bucket-server-encryption": [ "error" ], // S3 segurança
+        "sonar/certificate-transparency": [ "error" ], // Express helmet
+        "sonar/code-eval": [ "error" ], // No enval
+        "sonar/confidential-information-logging": [ "error" ], // Não faça log de coisas confidenciais
+        "sonar/content-length": [ "error" ], // Configure o tamanho de pacotes máximos
+        "anti-trojan-source/no-bidi": [ "error" ], // Anti Trojan code program
+        "sonar/cookie-no-httponly": [ "error" ], // Use Http Only no cookie
+        "sonar/cookies": [ "warn" ], // Use Http Only no cookie
+        "sonar/disabled-auto-escaping": [ "error" ], // Renderizar arquivos q podem conter XSS como readme
+        "sonar/disabled-resource-integrity": [ "error" ], // Use integridade para scripts
+        "sonar/dns-prefetching": [ "error" ], // DNS rules
     },
 };

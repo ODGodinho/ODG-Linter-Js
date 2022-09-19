@@ -95,6 +95,10 @@
 - [Prefer Default Parame](#prefer-default-parame)
 - [No Avoid Reverse](#no-avoid-reverse)
 - [Prefer Code Point](#prefer-code-point)
+- [Bool Param Default](#bool-param-default)
+- [Class Name Convention](#class-name-convention)
+- [Comma Or Logical Or Case](#comma-or-logical-or-case)
+- [No Constructor Bind](#no-constructor-bind)
 - [No Thenable](#no-thenable)
 - [No Unreadable Iife](#no-unreadable-iife)
 - [Prefer Native Cast](#prefer-native-cast)
@@ -296,6 +300,16 @@
   - [Prevent Secret Token](#prevent-secret-token)
   - [Prevent Literal Code](#prevent-literal-code)
   - [No Import Dynamic](#no-import-dynamic)
+  - [Security SSL](#security-ssl)
+  - [Security Encrypt/Access](#security-encrypt-access)
+  - [Certificate Transparency](#certificate-transparency)
+  - [No Log confidential information](#no-log-confidential-information)
+  - [Content Length](#content-length)
+  - [Anti Trojan Source No Bidi](#anti-trojan-source-no-bidi)
+  - [Cookie Httponly](#cookie-httponly)
+  - [Protect XSS Render](#protect-xss-render)
+  - [Force Integrity](#force-integrity)
+  - [DNS prefetching](#dns-prefetching)
 - [Catch Error Name](#catch-error-name)
 - [Consistent Destructured](#consistent-destructured)
 - [Consistent Function Scope](#consistent-function-scope)
@@ -362,6 +376,7 @@
   - [Import Namespace](#import-namespace)
   - [No Import Resolve](#no-import-resolve)
   - [Import Not Found](#import-not-found)
+  - [JS Type](#js-type)
 - [Possible Errors](#possible-errors)
   - [For Direction](#for-direction)
   - [No Extra Bind](#no-extra-bind)
@@ -372,6 +387,10 @@
   - [No Unneeded Ternary](#no-unneeded-ternary)
   - [No Unsafe Negation](#no-unsafe-negation)
   - [Text Encoding Identifier Case](#text-encoding-identifier-case)
+  - [Arguments Order](#arguments-order)
+  - [Assertions In Tests](#assertions-in-tests)
+  - [Test Multiple Possible Assert](#test-multiple-possible-assert)
+  - [No Disable Timeout](#no-disable-timeout)
 
 ## Introduction
 
@@ -507,6 +526,7 @@ var backtick = `back\ntick`; // you can use \n in single or double quoted string
 Requires indent with 4 spaces
 
 <https://eslint.org/docs/rules/indent#indent>
+<https://sonarsource.github.io/rspec/#/rspec/S3973/javascript>
 
 👍 Examples of correct code
 
@@ -2961,6 +2981,168 @@ const reverseString = array.reduce((p, c) => p + c, "");
 const string = array.reverse().reduce((p, c) => p + c, '');
 
 const reverseString = array.reverse().reduceRight((p, c) => p + c, '');
+```
+
+## Bool Param Default
+
+----------
+
+Optional boolean parameters should have default value
+
+<https://sonarsource.github.io/rspec/#/rspec/S4798/javascript>
+
+👍 Examples of correct code
+
+```typescript
+function countPositiveNumbers(arr: number[], countZero = false) {
+  // ...
+}
+
+function toggleProperty(property: string, value: boolean) {
+  setProperty(property, value);
+}
+
+function togglePropertyToCalculatedValue(property: string) {
+  setProperty(property, calculateProperty());
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function countPositiveNumbers(arr: number[], countZero?: boolean) { // Noncompliant, default value for 'countZero' should be defined
+  // ...
+}
+
+function toggleProperty(property: string, value?: boolean) { // Noncompliant, a new function should be defined
+  if (value !== undefined) {
+    setProperty(property, value);
+  } else {
+    setProperty(property, calculateProperty());
+  }
+}
+```
+
+## Class Name Convention
+
+----------
+
+Class names should comply with a naming convention
+
+<https://sonarsource.github.io/rspec/#/rspec/S101/javascript>
+
+👍 Examples of correct code
+
+```typescript
+// With default provided regular expression /^[A-Z][a-zA-Z0-9]*$/:
+class MyClass { }
+```
+
+👎 Examples of incorrect code
+
+```typescript
+class my_class { }
+```
+
+## No Class prototype
+
+----------
+
+Class methods should be used instead of "prototype" assignments
+
+<https://sonarsource.github.io/rspec/#/rspec/S3525/javascript>
+
+👍 Examples of correct code
+
+```typescript
+class MyClass {
+  constructor(initializerArgs = []) {
+    this._values = [...initializerArgs];
+  }
+
+  doSomething() {
+    //...
+  }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function MyNonClass(initializerArgs = []) {
+  this._values = [...initializerArgs];
+}
+
+MyNonClass.prototype.doSomething = function () {  // Noncompliant
+  // ...
+}
+```
+
+## Comma Or Logical Or Case
+
+----------
+
+Comma and logical OR operators should not be used in switch cases
+
+<https://sonarsource.github.io/rspec/#/rspec/S3616/javascript>
+
+👍 Examples of correct code
+
+```typescript
+switch (a) {
+  case 1:
+  case 2:
+    doTheThing(a);
+  case 3:
+  case 4:
+    doThatThing(a);
+  case 5:
+    doTheOtherThing(a);
+  default:
+    console.log('Neener, neener!');
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+switch (a) {
+  case 1,2:  // Noncompliant; only 2 is ever handled by this case
+    doTheThing(a);
+  case 3 || 4: // Noncompliant; only '3' is handled
+    doThatThing(a);
+  case 5:
+    doTheOtherThing(a);
+  default:
+    console.log('Neener, neener!');  // this happens when a==1 or a == 4
+}
+```
+
+## No Constructor Bind
+
+----------
+
+Prefer class properties to equivalent setup steps taken in a class' constructor method.
+
+<https://github.com/markalfred/eslint-plugin-no-constructor-bind>
+
+👍 Examples of correct code
+
+```typescript
+class User {
+  greet = () => 'hello'
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+class User {
+  constructor() {
+    this.greet = this.greet.bind(this)
+  }
+  greet() { return 'Hello' }
+}
 ```
 
 ## Prefer Code Point
@@ -6632,6 +6814,7 @@ Array has several methods for filtering, mapping, and folding.
 If we forget to write return statement in a callback of those, it's probably a mistake.
 
 <https://eslint.org/docs/rules/array-callback-return>
+<https://sonarsource.github.io/rspec/#/rspec/S3796/javascript>
 
 👍 Examples of correct code
 
@@ -9585,6 +9768,7 @@ Disallow the use of eval()-like methods
 
 <https://eslint.org/docs/rules/no-eval#no-eval>
 <https://eslint.org/docs/rules/no-implied-eval>
+<https://sonarsource.github.io/rspec/#/rspec/S1523/javascript>
 
 👍 Examples of correct code
 
@@ -9859,6 +10043,470 @@ require(name);
 require('../' + name);
 require(`../${name}`);
 require(name());
+```
+
+### Security SSL
+
+----------
+
+Authorizing HTTP communications with S3 buckets is security-sensitive
+
+<https://sonarsource.github.io/rspec/#/rspec/S6249/javascript>
+
+👍 Examples of correct code
+
+```typescript
+const s3 = require('aws-cdk-lib/aws-s3');
+
+const bucket = new s3.Bucket(this, 'example', {
+    bucketName: 'example',
+    versioned: true,
+    publicReadAccess: false,
+    enforceSSL: true
+});
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const s3 = require('aws-cdk-lib/aws-s3');
+
+const bucket = new s3.Bucket(this, 'example'); // Sensitive
+```
+
+### Security Encrypt/Access
+
+----------
+
+Allowing public ACLs or policies on a S3 bucket is security-sensitive
+Disabling server-side encryption of S3 buckets is security-sensitive
+
+By default S3 buckets are private, it means that only the bucket owner can access it.
+This access control can be relaxed with ACLs or policies.
+To prevent permissive policies or ACLs to be set on a S3 bucket the following booleans settings can be enabled:
+
+<https://sonarsource.github.io/rspec/#/rspec/S6281/javascript>
+<https://sonarsource.github.io/rspec/#/rspec/S6245/javascript>
+
+👍 Examples of correct code
+
+```typescript
+const s3 = require('aws-cdk-lib/aws-s3');
+
+new s3.Bucket(this, 'id', {
+    bucketName: 'bucket',
+    blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL
+});
+
+
+new s3.Bucket(this, 'id', {
+    blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+    encryption: s3.BucketEncryption.KMS_MANAGED
+});
+
+# Alternatively with a KMS key managed by the user.
+
+new s3.Bucket(this, 'id', {
+    blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
+    encryption: s3.BucketEncryption.KMS_MANAGED,
+    encryptionKey: access_key
+});
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const s3 = require('aws-cdk-lib/aws-s3');
+
+new s3.Bucket(this, 'id', {
+    bucketName: 'bucket'
+}); // Sensitive
+```
+
+### Certificate Transparency
+
+----------
+
+Disabling Certificate Transparency monitoring is security-sensitive
+
+Implement Expect-CT HTTP header which instructs the web browser to check public CT logs in order to verify if
+the website appears inside and if it is not, the browser will block the request and display a warning to the user.
+
+<https://sonarsource.github.io/rspec/#/rspec/S5742/javascript>
+
+👍 Examples of correct code
+
+```typescript
+const express = require('express');
+const helmet = require('helmet');
+
+let app = express();
+
+app.use(helmet.expectCt({
+  enforce: true,
+  maxAge: 86400
+})); // Compliant
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const express = require('express');
+const helmet = require('helmet');
+
+let app = express();
+
+app.use(
+    helmet({
+      expectCt: false // Sensitive
+    })
+);
+```
+
+### No Log confidential information
+
+----------
+
+Log management is an important topic, especially for the security of a web application, to ensure user activity,
+including potential attackers, is recorded and available for an analyst to understand what’s happened on the
+web application in case of malicious activities.
+
+<https://sonarsource.github.io/rspec/#/rspec/S5757/javascript>
+
+👍 Examples of correct code
+
+```typescript
+const { Signale } = require('signale');
+
+const CREDIT_CARD_NUMBERS = fetchFromWebForm()
+// here we suppose the credit card numbers are retrieved somewhere and CREDIT_CARD_NUMBERS looks like ["1234-5678-0000-9999", "1234-5678-0000-8888"]; for instance
+
+const options = {
+  secrets: ["([0-9]{4}-?)+"]
+};
+
+const logger = new Signale(options); // Compliant
+
+CREDIT_CARD_NUMBERS.forEach(function(CREDIT_CARD_NUMBER) {
+  logger.log('The customer ordered products with the credit card number = %s', CREDIT_CARD_NUMBER);
+});
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const { Signale } = require('signale');
+
+const CREDIT_CARD_NUMBERS = fetchFromWebForm()
+// here we suppose the credit card numbers are retrieved somewhere and CREDIT_CARD_NUMBERS looks like ["1234-5678-0000-9999", "1234-5678-0000-8888"]; for instance
+
+const options = {
+  secrets: []         // empty list of secrets
+};
+
+const logger = new Signale(options); // Sensitive
+
+CREDIT_CARD_NUMBERS.forEach(function(CREDIT_CARD_NUMBER) {
+  logger.log('The customer ordered products with the credit card number = %s', CREDIT_CARD_NUMBER);
+});
+```
+
+### Content Length
+
+----------
+
+Rejecting requests with significant content length is a good practice to control the network traffic intensity
+and thus resource consumption in order to prevents DoS attacks.
+
+<https://sonarsource.github.io/rspec/#/rspec/S5693/javascript>
+
+👍 Examples of correct code
+
+```typescript
+const form = new Formidable();
+form.maxFileSize = 8000000; // Compliant: 8MB
+
+let diskUpload = multer({
+  storage: diskStorage,
+  limits: {
+     fileSize: 8000000 // Compliant: 8MB
+  }
+});
+
+let jsonParser = bodyParser.json(); // Compliant, when the limit is not defined, the default value is set to 100kb
+let urlencodedParser = bodyParser.urlencoded({ extended: false, limit: "2mb" }); // Compliant
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const form = new Formidable();
+form.maxFileSize = 10000000; // Sensitive: 10MB is more than the recommended limit of 8MB
+
+const formDefault = new Formidable(); // Sensitive, the default value is 200MB
+
+let diskUpload = multer({
+  storage: diskStorage,
+  limits: {
+    fileSize: 10000000; // Sensitive: 10MB is more than the recommended limit of 8MB
+  }
+});
+
+let diskUploadUnlimited = multer({ // Sensitive: the default value is no limit
+  storage: diskStorage,
+});
+
+// 4MB is more than the recommended limit of 2MB for non-file-upload requests
+let jsonParser = bodyParser.json({ limit: "4mb" }); // Sensitive
+let urlencodedParser = bodyParser.urlencoded({ extended: false, limit: "4mb" }); // Sensitive
+```
+
+### Anti Trojan Source No Bidi
+
+----------
+
+The trick is to use Unicode control characters to reorder tokens in source code at the encoding level.
+These visually reordered tokens can be used to display logic that, while semantically correct, diverges from the logic presented by the logical ordering of source code tokens.
+
+<https://trojansource.codes/>
+<https://github.com/lirantal/eslint-plugin-anti-trojan-source>
+
+### Cookie Httponly
+
+----------
+
+When a cookie is configured with the HttpOnly attribute set to true,
+the browser guaranties that no client-side script will be able to read it. In most cases,
+when a cookie is created, the default value of HttpOnly is false and it’s up to the developer to decide whether or
+not the content of the cookie can be read by the client-side script. As a majority of Cross-Site Scripting (XSS)
+attacks target the theft of session-cookies, the HttpOnly attribute can help to reduce their impact as it won’t be
+possible to exploit the XSS vulnerability to steal session-cookies.
+
+<https://sonarsource.github.io/rspec/#/rspec/S3330/javascript>
+<https://sonarsource.github.io/rspec/#/rspec/S2255/javascript>
+
+```typescript
+let session = cookieSession({
+  httpOnly: true,// Compliant
+});  // Compliant
+
+const express = require('express');
+const session = require('express-session');
+
+let app = express();
+app.use(session({
+  cookie:
+  {
+    httpOnly: true // Compliant
+  }
+}));
+
+let cookies = new Cookies(req, res, { keys: keys });
+
+cookies.set('LastVisit', new Date().toISOString(), {
+  httpOnly: true // Compliant
+}); // Compliant
+
+const cookieParser = require('cookie-parser');
+const csrf = require('csurf');
+const express = require('express');
+
+let csrfProtection = csrf({ cookie: { httpOnly: true }}); // Compliant
+```
+
+👎 Examples of incorrect code
+
+```typescript
+let session = cookieSession({
+  httpOnly: false,// Sensitive
+});  // Sensitive
+
+const express = require('express');
+const session = require('express-session');
+
+let app = express()
+app.use(session({
+  cookie:
+  {
+    httpOnly: false // Sensitive
+  }
+}));
+
+let cookies = new Cookies(req, res, { keys: keys });
+
+cookies.set('LastVisit', new Date().toISOString(), {
+  httpOnly: false // Sensitive
+}); // Sensitive
+
+const cookieParser = require('cookie-parser');
+const csrf = require('csurf');
+const express = require('express');
+
+let csrfProtection = csrf({ cookie: { httpOnly: false }}); // Sensitive
+```
+
+### Protect XSS Render
+
+----------
+
+Disabling auto-escaping in template engines is security-sensitive
+
+<https://sonarsource.github.io/rspec/#/rspec/S5247/javascript>
+
+```typescript
+let Mustache = require("mustache");
+
+let rendered = Mustache.render(template, { name: inputName });
+
+// or
+
+const Handlebars = require('handlebars');
+
+let source = "<p>attack {{name}}</p>";
+let data = { "name": "<b>Alan</b>" };
+
+let template = Handlebars.compile(source);
+
+// or
+
+let md = require('markdown-it')();
+
+let result = md.render('# <b>attack</b>');
+
+// or
+
+const marked = require('marked');
+
+marked.setOptions({
+  renderer: new marked.Renderer()
+}); // Compliant by default sanitize is set to true
+
+console.log(marked("# test <b>attack/b>"));
+
+// or
+
+let kramed = require('kramed');
+
+let options = {
+  renderer: new kramed.Renderer({
+    sanitize: true // Compliant
+  })
+};
+
+console.log(kramed('Attack [xss?](javascript:alert("xss")).', options));
+```
+
+👎 Examples of incorrect code
+
+```typescript
+let Mustache = require("mustache");
+
+Mustache.escape = function(text) {return text;}; // Sensitive
+
+let rendered = Mustache.render(template, { name: inputName });
+
+// or
+
+const Handlebars = require('handlebars');
+let source = "<p>attack {{name}}</p>";
+let template = Handlebars.compile(source, { noEscape: true }); // Sensitive
+
+// or
+
+const markdownIt = require('markdown-it');
+let md = markdownIt({
+  html: true // Sensitive
+});
+
+let result = md.render('# <b>attack</b>');
+
+// or
+
+const marked = require('marked');
+
+marked.setOptions({
+  renderer: new marked.Renderer(),
+  sanitize: false // Sensitive
+});
+
+console.log(marked("# test <b>attack/b>"));
+
+// or
+
+let kramed = require('kramed');
+
+var options = {
+  renderer: new kramed.Renderer({
+    sanitize: false // Sensitive
+  })
+};
+```
+
+### Force Integrity
+
+----------
+
+Disabling resource integrity features is security-sensitive
+
+Fetching external resources, for example from a CDN, without verifying their integrity could impact the security of an
+application if the CDN gets compromised and resources are replaced by malicious ones.
+Resources integrity feature will block resources inclusion into an application if the pre-computed digest
+of the expected resource doesn’t match with the digest of the retrieved resource.
+
+<https://sonarsource.github.io/rspec/#/rspec/S5725/javascript>
+
+```typescript
+let script = document.createElement("script");
+script.src = "https://cdnexample.com/script-v1.2.3.js";
+script.integrity = "sha384-oqVuAfXRKap7fdgcCY5uykM6+R9GqQ8K/uxy9rx7HNQlGYl1kPzQho1wx4JwY8wC"; // Compliant
+script.crossOrigin = "anonymous";
+document.head.appendChild(script);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+let script = document.createElement("script");
+script.src = "https://cdnexample.com/script-latest.js";
+ // Sensitive no integrity
+script.crossOrigin = "anonymous";
+document.head.appendChild(script);
+```
+
+### DNS prefetching
+
+----------
+
+Allowing browsers to perform DNS prefetching is security-sensitive
+
+<https://sonarsource.github.io/rspec/#/rspec/S5743/javascript>
+
+```typescript
+const express = require('express');
+const helmet = require('helmet');
+
+let app = express();
+
+app.use(
+  helmet.dnsPrefetchControl({
+    allow: false // Compliant
+  })
+);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const express = require('express');
+const helmet = require('helmet');
+
+let app = express();
+
+app.use(
+  helmet.dnsPrefetchControl({
+    allow: true // Sensitive: allowing DNS prefetching is security-sensitive
+  })
+);
 ```
 
 ## Catch Error Name
@@ -12299,6 +12947,26 @@ export { notFoo as defNotBar } from './foo';
 import { dontCreateStore } from 'redux';
 ```
 
+### JS Type
+
+----------
+
+The types of the arguments to built-in functions are specified in the JavaScript language specifications
+
+<https://sonarsource.github.io/rspec/#/rspec/S3782/javascript>
+
+👍 Examples of correct code
+
+```typescript
+const isTooSmall = Math.abs(x) < 0.0042;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const isTooSmall = Math.abs(x < 0.0042); // Type require number no boolean
+```
+
 ## Possible Errors
 
 ### For Direction
@@ -12675,4 +13343,203 @@ const string = buffer.toString('utf8');
 await fs.readFile(file, 'UTF-8');
 await fs.readFile(file, 'ASCII');
 const string = buffer.toString('utf-8');
+```
+
+### Arguments Order
+
+----------
+
+Parameters should be passed in the correct order
+
+<https://sonarsource.github.io/rspec/#/rspec/S2234/javascript>
+
+👍 Examples of correct code
+
+```typescript
+function divide(divisor, dividend) {
+  return divisor/dividend;
+}
+
+function doTheThing() {
+  var divisor = 15;
+  var dividend = 5;
+
+  var result = divide(divisor, dividend);
+  //...
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function divide(divisor, dividend) {
+  return divisor/dividend;
+}
+
+function doTheThing() {
+  var divisor = 15;
+  var dividend = 5;
+
+  var result = divide(dividend, divisor);  // Noncompliant; operation succeeds, but result is unexpected
+  //...
+}
+```
+
+### Assertions In Tests
+
+----------
+
+A test case without assertions ensures only that no exceptions are thrown. Beyond basic runnability,
+it ensures nothing about the behavior of the code under test.
+
+<https://sonarsource.github.io/rspec/#/rspec/S2699/javascript>
+
+👍 Examples of correct code
+
+```typescript
+const expect = require('chai').expect;
+
+describe("Has assertions", function() {
+    it("tests a string", function() {
+        const str = "";
+        expect(str).to.be.a('string');
+    });
+});
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const expect = require('chai').expect;
+
+describe("No assertion", function() {
+    it("doesn't test anything", function() { // Noncompliant
+        const str = "";
+    });
+});
+```
+
+### Test Multiple Possible Assert
+
+----------
+
+A test case without assertions ensures only that no exceptions are thrown. Beyond basic runnability,
+it ensures nothing about the behavior of the code under test.
+
+<https://sonarsource.github.io/rspec/#/rspec/S2699/javascript>
+
+👍 Examples of correct code
+
+```typescript
+const expect = require('chai').expect;
+
+describe("uncertain assertions", function() {
+    const throwsTypeError = () => { throw new TypeError() }
+
+    it("uses chai 'expect'", function() {
+        expect(throwsTypeError).to.throw(TypeError)
+        expect({a: 42}).to.not.have.any.keys('b', 'c');
+        expect({a: 21}).to.not.have.property('b');
+        expect({a: 21}).to.not.have.ownPropertyDescriptor('b');
+        expect([21, 42]).to.not.include(1).and.not.include(2);
+
+        var myObj = { value: 1 }
+        const incThree = () => { myObj.value += 3; };
+        const decThree = () => { myObj.value -= 3; };
+        const doNothing = () => {};
+
+        expect(incThree).to.increase(myObj, 'value').by(3);
+        expect(decThree).to.decrease(myObj, 'value').by(3);
+
+        expect(decThree).to.decrease(myObj, 'value').by(3);
+        expect(incThree).to.increase(myObj, 'value').by(3);
+
+        expect(doNothing).to.not.change(myObj, 'value');
+
+        expect(incThree).to.increase(myObj, 'value').by(3);
+
+        let toCheck;
+        // Either of the following is valid
+        expect(toCheck).to.be.a('string');
+        expect(toCheck).to.be.NaN;
+        expect(toCheck).to.equal(Infinity);
+        expect(toCheck).to.equal(-Infinity);
+    });
+});
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const expect = require('chai').expect;
+
+describe("uncertain assertions", function() {
+    const throwsTypeError = () => { throw new TypeError() }
+
+    it("uses chai 'expect'", function() {
+        expect(throwsTypeError).to.not.throw(ReferenceError) // Noncompliant
+        expect({a: 42}).to.not.include({b: 10, c: 20});  // Noncompliant
+        expect({a: 21}).to.not.have.property('b', 42); // Noncompliant
+        expect({a: 21}).to.not.have.ownPropertyDescriptor('b', {   // Noncompliant
+            configurable: true,
+            enumerable: true,
+            writable: true,
+            value: 42,
+        });
+        expect([21, 42]).to.not.have.members([1, 2]); // Noncompliant
+
+        var myObj = { value: 1 }
+        const incThree = () => { myObj.value += 3; };
+        const decThree = () => { myObj.value -= 3; };
+        const doNothing = () => {};
+
+        expect(incThree).to.change(myObj, 'value').by(3); // Noncompliant
+        expect(decThree).to.change(myObj, 'value').by(3); // Noncompliant
+
+        expect(decThree).to.not.increase(myObj, 'value'); // Noncompliant
+        expect(incThree).to.not.decrease(myObj, 'value'); // Noncompliant
+
+        expect(doNothing).to.not.increase(myObj, 'value'); // Noncompliant
+        expect(doNothing).to.not.decrease(myObj, 'value'); // Noncompliant
+
+        expect(incThree).to.increase(myObj, 'value').but.not.by(1); // Noncompliant
+
+        let toCheck;
+        expect(toCheck).to.not.be.finite; // Noncompliant
+    });
+});
+```
+
+### No Disable Timeout
+
+----------
+
+Timeout should be disabled by setting it to "0".
+
+<https://sonarsource.github.io/rspec/#/rspec/S6080/javascript>
+
+👍 Examples of correct code
+
+```typescript
+describe("testing this.timeout", function() {
+  it("doesn't disable the timeout", function(done) {
+    this.timeout(1000);
+  });
+});
+```
+
+👎 Examples of incorrect code
+
+```typescript
+describe("testing this.timeout", function() {
+  it("unexpectedly disables the timeout", function(done) {
+    this.timeout(2147483648); // Noncompliant
+  });
+});
+
+describe("testing this.timeout", function() {
+  it("disables the timeout as expected", function(done) {
+    this.timeout(0);
+  });
+});
 ```

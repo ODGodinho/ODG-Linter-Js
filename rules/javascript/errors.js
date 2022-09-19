@@ -43,5 +43,8 @@ module.exports = {
             },
         ], // Import não encontrado
         "import/named": [ "error", { "commonjs": true } ], // Import apenas objetos existente no modulo
+        "sonar/argument-type": [ "error" ], // Caso a tipagem no arquivo Js não bate
+        "sonar/anchor-precedence": [ "error" ], // Valida melhora de regex
+        "sonar/different-types-comparison": [ "error" ], // Não compare tipos diferentes
     },
 };

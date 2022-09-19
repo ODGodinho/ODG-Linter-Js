@@ -97,5 +97,8 @@ module.exports = {
         "@typescript-eslint/no-shadow": [ "error" ], // Erro caso ja esteja declarado escopo a cima
         "import/no-commonjs": [ "error" ], // Não use module.exports
         "unicorn/prefer-module": [ "error" ], // Prefira module js
+        "sonar/array-callback-without-return": [ "off" ], // Não use new Array
+        "no-constructor-bind/no-constructor-bind": [ "error" ], // Não use bind no construtor para própria classe
+    	"no-constructor-bind/no-constructor-state": [ "error" ],
     },
 };

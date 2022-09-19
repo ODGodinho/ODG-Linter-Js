@@ -17,19 +17,23 @@
     "eslint": "*"
   },
   "dependencies": {
+    "@babel/core": "*",
     "@typescript-eslint/eslint-plugin": "*",
     "@typescript-eslint/parser": "*",
     "eslint": "*",
+    "eslint-plugin-anti-trojan-source": "*",
     "eslint-plugin-array-func": "*",
     "eslint-plugin-filenames": "*",
     "eslint-plugin-html": "*",
     "eslint-plugin-import": "*",
     "eslint-plugin-jsdoc": "*",
     "eslint-plugin-n": "*",
+    "eslint-plugin-no-constructor-bind": "*",
     "eslint-plugin-php-markup": "*",
     "eslint-plugin-promise": "*",
     "eslint-plugin-regexp": "*",
     "eslint-plugin-security": "*",
+    "eslint-plugin-sonar": "*",
     "eslint-plugin-unicorn": "*"
   },
   "bugs": {

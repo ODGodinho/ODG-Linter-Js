@@ -9,9 +9,11 @@ module.exports = {
         "security",
         "unicorn",
         "html",
-        "php-markup",
         "n",
         "array-func",
+        "no-constructor-bind",
+        "anti-trojan-source",
+        "sonar",
     ],
     env: {
         node: true,
@@ -24,6 +26,27 @@ module.exports = {
         "./rules/javascript/security.js",
         "./rules/javascript/performance.js",
         "./rules/javascript/possible-errors.js",
+    ],
+    ignorePatterns: [
+        "!.*",
+
+        ".git/",
+        "node_modules/",
+        "bower_components/",
+        "jspm_packages/",
+        ".npm/",
+        "vendor/",
+
+        "lib-cov/",
+        "coverage/",
+        ".nyc_output/",
+        ".cache/",
+
+        "build/",
+        "dist/",
+        "tmp/",
+
+        "**/*.min.*",
     ],
     settings: {
         "html/report-bad-indent": "error",
@@ -75,19 +98,39 @@ module.exports = {
             },
         },
         {
-            files: [ "**/tests/**" ],
+            files: [ "**.php" ],
+            plugins: [
+                "php-markup",
+            ],
+            globals: {
+                "lintPHPCode": true,
+            },
+            settings: {
+                "php/php-extensions": [ ".php" ],
+                "php/markup-replacement": {
+                    "php": "0",
+                    "=": "0",
+                },
+                "php/keep-eol": true,
+                "php/remove-whitespace": false,
+                "php/remove-empty-line": false,
+                "php/remove-php-lint": true,
+            },
+        },
+        {
+            files: [
+                "**/test/**",
+                "**/tests/**",
+                "**/spec/**",
+                "**/__tests__/**",
+                "*.test.*",
+                "*.spec.*",
+                "*.e2e.*",
+                "*.e2e-spec.*",
+            ],
             extends: [
                 "./rules/typescript/tests.js",
             ],
-            parser: "@typescript-eslint/parser",
-            parserOptions: {
-                ecmaFeatures: {
-                    jsx: true,
-                },
-                ecmaVersion: 2022,
-                sourceType: "module",
-                project: [ "tsconfig.json" ], // Specify it only for TypeScript files
-            },
         },
     ],
     rules: {},
