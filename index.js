@@ -94,7 +94,7 @@ module.exports = {
                 },
                 ecmaVersion: 2022,
                 sourceType: "module",
-                project: [ "tsconfig.json" ], // Specify it only for TypeScript files
+                project: [ "tsconfig.json", "tsconfig-eslint.json" ], // Specify it only for TypeScript files
             },
         },
         {
