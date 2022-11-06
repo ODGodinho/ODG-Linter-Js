@@ -1,43 +1,44 @@
 {
-  "name": "@odg/eslint-config",
-  "version": "0.8.1",
-  "description": "Linter for JavaScript And Typescript project",
-  "main": "index.js",
-  "scripts": {},
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ODGodinho/ODG-Linter-Js.git"
-  },
-  "author": "Dragons Gamers <https://www.linkedin.com/in/victor-alves-odgodinho>",
-  "license": "MIT",
-  "devDependencies": {
-    "typescript": "*"
-  },
-  "peerDependencies": {
-    "eslint": "*"
-  },
-  "dependencies": {
-    "@babel/core": "*",
-    "@typescript-eslint/eslint-plugin": "*",
-    "@typescript-eslint/parser": "*",
-    "eslint": "*",
-    "eslint-plugin-anti-trojan-source": "*",
-    "eslint-plugin-array-func": "*",
-    "eslint-plugin-filenames": "*",
-    "eslint-plugin-html": "*",
-    "eslint-plugin-import": "*",
-    "eslint-plugin-jsdoc": "*",
-    "eslint-plugin-n": "*",
-    "eslint-plugin-no-constructor-bind": "*",
-    "eslint-plugin-php-markup": "*",
-    "eslint-plugin-promise": "*",
-    "eslint-plugin-regexp": "*",
-    "eslint-plugin-security": "*",
-    "eslint-plugin-sonar": "*",
-    "eslint-plugin-unicorn": "*"
-  },
-  "bugs": {
-    "url": "https://github.com/ODGodinho/ODG-Linter-Js/issues"
-  },
-  "homepage": "https://github.com/ODGodinho/ODG-Linter-Js#readme"
+    "name": "@odg/eslint-config",
+    "version": "0.9.0",
+    "description": "Linter for JavaScript And Typescript project",
+    "main": "index.js",
+    "author": "Dragons Gamers <https://www.linkedin.com/in/victor-alves-odgodinho>",
+    "scripts": {},
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ODGodinho/ODG-Linter-Js.git"
+    },
+    "license": "MIT",
+    "devDependencies": {
+        "typescript": "*"
+    },
+    "peerDependencies": {
+        "eslint": "*"
+    },
+    "dependencies": {
+        "@babel/core": "*",
+        "@typescript-eslint/eslint-plugin": "*",
+        "@typescript-eslint/parser": "*",
+        "eslint": "*",
+        "eslint-plugin-anti-trojan-source": "*",
+        "eslint-plugin-array-func": "*",
+        "eslint-plugin-filenames": "*",
+        "eslint-plugin-html": "*",
+        "eslint-plugin-import": "*",
+        "eslint-plugin-jsdoc": "*",
+        "eslint-plugin-jsonc": "*",
+        "eslint-plugin-n": "*",
+        "eslint-plugin-no-constructor-bind": "*",
+        "eslint-plugin-php-markup": "*",
+        "eslint-plugin-promise": "*",
+        "eslint-plugin-regexp": "*",
+        "eslint-plugin-security": "*",
+        "eslint-plugin-sonar": "*",
+        "eslint-plugin-unicorn": "*"
+    },
+    "bugs": {
+        "url": "https://github.com/ODGodinho/ODG-Linter-Js/issues"
+    },
+    "homepage": "https://github.com/ODGodinho/ODG-Linter-Js#readme"
 }

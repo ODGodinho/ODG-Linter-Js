@@ -1,7 +1,9 @@
+const indentSize = 4;
+
 module.exports = {
     rules: {
         "indent": [ "off" ], // 4 spaces
-        "@typescript-eslint/indent": [ "error", 4 ], // Força indent com 4 espaços
+        "@typescript-eslint/indent": [ "error", indentSize ], // Força indent com 4 espaços
         "quotes": [ "off" ], // Aspas duplas
         "@typescript-eslint/quotes": [ "error", "double" ], // Força aspas dupla
         "lines-between-class-members": [ "off" ], // Força linha em branco entre props classe e funções

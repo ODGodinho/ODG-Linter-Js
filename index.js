@@ -1,6 +1,5 @@
 module.exports = {
     plugins: [
-        "@typescript-eslint",
         "import",
         "jsdoc",
         "promise",
@@ -14,6 +13,7 @@ module.exports = {
         "no-constructor-bind",
         "anti-trojan-source",
         "sonar",
+        "jsonc",
     ],
     env: {
         node: true,
@@ -26,6 +26,7 @@ module.exports = {
         "./rules/javascript/security.js",
         "./rules/javascript/performance.js",
         "./rules/javascript/possible-errors.js",
+        "./rules/json/base.js",
     ],
     ignorePatterns: [
         "!.*",

@@ -8,6 +8,7 @@
         "Merge",
         "Files",
         "Refactor",
-        "Typescript"
+        "Typescript",
+        "Json"
     ]
 }

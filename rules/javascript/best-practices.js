@@ -1,6 +1,8 @@
+const indentSize = 4;
+
 module.exports = {
     rules: {
-        "indent": [ "error", 4 ], // 4 spaces
+        "indent": [ "error", indentSize ], // 4 spaces
         "semi": [ "error", "always" ], // Força usar ponto-virgula ;
         "quotes": [ "error", "double" ], // Aspas duplas
         "lines-between-class-members": [ "error", "always" ], // Força linha em branco entre props classe e funções

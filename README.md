@@ -39,7 +39,7 @@
 - [Line Break Rule](#line-break-rule)
 - [EOL last Rule](#eol-last-rule)
 - [Max Line Len Rule](#max-line-len-rule)
-- [CamelCase Rule](#camel-case-rule)
+- [Camel Case Rule](#camel-case-rule)
 - [Padded Block Rule](#padded-block-rule)
 - [Lines Between Class Members](#lines-between-class-members)
 - [No Multi Assign Rule](#no-multi-assign-rule)
@@ -599,11 +599,11 @@ var foo = {
 var foo = { "bar": "This is a bar.", "baz": { "qux": "This is a qux" }, "difficult": "to read" };
 ```
 
-## CamelCase Rule
+## Camel Case Rule
 
 ----------
 
-Force use camelcase variable
+Force use camel case variable
 
 <https://eslint.org/docs/rules/camelcase#camelcase>
 
