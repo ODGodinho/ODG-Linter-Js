@@ -408,21 +408,7 @@ Add extends in your `.eslintrc` file
 
 ```json
 {
-    "extends": [
-        "@odg/odg-linter-js",
-    ],
-    "overrides": [
-        {
-            "files": [ "*.ts", "*.tsx" ],
-            "parser": "@typescript-eslint/parser",
-            "parserOptions": {
-                "ecmaFeatures": { "jsx": true },
-                "ecmaVersion": 2018,
-                "sourceType": "module",
-                "project": [ "tsconfig.json" ], // Specify it only for TypeScript files
-            },
-        },
-    ],
+    "extends": [ "@odg" ]
 }
 ```
 
