@@ -421,5 +421,6 @@ module.exports = {
         "sonar/comma-or-logical-or-case": [ "error" ], // Switch Case logica invalida
         "sonar/conditional-indentation": [ "error" ], // Formatação IF
         "sonar/deprecation": [ "warn" ], // Alerta em funções depreciadas
+        "object-curly-spacing": [ "error", "always", { "arraysInObjects": true } ],
     },
 };
