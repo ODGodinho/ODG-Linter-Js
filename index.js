@@ -48,6 +48,8 @@ module.exports = {
         "tmp/",
 
         "**/*.min.*",
+        "package-lock.json",
+        "yarn.lock",
     ],
     settings: {
         "html/report-bad-indent": "error",
