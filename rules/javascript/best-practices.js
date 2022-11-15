@@ -67,7 +67,7 @@ module.exports = {
         } ], // Requer espaço apos try {}
         "space-before-blocks": [ "error" ], // Requer espaço antes das chaves
         "space-unary-ops": [
-            2, {
+            "error", {
                 words: true, // Espaço apos Await e palavras chaves
                 nonwords: false, // Força nao ter espaço antes de operadores unários !, -, +
                 overrides: {

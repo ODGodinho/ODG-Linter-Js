@@ -1,3 +1,18 @@
 {
-    "extends": "@odg/tsconfig/tsconfig.json"
+    "compilerOptions": {
+        "baseUrl": ".",
+        "outDir": "./dist",
+        "rootDirs": [
+            ".",
+            "./src"
+        ],
+        "typeRoots": [
+            "./src/@types",
+            "node_modules/@types"
+        ],
+        "types": [ "node" ]
+    },
+    "exclude": [ "./coverage/" ],
+    "extends": "@odg/tsconfig/tsconfig.node.json",
+    "include": [ "." ]
 }
