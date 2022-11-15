@@ -13,7 +13,6 @@ module.exports = {
                 "no-unused-expressions": [ "off" ],
                 "import/unambiguous": [ "off" ],
                 "filenames/match-regex": [ "off" ],
-                "eol-last": [ "error", "never" ],
             },
         },
         {

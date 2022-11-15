@@ -230,7 +230,11 @@ module.exports = {
             "error",
             "^[a-zA-Z][a-zA-Z0-9_-]+((\\.[a-z]+)?)+$",
         ], // Nome de arquivo deve ser alfanumérico
-        "filenames/match-exported": [ "error", "^[a-zA-Z0-9_-]+$" ], // Nome do arquivo igual export default
+        "filenames/match-exported": [
+            "error",
+            "^[a-zA-Z0-9_-]+$",
+            "\\.[a-z]+$",
+        ], // Nome do arquivo igual export default
         "unicorn/catch-error-name": [
             "error",
             {
