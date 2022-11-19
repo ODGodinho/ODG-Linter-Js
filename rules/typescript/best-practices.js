@@ -21,6 +21,7 @@ module.exports = {
         "@typescript-eslint/explicit-function-return-type": [ "error" ], // Força tipo de retorno
         "no-unused-vars": [ "off" ], // Não permite variáveis não utilizadas
         "@typescript-eslint/no-unused-vars": [ "error", {
+            argsIgnorePattern: "^_",
             args: "after-used",
         } ], // Não permite variáveis não usado
         "default-param-last": [ "off" ], // Parâmetros default devem ficar no final
