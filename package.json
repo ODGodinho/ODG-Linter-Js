@@ -1,6 +1,6 @@
 {
     "name": "@odg/eslint-config",
-    "version": "0.9.4",
+    "version": "1.0.0",
     "description": "Linter for JavaScript And Typescript project",
     "main": "index.js",
     "author": "Dragons Gamers <https://www.linkedin.com/in/victor-alves-odgodinho>",
@@ -37,7 +37,9 @@
         "eslint-plugin-regexp": "*",
         "eslint-plugin-security": "*",
         "eslint-plugin-sonar": "*",
-        "eslint-plugin-unicorn": "*"
+        "eslint-plugin-unicorn": "*",
+        "eslint-plugin-yml": "*",
+        "toml-eslint-parser": "*"
     },
     "bugs": {
         "url": "https://github.com/ODGodinho/ODG-Linter-Js/issues"

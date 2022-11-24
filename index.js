@@ -135,6 +135,32 @@ module.exports = {
                 "./rules/typescript/tests.js",
             ],
         },
+        {
+            files: [
+                ".env.*",
+                "*.env",
+                "*.properties",
+                "*.ini",
+                "*.toml",
+            ],
+            extends: [
+                "./rules/ini/base.js",
+            ],
+            parser: "toml-eslint-parser",
+        },
+        {
+            files: [
+                "*.yml",
+                "*.yaml",
+            ],
+            extends: [
+                "./rules/yaml/base.js",
+            ],
+            parser: "yaml-eslint-parser",
+            parserOptions: {
+                defaultYAMLVersion: "1.2",
+            },
+        },
     ],
     rules: {},
 };

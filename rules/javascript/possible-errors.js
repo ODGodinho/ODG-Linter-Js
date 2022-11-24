@@ -20,5 +20,7 @@ module.exports = {
         "sonar/assertions-in-tests": [ "error" ], // Teste devem ter asserts
         "sonar/chai-determinate-assertion": [ "error" ], // Previne teste chai que pode dar mais de um caso de assert
         "sonar/disabled-timeout": [ "error" ], // Não permite desligar timeout de mocha
+        "no-empty-static-block": [ "error" ], // Não faça static{ } vazio
+        "no-fallthrough": [ "error" ], // Se misturar 2 cases no switch coloque comentário // falls through
     },
 };

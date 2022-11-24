@@ -40,6 +40,7 @@
 - [EOL last Rule](#eol-last-rule)
 - [Max Line Len Rule](#max-line-len-rule)
 - [Camel Case Rule](#camel-case-rule)
+- [Strict](#strict)
 - [Padded Block Rule](#padded-block-rule)
 - [Lines Between Class Members](#lines-between-class-members)
 - [No Multi Assign Rule](#no-multi-assign-rule)
@@ -60,10 +61,12 @@
 - [Unused Vars](#unused-vars)
 - [Comma Spacing](#comma-spacing)
 - [Comma Dangle](#comma-dangle)
+- [Arrow Spacing](#arrow-spacing)
 - [Prefer Arrow Function](#prefer-arrow-function)
 - [Prefer Destructuring](#prefer-destructuring)
 - [Arrow Function Body](#arrow-function-body)
 - [Arrow Function Parentheses](#arrow-function-parentheses)
+- [Arrow Function No Break Line](#arrow-function-no-break-line)
 - [No Empty Block](#no-empty-block)
 - [No Long Syntax](#no-long-syntax)
 - [Useless Call Code](#useless-call-code)
@@ -195,6 +198,15 @@
 - [Comma Style](#comma-style)
 - [Object BreakLine](#object-break-line)
 - [No Shadow](#no-shadow)
+- [Parentheses New Line](#parentheses-new-line)
+- [No Func Call Spacing](#no-func-call-spacing)
+- [Array Element New Line](#array-element-new-line)
+- [Wrap Iife](#wrap-iife)
+- [Disallow Template Tag Space](#disallow-template-tag-space)
+- [No Space Spread](#no-space-spread)
+- [Inline IF](#inline-if)
+- [New Instance Use Parentheses](#new-instance-use-parentheses)
+- [Logical Assignment Operators](#logical-assignment-operators)
 - [Promise Rules](#promise-rules)
   - [No New Statics](#no-new-statics)
   - [No Return Wrap](#no-return-wrap)
@@ -310,6 +322,7 @@
   - [Protect XSS Render](#protect-xss-render)
   - [Force Integrity](#force-integrity)
   - [DNS prefetching](#dns-prefetching)
+  - [No Prototype Builtins](#no-prototype-builtins)
 - [Catch Error Name](#catch-error-name)
 - [Consistent Destructured](#consistent-destructured)
 - [Consistent Function Scope](#consistent-function-scope)
@@ -351,6 +364,7 @@
 - [Prefer String Trim Start End](#prefer-string-trim-start-end)
 - [Prefer Switch](#prefer-switch)
 - [Prefer Ternary](#prefer-ternary)
+- [Multiline Ternary Multiple](#multiline-ternary-multiple)
 - [Prevent Abbreviations](#prevent-abbreviations)
 - [Consistent Relative URL](#consistent-relative-url)
 - [Require Array Join Separator](#require-array-join-separator)
@@ -377,6 +391,10 @@
   - [No Import Resolve](#no-import-resolve)
   - [Import Not Found](#import-not-found)
   - [JS Type](#js-type)
+  - [No Invalid This](#no-invalid-this)
+  - [No This Before Super](#no-this-before-super)
+  - [No Obj Calls](#no-obj-calls)
+  - [No Empty Pattern](#no-empty-pattern)
 - [Possible Errors](#possible-errors)
   - [For Direction](#for-direction)
   - [No Extra Bind](#no-extra-bind)
@@ -391,6 +409,9 @@
   - [Assertions In Tests](#assertions-in-tests)
   - [Test Multiple Possible Assert](#test-multiple-possible-assert)
   - [No Disable Timeout](#no-disable-timeout)
+  - [No Empty Static Block](#no-empty-static-block)
+  - [No Fallthrough](#no-fallthrough)
+- [YAML / JSON](#yaml-json)
 
 ## Introduction
 
@@ -480,7 +501,10 @@ class Foo {
 
 Requires the use of double quotes wherever possible
 
-<https://eslint.org/docs/rules/quotes#quotes>
+Enforces the use of double quotes for all JSX attribute values that don’t contain a double quote.
+
+<https://eslint.org/docs/rules/quotes>
+<https://eslint.org/docs/rules/jsx-quotes>
 
 👍 Examples of correct code
 
@@ -504,9 +528,11 @@ var backtick = `back\ntick`; // you can use \n in single or double quoted string
 ----------
 
 Requires indent with 4 spaces
+Tabs Disallow
 
 <https://eslint.org/docs/rules/indent#indent>
 <https://sonarsource.github.io/rspec/#/rspec/S3973/javascript>
+<https://eslint.org/docs/latest/rules/no-tabs>
 
 👍 Examples of correct code
 
@@ -627,6 +653,31 @@ var my_favorite_color = "#112C85";
 
 function do_something() {
     // ...
+}
+```
+
+## Strict
+
+----------
+
+A strict mode directive is a "use strict" literal at the beginning of a script or function body.
+It enables strict mode semantics.
+
+<https://eslint.org/docs/latest/rules/strict>
+
+👍 Examples of correct code
+
+```typescript
+"use strict";
+
+function foo() {
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function foo() {
 }
 ```
 
@@ -993,6 +1044,7 @@ var c = object[ "foo"];
 Enforces consistent spacing before and after keywords.
 
 <https://eslint.org/docs/rules/keyword-spacing#keyword-spacing>
+<https://eslint.org/docs/rules/yield-star-spacing>
 
 👍 Examples of correct code
 
@@ -1009,6 +1061,10 @@ try {
 
 } catch(e) {
     // code ...
+}
+
+function *generator() {
+  yield *other();
 }
 ```
 
@@ -1027,6 +1083,18 @@ try{
 
 }catch(e){
     // code ...
+}
+
+function*generator() {
+  yield*other();
+}
+
+function* generator() {
+  yield* other();
+}
+
+function * generator() {
+  yield * other();
 }
 ```
 
@@ -1478,6 +1546,35 @@ function baz(
 }
 ```
 
+## Arrow Spacing
+
+----------
+
+This rule normalize style of spacing before/after an arrow function’s arrow(=>).
+
+<https://eslint.org/docs/latest/rules/arrow-spacing>
+
+👍 Examples of correct code
+
+```typescript
+() => {};
+(a) => {};
+() => {'\n'};
+```
+
+👎 Examples of incorrect code
+
+```typescript
+()=> {};
+() =>{};
+(a)=> {};
+(a) =>{};
+a =>a;
+a=> a;
+()=> {'\n'};
+() =>{'\n'};
+```
+
 ## Prefer Arrow Function
 
 ----------
@@ -1611,6 +1708,58 @@ let foo = () => {
         }
     };
 };
+```
+
+## Arrow Function No Break Line
+
+----------
+
+Enforces parentheses around arguments in all cases.
+
+<https://eslint.org/docs/rules/arrow-parens>
+
+👍 Examples of correct code
+
+```typescript
+(foo) => bar;
+
+(foo) => (bar);
+
+(foo) => bar => baz;
+
+(foo) => (
+  bar()
+);
+
+// functions with block bodies allowed with this rule using any style
+// to enforce a consistent location for this case, see the rule: `brace-style`
+(foo) => {
+  return bar();
+}
+
+(foo) =>
+{
+  return bar();
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+(foo) =>
+  bar;
+
+(foo) =>
+  (bar);
+
+(foo) =>
+  bar =>
+    baz;
+
+(foo) =>
+(
+  bar()
+);
 ```
 
 ## No Empty Block
@@ -6410,6 +6559,8 @@ Requires using either T[] instead of Array\<T\>.
 ```typescript
 const x: string[] = ['a', 'b'];
 const y: readonly string[] = ['a', 'b'];
+
+const a: Array<string | number> = ['a', 'b'];
 ```
 
 👎 Examples of incorrect code
@@ -7178,7 +7329,11 @@ const obj3 = {
 
 Enforces placing object properties on separate lines.
 
-<https://eslint.org/docs/rules/object-property-newline>
+Then any code used within the same scope would not get the global undefined,
+but rather the local version with a very different meaning.
+
+<https://eslint.org/docs/rules/no-shadow>
+<https://eslint.org/docs/rules/no-shadow-restricted-names>
 
 👍 Examples of correct code
 
@@ -7196,6 +7351,8 @@ function b(a) {
     var c = 10;
 }
 b(a);
+
+function f(a, b){}
 ```
 
 👎 Examples of incorrect code
@@ -7218,6 +7375,376 @@ b(a);
 if (true) {
     let a = 5;
 }
+
+function NaN(){}
+
+!function(Infinity){};
+
+var undefined = 5;
+
+try {} catch(eval){}
+```
+
+## Parentheses New Line
+
+----------
+
+This rule enforces consistent line breaks inside parentheses of function parameters or arguments.
+
+<https://eslint.org/docs/latest/rules/function-paren-newline>
+<https://eslint.org/docs/latest/rules/function-call-argument-newline>
+
+👍 Examples of correct code
+
+```typescript
+function foo(
+  bar,
+  baz
+) {}
+
+var foo = function(bar, baz) {};
+
+var foo = (
+  bar
+) => {};
+
+foo(
+  function() {
+    return baz;
+  }
+);
+
+foo("one", "two", "three");
+// or
+foo(
+    "one",
+    "two",
+    "three"
+);
+
+bar("one", "two", {
+    one: 1,
+    two: 2
+});
+// or
+bar(
+    "one",
+    "two",
+    { one: 1, two: 2 }
+);
+// or
+bar(
+    "one",
+    "two",
+    {
+        one: 1,
+        two: 2
+    }
+);
+
+baz("one", "two", (x) => {
+    console.log(x);
+});
+// or
+baz(
+    "one",
+    "two",
+    (x) => {
+        console.log(x);
+    }
+);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function foo(bar,
+  baz
+) {}
+
+var foo = function(bar,
+baz) {};
+
+var foo = (
+  bar) => {};
+
+foo(
+  function() {
+    return baz;
+  });
+
+foo("one", "two",
+    "three");
+//or
+foo("one",
+    "two", "three");
+
+bar("one", "two",
+    { one: 1, two: 2}
+);
+
+baz("one", "two",
+    (x) => { console.log(x); }
+);
+```
+
+## No Func Call Spacing
+
+----------
+
+Disallows space between the function name and the opening parenthesis.
+
+<https://eslint.org/docs/latest/rules/func-call-spacing>
+
+👍 Examples of correct code
+
+```typescript
+fn();
+```
+
+👎 Examples of incorrect code
+
+```typescript
+fn ();
+
+fn
+();
+```
+
+## Array Element New Line
+
+----------
+
+This rule enforces line breaks between array elements.
+
+<https://eslint.org/docs/latest/rules/array-element-newline>
+
+👍 Examples of correct code
+
+```typescript
+var a = [];
+var b = [1];
+var c = [1, 2];
+var d = [1, 2, 3];
+var e = [
+    1,
+    2
+];
+var f = [
+    1,
+    2,
+    3
+];
+var g = [
+    function foo() {
+        dosomething();
+    }, function bar() {
+        dosomething();
+    }, function baz() {
+        dosomething();
+    }
+];
+var h = [
+    function foo() {
+        dosomething();
+    },
+    function bar() {
+        dosomething();
+    },
+    function baz() {
+        dosomething();
+    }
+];
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var a = [
+    1, 2,
+    3
+];
+var b = [
+    function foo() {
+        dosomething();
+    }, function bar() {
+        dosomething();
+    },
+    function baz() {
+        dosomething();
+    }
+];
+```
+
+## Wrap Iife
+
+----------
+
+Enforces always wrapping the function expression
+
+<https://eslint.org/docs/latest/rules/wrap-iife>
+
+👍 Examples of correct code
+
+```typescript
+var x = (function () { return { y: 1 }; })(); // wrapped function expression
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var x = function () { return { y: 1 };}(); // unwrapped
+var x = (function () { return { y: 1 };}()); // wrapped call expression
+```
+
+## Disallow Template Tag Space
+
+----------
+
+Disallows spaces between a tag function and its template literal.
+
+<https://eslint.org/docs/latest/rules/template-tag-spacing>
+
+👍 Examples of correct code
+
+```typescript
+func`Hello world`;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+func `Hello world`;
+```
+
+## No Space Spread
+
+----------
+
+Enforce spacing between rest and spread operators and their expressions
+
+<https://eslint.org/docs/latest/rules/rest-spread-spacing>
+
+👍 Examples of correct code
+
+```typescript
+fn(...args)
+[...arr, 4, 5, 6]
+let [a, b, ...arr] = [1, 2, 3, 4, 5];
+function fn(...args) { console.log(args); }
+let { x, y, ...z } = { x: 1, y: 2, a: 3, b: 4 };
+let n = { x, y, ...z };
+```
+
+👎 Examples of incorrect code
+
+```typescript
+fn(... args)
+[... arr, 4, 5, 6]
+let [a, b, ... arr] = [1, 2, 3, 4, 5];
+function fn(... args) { console.log(args); }
+let { x, y, ... z } = { x: 1, y: 2, a: 3, b: 4 };
+let n = { x, y, ... z };
+```
+
+## Inline IF
+
+----------
+
+Disallows a newline before a single-line statement.
+
+<https://eslint.org/docs/latest/rules/nonblock-statement-body-position>
+
+👍 Examples of correct code
+
+```typescript
+if (foo) bar();
+else baz();
+
+while (foo) bar();
+
+for (let i = 1; i < foo; i++) bar();
+
+do bar(); while (foo)
+
+if (foo) { // block statements are always allowed with this rule
+  bar();
+} else {
+  baz();
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+if (foo)
+  bar();
+else
+  baz();
+
+while (foo)
+  bar();
+
+for (let i = 1; i < foo; i++)
+  bar();
+
+do
+  bar();
+while (foo)
+```
+
+## New Instance Use Parentheses
+
+----------
+
+This rule can enforce or disallow parentheses when invoking a constructor with no arguments using the new keyword.
+
+<https://eslint.org/docs/latest/rules/new-parens>
+
+👍 Examples of correct code
+
+```typescript
+var person = new Person();
+var person = new Person("name");
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var person = new Person;
+var person = new (Person);
+```
+
+## Logical Assignment Operators
+
+----------
+
+The shorthand can be used if the assignment target and the left expression of a logical expression are the same.
+For example `a = a || b` can be shortened to `a ||= b`.
+
+<https://eslint.org/docs/latest/rules/logical-assignment-operators>
+
+👍 Examples of correct code
+
+```typescript
+a = b
+a += b
+a ||= b
+a = b || c
+a || (b = c)
+
+if (a) a = b
+```
+
+👎 Examples of incorrect code
+
+```typescript
+a = a || b
+a = a && b
+a = a ?? b
+a || (a = b)
+a && (a = b)
+a ?? (a = b)
 ```
 
 ## Promise Rules
@@ -7836,6 +8363,7 @@ import typescript from "typescript"; // exists in dev dependency package.json
 ----------
 
 Enforce a convention in the order of require() / import statements
+Use: Alphabetic order import
 
 <https://github.com/import-js/eslint-plugin-import/blob/HEAD/docs/rules/order.md>
 
@@ -7979,9 +8507,13 @@ export {
 
 ----------
 
-Require space after comment block
+Require space after comment block.
+
+Many style guides require empty lines before or after comments.
+The primary goal of these rules is to make the comments easier to read and improve readability of the code.
 
 <https://eslint.org/docs/rules/spaced-comment>
+<https://eslint.org/docs/latest/rules/lines-around-comment>
 
 👍 Examples of correct code
 
@@ -7993,6 +8525,12 @@ Require space after comment block
 /*
  * This is a comment with a whitespace at the beginning
  */
+
+
+/**
+ * valid
+ */
+function() {}
 ```
 
 👎 Examples of incorrect code
@@ -8001,6 +8539,12 @@ Require space after comment block
 //This is a comment with no whitespace at the beginning
 
 /*This is a comment with no whitespace at the beginning */
+
+/**
+ * invalid after space
+ */
+
+function() {}
 ```
 
 ### Capitalized Comments
@@ -10489,6 +11033,39 @@ app.use(
 );
 ```
 
+### No Prototype Builtins
+
+----------
+
+Additionally, objects can have properties that shadow the builtins on Object.prototype,
+potentially causing unintended behavior or denial-of-service security vulnerabilities.
+For example, it would be unsafe for a webserver to parse JSON input from a client and call hasOwnProperty directly
+on the resulting object, because a malicious client could send a JSON value like {"hasOwnProperty": 1}
+and cause the server to crash.
+
+To avoid subtle bugs like this, it’s better to always call these methods from Object.prototype.
+For example, foo.hasOwnProperty("bar") should be replaced with Object.prototype.hasOwnProperty.call(foo, "bar").
+
+<https://eslint.org/docs/latest/rules/No-Prototype-Builtins>
+
+```typescript
+var hasBarProperty = Object.prototype.hasOwnProperty.call(foo, "bar");
+
+var isPrototypeOfBar = Object.prototype.isPrototypeOf.call(foo, bar);
+
+var barIsEnumerable = {}.propertyIsEnumerable.call(foo, "bar");
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var hasBarProperty = foo.hasOwnProperty("bar");
+
+var isPrototypeOfBar = foo.isPrototypeOf(bar);
+
+var barIsEnumerable = foo.propertyIsEnumerable("bar");
+```
+
 ## Catch Error Name
 
 ----------
@@ -11938,6 +12515,52 @@ if (test) {
 }
 ```
 
+## Multiline Ternary Multiple
+
+----------
+
+Enforces newlines between the operands of a ternary expression if the expression spans multiple lines.
+
+<https://eslint.org/docs/latest/rules/multiline-ternary>
+
+👍 Examples of correct code
+
+```tsx
+foo > bar ? value1 : value2;
+
+foo > bar ?
+    value1 :
+    value2;
+
+foo > bar ?
+    (baz > qux ? value1 : value2) :
+    value3;
+
+foo > bar ?
+    (baz > qux ?
+        value1 :
+        value2) :
+    value3;
+
+foo > bar &&
+    bar > baz ?
+        value1 :
+        value2;
+```
+
+👎 Examples of incorrect code
+
+```tsx
+foo > bar ? value1 :
+    value2;
+
+foo > bar ?
+    value1 : value2;
+
+foo > bar &&
+    bar > baz ? value1 : value2;
+```
+
 ## Prevent Abbreviations
 
 ----------
@@ -12947,6 +13570,320 @@ const isTooSmall = Math.abs(x) < 0.0042;
 const isTooSmall = Math.abs(x < 0.0042); // Type require number no boolean
 ```
 
+### No Invalid This
+
+----------
+
+Under the strict mode, this keywords outside of classes or class-like objects might be undefined and raise a TypeError.
+
+<https://eslint.org/docs/latest/rules/no-invalid-this#rule-details>
+<https://typescript-eslint.io/rules/no-invalid-this>
+
+👍 Examples of correct code
+
+```typescript
+"use strict";
+
+this.a = 0;
+baz(() => this);
+
+function Foo() {
+    // OK, this is in a legacy style constructor.
+    this.a = 0;
+    baz(() => this);
+}
+
+class Foo {
+    constructor() {
+        // OK, this is in a constructor.
+        this.a = 0;
+        baz(() => this);
+    }
+}
+
+var obj = {
+    foo: function foo() {
+        // OK, this is in a method (this function is on object literal).
+        this.a = 0;
+    }
+};
+
+var obj = {
+    foo() {
+        // OK, this is in a method (this function is on object literal).
+        this.a = 0;
+    }
+};
+
+var obj = {
+    get foo() {
+        // OK, this is in a method (this function is on object literal).
+        return this.a;
+    }
+};
+
+var obj = Object.create(null, {
+    foo: {value: function foo() {
+        // OK, this is in a method (this function is on object literal).
+        this.a = 0;
+    }}
+});
+
+Object.defineProperty(obj, "foo", {
+    value: function foo() {
+        // OK, this is in a method (this function is on object literal).
+        this.a = 0;
+    }
+});
+
+Object.defineProperties(obj, {
+    foo: {value: function foo() {
+        // OK, this is in a method (this function is on object literal).
+        this.a = 0;
+    }}
+});
+
+function Foo() {
+    this.foo = function foo() {
+        // OK, this is in a method (this function assigns to a property).
+        this.a = 0;
+        baz(() => this);
+    };
+}
+
+obj.foo = function foo() {
+    // OK, this is in a method (this function assigns to a property).
+    this.a = 0;
+};
+
+Foo.prototype.foo = function foo() {
+    // OK, this is in a method (this function assigns to a property).
+    this.a = 0;
+};
+
+class Foo {
+
+    // OK, this is in a class field initializer.
+    a = this.b;
+
+    // OK, static initializers also have valid this.
+    static a = this.b;
+
+    foo() {
+        // OK, this is in a method.
+        this.a = 0;
+        baz(() => this);
+    }
+
+    static foo() {
+        // OK, this is in a method (static methods also have valid this).
+        this.a = 0;
+        baz(() => this);
+    }
+
+    static {
+        // OK, static blocks also have valid this.
+        this.a = 0;
+        baz(() => this);
+    }
+}
+
+var foo = (function foo() {
+    // OK, the `bind` method of this function is called directly.
+    this.a = 0;
+}).bind(obj);
+
+foo.forEach(function() {
+    // OK, `thisArg` of `.forEach()` is given.
+    this.a = 0;
+    baz(() => this);
+}, thisArg);
+
+/** @this Foo */
+function foo() {
+    // OK, this function has a `@this` tag in its JSDoc comment.
+    this.a = 0;
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+"use strict";
+
+(function() {
+    this.a = 0;
+    baz(() => this);
+})();
+
+function foo() {
+    this.a = 0;
+    baz(() => this);
+}
+
+var foo = function() {
+    this.a = 0;
+    baz(() => this);
+};
+
+foo(function() {
+    this.a = 0;
+    baz(() => this);
+});
+
+var obj = {
+    aaa: function() {
+        return function foo() {
+            // There is in a method `aaa`, but `foo` is not a method.
+            this.a = 0;
+            baz(() => this);
+        };
+    }
+};
+
+foo.forEach(function() {
+    this.a = 0;
+    baz(() => this);
+});
+```
+
+### No This Before Super
+
+----------
+
+In the constructor of derived classes, if this/super are used before super() calls, it raises a reference error.
+
+<https://eslint.org/docs/latest/rules/no-this-before-super>
+
+👍 Examples of correct code
+
+```typescript
+class A {
+    constructor() {
+        this.a = 0; // OK, this class doesn't have an `extends` clause.
+    }
+}
+
+class A extends B {
+    constructor() {
+        super();
+        this.a = 0; // OK, this is after `super()`.
+    }
+}
+
+class A extends B {
+    foo() {
+        this.a = 0; // OK. this is not in a constructor.
+    }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+class A extends B {
+    constructor() {
+        this.a = 0;
+        super();
+    }
+}
+
+class A extends B {
+    constructor() {
+        this.foo();
+        super();
+    }
+}
+
+class A extends B {
+    constructor() {
+        super.foo();
+        super();
+    }
+}
+
+class A extends B {
+    constructor() {
+        super(this.foo());
+    }
+}
+```
+
+### No Obj Calls
+
+----------
+
+Disallow calling global object properties as functions
+
+<https://eslint.org/docs/latest/rules/no-obj-calls>
+
+👍 Examples of correct code
+
+```typescript
+function area(r) {
+    return Math.PI * r * r;
+}
+
+var object = JSON.parse("{}");
+
+var value = Reflect.get({ x: 1, y: 2 }, "x");
+
+var first = Atomics.load(foo, 0);
+
+var segmenterFr = new Intl.Segmenter("fr", { granularity: "word" });
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var math = Math();
+
+var newMath = new Math();
+
+var json = JSON();
+
+var newJSON = new JSON();
+
+var reflect = Reflect();
+
+var newReflect = new Reflect();
+
+var atomics = Atomics();
+
+var newAtomics = new Atomics();
+
+var intl = Intl();
+
+var newIntl = new Intl();
+```
+
+### No Empty Pattern
+
+----------
+
+Disallow empty destructuring patterns
+
+<https://eslint.org/docs/latest/rules/no-empty-pattern>
+
+👍 Examples of correct code
+
+```typescript
+
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var {} = foo;
+var [] = foo;
+var {a: {}} = foo;
+var {a: []} = foo;
+function foo({}) {}
+function foo([]) {}
+function foo({a: {}}) {}
+function foo({a: []}) {}
+```
+
 ## Possible Errors
 
 ### For Direction
@@ -13523,3 +14460,122 @@ describe("testing this.timeout", function() {
   });
 });
 ```
+
+### No Empty Static Block
+
+----------
+
+Empty static blocks, while not technically errors, usually occur due to refactoring that wasn’t completed.
+They can cause confusion when reading code.
+
+<https://eslint.org/docs/latest/rules/no-empty-static-block>
+
+👍 Examples of correct code
+
+```typescript
+class Foo {
+    static {
+        bar();
+    }
+}
+
+class Foo {
+    static {
+        // comment
+    }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+class Foo {
+    static {}
+}
+```
+
+### No Fallthrough
+
+----------
+
+The switch statement in JavaScript is one of the more error-prone constructs of the language
+thanks in part to the ability to “fall through” from one case to the next. For example:
+
+Use `// falls through` comments to run multiple cases
+
+<https://eslint.org/docs/latest/rules/no-fallthrough>
+
+👍 Examples of correct code
+
+```typescript
+switch(foo) {
+    case 1:
+        doSomething();
+        break;
+
+    case 2:
+        doSomething();
+}
+
+function bar(foo) {
+    switch(foo) {
+        case 1:
+            doSomething();
+            return;
+
+        case 2:
+            doSomething();
+    }
+}
+
+switch(foo) {
+    case 1:
+        doSomething();
+        throw new Error("Boo!");
+
+    case 2:
+        doSomething();
+}
+
+switch(foo) {
+    case 1:
+    case 2:
+        doSomething();
+}
+
+switch(foo) {
+    case 1:
+        doSomething();
+        // falls through
+
+    case 2:
+        doSomething();
+}
+
+switch(foo) {
+    case 1: {
+        doSomething();
+        // falls through
+    }
+
+    case 2: {
+        doSomethingElse();
+    }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+switch(foo) {
+    case 1:
+        doSomething();
+
+    case 2:
+        doSomething();
+}
+```
+
+## Yaml Json
+
+add suport yaml and json files

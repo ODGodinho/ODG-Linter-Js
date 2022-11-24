@@ -2,6 +2,7 @@ const indentSize = 4;
 
 module.exports = {
     rules: {
+        "strict": [ "off" ], // Strict javascript disable
         "indent": [ "off" ], // 4 spaces
         "@typescript-eslint/indent": [ "error", indentSize ], // Força indent com 4 espaços
         "quotes": [ "off" ], // Aspas duplas
@@ -10,6 +11,7 @@ module.exports = {
         "@typescript-eslint/lines-between-class-members": [
             "error",
             "always",
+            { "exceptAfterOverload": false },
         ], // Força linha em branco entre props classe e funções
         "@typescript-eslint/explicit-member-accessibility": [ "error" ], // Força visibility para props
         "space-before-function-paren": [ "off" ], // Não permite espaço antes dos parenteses
@@ -52,9 +54,7 @@ module.exports = {
         "no-throw-literal": [ "off" ], // Não permite throw "string" ou diferente de classe
         "@typescript-eslint/no-throw-literal": [ "error" ], // Não permite throw "string" ou diferente de classe
         "@typescript-eslint/no-unsafe-assignment": [ "error" ], // Não permite atribuição de tipos inválidos
-        "no-invalid-this": [ "off" ], // Desliga invalid this Js
-        "@typescript-eslint/no-invalid-this": [ "error" ], // Não permite this inválido
-        "dot-location": [ "off" ], // Object.property ponto junto com a property
+        "dot-notation": [ "off" ], // Força usar ponto em objeto JS
         "@typescript-eslint/dot-notation": [ "error" ], // Força usar ponto em objeto
         "@typescript-eslint/type-annotation-spacing": [ "error" ], // Não colocar junto : tipagem
         "no-extra-parens": [ "off" ], // Não permite parênteses extra
@@ -76,7 +76,11 @@ module.exports = {
             "error",
         ], // Não permite restrições de tipo desnecessárias <T extends any>
         "@typescript-eslint/prefer-as-const": [ "error" ], // Preferir constantes
-        "@typescript-eslint/array-type": [ "error" ], // Não permite tipos de array incorretos
+        "@typescript-eslint/array-type": [ "error", {
+            default: "array-simple",
+            readonly: "array-simple",
+        } ], // Não permite tipos de array incorretos
+        "jsdoc/require-returns-check": [ "off" ],
         "@typescript-eslint/await-thenable": [ "error" ], // Não permite await em não promises
         "@typescript-eslint/method-signature-style": [
             "error",
@@ -102,6 +106,26 @@ module.exports = {
         "unicorn/prefer-module": [ "error" ], // Prefira module js
         "sonar/array-callback-without-return": [ "off" ], // Não use new Array
         "no-constructor-bind/no-constructor-bind": [ "error" ], // Não use bind no construtor para própria classe
-    	"no-constructor-bind/no-constructor-state": [ "error" ],
+        "no-constructor-bind/no-constructor-state": [ "error" ],
+        "func-call-spacing": [ "off" ], // Não use espaço antes dos parens função
+        "@typescript-eslint/func-call-spacing": [ "error", "never" ], // Não use espaço antes dos parens função
+        "object-curly-spacing": [ "off" ], // Espaço declarar objeto
+        "@typescript-eslint/object-curly-spacing": [ "error", "always", { "arraysInObjects": true } ],
+        "yield-star-spacing": [ "error", "before" ], // Espaço a esquerda yield
+        "switch-colon-spacing": [ "error", { "after": true, "before": false } ], // Não coloque espaço antes do : case
+        "semi": [ "off" ], // Use ponto e virgula ts
+        "@typescript-eslint/semi": [ "error", "always" ], // Use ponto e virgula ts
+        "padding-line-between-statements": [ "off" ],
+        "@typescript-eslint/padding-line-between-statements": [
+            "error",
+            { "blankLine": "always", "prev": "*", "next": "export" }, // Uma linha em branco antes do export
+            { "blankLine": "always", "prev": "export", "next": "*" }, // Uma linha em branco apos o export
+            { "blankLine": "always", "prev": "*", "next": "class" }, // Uma linha em branco antes da classe
+            { "blankLine": "always", "prev": "class", "next": "*" }, // Uma linha em branco apos a classe
+            { "blankLine": "always", "prev": "*", "next": "interface" }, // Uma linha em branco antes da interface
+            { "blankLine": "always", "prev": "interface", "next": "*" }, // Uma linha em branco apos a interface
+            { "blankLine": "always", "prev": "*", "next": "type" }, // Uma linha em branco antes do type
+            { "blankLine": "always", "prev": "type", "next": "*" }, // Uma linha em branco apos o type
+        ],
     },
 };

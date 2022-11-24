@@ -30,5 +30,6 @@ module.exports = {
         "sonar/disabled-auto-escaping": [ "error" ], // Renderizar arquivos q podem conter XSS como readme
         "sonar/disabled-resource-integrity": [ "error" ], // Use integridade para scripts
         "sonar/dns-prefetching": [ "error" ], // DNS rules
+        "no-prototype-builtins": [ "error" ], // Object.prototype.hasOwnProperty.call no lugar obj.hasOwnProperty
     },
 };

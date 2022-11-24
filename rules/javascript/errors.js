@@ -46,5 +46,9 @@ module.exports = {
         "sonar/argument-type": [ "error" ], // Caso a tipagem no arquivo Js não bate
         "sonar/anchor-precedence": [ "error" ], // Valida melhora de regex
         "sonar/different-types-comparison": [ "error" ], // Não compare tipos diferentes
+        "no-invalid-this": [ "error" ], // Desliga invalid this Js
+        "no-this-before-super": [ "error" ], // Não faça this antes super
+        "no-obj-calls": [ "error" ], // Não execute objetos
+        "no-empty-pattern": [ "error" ], // Desestruturar vazio
     },
 };

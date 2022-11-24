@@ -34,8 +34,7 @@ module.exports = {
         } ],
         "no-useless-constructor": [ "error" ], // Não permite construtores desnecessários
         "no-throw-literal": [ "error" ], // Não permite throw "string" ou diferente de classe
-        "no-invalid-this": [ "error" ], // Desliga invalid this Js
-        "dot-location": [ "error" ], // Object.property ponto junto com a property
+        "dot-location": [ "error", "property" ], // Object.property ponto junto com a property
         "no-extra-parens": [ "error" ], // Não permite parênteses extra
         "no-extra-semi": [ "error" ], // Não permite ;, duplicadas ou desnecessárias
         "no-empty-function": [ "error" ], // Não permite funções vazias
@@ -95,7 +94,7 @@ module.exports = {
         "no-multi-str": [ "error" ], // Não quebre linha dentro de uma string
         "consistent-this": [ "error", "that" ], // Não permite this em locais inconsistente.
         "no-irregular-whitespace": [ "error" ], // Não permite espaços entre palavras
-        "dot-notation": "off",
+        "dot-notation": [ "error" ], // Força usar dot em objeto em vez de object["key"]
         "no-whitespace-before-property": [ "error" ], // Não permite espaço antes de property
         "no-trailing-spaces": [ "error" ], // Não permite espaço apos ou antes do ponto
         "no-extra-boolean-cast": [
@@ -178,12 +177,25 @@ module.exports = {
         "regexp/no-invisible-character": [ "error" ], // Evita colocar tab espaço em regex
         "regexp/no-legacy-features": [ "error", {
             staticProperties: [
-                "input", "$_",
-                "lastMatch", "$&",
-                "lastParen", "$+",
-                "leftContext", "$`",
-                "rightContext", "$'",
-                "$1", "$2", "$3", "$4", "$5", "$6", "$7", "$8", "$9",
+                "input",
+                "$_",
+                "lastMatch",
+                "$&",
+                "lastParen",
+                "$+",
+                "leftContext",
+                "$`",
+                "rightContext",
+                "$'",
+                "$1",
+                "$2",
+                "$3",
+                "$4",
+                "$5",
+                "$6",
+                "$7",
+                "$8",
+                "$9",
             ],
             prototypeMethods: [ "compile" ],
         } ],
@@ -287,7 +299,12 @@ module.exports = {
         "unicorn/prefer-string-trim-start-end": [ "error" ], // Prefira trim Start/End invés de Left/Right
         "unicorn/prefer-switch": [ "error" ], // Prefira switch
         "unicorn/prefer-ternary": [ "error" ], // Prefira ternário em vez de if else
-        "unicorn/prevent-abbreviations": [ "error" ], // Prefira ternário em vez de if else
+        "unicorn/prevent-abbreviations": [ "error", {
+            "ignore": [
+                "\\.env$",
+                ".env.*",
+            ],
+        } ], // Prefira ternário em vez de if else
         "unicorn/relative-url-style": [ "error" ], // Não coloque ./ em new URL
         "unicorn/require-array-join-separator": [ "error" ], // Sempre passe parâmetro Array#join
         "unicorn/require-number-to-fixed-digits-argument": [ "error" ], // Passe quantidade em ToFixed
@@ -379,6 +396,10 @@ module.exports = {
         "import/order": [
             "error",
             {
+                "alphabetize": {
+                    "caseInsensitive": true,
+                    "order": "asc",
+                },
                 "groups": [
                     "builtin",
                     "external",
@@ -425,6 +446,32 @@ module.exports = {
         "sonar/comma-or-logical-or-case": [ "error" ], // Switch Case logica invalida
         "sonar/conditional-indentation": [ "error" ], // Formatação IF
         "sonar/deprecation": [ "warn" ], // Alerta em funções depreciadas
-        "object-curly-spacing": [ "error", "always", { "arraysInObjects": true } ],
+        "object-curly-spacing": [ "error", "always", { "arraysInObjects": true } ], // Espaço declarar objeto
+        "function-paren-newline": [ "error", "multiline-arguments" ], // Força formatação parentese quebre todos params
+        "function-call-argument-newline": [ "error", "consistent" ], // Força formatação parentese quebre todos params
+        "func-call-spacing": [ "error", "never" ],
+        "array-element-newline": [ "error", {
+            "ArrayExpression": "consistent",
+            "ArrayPattern": { "minItems": 3 },
+        } ],
+        "wrap-iife": [ "error", "inside" ], // Coloque parentese em função auto excetuável
+        "template-tag-spacing": [ "error", "never" ], // Sem espaço em template " sql`` "
+        "template-curly-spacing": [ "error" ], // Não coloque espaço em template string
+        "rest-spread-spacing": [ "error", "never" ], // Não faça fun(... space)
+        "nonblock-statement-body-position": [ "error", "beside" ], // If sem chaves deve ser inline
+        "no-tabs": [ "error" ], // Não use tabs
+        "new-parens": [ "error" ], // New Sempre precisa ter parenteses
+        "multiline-ternary": [ "error", "always-multiline" ], // Força múltiplas linhas em ternários múltiplos
+        "lines-around-comment": [
+            "error",
+            { "beforeLineComment": true, "allowBlockStart": true },
+        ], // Linha em branco antes do comentário
+        "jsx-quotes": [ "error", "prefer-double" ], // Aspas duplas em jsx html
+        "implicit-arrow-linebreak": [ "error", "beside" ], // Não quebre arrow function
+        "arrow-spacing": [ "error", { "before": true, "after": true } ], // Espaço seta arrow function
+        "vars-on-top": [ "error" ], // Caso a regra de var seja desativa elas devem ficar no topo
+        "strict": [ "error" ], // Strict javascript top file
+        "no-shadow-restricted-names": [ "error" ], // Sem variável com palavra reservada
+        "logical-assignment-operators": [ "error", "always" ], // Faça ||= ao invés a = a || b
     },
 };
