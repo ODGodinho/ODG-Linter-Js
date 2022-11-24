@@ -49,7 +49,6 @@ module.exports = {
             enforceForJSX: true,
             allowShortCircuit: true,
         } ],
-        "no-useless-constructor": [ "off" ], // Não permite construtores desnecessários
         "@typescript-eslint/no-useless-constructor": [ "error" ], // Não permite construtores desnecessários
         "no-throw-literal": [ "off" ], // Não permite throw "string" ou diferente de classe
         "@typescript-eslint/no-throw-literal": [ "error" ], // Não permite throw "string" ou diferente de classe
