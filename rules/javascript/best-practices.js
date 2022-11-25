@@ -129,7 +129,10 @@ module.exports = {
         "no-new-require": [ "error" ], // Não permite usar new require()
         "no-new-object": [ "error" ], // Não permite usar new Object
         "prefer-template": [ "error" ], // Prefer template literals over string concatenation
-        "no-multiple-empty-lines": [ "error", { "max": 1 } ], // Não permita varias linhas em branco
+        "no-multiple-empty-lines": [
+            "error",
+            { "max": 1, "maxEOF": 0, "maxBOF": 0 },
+        ], // Não permita varias linhas em branco
         "no-async-promise-executor": [ "error" ], // Não permita use função async para executar promise
         "prefer-promise-reject-errors": [ "error" ], // Passe uma Exception em promise ao invés de string/number
         "semi-spacing": [ "error", { before: false, after: true } ], // Não permite espaço antes do ;
