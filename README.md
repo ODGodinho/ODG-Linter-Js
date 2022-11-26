@@ -207,6 +207,7 @@
 - [Inline IF](#inline-if)
 - [New Instance Use Parentheses](#new-instance-use-parentheses)
 - [Logical Assignment Operators](#logical-assignment-operators)
+- [No With](#no-with)
 - [Promise Rules](#promise-rules)
   - [No New Statics](#no-new-statics)
   - [No Return Wrap](#no-return-wrap)
@@ -7745,6 +7746,29 @@ a = a ?? b
 a || (a = b)
 a && (a = b)
 a ?? (a = b)
+```
+
+## No With
+
+----------
+
+The with statement is potentially problematic because it adds members of an object to the current scope,
+making it impossible to tell what a variable inside the block actually refers to.
+
+<https://eslint.org/docs/rules/no-with>
+
+👍 Examples of correct code
+
+```typescript
+const r = ({x, y}) => Math.sqrt(x * x + y * y);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+with (point) {
+    r = Math.sqrt(x * x + y * y); // is r a member of point?
+}
 ```
 
 ## Promise Rules

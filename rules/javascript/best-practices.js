@@ -306,6 +306,9 @@ module.exports = {
             "ignore": [
                 "\\.env$",
                 ".env.*",
+                "^Arr$",
+                "^Num$",
+                "^Str$",
             ],
         } ], // Prefira ternário em vez de if else
         "unicorn/relative-url-style": [ "error" ], // Não coloque ./ em new URL
@@ -476,5 +479,6 @@ module.exports = {
         "strict": [ "error" ], // Strict javascript top file
         "no-shadow-restricted-names": [ "error" ], // Sem variável com palavra reservada
         "logical-assignment-operators": [ "error", "always" ], // Faça ||= ao invés a = a || b
+        "no-with": [ "error" ], // Não use with
     },
 };
