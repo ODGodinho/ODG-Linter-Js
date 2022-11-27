@@ -14,6 +14,7 @@ module.exports = {
             "vars": "all",
             "args": "after-used",
             "caughtErrors": "all",
+            "ignoreRestSiblings": true,
             "varsIgnorePattern": "^_",
             "argsIgnorePattern": "^_",
         } ],
@@ -27,12 +28,6 @@ module.exports = {
             functions: "always-multiline",
         } ], // Virgula no final de tudo
         "no-array-constructor": [ "error" ], // Não permite usar new Array()
-        "no-unused-expressions": [ "error", {
-            allowTernary: true,
-            allowShortCircuit: true,
-            enforceForJSX: true,
-        } ],
-        "no-useless-constructor": [ "error" ], // Não permite construtores desnecessários
         "no-throw-literal": [ "error" ], // Não permite throw "string" ou diferente de classe
         "dot-location": [ "error", "property" ], // Object.property ponto junto com a property
         "no-extra-parens": [ "error" ], // Não permite parênteses extra
@@ -79,15 +74,12 @@ module.exports = {
         "space-in-parens": [ "error", "never" ], // Não permite espaço entre parenteses
         "no-multi-spaces": [ "error" ], // Nao permite vários espaços if(  i  )
         "computed-property-spacing": [ "error", "never" ], // Desliga espaço ao recuperar item $a[ 'I' ] ou $a[ ] = 12;
-        "no-useless-concat": [ "error" ], // Desabilita concatenação de strings desnecessárias ex: "a" + "b"
         "no-self-assign": [ "error" ], // Nao se atribua seu próprio valor a variável
         "array-bracket-newline": [ "error", "consistent" ], // Quebra linha Array
         "prefer-arrow-callback": [ "error" ], // Força arrow function
         "arrow-body-style": [ "error", "as-needed" ], // Força arrow function sem body
         "no-empty": [ "error" ], // Não permite blocos vazios (if, while, for, function, etc)
-        "no-useless-call": [ "error" ], // Não permite chamadas desnecessárias.call
-        "no-useless-catch": [ "error" ], // Não permite catch desnecessários
-        "no-useless-return": [ "error" ], // Não permite retornos desnecessários
+
         "newline-before-return": [ "error" ], // Força retorno de função com \n antes
         "multiline-comment-style": [ "error", "starred-block" ], // Força /* comentário */ ao invés de // varias vezes
         "no-unreachable": [ "error" ], // Não permite unreachable code
@@ -123,7 +115,6 @@ module.exports = {
         "no-redeclare": [ "error" ], // Não permite redeclarar variáveis
         "no-self-compare": [ "error" ], // Não permite comparar com seu próprio valor
         "no-unmodified-loop-condition": [ "error" ], // Loop sem modificar o valor do contador ou check único
-        "no-useless-escape": [ "error" ], // Não permite usar escape desnecessárias
         "yoda": [ "error" ], // Força if Variável === "COMPARATION"
         "no-undef-init": [ "error" ], // Não permite variáveis definidas como undefined ao inicializar
         "no-new-require": [ "error" ], // Não permite usar new require()
@@ -153,7 +144,6 @@ module.exports = {
         "array-callback-return": [ "error" ], // Força returno em array callback
         "space-infix-ops": [ "error" ], // Espaço em operadores
         "curly": [ "off" ], // Utilize chaves em multi linhas
-        "no-useless-rename": [ "error" ], // Disable Rename desnecessários
         "handle-callback-err": [ "error" ], // Funções que recebem error deve ser tratado
         "n/handle-callback-err": [
             "error",
@@ -169,7 +159,13 @@ module.exports = {
         "block-scoped-var": [ "error" ], // INFO: Bloqueia Vars for escopo, mas ainda sim prefira Lets
         "brace-style": [ "error" ], // Força formatação {}
         "comma-style": [ "error", "last" ], // Separa variável por virgula alinhando a direita
-        "key-spacing": [ "error" ], // Espaçamento propriedade objects
+        "key-spacing": [
+            "error",
+            {
+                beforeColon: false,
+                afterColon: true,
+            },
+        ], // Espaçamento propriedade objects
         "object-property-newline": [ "error", {
             allowAllPropertiesOnSameLine: true,
         } ], // Quebre todos objetos ou nenhum
@@ -240,6 +236,7 @@ module.exports = {
             { "blankLine": "always", "prev": "export", "next": "*" }, // Uma linha em branco apos do export
             { "blankLine": "always", "prev": "*", "next": "class" }, // Uma linha em branco antes da classe
             { "blankLine": "always", "prev": "class", "next": "*" }, // Uma linha em branco Apos da classe
+            { "blankLine": "always", "prev": "multiline-block-like", "next": "*" },
         ],
         "filenames/match-regex": [
             "error",
@@ -315,17 +312,20 @@ module.exports = {
         "unicorn/require-array-join-separator": [ "error" ], // Sempre passe parâmetro Array#join
         "unicorn/require-number-to-fixed-digits-argument": [ "error" ], // Passe quantidade em ToFixed
         "unicorn/template-indent": [ "error" ], // Indenter em template string
+        "unicorn/no-nested-ternary": [ "error" ], // Ternário ilegível
         "no-shadow": [ "error" ], // Erro caso ja esteja declarado escopo a cima
         "no-delete-var": [ "error" ], // Não delete variáveis
         "no-lone-blocks": [ "error" ], // Não crie bloco desnecessários
         "no-proto": [ "error" ], // Não use __proto__ depreciada desde ECMA 3.1
-        "id-length": [ "error", { "min": 3 } ], // Tamanho mínimo das variáveis
+        "id-length": [ "error", {
+            "min": 3,
+            "exceptions": [ "i", "fs", "os", "id", "ip" ],
+        } ], // Tamanho mínimo das variáveis
         "max-depth": [ "error", { "max": 3 } ], // Tamanho máximo do Hadouken
-        "max-params": [ "error", { "max": 3 } ], // Máximo de parâmetros
+        "max-params": [ "error", { "max": 4 } ], // Máximo de parâmetros
         "max-statements": [ "error" ], // Máximo atribuição em função
         "operator-assignment": [ "error", "always" ], // Prefira atribuição curtas +=
         "prefer-rest-params": [ "error" ], // Prefira ..args em vez de arguments
-        "no-useless-computed-key": [ "error" ], // Chave de objeto computada de forma desnecessária
         "symbol-description": [ "error" ], // Symbol deve ter descrição
         "no-return-await": [ "error" ], // Não coloque await no return
         "max-classes-per-file": [ "error", 1 ], // Apenas 1 classe por arquivo
@@ -456,10 +456,7 @@ module.exports = {
         "function-paren-newline": [ "error", "multiline-arguments" ], // Força formatação parentese quebre todos params
         "function-call-argument-newline": [ "error", "consistent" ], // Força formatação parentese quebre todos params
         "func-call-spacing": [ "error", "never" ],
-        "array-element-newline": [ "error", {
-            "ArrayExpression": "consistent",
-            "ArrayPattern": { "minItems": 3 },
-        } ],
+        "array-element-newline": [ "error", "consistent" ],
         "wrap-iife": [ "error", "inside" ], // Coloque parentese em função auto excetuável
         "template-tag-spacing": [ "error", "never" ], // Sem espaço em template " sql`` "
         "template-curly-spacing": [ "error" ], // Não coloque espaço em template string
@@ -480,5 +477,45 @@ module.exports = {
         "no-shadow-restricted-names": [ "error" ], // Sem variável com palavra reservada
         "logical-assignment-operators": [ "error", "always" ], // Faça ||= ao invés a = a || b
         "no-with": [ "error" ], // Não use with
+        "semi-style": [ "error", "last" ], // Local do ponto e virgula
+        "object-curly-newline": [
+            "error",
+            {
+                "ExportDeclaration": {
+                    "consistent": true,
+                    "minProperties": 4,
+                    "multiline": true,
+                },
+                "ImportDeclaration": {
+                    "consistent": true,
+                    "minProperties": 4,
+                    "multiline": true,
+                },
+                "ObjectExpression": {
+                    "consistent": true,
+                    "minProperties": 4,
+                    "multiline": true,
+                },
+                "ObjectPattern": {
+                    "consistent": true,
+                    "minProperties": 4,
+                    "multiline": true,
+                },
+            },
+        ],
+        "no-negated-condition": [ "error" ], // Local do ponto e virgula
+        "no-mixed-spaces-and-tabs": [ "error" ],
+        "func-name-matching": [
+            "error",
+            {
+                considerPropertyDescriptor: true,
+            },
+        ],
+        "no-new-wrappers": [ "error" ],
+        "no-misleading-character-class": [ "error" ],
+        "grouped-accessor-pairs": [
+            "error",
+            "getBeforeSet",
+        ],
     },
 };

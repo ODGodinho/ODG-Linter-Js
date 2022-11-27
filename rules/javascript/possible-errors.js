@@ -22,5 +22,30 @@ module.exports = {
         "sonar/disabled-timeout": [ "error" ], // Não permite desligar timeout de mocha
         "no-empty-static-block": [ "error" ], // Não faça static{ } vazio
         "no-fallthrough": [ "error" ], // Se misturar 2 cases no switch coloque comentário // falls through
+        "no-useless-concat": [ "error" ], // Desabilita concatenação de strings desnecessárias ex: "a" + "b"
+        "no-octal-escape": [ "error" ], // Não use 071
+        "no-octal": [ "error" ], // Use \ em unicode e hexadecimal
+        "no-case-declarations": [ "error" ], // Use chaves em caso de declaração em switch case
+        "no-restricted-syntax": [
+            "error",
+            {
+                selector: "ImportDeclaration[specifiers.length = 0]",
+                message: "Empty imports are not allowed",
+            }, // Bloqueia imports vazios
+        ], // Bloqueio de syntax informadas
+        "regex/invalid": [
+            "error",
+            [
+                {
+                    "id": "EmptyImport",
+                    "message": "errorMessageN",
+                    "regex": "import(.*{\\s*}.*)from.*\\n",
+                    "replacement": {
+                        "function":
+                            "return $[1].replace(/\\s/g, '') !== '{}' ? $[0].replace(/,?\\s{\\s*}\\s/, ' ') : ''",
+                    },
+                }, // BLoqueia import vazios
+            ],
+        ],
     },
 };

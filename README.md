@@ -69,11 +69,6 @@
 - [Arrow Function No Break Line](#arrow-function-no-break-line)
 - [No Empty Block](#no-empty-block)
 - [No Long Syntax](#no-long-syntax)
-- [Useless Call Code](#useless-call-code)
-- [Useless Catch Code](#useless-catch-code)
-- [Useless Expression Code](#useless-expression-code)
-- [Useless Return Code](#useless-return-code)
-- [Useless Construct Code](#useless-construct-code)
 - [Useless Parens](#useless-parens)
 - [Useless Boolean](#useless-boolean)
 - [Useless Alias](#useless-alias)
@@ -86,6 +81,8 @@
 - [Disallow Script Url](#disallow-script-url)
 - [Disallow Undefined](#disallow-undefined)
 - [Function Name](#function-name)
+- [Function Name Match](#function-name-match)
+- [Get And Setters](#get-and-setters)
 - [Function Style](#function-style)
 - [No Else Return](#no-else-return)
 - [No Console Spaces](#no-console-spaces)
@@ -128,7 +125,6 @@
 - [No Delete Var](#no-delete-var)
 - [No Lone Blocks](#no-lone-blocks)
 - [No Proto](#no-proto)
-- [No Useless Computed Key](#no-useless-computed-key)
 - [No Declare in Block](#no-declare-in-block)
 - [No Nonoctal Decimal Escape](#no-nonoctal-decimal-escape)
 - [No Import Absolute Path](#no-import-absolute-path)
@@ -196,7 +192,9 @@
 - [Quote Props](#quote-props)
 - [Brace Style](#brace-style)
 - [Comma Style](#comma-style)
-- [Object BreakLine](#object-break-line)
+- [Object Break Line](#object-break-line)
+- [Object Curly Newline](#object-curly-newline)
+- [No Negative Condition](#no-negated-condition)
 - [No Shadow](#no-shadow)
 - [Parentheses New Line](#parentheses-new-line)
 - [No Func Call Spacing](#no-func-call-spacing)
@@ -231,7 +229,8 @@
   - [Import Order](#import-order)
   - [No Anonymous Default Export](#no-anonymous-default-export)
   - [Prefer Node Protocol](#prefer-node-protocol)
-  - [Prefer export…from](#prefer-export-from)
+  - [Prefer export from](#prefer-export-from)
+  - [No Empty Import](#no-empty-import)
 - [Documentation](#documentation)
   - [Space Comment](#spaced-comment)
   - [Capitalized Comments](#capitalized-comments)
@@ -396,6 +395,13 @@
   - [No This Before Super](#no-this-before-super)
   - [No Obj Calls](#no-obj-calls)
   - [No Empty Pattern](#no-empty-pattern)
+  - [No Useless Computed Key](#no-useless-computed-key)
+  - [Useless Call Code](#useless-call-code)
+  - [Useless Catch Code](#useless-catch-code)
+  - [Useless Expression Code](#useless-expression-code)
+  - [Useless Return Code](#useless-return-code)
+  - [Useless Construct Code](#useless-construct-code)
+  - [No Use Before Define](#no-use-before-define)
 - [Possible Errors](#possible-errors)
   - [For Direction](#for-direction)
   - [No Extra Bind](#no-extra-bind)
@@ -412,6 +418,10 @@
   - [No Disable Timeout](#no-disable-timeout)
   - [No Empty Static Block](#no-empty-static-block)
   - [No Fallthrough](#no-fallthrough)
+  - [No Octal](#no-octal)
+  - [Octal Scape](#octal-scape)
+  - [No Global Assign](#no-global-assign)
+  - [No Case Declarations](#no-case-declarations)
 - [YAML / JSON](#yaml-json)
 
 ## Introduction
@@ -467,6 +477,7 @@ export default class Foo {
 Requires semicolons at the end of statements
 
 <https://eslint.org/docs/rules/semi#semi>
+<https://eslint.org/docs/rules/semi-style>
 
 👍 Examples of correct code
 
@@ -479,6 +490,23 @@ object.method = function() {
 
 class Foo {
     bar = 1;
+}
+
+foo();
+[1, 2, 3].forEach(bar);
+
+for (
+    var i = 0;
+    i < 10;
+    ++i
+) {
+    foo();
+}
+
+class C {
+    static {
+        foo();
+    }
 }
 ```
 
@@ -493,6 +521,25 @@ object.method = function() {
 
 class Foo {
     bar = 1
+}
+
+
+foo()
+;[1, 2, 3].forEach(bar)
+
+for (
+    var i = 0
+    ; i < 10
+    ; ++i
+) {
+    foo()
+}
+
+class C {
+    static {
+        foo()
+        ;bar()
+    }
 }
 ```
 
@@ -534,6 +581,7 @@ Tabs Disallow
 <https://eslint.org/docs/rules/indent#indent>
 <https://sonarsource.github.io/rspec/#/rspec/S3973/javascript>
 <https://eslint.org/docs/latest/rules/no-tabs>
+<https://eslint.org/docs/latest/rules/no-mixed-spaces-and-tabs>
 
 👍 Examples of correct code
 
@@ -1843,287 +1891,6 @@ const arr = Array(0, 1, 2);
 const arr = new Array(0, 1, 2);
 ```
 
-## Useless Call Code
-
-----------
-
-Disallow useless code
-
-<https://eslint.org/docs/rules/no-useless-call#no-useless-call>
-
-👍 Examples of correct code
-
-```typescript
-foo.call(obj, 1, 2, 3);
-foo.apply(obj, [1, 2, 3]);
-obj.foo.call(null, 1, 2, 3);
-obj.foo.apply(null, [1, 2, 3]);
-obj.foo.call(otherObj, 1, 2, 3);
-obj.foo.apply(otherObj, [1, 2, 3]);
-
-// The argument list is variadic.
-// Those are warned by the `prefer-spread` rule.
-foo.apply(undefined, args);
-foo.apply(null, args);
-obj.foo.apply(obj, args);
-
-a[++i].foo.call(a[i], 1, 2, 3);
-```
-
-👎 Examples of incorrect code
-
-```typescript
-foo.call(undefined, 1, 2, 3);
-foo.apply(undefined, [1, 2, 3]);
-foo.call(null, 1, 2, 3);
-foo.apply(null, [1, 2, 3]);
-
-// These are same as `obj.foo(1, 2, 3);`
-obj.foo.call(obj, 1, 2, 3);
-obj.foo.apply(obj, [1, 2, 3]);
-
-a[i++].foo.call(a[i++], 1, 2, 3);
-```
-
-## Useless Catch Code
-
-----------
-
-Disallow useless code
-
-<https://eslint.org/docs/rules/no-useless-catch#no-useless-catch>
-
-👍 Examples of correct code
-
-```typescript
-try {
-  doSomethingThatMightThrow();
-} catch (e) {
-  doSomethingBeforeRethrow();
-  throw e;
-}
-
-try {
-  doSomethingThatMightThrow();
-} catch (e) {
-  handleError(e);
-}
-
-try {
-  doSomethingThatMightThrow();
-} finally {
-  cleanUp();
-}
-```
-
-👎 Examples of incorrect code
-
-```typescript
-try {
-  doSomethingThatMightThrow();
-} catch (e) {
-  throw e;
-}
-
-try {
-  doSomethingThatMightThrow();
-} catch (e) {
-  throw e;
-} finally {
-  cleanUp();
-}
-```
-
-## Useless Expression Code
-
-----------
-
-Disallow useless code
-
-<https://eslint.org/docs/rules/no-unused-expressions>
-
-👍 Examples of correct code
-
-```typescript
-{} // In this context, this is a block statement, not an object literal
-
-{myLabel: someVar} // In this context, this is a block statement with a label and expression, not an object literal
-
-function namedFunctionDeclaration () {}
-
-(function aGenuineIIFE () {}());
-
-f()
-
-a = 0
-
-new C
-
-delete a.b
-
-void a
-
-a ? b() : c();
-a ? (b = c) : d();
-```
-
-👎 Examples of incorrect code
-
-```typescript
-0
-
-if(0) 0
-
-{0}
-
-f(0), {}
-
-a && b()
-
-a, b()
-
-c = a, b;
-
-a() && function namedFunctionInExpressionContext () {f();}
-
-(function anIncompleteIIFE () {});
-
-injectGlobal`body{ color: red; }`
-
-function foo() {
-    "bar" + 1;
-}
-
-class Foo {
-    static {
-        "use strict"; // class static blocks do not have directive prologues
-    }
-}
-```
-
-## Useless Return Code
-
-----------
-
-Disallow useless code
-
-<https://eslint.org/docs/rules/no-useless-return#no-useless-return>
-
-👍 Examples of correct code
-
-```typescript
-function foo() { return 5; }
-
-function foo() {
-  return doSomething();
-}
-
-function foo() {
-  if (condition) {
-    bar();
-    return;
-  } else {
-    baz();
-  }
-  qux();
-}
-
-function foo() {
-  switch (bar) {
-    case 1:
-      doSomething();
-      return;
-    default:
-      doSomethingElse();
-  }
-}
-
-function foo() {
-  for (const foo of bar) {
-    return;
-  }
-}
-```
-
-👎 Examples of incorrect code
-
-```typescript
-function foo() { return; }
-
-function foo() {
-  doSomething();
-  return;
-}
-
-function foo() {
-  if (condition) {
-    bar();
-    return;
-  } else {
-    baz();
-  }
-}
-
-function foo() {
-  switch (bar) {
-    case 1:
-      doSomething();
-    default:
-      doSomethingElse();
-      return;
-  }
-}
-```
-
-## Useless Construct Code
-
-----------
-
-Disallow useless code
-
-<https://eslint.org/docs/rules/no-useless-constructor#options>
-
-👍 Examples of correct code
-
-```typescript
-
-class A { }
-
-class A {
-    constructor () {
-        doSomething();
-    }
-}
-
-class B extends A {
-    constructor() {
-        super('foo');
-    }
-}
-
-class B extends A {
-    constructor() {
-        super();
-        doSomething();
-    }
-}
-```
-
-👎 Examples of incorrect code
-
-```typescript
-class A {
-    constructor () {
-    }
-}
-
-class B extends A {
-    constructor (...args) {
-      super(...args);
-    }
-}
-```
-
 ## Useless Parens
 
 ----------
@@ -2690,6 +2457,168 @@ Foo.prototype.bar = function() {};
 }())
 
 export default function() {}
+```
+
+## Function Name Match
+
+----------
+
+This rule requires function names to match the name of the variable or property to which they are assigned.
+The rule will ignore property assignments where the property name is a literal that
+is not a valid identifier in the ECMAScript version specified in your configuration (default ES5).
+
+<https://eslint.org/docs/latest/rules/func-name-matching>
+
+👍 Examples of correct code
+
+```typescript
+var foo = function foo() {};
+var foo = function() {};
+var foo = () => {};
+foo = function foo() {};
+
+obj.foo = function foo() {};
+obj['foo'] = function foo() {};
+obj['foo//bar'] = function foo() {};
+obj[foo] = function bar() {};
+
+var obj = {foo: function foo() {}};
+var obj = {[foo]: function bar() {}};
+var obj = {'foo//bar': function foo() {}};
+var obj = {foo: function() {}};
+
+obj['x' + 2] = function bar(){};
+var [ bar ] = [ function bar(){} ];
+({[foo]: function bar() {}})
+
+class C {
+    foo = function foo() {};
+    baz = function() {};
+}
+
+// private names are ignored
+class D {
+    #foo = function foo() {};
+    #bar = function foo() {};
+    baz() {
+        this.#foo = function foo() {};
+        this.#foo = function bar() {};
+    }
+}
+
+module.exports = function foo(name) {};
+module['exports'] = function foo(name) {};
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = function bar() {};
+foo = function bar() {};
+obj.foo = function bar() {};
+obj['foo'] = function bar() {};
+var obj = {foo: function bar() {}};
+({['foo']: function bar() {}});
+
+class C {
+    foo = function bar() {};
+}
+```
+
+## Get And Setters
+
+----------
+
+A getter and setter for the same property don’t necessarily have to be defined adjacent to each other.
+
+<https://eslint.org/docs/latest/rules/grouped-accessor-pairs>
+
+👍 Examples of correct code
+
+```typescript
+
+var foo = {
+    get a() {
+        return this.val;
+    },
+    set a(value) {
+        this.val = value;
+    },
+    b: 1
+};
+
+var bar = {
+    set b(value) {
+        this.val = value;
+    },
+    get b() {
+        return this.val;
+    },
+    a: 1
+}
+
+class Foo {
+    set a(value) {
+        this.val = value;
+    }
+    get a() {
+        return this.val;
+    }
+    b(){}
+}
+
+const Bar = class {
+    static get a() {
+        return this.val;
+    }
+    static set a(value) {
+        this.val = value;
+    }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = {
+    get a() {
+        return this.val;
+    },
+    b: 1,
+    set a(value) {
+        this.val = value;
+    }
+};
+
+var bar = {
+    set b(value) {
+        this.val = value;
+    },
+    a: 1,
+    get b() {
+        return this.val;
+    }
+}
+
+class Foo {
+    set a(value) {
+        this.val = value;
+    }
+    b(){}
+    get a() {
+        return this.val;
+    }
+}
+
+const Bar = class {
+    static get a() {
+        return this.val;
+    }
+    b(){}
+    static set a(value) {
+        this.val = value;
+    }
+}
 ```
 
 ## Function Style
@@ -4338,7 +4267,7 @@ class C {
 }
 ```
 
-### No Proto
+## No Proto
 
 ----------
 
@@ -4366,34 +4295,6 @@ var a = obj["__proto__"];
 obj.__proto__ = b;
 
 obj["__proto__"] = b;
-```
-
-### No Useless Computed Key
-
-----------
-
-Disallow unnecessary computed property keys in objects and classes
-
-<https://eslint.org/docs/latest/rules/no-useless-computed-key>
-
-👍 Examples of correct code
-
-```typescript
-var c = { 'a': 0 };
-var c = { 0: 0 };
-var a = { x() {} };
-var c = { a: 0 };
-var c = { '0+1,234': 0 };
-```
-
-👎 Examples of incorrect code
-
-```typescript
-var a = { ['0']: 0 };
-var a = { ['0+1,234']: 0 };
-var a = { [0]: 0 };
-var a = { ['x']: 0 };
-var a = { ['x']() {} };
 ```
 
 ## No Declare in Block
@@ -7277,27 +7178,23 @@ Enforces placing object properties on separate lines.
 👍 Examples of correct code
 
 ```typescript
-const obj1 = {
-    foo: "foo",
-    bar: "bar",
-    baz: "baz"
-};
+const obj1 = { foo: "foo", bar: "bar", baz: "baz" };
 
 const obj2 = {
-    foo: "foo"
-    , bar: "bar"
-    , baz: "baz"
+    foo: "foo",
+    bar: "bar",
+    baz: "baz",
 };
 
 const user = process.argv[2];
 const obj3 = {
     user,
-    [process.argv[3] ? "foo" : "bar"]: 0,
+    [ process.argv[3] ? "foo" : "bar" ]: 0,
     baz: [
         1,
         2,
         4,
-        8
+        8,
     ]
 };
 ```
@@ -7322,6 +7219,109 @@ const obj3 = {
         8
     ]
 };
+```
+
+## Object Curly Newline
+
+----------
+
+A number of style guides require or disallow line breaks inside of object braces and other tokens.
+
+<https://eslint.org/docs/latest/rules/object-curly-newline>
+
+👍 Examples of correct code
+
+```typescript
+let a = {};
+let b = { foo: 1 };
+let c = { foo: 1, bar: 2 };
+let d = {
+    foo: 1,
+    bar: 2,
+};
+let e = {
+    foo: function() {
+        dosomething();
+    }
+};
+
+let { f } = obj;
+let { g, h } = obj;
+let {
+    i,
+    j
+} = obj;
+let { k = () => dosomething() } = obj;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+let b = {
+    foo: 1
+};
+let c = { foo: 1,
+    bar: 2 };
+let d = {foo: 1
+    , bar: 2};
+let e = { foo: function() {
+    dosomething();
+} };
+
+let {i,
+    j} = obj;
+```
+
+## No Negative Condition
+
+----------
+
+Negated conditions are more difficult to understand. Code can be made more readable by inverting the condition instead.
+
+<https://eslint.org/docs/latest/rules/no-negated-condition>
+
+👍 Examples of correct code
+
+```typescript
+if (!a) {
+    doSomething();
+}
+
+if (!a) {
+    doSomething();
+} else if (b) {
+    doSomething();
+}
+
+if (a != b) {
+    doSomething();
+}
+
+a ? b : c
+```
+
+👎 Examples of incorrect code
+
+```typescript
+if (!a) {
+    doSomething();
+} else {
+    doSomethingElse();
+}
+
+if (a != b) {
+    doSomething();
+} else {
+    doSomethingElse();
+}
+
+if (a !== b) {
+    doSomething();
+} else {
+    doSomethingElse();
+}
+
+!a ? c : b
 ```
 
 ## No Shadow
@@ -8473,7 +8473,7 @@ import fs from 'fs/promises';
 const fs = require('fs/promises');
 ```
 
-### Prefer export…from
+### Prefer export from
 
 ----------
 
@@ -8523,6 +8523,28 @@ export {
     named,
     named as renamedNamed,
 };
+```
+
+### No Empty Import
+
+----------
+
+Prevent import empty
+
+<https://github.com/ODGodinho/ODG-Linter-Js>
+
+👍 Examples of correct code
+
+```typescript
+import { a } from './foo.js';
+import a from './foo.js';
+```
+
+👎 Examples of incorrect code
+
+```typescript
+import { } from './foo.js';
+import t, { } from './foo.js';
 ```
 
 ## Documentation
@@ -11625,7 +11647,7 @@ if (foo) {
 Improved version of the no-nested-ternary ESLint rule,
 which allows cases where the nested ternary is only one level and wrapped in Parentheses.
 
-<https://eslint.org/docs/latest/rules/no-nested-ternary#rule-details>
+<https://eslint.org/docs/latest/rules/no-nested-ternary>
 <https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/no-nested-ternary.md>
 
 👍 Examples of correct code
@@ -13908,6 +13930,423 @@ function foo({a: {}}) {}
 function foo({a: []}) {}
 ```
 
+### No Useless Computed Key
+
+----------
+
+Disallow unnecessary computed property keys in objects and classes
+
+<https://eslint.org/docs/latest/rules/no-useless-computed-key>
+
+👍 Examples of correct code
+
+```typescript
+var c = { 'a': 0 };
+var c = { 0: 0 };
+var a = { x() {} };
+var c = { a: 0 };
+var c = { '0+1,234': 0 };
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var a = { ['0']: 0 };
+var a = { ['0+1,234']: 0 };
+var a = { [0]: 0 };
+var a = { ['x']: 0 };
+var a = { ['x']() {} };
+```
+
+
+### Useless Call Code
+
+----------
+
+Disallow useless code
+
+<https://eslint.org/docs/rules/no-useless-call#no-useless-call>
+
+👍 Examples of correct code
+
+```typescript
+foo.call(obj, 1, 2, 3);
+foo.apply(obj, [1, 2, 3]);
+obj.foo.call(null, 1, 2, 3);
+obj.foo.apply(null, [1, 2, 3]);
+obj.foo.call(otherObj, 1, 2, 3);
+obj.foo.apply(otherObj, [1, 2, 3]);
+
+// The argument list is variadic.
+// Those are warned by the `prefer-spread` rule.
+foo.apply(undefined, args);
+foo.apply(null, args);
+obj.foo.apply(obj, args);
+
+a[++i].foo.call(a[i], 1, 2, 3);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+foo.call(undefined, 1, 2, 3);
+foo.apply(undefined, [1, 2, 3]);
+foo.call(null, 1, 2, 3);
+foo.apply(null, [1, 2, 3]);
+
+// These are same as `obj.foo(1, 2, 3);`
+obj.foo.call(obj, 1, 2, 3);
+obj.foo.apply(obj, [1, 2, 3]);
+
+a[i++].foo.call(a[i++], 1, 2, 3);
+```
+
+### Useless Catch Code
+
+----------
+
+Disallow useless code
+
+<https://eslint.org/docs/rules/no-useless-catch#no-useless-catch>
+
+👍 Examples of correct code
+
+```typescript
+try {
+  doSomethingThatMightThrow();
+} catch (e) {
+  doSomethingBeforeRethrow();
+  throw e;
+}
+
+try {
+  doSomethingThatMightThrow();
+} catch (e) {
+  handleError(e);
+}
+
+try {
+  doSomethingThatMightThrow();
+} finally {
+  cleanUp();
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+try {
+  doSomethingThatMightThrow();
+} catch (e) {
+  throw e;
+}
+
+try {
+  doSomethingThatMightThrow();
+} catch (e) {
+  throw e;
+} finally {
+  cleanUp();
+}
+```
+
+### Useless Expression Code
+
+----------
+
+Disallow useless code
+
+<https://eslint.org/docs/rules/no-unused-expressions>
+
+👍 Examples of correct code
+
+```typescript
+{} // In this context, this is a block statement, not an object literal
+
+{myLabel: someVar} // In this context, this is a block statement with a label and expression, not an object literal
+
+function namedFunctionDeclaration () {}
+
+(function aGenuineIIFE () {}());
+
+f()
+
+a = 0
+
+new C
+
+delete a.b
+
+void a
+
+a ? b() : c();
+a ? (b = c) : d();
+```
+
+👎 Examples of incorrect code
+
+```typescript
+0
+
+if(0) 0
+
+{0}
+
+f(0), {}
+
+a && b()
+
+a, b()
+
+c = a, b;
+
+a() && function namedFunctionInExpressionContext () {f();}
+
+(function anIncompleteIIFE () {});
+
+injectGlobal`body{ color: red; }`
+
+function foo() {
+    "bar" + 1;
+}
+
+class Foo {
+    static {
+        "use strict"; // class static blocks do not have directive prologues
+    }
+}
+```
+
+### Useless Return Code
+
+----------
+
+Disallow useless code
+
+<https://eslint.org/docs/rules/no-useless-return#no-useless-return>
+
+👍 Examples of correct code
+
+```typescript
+function foo() { return 5; }
+
+function foo() {
+  return doSomething();
+}
+
+function foo() {
+  if (condition) {
+    bar();
+    return;
+  } else {
+    baz();
+  }
+  qux();
+}
+
+function foo() {
+  switch (bar) {
+    case 1:
+      doSomething();
+      return;
+    default:
+      doSomethingElse();
+  }
+}
+
+function foo() {
+  for (const foo of bar) {
+    return;
+  }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function foo() { return; }
+
+function foo() {
+  doSomething();
+  return;
+}
+
+function foo() {
+  if (condition) {
+    bar();
+    return;
+  } else {
+    baz();
+  }
+}
+
+function foo() {
+  switch (bar) {
+    case 1:
+      doSomething();
+    default:
+      doSomethingElse();
+      return;
+  }
+}
+```
+
+### Useless Construct Code
+
+----------
+
+Disallow useless code
+
+<https://eslint.org/docs/rules/no-useless-constructor#options>
+
+👍 Examples of correct code
+
+```typescript
+
+class A { }
+
+class A {
+    constructor () {
+        doSomething();
+    }
+}
+
+class B extends A {
+    constructor() {
+        super('foo');
+    }
+}
+
+class B extends A {
+    constructor() {
+        super();
+        doSomething();
+    }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+class A {
+    constructor () {
+    }
+}
+
+class B extends A {
+    constructor (...args) {
+      super(...args);
+    }
+}
+```
+
+### No Use Before Define
+
+----------
+
+In JavaScript, prior to ES6, variable and function declarations are hoisted to the top of a scope,
+so it’s possible to use identifiers before their formal declarations in code.
+
+<https://eslint.org/docs/latest/rules/no-use-before-define>
+
+👍 Examples of correct code
+
+```typescript
+var a;
+a = 10;
+alert(a);
+
+function f() {}
+f(1);
+
+var b = 1;
+function g() {
+    return b;
+}
+
+{
+    let c;
+    c++;
+}
+
+{
+    class C {
+        static x = C;
+    }
+}
+
+{
+    const C = class C {
+        static x = C;
+    }
+}
+
+{
+    const C = class {
+        x = C;
+    }
+}
+
+{
+    const C = class C {
+        static {
+            C.x = "foo";
+        }
+    }
+}
+
+const foo = 1;
+export { foo };
+```
+
+👎 Examples of incorrect code
+
+```typescript
+alert(a);
+var a = 10;
+
+f();
+function f() {}
+
+function g() {
+    return b;
+}
+var b = 1;
+
+{
+    alert(c);
+    let c = 1;
+}
+
+{
+    class C extends C {}
+}
+
+{
+    class C {
+        static x = "foo";
+        [C.x]() {}
+    }
+}
+
+{
+    const C = class {
+        static x = C;
+    }
+}
+
+{
+    const C = class {
+        static {
+            C.x = "foo";
+        }
+    }
+}
+
+export { foo };
+const foo = 1;
+```
+
 ## Possible Errors
 
 ### For Direction
@@ -14597,6 +15036,139 @@ switch(foo) {
 
     case 2:
         doSomething();
+}
+```
+
+### No Octal
+
+----------
+
+Octal literals are numerals that begin with a leading zero, such as:
+
+<https://eslint.org/docs/latest/rules/no-octal>
+
+👍 Examples of correct code
+
+```typescript
+var test = 71 + 5; // 76
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var num = 071; // 57
+var result = 5 + 07;
+
+var test = 071 + 5; // 62
+```
+
+### Octal Scape
+
+----------
+
+As of the ECMAScript 5 specification, octal escape sequences in string literals
+are deprecated and should not be used. Unicode escape sequences should be used instead.
+
+<https://eslint.org/docs/latest/rules/no-octal-escape>
+
+👍 Examples of correct code
+
+```typescript
+var foo = "Copyright \u00A9";   // unicode
+
+var foo = "Copyright \xA9";     // hexadecimal
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = "Copyright \251";
+```
+
+### No Global Assign
+
+----------
+
+JavaScript environments contain a number of built-in global variables, such as window in browsers
+and process in Node.js. In almost all cases, you don’t want to assign a value to these global
+variables as doing so could result in losing access to important functionality.
+For example, you probably don’t want to do this in browser code:
+
+<https://eslint.org/docs/latest/rules/no-global-assign>
+
+👍 Examples of correct code
+
+```typescript
+a = 1
+const b = 1
+b = 2
+```
+
+👎 Examples of incorrect code
+
+```typescript
+Object = null
+undefined = 1
+window = {}
+length = 1
+top = 1
+```
+
+### No Case Declarations
+
+----------
+
+This rule disallows lexical declarations (let, const, function and class) in case/default clauses.
+The reason is that the lexical declaration is visible in the entire switch block but it only gets
+initialized when it is assigned, which will only happen if the case where it is defined is reached.
+
+<https://eslint.org/docs/latest/rules/no-case-declarations>
+
+👍 Examples of correct code
+
+```typescript
+// Declarations outside switch-statements are valid
+const a = 0;
+
+switch (foo) {
+    // The following case clauses are wrapped into blocks using brackets
+    case 1: {
+        let x = 1;
+        break;
+    }
+    case 2: {
+        const y = 2;
+        break;
+    }
+    case 3: {
+        function f() {}
+        break;
+    }
+    case 4:
+        // Declarations using var without brackets are valid due to function-scope hoisting
+        var z = 4;
+        break;
+    default: {
+        class C {}
+    }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+switch (foo) {
+    case 1:
+        let x = 1;
+        break;
+    case 2:
+        const y = 2;
+        break;
+    case 3:
+        function f() {}
+        break;
+    default:
+        class C {}
 }
 ```
 

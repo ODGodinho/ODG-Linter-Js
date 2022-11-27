@@ -43,12 +43,6 @@ module.exports = {
         } ], // Virgula no final de tudo
         "no-array-constructor": [ "off" ], // Não permite usar new Array()
         "@typescript-eslint/no-array-constructor": [ "error" ], // Não permite usar new Array()
-        "no-unused-expressions": [ "off" ], // Não permite expressões desnecessárias
-        "@typescript-eslint/no-unused-expressions": [ "error", {
-            allowTernary: true,
-            enforceForJSX: true,
-            allowShortCircuit: true,
-        } ],
         "no-useless-constructor": [ "off" ], // Desliga Javascript rule
         "@typescript-eslint/no-useless-constructor": [ "error" ], // Não permite construtores desnecessários
         "no-throw-literal": [ "off" ], // Não permite throw "string" ou diferente de classe
@@ -126,6 +120,7 @@ module.exports = {
             { "blankLine": "always", "prev": "interface", "next": "*" }, // Uma linha em branco apos a interface
             { "blankLine": "always", "prev": "*", "next": "type" }, // Uma linha em branco antes do type
             { "blankLine": "always", "prev": "type", "next": "*" }, // Uma linha em branco apos o type
+            { "blankLine": "always", "prev": "multiline-block-like", "next": "*" },
         ],
     },
 };

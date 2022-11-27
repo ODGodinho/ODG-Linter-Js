@@ -2,6 +2,7 @@ module.exports = {
     rules: {
         "regexp/no-contradiction-with-assertion": [ "error" ], // Não coloque opcional em uma das condições
         "regexp/no-control-character": [ "error" ], // Não use caracteres especiais da tabela ASCII 0 - 31
+        "no-control-regex": [ "error" ], // Não use caracteres especiais da tabela ASCII 0 - 31
         "regexp/no-dupe-disjunctions": [ "error" ], // Não permite condições duplicadas em regex
         "regexp/no-empty-alternative": [ "error" ], // Não coloque alternativas vazias
         "regexp/no-empty-capturing-group": [ "error" ], // Grupos devem ter assertion
@@ -50,5 +51,23 @@ module.exports = {
         "no-this-before-super": [ "error" ], // Não faça this antes super
         "no-obj-calls": [ "error" ], // Não execute objetos
         "no-empty-pattern": [ "error" ], // Desestruturar vazio
+        "no-useless-computed-key": [ "error" ], // Chave de objeto computada de forma desnecessária
+        "no-useless-constructor": [ "error" ], // Não permite construtores desnecessários
+        "no-useless-call": [ "error" ], // Não permite chamadas desnecessárias.call
+        "no-useless-catch": [ "error" ], // Não permite catch desnecessários
+        "no-useless-return": [ "error" ], // Não permite retornos desnecessários
+        "no-useless-escape": [ "error" ], // Não permite usar escape desnecessárias
+        "no-useless-rename": [ "error" ], // Disable Rename desnecessários
+        "no-unused-expressions": [ "error", {
+            allowTernary: true,
+            allowShortCircuit: true,
+            enforceForJSX: true,
+        } ],
+        "no-use-before-define": [
+            "error",
+            {
+                "classes": true,
+            },
+        ], // Não use antes de definir
     },
 };

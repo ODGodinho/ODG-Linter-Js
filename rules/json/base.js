@@ -13,6 +13,11 @@ module.exports = {
                 "no-unused-expressions": [ "off" ],
                 "import/unambiguous": [ "off" ],
                 "filenames/match-regex": [ "off" ],
+                "jsonc/object-curly-spacing": [ "error", "always" ], // Espaço declarar objeto
+                "jsonc/object-curly-newline": [
+                    "error",
+                    { "consistent": true },
+                ], // Força quebrar linha em todos #4 os itens objeto
             },
         },
         {
