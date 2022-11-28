@@ -19,7 +19,13 @@ module.exports = {
             "argsIgnorePattern": "^_",
         } ],
         "default-param-last": [ "error" ],
-        "comma-spacing": [ "error" ],
+        "comma-spacing": [
+            "error",
+            {
+                before: false,
+                after: true,
+            },
+        ],
         "comma-dangle": [ "error", {
             arrays: "always-multiline",
             objects: "always-multiline",

@@ -16,5 +16,9 @@ module.exports = {
         } ],
         "no-use-before-define": [ "off" ], // Não use antes de definir
         "@typescript-eslint/no-use-before-define": [ "error" ], // Não use antes de definir
+        "@typescript-eslint/no-base-to-string": [
+            "error",
+        ], // Não coloque dentro de string algo q n pode ser convertido
+        "@typescript-eslint/no-loss-of-precision": [ "error" ], // Não permite números com perda de precisão
     },
 };

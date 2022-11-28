@@ -4,7 +4,7 @@ module.exports = {
     ],
     overrides: [
         {
-            files: [ "*.json", "*.json5", "*.jsonc", ".eslintrc" ],
+            files: [ "*.json", "*.json5", "*.jsonc", ".eslintrc", "*.code-*" ],
             parser: require.resolve("jsonc-eslint-parser"),
             rules: {
                 "jsonc/array-bracket-spacing": [ "error", "always" ],

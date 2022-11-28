@@ -323,6 +323,7 @@
   - [Force Integrity](#force-integrity)
   - [DNS prefetching](#dns-prefetching)
   - [No Prototype Builtins](#no-prototype-builtins)
+  - [No Dynamic Delete](#no-dynamic-delete)
 - [Catch Error Name](#catch-error-name)
 - [Consistent Destructured](#consistent-destructured)
 - [Consistent Function Scope](#consistent-function-scope)
@@ -370,6 +371,31 @@
 - [Require Array Join Separator](#require-array-join-separator)
 - [Require Number To Fixed Digits Argument](#require-number-to-fixed-digits-argument)
 - [Template String Indent](#template-string-indent)
+- [Adjacent Overload Signatures](#adjacent-overload-signatures)
+- [Ban Ts Comment](#ban-ts-comment)
+- [Ban Tslint Comment](#ban-tslint-comment)
+- [Class Literal Property Style](#class-literal-property-style)
+- [Consistent Generic Constructors](#consistent-generic-constructors)
+- [Consistent Indexed Object Style](#consistent-indexed-object-style)
+- [Consistent Type Assertions](#consistent-type-assertions)
+- [Consistent Type Definitions](#consistent-type-definitions)
+- [Consistent Type Exports](#consistent-type-exports)
+- [Consistent Type Imports](#consistent-type-imports)
+- [Member Delimiter Style](#member-delimiter-style)
+- [Member Ordering](#member-ordering)
+- [No Confusing Non Null Assertion](#no-confusing-non-null-assertion)
+- [No Extra Non Null Assertion](#no-extra-non-null-assertion)
+- [No For In Array](#no-for-in-array)
+- [No Inferrable Type](#no-inferrable-type)
+- [No This Alias](#no-this-alias)
+- [Non Nullable Type Assertion Style](#non-nullable-type-assertion-style)
+- [Parameter Properties](#parameter-properties)
+- [Prefer Enum Initializers](#prefer-enum-initializers)
+- [Prefer Function Type](#prefer-function-type)
+- [Prefer Namespace Keyword](#prefer-namespace-keyword)
+- [Prefer Nullish Coalescing](#prefer-nullish-coalescing)
+- [Prefer Optional Chain](#prefer-optional-chain)
+- [Prefer Readonly](#prefer-readonly)
 - [Performance](#performance)
   - [No Alert](#no-alert)
   - [No Loop Func](#no-loop-func)
@@ -402,6 +428,7 @@
   - [Useless Return Code](#useless-return-code)
   - [Useless Construct Code](#useless-construct-code)
   - [No Use Before Define](#no-use-before-define)
+  - [No Base To String](#no-base-to-string)
 - [Possible Errors](#possible-errors)
   - [For Direction](#for-direction)
   - [No Extra Bind](#no-extra-bind)
@@ -422,6 +449,14 @@
   - [Octal Scape](#octal-scape)
   - [No Global Assign](#no-global-assign)
   - [No Case Declarations](#no-case-declarations)
+  - [No Confusing Void Expression](#no-confusing-void-expression)
+  - [No Duplicate Enum Values](#no-duplicate-enum-values)
+  - [No Floating Promises](#no-floating-promises)
+  - [No Invalid Void Type](#no-invalid-void-type)
+  - [No Non Null Asserted Nullish Coalescing](#no-non-null-asserted-nullish-coalescing)
+  - [No Non Null Asserted Optional Chain](#no-non-null-asserted-optional-chain)
+  - [No Unsafe Declaration Merging](#no-unsafe-declaration-merging)
+  - [No Useless Empty Export](#no-useless-empty-export)
 - [YAML / JSON](#yaml-json)
 
 ## Introduction
@@ -4782,6 +4817,7 @@ var f = Function.bind(null, "a", "b", "return a + b"); // assuming that the resu
 Disallows variable redeclarations.
 
 <https://eslint.org/docs/rules/no-redeclare#no-redeclare>
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-redeclare.md>
 
 👍 Examples of correct code
 
@@ -7335,6 +7371,7 @@ but rather the local version with a very different meaning.
 
 <https://eslint.org/docs/rules/no-shadow>
 <https://eslint.org/docs/rules/no-shadow-restricted-names>
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-shadow.md>
 
 👍 Examples of correct code
 
@@ -10339,6 +10376,7 @@ Disallow the use of eval()-like methods
 <https://eslint.org/docs/rules/no-eval#no-eval>
 <https://eslint.org/docs/rules/no-implied-eval>
 <https://sonarsource.github.io/rspec/#/rspec/S1523/javascript>
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-implied-eval.md>
 
 👍 Examples of correct code
 
@@ -11110,6 +11148,58 @@ var hasBarProperty = foo.hasOwnProperty("bar");
 var isPrototypeOfBar = foo.isPrototypeOf(bar);
 
 var barIsEnumerable = foo.propertyIsEnumerable("bar");
+```
+
+## No Dynamic Delete
+
+----------
+
+Deleting dynamically computed keys can be dangerous and in some cases not well optimized.
+Using the delete operator on keys that aren't runtime constants could be a sign that you're using the wrong data
+structures. Using Objects with added and removed keys can cause occasional edge case bugs,
+such as if a key is named "hasOwnProperty".
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-dynamic-delete.md>
+
+👍 Examples of correct code
+
+```typescript
+const container: { [i: string]: number } = {
+  /* ... */
+};
+
+// Constant runtime lookups by string index
+delete container.aaa;
+
+// Constants that must be accessed by []
+delete container[7];
+delete container['-Infinity'];
+
+const name = 'aaa';
+switch (name) {
+    case "aaa":
+        delete container.aaa
+        break;
+    case "bbb":
+        delete container.bbb
+        break;
+    default:
+        throw new Error("Not Authorized");
+        break;
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+// Can be replaced with the constant equivalents, such as container.aaa
+delete container['aaa'];
+delete container['Infinity'];
+
+// Dynamic, difficult-to-reason-about lookups
+const name = 'name';
+delete container[name];
+delete container[name.toUpperCase()];
 ```
 
 ## Catch Error Name
@@ -12073,7 +12163,7 @@ Prefer Node#append() over Node#appendChild()
 
 👍 Examples of correct code
 
-```tsx
+```typescript
 foo.append(bar);
 foo.append('bar');
 foo.append(bar, 'baz');
@@ -12081,7 +12171,7 @@ foo.append(bar, 'baz');
 
 👎 Examples of incorrect code
 
-```tsx
+```typescript
 foo.appendChild(bar);
 ```
 
@@ -12095,14 +12185,14 @@ Prefer `childNode.remove()` over `parentNode.removeChild(childNode)`
 
 👍 Examples of correct code
 
-```tsx
+```typescript
 foo.remove();
 this.remove();
 ```
 
 👎 Examples of incorrect code
 
-```tsx
+```typescript
 parentNode.removeChild(foo);
 parentNode.removeChild(this);
 ```
@@ -12114,10 +12204,11 @@ parentNode.removeChild(this);
 Prefer `.includes()` over `.indexOf()` and Array#some() when checking for existence or non-existence
 
 <https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-includes.md>
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/prefer-includes.md>
 
 👍 Examples of correct code
 
-```tsx
+```typescript
 const str = 'foobar';
 str.indexOf('foo') !== -n;
 str.indexOf('foo') !== 1;
@@ -12140,7 +12231,7 @@ const isFound = foo.some(x => {
 
 👎 Examples of incorrect code
 
-```tsx
+```typescript
 [].indexOf('foo') !== -1;
 x.indexOf('foo') != -1;
 str.indexOf('foo') > -1;
@@ -12164,7 +12255,7 @@ The .key property is also more semantic and readable.
 
 👍 Examples of correct code
 
-```tsx
+```typescript
 window.addEventListener("click", event => {
     console.log(event.key);
 });
@@ -12177,7 +12268,7 @@ window.addEventListener("keydown", event => {
 
 👎 Examples of incorrect code
 
-```tsx
+```typescript
 window.addEventListener("keydown", event => {
     console.log(event.keyCode);
 });
@@ -12198,7 +12289,7 @@ Prefer negative index over .length - index for {String,Array,TypedArray}#slice()
 
 👍 Examples of correct code
 
-```tsx
+```typescript
 foo.slice(-2, -1);
 foo.splice(-1, 1);
 foo.at(-1);
@@ -12208,7 +12299,7 @@ Array.prototype.slice.apply(foo, [-2, -1]);
 
 👎 Examples of incorrect code
 
-```tsx
+```typescript
 foo.slice(foo.length - 2, foo.length - 1);
 foo.splice(foo.length - 1, 1);
 foo.at(foo.length - 1);
@@ -12226,7 +12317,7 @@ Prefer omitting the catch binding parameter
 
 👍 Examples of correct code
 
-```tsx
+```typescript
 try {} catch {}
 try {} catch (error) {
     console.error(error);
@@ -12235,7 +12326,7 @@ try {} catch (error) {
 
 👎 Examples of incorrect code
 
-```tsx
+```typescript
 try {} catch (notUsedError) {}
 try {} catch ({message}) {}
 ```
@@ -12251,7 +12342,7 @@ When “borrowing” a method from Array or Object, it's clearer to get it from 
 
 👍 Examples of correct code
 
-```tsx
+```typescript
 const array = Array.prototype.slice.apply(bar);
 const hasProperty = Object.prototype.hasOwnProperty.call(foo, 'property');
 Reflect.apply(Array.prototype.forEach, arrayLike, [callback]);
@@ -12260,7 +12351,7 @@ const maxValue = Math.max.apply(Math, numbers);
 
 👎 Examples of incorrect code
 
-```tsx
+```typescript
 const array = [].slice.apply(bar);
 const hasProperty = {}.hasOwnProperty.call(foo, 'property');
 Reflect.apply([].forEach, arrayLike, [callback]);
@@ -12277,7 +12368,7 @@ Prefer .querySelector() over .getElementById(),
 
 👍 Examples of correct code
 
-```tsx
+```typescript
 document.querySelector('#foo');
 document.querySelector('.bar');
 document.querySelector('main #foo .bar');
@@ -12288,7 +12379,7 @@ document.querySelector('li').querySelectorAll('a');
 
 👎 Examples of incorrect code
 
-```tsx
+```typescript
 document.getElementById('foo');
 document.getElementsByClassName('foo bar');
 document.getElementsByTagName('main');
@@ -12332,7 +12423,7 @@ Prefer the spread operator over Array.from(…), Array#concat(…), Array#slice(
 
 👍 Examples of correct code
 
-```tsx
+```typescript
 [ ...set ].map(element => foo(element));
 const array = [ ...array1, ...array2 ];
 const tail = array.slice(1);
@@ -12341,7 +12432,7 @@ const copy = [ ...array ];
 
 👎 Examples of incorrect code
 
-```tsx
+```typescript
 Array.from(set).map(element => foo(element));
 const array = array1.concat(array2);
 const copy = array.slice();
@@ -12360,7 +12451,7 @@ if the string is not a literal.
 
 👍 Examples of correct code
 
-```tsx
+```typescript
 string.replace(/Non-literal characters .*/g, "");
 string.replace(/Extra flags/gi, "");
 string.replace("Not a regex expression", "")
@@ -12369,7 +12460,7 @@ string.replaceAll("Literal characters only", "");
 
 👎 Examples of incorrect code
 
-```tsx
+```typescript
 string.replace(/This has no special regex symbols/g, "");
 string.replace(/\(It also checks for escaped regex symbols\)/g, "");
 string.replace(/Works for u flag too/gu, "");
@@ -12385,7 +12476,7 @@ Prefer String#startsWith() & String#endsWith() over RegExp#test()
 
 👍 Examples of correct code
 
-```tsx
+```typescript
 const foo = baz.startsWith("bar");
 const foo = baz.endsWith("bar");
 const foo = baz?.startsWith("bar");
@@ -12396,7 +12487,7 @@ const foo = /^bar/i.test(baz);
 
 👎 Examples of incorrect code
 
-```tsx
+```typescript
 const foo = /^bar/.test(baz);
 const foo = /bar$/.test(baz);
 ```
@@ -12411,14 +12502,14 @@ Prefer `String#trimStart()` / `String#trimEnd()` over `String#trimLeft()` / `Str
 
 👍 Examples of correct code
 
-```tsx
+```typescript
 const foo = bar.trimStart();
 const foo = bar.trimEnd();
 ```
 
 👎 Examples of incorrect code
 
-```tsx
+```typescript
 const foo = bar.trimLeft();
 const foo = bar.trimRight();
 ```
@@ -12433,7 +12524,7 @@ Prefer switch over multiple else-if
 
 👍 Examples of correct code
 
-```tsx
+```typescript
 if (foo === 1) {
     // 1
 } else if (foo === 2) {
@@ -12460,7 +12551,7 @@ switch (foo) {
 
 👎 Examples of incorrect code
 
-```tsx
+```typescript
 if (foo === 1) {
     // 1
 } else if (foo === 2) {
@@ -12483,7 +12574,7 @@ where 'simple' means the consequent and alternate are each one line and have the
 
 👍 Examples of correct code
 
-```tsx
+```typescript
 function func() {
     return test ? a : b;
 }
@@ -12526,7 +12617,7 @@ if (test) {
 
 👎 Examples of incorrect code
 
-```tsx
+```typescript
 function func() {
     if (test) {
         return a;
@@ -12571,7 +12662,7 @@ Enforces newlines between the operands of a ternary expression if the expression
 
 👍 Examples of correct code
 
-```tsx
+```typescript
 foo > bar ? value1 : value2;
 
 foo > bar ?
@@ -12596,7 +12687,7 @@ foo > bar &&
 
 👎 Examples of incorrect code
 
-```tsx
+```typescript
 foo > bar ? value1 :
     value2;
 
@@ -12618,7 +12709,7 @@ Code is written only once, but read many times.
 
 👍 Examples of correct code
 
-```tsx
+```typescript
 const error = new Error();
 const event = document.createEvent('Event');
 const levels = {
@@ -12636,7 +12727,7 @@ this.evt = 'click';
 
 👎 Examples of incorrect code
 
-```tsx
+```typescript
 const e = new Error();
 const e = document.createEvent('Event');
 class Btn {}
@@ -12652,13 +12743,13 @@ Enforce consistent relative URL style
 
 👍 Examples of correct code
 
-```tsx
+```typescript
 const url = new URL('foo', base);
 ```
 
 👎 Examples of incorrect code
 
-```tsx
+```typescript
 const url = new URL('./foo', base)
 ```
 
@@ -12674,7 +12765,7 @@ instead of relying on the default comma (',') separator.
 
 👍 Examples of correct code
 
-```tsx
+```typescript
 const string = array.join(',');
 const string = array.join('|');
 const string = Array.prototype.join.call(arrayLike, '');
@@ -12683,7 +12774,7 @@ const string = [].join.call(arrayLike, '\n');
 
 👎 Examples of incorrect code
 
-```tsx
+```typescript
 const string = array.join();
 const string = Array.prototype.join.call(arrayLike);
 const string = [].join.call(arrayLike);
@@ -12702,7 +12793,7 @@ instead of relying on the default value of 0.
 
 👍 Examples of correct code
 
-```tsx
+```typescript
 const string = foo.toFixed(0);
 const string = foo.toFixed(2);
 const integer = Math.floor(foo);
@@ -12713,7 +12804,7 @@ const integer = Math.trunc(foo);
 
 👎 Examples of incorrect code
 
-```tsx
+```typescript
 const string = number.toFixed();
 ```
 
@@ -12727,7 +12818,7 @@ Fix whitespace-insensitive template indentation
 
 👍 Examples of correct code
 
-```tsx
+```typescript
 function foo() {
     const sqlQuery = sql`
         select *
@@ -12753,7 +12844,7 @@ function foo() {
 
 👎 Examples of incorrect code
 
-```tsx
+```typescript
 function foo() {
     const sqlQuery = sql`
 select *
@@ -12774,6 +12865,1098 @@ and last_name = ${y}
                         <span>hello</span>
                 </div>
     `;
+}
+```
+
+## Adjacent Overload Signatures
+
+----------
+
+Function overload signatures represent multiple ways a function can be called, potentially with different return types.
+It's typical for an interface or type alias describing a function to place all overload signatures next to each other.
+If Signatures placed elsewhere in the type are easier to be missed by future developers reading the code.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/adjacent-overload-signatures.md>
+
+👍 Examples of correct code
+
+```typescript
+declare namespace Foo {
+  export function foo(s: string): void;
+  export function foo(n: number): void;
+  export function foo(sn: string | number): void;
+  export function bar(): void;
+}
+
+type Foo = {
+  foo(s: string): void;
+  foo(n: number): void;
+  foo(sn: string | number): void;
+  bar(): void;
+};
+
+interface Foo {
+  foo(s: string): void;
+  foo(n: number): void;
+  foo(sn: string | number): void;
+  bar(): void;
+}
+
+class Foo {
+  foo(s: string): void;
+  foo(n: number): void;
+  foo(sn: string | number): void {}
+  bar(): void {}
+}
+
+export function bar(): void;
+export function foo(s: string): void;
+export function foo(n: number): void;
+export function foo(sn: string | number): void;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+declare namespace Foo {
+  export function foo(s: string): void;
+  export function foo(n: number): void;
+  export function bar(): void;
+  export function foo(sn: string | number): void;
+}
+
+type Foo = {
+  foo(s: string): void;
+  foo(n: number): void;
+  bar(): void;
+  foo(sn: string | number): void;
+};
+
+interface Foo {
+  foo(s: string): void;
+  foo(n: number): void;
+  bar(): void;
+  foo(sn: string | number): void;
+}
+
+class Foo {
+  foo(s: string): void;
+  foo(n: number): void;
+  bar(): void {}
+  foo(sn: string | number): void {}
+}
+
+export function foo(s: string): void;
+export function foo(n: number): void;
+export function bar(): void;
+export function foo(sn: string | number): void;
+```
+
+## Ban Ts Comment
+
+----------
+
+TypeScript provides several directive comments that can be used to alter how it processes files.
+Using these to suppress TypeScript compiler errors reduces the effectiveness of TypeScript overall.
+Instead, it's generally better to correct the types of code, to make directives unnecessary.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/ban-ts-comment.md>
+
+👍 Examples of correct code
+
+```typescript
+if (false) {
+  // @ts-ignore: Unreachable code error
+  console.log('hello');
+}
+if (false) {
+  /*
+  @ts-ignore: Unreachable code error
+  */
+  console.log('hello');
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+if (false) {
+  // Compiler warns about unreachable code error
+  console.log('hello');
+}
+
+if (false) {
+  // @ts-expect-error: Unreachable code error
+  console.log('hello');
+}
+if (false) {
+  /*
+  @ts-expect-error: Unreachable code error
+  */
+  console.log('hello');
+}
+```
+
+## Ban Tslint Comment
+
+----------
+
+Useful when migrating from TSLint to ESLint. Once TSLint has been removed,
+this rule helps locate TSLint annotations (e.g. // tslint:disable).
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/ban-tslint-comment.md>
+
+👍 Examples of correct code
+
+```typescript
+// This is a comment that just happens to mention tslint
+/* This is a multiline comment that just happens to mention tslint */
+someCode(); // This is a comment that just happens to mention tslint
+```
+
+👎 Examples of incorrect code
+
+```typescript
+/* tslint:disable */
+/* tslint:enable */
+/* tslint:disable:rule1 rule2 rule3... */
+/* tslint:enable:rule1 rule2 rule3... */
+// tslint:disable-next-line
+someCode(); // tslint:disable-line
+// tslint:disable-next-line:rule1 rule2 rule3...
+```
+
+## Class Literal Property Style
+
+----------
+
+This style checks for any getter methods that return literal values,
+and requires them to be defined using fields with the readonly modifier instead.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/class-literal-property-style.md>
+
+👍 Examples of correct code
+
+```typescript
+class Mx {
+  public readonly myField1 = 1;
+
+  // not a literal
+  public readonly myField2 = [1, 2, 3];
+
+  private readonly ['myField3'] = 'hello world';
+
+  public get myField4() {
+    return `hello from ${window.location.href}`;
+  }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+class Mx {
+  public static get myField1() {
+    return 1;
+  }
+
+  private get ['myField2']() {
+    return 'hello world';
+  }
+}
+```
+
+## Consistent Generic Constructors
+
+----------
+
+When constructing a generic class, you can specify the type arguments on either the left-hand side
+(as a type annotation) or the right-hand side (as part of the constructor call):
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/consistent-generic-constructors.md>
+
+👍 Examples of correct code
+
+```typescript
+const map = new Map<string, number>();
+const map: Map<string, number> = new MyMap();
+const set = new Set<string>();
+const set = new Set();
+const set: Set<string> = new Set<string>();
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const map: Map<string, number> = new Map();
+const set: Set<string> = new Set();
+```
+
+## Consistent Indexed Object Style
+
+----------
+
+TypeScript supports defining arbitrary object keys using an index signature.
+TypeScript also has a builtin type named Record to create an empty object defining only an index signature.
+For example, the following types are equal:
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/consistent-indexed-object-style.md>
+
+👍 Examples of correct code
+
+```typescript
+type Foo = Record<string, unknown>;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+interface Foo {
+  [key: string]: unknown;
+}
+
+type Foo = {
+  [key: string]: unknown;
+};
+```
+
+## Consistent Type Assertions
+
+----------
+
+This rule aims to standardize the use of type assertion style across the codebase.
+Keeping to one syntax consistently helps with code readability.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/consistent-type-assertions.md>
+
+👍 Examples of correct code
+
+```typescript
+const x: T = { ... };
+const y = { ... } as any;
+const z = { ... } as unknown;
+foo({ ... } as T);
+new Clazz({ ... } as T);
+function foo() { throw { bar: 5 } as Foo }
+const foo = <Foo props={{ ... } as Bar}/>;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const x = { ... } as T;
+
+function foo() {
+  return { ... } as T;
+}
+```
+
+## Consistent Type Definitions
+
+----------
+
+TypeScript provides two common ways to define an object type: interface and type.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/consistent-type-definitions.md>
+
+👍 Examples of correct code
+
+```typescript
+type T = string;
+type Foo = string | {};
+
+interface T {
+  x: number;
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+type T = { x: number };
+```
+
+## Consistent Type Exports
+
+----------
+
+TypeScript allows specifying a keyword on exports to indicate that the export exists only in the type system,
+not at runtime. This allows transpilers to drop exports without knowing the types of the dependencies.type
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/consistent-type-exports.md>
+
+👍 Examples of correct code
+
+```typescript
+const x = 1;
+type T = number;
+
+export { x, type T };
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const x = 1;
+type T = number;
+
+export { x, T };
+```
+
+## Consistent Type Imports
+
+----------
+
+TypeScript allows specifying a type keyword on imports to indicate that the export exists only in the type system,
+not at runtime. This allows transpilers to drop imports without knowing the types of the dependencies.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/consistent-type-imports.md>
+
+👍 Examples of correct code
+
+```typescript
+import { type Foo } from 'Foo';
+import type Bar from 'Bar';
+type T = Foo;
+const x: Bar = 1;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+import type { Foo } from 'Foo';
+
+// or
+
+import { Foo } from 'Foo';
+import Bar from 'Bar';
+type T = Foo;
+const x: Bar = 1;
+```
+
+## Member Delimiter Style
+
+----------
+
+TypeScript allows three delimiters between members in interfaces and type aliases:
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/member-delimiter-style.md>
+
+👍 Examples of correct code
+
+```typescript
+interface Foo {
+    name: string;
+    greet(): string;
+}
+
+interface Foo { name: string }
+
+type Bar = {
+    name: string;
+    greet(): string;
+}
+
+type Bar = { name: string }
+
+type FooBar = { name: string; greet(): string }
+```
+
+👎 Examples of incorrect code
+
+```typescript
+// missing semicolon delimiter
+interface Foo {
+    name: string
+    greet(): string
+}
+
+// using incorrect delimiter
+interface Bar {
+    name: string,
+    greet(): string,
+}
+
+// missing last member delimiter
+interface Baz {
+    name: string;
+    greet(): string
+}
+
+// incorrect delimiter
+type FooBar = { name: string, greet(): string }
+
+// last member should not have delimiter
+type FooBar = { name: string; greet(): string; }
+```
+
+## Member Ordering
+
+----------
+
+This rule aims to standardize the way classes, interfaces, and type literals are structured and ordered.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/member-ordering.md>
+
+👍 Examples of correct code
+
+```typescript
+[
+  // Index signature
+  "signature",
+
+  // Fields
+  "public-static-field",
+  "protected-static-field",
+  "private-static-field",
+  "#private-static-field",
+
+  "public-decorated-field",
+  "protected-decorated-field",
+  "private-decorated-field",
+
+  "public-instance-field",
+  "protected-instance-field",
+  "private-instance-field",
+  "#private-instance-field",
+
+  "public-abstract-field",
+  "protected-abstract-field",
+
+  "public-field",
+  "protected-field",
+  "private-field",
+  "#private-field",
+
+  "static-field",
+  "instance-field",
+  "abstract-field",
+
+  "decorated-field",
+
+  "field",
+
+  // Static initialization
+  "static-initialization",
+
+  // Constructors
+  "public-constructor",
+  "protected-constructor",
+  "private-constructor",
+
+  // Getters
+  "public-static-get",
+  "protected-static-get",
+  "private-static-get",
+  "#private-static-get",
+
+  "public-decorated-get",
+  "protected-decorated-get",
+  "private-decorated-get",
+
+  "public-instance-get",
+  "protected-instance-get",
+  "private-instance-get",
+  "#private-instance-get",
+
+  "public-abstract-get",
+  "protected-abstract-get",
+
+  "public-get",
+  "protected-get",
+  "private-get",
+  "#private-get",
+
+  "static-get",
+  "instance-get",
+  "abstract-get",
+
+  "decorated-get",
+
+  "get",
+
+  // Setters
+  "public-static-set",
+  "protected-static-set",
+  "private-static-set",
+  "#private-static-set",
+
+  "public-decorated-set",
+  "protected-decorated-set",
+  "private-decorated-set",
+
+  "public-instance-set",
+  "protected-instance-set",
+  "private-instance-set",
+  "#private-instance-set",
+
+  "public-abstract-set",
+  "protected-abstract-set",
+
+  "public-set",
+  "protected-set",
+  "private-set",
+
+  "static-set",
+  "instance-set",
+  "abstract-set",
+
+  "decorated-set",
+
+  "set",
+
+  // Methods
+  "public-static-method",
+  "protected-static-method",
+  "private-static-method",
+  "#private-static-method",
+  "public-decorated-method",
+  "protected-decorated-method",
+  "private-decorated-method",
+  "public-instance-method",
+  "protected-instance-method",
+  "private-instance-method",
+  "#private-instance-method",
+  "public-abstract-method",
+  "protected-abstract-method"
+]
+```
+
+👎 Examples of incorrect code
+
+```typescript
+// another order
+```
+
+## No Confusing Non Null Assertion
+
+----------
+
+Using a non-null assertion (!) next to an assign or equals check (= or == or ===)
+creates code that is confusing as it looks similar to a not equals check (!= !==).
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-confusing-non-null-assertion.md>
+
+👍 Examples of correct code
+
+```typescript
+interface Foo {
+  bar?: string;
+  num?: number;
+}
+
+const foo: Foo = getFoo();
+const isEqualsBar = foo.bar === "hello";
+const isEqualsNum = 1 + foo.num! === 2;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+interface Foo {
+  bar?: string;
+  num?: number;
+}
+
+const foo: Foo = getFoo();
+const isEqualsBar = foo.bar! == 'hello';
+const isEqualsNum = 1 + foo.num! == 2;
+```
+
+## No Extra Non Null Assertion
+
+----------
+
+The ! non-null assertion operator in TypeScript is used to assert that a value's type does not include null or undefined.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-extra-non-null-assertion.md>
+
+👍 Examples of correct code
+
+```typescript
+const foo: { bar: number } | null = null;
+const bar = foo!.bar;
+function foo(bar: number | undefined) {
+  const bar: number = bar!;
+}
+function foo(bar?: { n: number }) {
+  return bar?.n;
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const foo: { bar: number } | null = null;
+const bar = foo!!!.bar;
+function foo(bar: number | undefined) {
+  const bar: number = bar!!!;
+}
+function foo(bar?: { n: number }) {
+  return bar!?.n;
+}
+```
+
+## No For In Array
+
+----------
+
+A for-in loop (for (var i in o)) iterates over the properties of an Object.
+While it is legal to use for-in loops with array types, it is not common.
+for-in will iterate over the indices of the array as strings, omitting any "holes" in the array.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-for-in-array.md>
+
+👍 Examples of correct code
+
+```typescript
+for (const value of array) {
+  console.log(value);
+}
+
+for (const [ index, value ] of array.entries()) {
+    console.log(index, value);
+}
+
+```
+
+👎 Examples of incorrect code
+
+```typescript
+for (const i in array) {
+  console.log(array[i]);
+}
+
+for (const i in array) {
+  console.log(i, array[i]);
+}
+```
+
+## No Inferrable Type
+
+----------
+
+TypeScript is able to infer the types of parameters, properties, and variables from their default or initial values.
+There is no need to use an explicit : type annotation on one of those constructs initialized to a boolean, number,
+or string.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-inferrable-types.md>
+
+👍 Examples of correct code
+
+```typescript
+const a = 10n;
+const a = BigInt(10);
+const a = !0;
+const a = Boolean(null);
+const a = true;
+const a = null;
+const a = 10;
+const a = Infinity;
+const a = NaN;
+const a = Number('1');
+const a = /a/;
+const a = new RegExp('a');
+const a = `str`;
+const a = String(1);
+const a = Symbol('a');
+const a = undefined;
+const a = void someValue;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const a: bigint = 10n;
+const a: bigint = BigInt(10);
+const a: boolean = !0;
+const a: boolean = Boolean(null);
+const a: boolean = true;
+const a: null = null;
+const a: number = 10;
+const a: number = Infinity;
+const a: number = NaN;
+const a: number = Number('1');
+const a: RegExp = /a/;
+const a: RegExp = new RegExp('a');
+const a: string = `str`;
+const a: string = String(1);
+const a: symbol = Symbol('a');
+const a: undefined = undefined;
+const a: undefined = void someValue;
+```
+
+## No This Alias
+
+----------
+
+Assigning a variable to this instead of properly using arrow lambdas may be a symptom of pre-ES6 practices or
+not managing scope well.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-this-alias.md>
+
+👍 Examples of correct code
+
+```typescript
+setTimeout(() => {
+  this.doWork();
+});
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const self = this;
+
+setTimeout(function () {
+  self.doWork();
+});
+```
+
+## Non Nullable Type Assertion Style
+
+----------
+
+!: Non-null assertion
+as: Traditional type assertion with a coincidentally equivalent type
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/non-nullable-type-assertion-style.md>
+
+👍 Examples of correct code
+
+```typescript
+const maybe = Math.random() > 0.5 ? '' : undefined;
+
+const definitely = maybe!;
+const alsoDefinitely = maybe!;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const maybe = Math.random() > 0.5 ? '' : undefined;
+
+const definitely = maybe as string;
+const alsoDefinitely = <string>maybe;
+```
+
+## Parameter Properties
+
+----------
+
+The constructor parameter is assigned to the class property at the beginning of the constructor
+
+<http://link.com>
+
+👍 Examples of correct code
+
+```typescript
+class Foo {
+  constructor(readonly name: string) {}
+}
+
+class Foo {
+  constructor(private name: string) {}
+}
+
+class Foo {
+  constructor(protected name: string) {}
+}
+
+class Foo {
+  constructor(public name: string) {}
+}
+
+class Foo {
+  constructor(private readonly name: string) {}
+}
+
+class Foo {
+  constructor(protected readonly name: string) {}
+}
+
+class Foo {
+  constructor(public readonly name: string) {}
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+class Foo {
+  constructor(name: string) {
+    this.name = name;
+  }
+}
+```
+
+## Prefer Enum Initializers
+
+----------
+
+TypeScript enums are a practical way to organize semantically related constant values.
+Members of enums thatdon't have explicit values are by default given sequentially increasing numbers.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/prefer-enum-initializers.md>
+
+👍 Examples of correct code
+
+```typescript
+enum Status {
+  Open = 'Open',
+  Close = 'Close',
+}
+
+enum Direction {
+  Up = 1,
+  Down = 2,
+}
+
+enum Color {
+  Red = 'Red',
+  Green = 'Green',
+  Blue = 'Blue',
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+enum Status {
+  Open = 1,
+  Close,
+}
+
+enum Direction {
+  Up,
+  Down,
+}
+
+enum Color {
+  Red,
+  Green = 'Green'
+  Blue = 'Blue',
+}
+```
+
+## Prefer Function Type
+
+----------
+
+TypeScript allows for two common ways to declare a type for a function:
+
+Function type: () => string
+Object type with a signature: { (): string }
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/prefer-function-type.md>
+
+👍 Examples of correct code
+
+```typescript
+type Example = () => string;
+function foo(example: () => number): number {
+  return bar();
+}
+// returns the function itself, not the `this` argument.
+type ReturnsSelf = (arg: string) => ReturnsSelf;
+function foo(bar: { (): string; baz: number }): string {
+  return bar();
+}
+interface Foo {
+  bar: string;
+}
+interface Bar extends Foo {
+  (): void;
+}
+// multiple call signatures (overloads) is allowed:
+interface Overloaded {
+  (data: string): number;
+  (id: number): string;
+}
+// this is equivelent to Overloaded interface.
+type Intersection = ((data: string) => number) & ((id: number) => string);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+interface Example {
+  (): string;
+}
+function foo(example: { (): number }): number {
+  return example();
+}
+interface ReturnsSelf {
+  // returns the function itself, not the `this` argument.
+  (arg: string): this;
+}
+```
+
+## Prefer Namespace Keyword
+
+----------
+
+TypeScript historically allowed a form of code organization called "custom modules" (module Example {}),
+later renamed to "namespaces" (namespace Example).
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/prefer-namespace-keyword.md>
+
+👍 Examples of correct code
+
+```typescript
+namespace Example {}
+
+declare module 'foo' {}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+module Example {}
+
+```
+
+## Prefer Nullish Coalescing
+
+----------
+
+The ?? nullish coalescing runtime operator allows providing a default value when dealing with null or undefined.
+Because the nullish coalescing operator only coalesces when the original value is null or undefined, it is much
+safer than relying upon logical OR operator chaining ||, which coalesces on any falsy value.
+
+This rule reports when an || operator can be safely replaced with a ??.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/prefer-nullish-coalescing.md>
+
+👍 Examples of correct code
+
+```typescript
+const foo: any = 'bar';
+foo ?? 'a string';
+foo ?? 'a string';
+foo ?? 'a string';
+foo ?? 'a string';
+
+const foo: string | undefined = 'bar';
+foo ?? 'a string';
+foo ?? 'a string';
+
+const foo: string | null = 'bar';
+foo ?? 'a string';
+foo ?? 'a string';
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const foo: any = 'bar';
+foo !== undefined && foo !== null ? foo : 'a string';
+foo === undefined || foo === null ? 'a string' : foo;
+foo == undefined ? 'a string' : foo;
+foo == null ? 'a string' : foo;
+
+const foo: string | undefined = 'bar';
+foo !== undefined ? foo : 'a string';
+foo === undefined ? 'a string' : foo;
+
+const foo: string | null = 'bar';
+foo !== null ? foo : 'a string';
+foo === null ? 'a string' : foo;
+```
+
+## Prefer Optional Chain
+
+----------
+
+This rule reports on code where an && operator can be safely replaced with ?. optional chaining.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/prefer-optional-chain.md>
+
+👍 Examples of correct code
+
+```typescript
+foo?.a?.b?.c;
+foo?.['a']?.b?.c;
+foo?.a?.b?.method?.();
+
+foo?.a?.b?.c?.d?.e;
+
+!foo?.bar;
+!foo?.[bar];
+!foo?.bar?.baz?.();
+```
+
+👎 Examples of incorrect code
+
+```typescript
+foo && foo.a && foo.a.b && foo.a.b.c;
+foo && foo['a'] && foo['a'].b && foo['a'].b.c;
+foo && foo.a && foo.a.b && foo.a.b.method && foo.a.b.method();
+
+// With empty objects
+(((foo || {}).a || {}).b || {}).c;
+(((foo || {})['a'] || {}).b || {}).c;
+
+// With negated `or`s
+!foo || !foo.bar;
+!foo || !foo[bar];
+!foo || !foo.bar || !foo.bar.baz || !foo.bar.baz();
+
+// this rule also supports converting chained strict nullish checks:
+foo &&
+  foo.a != null &&
+  foo.a.b !== null &&
+  foo.a.b.c != undefined &&
+  foo.a.b.c.d !== undefined &&
+  foo.a.b.c.d.e;
+```
+
+## Prefer Readonly
+
+----------
+
+This rule reports on private members are marked as readonly if they're never modified outside of the constructor.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/prefer-readonly.md>
+
+👍 Examples of correct code
+
+```typescript
+class Container {
+
+  // Public members might be modified externally
+  public publicMember: boolean;
+
+  // Protected members might be modified by child classes
+  protected protectedMember: number;
+
+  // This is modified later on by the class
+  private modifiedLater = 'unchanged';
+
+  private readonly myProp = 'readonly';
+
+  public mutate() {
+    this.modifiedLater = 'mutated';
+  }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+class Container {
+
+  // These member variables could be marked as readonly
+  private neverModifiedMember = true;
+  private onlyModifiedInConstructor: number;
+
+  public constructor(
+    onlyModifiedInConstructor: number,
+    // Private parameter properties can also be marked as readonly
+    private neverModifiedParameter: string,
+  ) {
+    this.onlyModifiedInConstructor = onlyModifiedInConstructor;
+  }
 }
 ```
 
@@ -14347,6 +15530,54 @@ export { foo };
 const foo = 1;
 ```
 
+### No Base To String
+
+----------
+
+JavaScript will call toString() on an object when it is converted to a string,
+such as when + adding to a string or in ${} template literals.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-base-to-string.md>
+
+👍 Examples of correct code
+
+```typescript
+// These types all have useful .toString()s
+'Text' + true;
+`Value: ${123}`;
+`Arrays too: ${[1, 2, 3]}`;
+(() => {}).toString();
+
+// Defining a custom .toString class is considered acceptable
+class CustomToString {
+  toString() {
+    return 'Hello, world!';
+  }
+}
+`Value: ${new CustomToString()}`;
+
+const literalWithToString = {
+  toString: () => 'Hello, world!',
+};
+
+`Value: ${literalWithToString}`;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+// Passing an object or class instance to string concatenation:
+'' + {};
+
+class MyClass {}
+const value = new MyClass();
+value + '';
+
+// Interpolation and manual .toString() calls too:
+`Value: ${value}`;
+({}.toString());
+```
+
 ## Possible Errors
 
 ### For Direction
@@ -15170,6 +16401,315 @@ switch (foo) {
     default:
         class C {}
 }
+```
+
+### No Confusing Void Expression
+
+----------
+
+void in TypeScript refers to a function return that is meant to be ignored. Attempting to use a void-typed value,
+such as storing the result of a called function in a variable, is often a sign of a programmer error.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-confusing-void-expression.md>
+
+👍 Examples of correct code
+
+```typescript
+// just a regular void function in a statement position
+alert('Hello, world!');
+
+// this function returns a boolean value so it's ok
+const response = confirm('Are you sure?');
+console.log(confirm('Are you sure?'));
+
+// now it's obvious that `postMessage` doesn't return any response
+promise.then(value => {
+  window.postMessage(value);
+});
+
+// now it's explicit that we want to log the error and return early
+function doSomething() {
+  if (!somethingToDo) {
+    console.error('Nothing to do!');
+    return;
+  }
+
+  console.log('Doing a thing...');
+}
+
+// using logical expressions for their side effects is fine
+cond && console.log('true');
+cond || console.error('false');
+cond ? console.log('true') : console.error('false');
+```
+
+👎 Examples of incorrect code
+
+```typescript
+// somebody forgot that `alert` doesn't return anything
+const response = alert('Are you sure?');
+console.log(alert('Are you sure?'));
+
+// it's not obvious whether the chained promise will contain the response (fixable)
+promise.then(value => window.postMessage(value));
+
+// it looks like we are returning the result of `console.error` (fixable)
+function doSomething() {
+  if (!somethingToDo) {
+    return console.error('Nothing to do!');
+  }
+
+  console.log('Doing a thing...');
+}
+```
+
+### No Duplicate Enum Values
+
+----------
+
+Although TypeScript supports duplicate enum member values, people usually expect members to have unique values within
+the same enum. Duplicate values can lead to bugs that are hard to track down.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-duplicate-enum-values.md>
+
+👍 Examples of correct code
+
+```typescript
+enum E {
+  A = 0,
+  B = 1,
+}
+enum E {
+  A = 'A',
+  B = 'B',
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+enum E {
+  A = 0,
+  B = 0,
+}
+enum E {
+  A = 'A',
+  B = 'A',
+}
+```
+
+### No Floating Promises
+
+----------
+
+A "floating" Promise is one that is created without any code set up to handle any errors it might throw.
+Floating Promises can cause several issues, such as improperly sequenced operations, ignored Promise rejections,
+and more.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-floating-promises.md>
+
+👍 Examples of correct code
+
+```typescript
+const promise = new Promise((resolve, reject) => resolve('value'));
+await promise;
+
+async function returnsPromise() {
+  return 'value';
+}
+returnsPromise()
+    .then(() => {})
+    .catch(() => {});
+
+Promise.reject('value').catch(() => {});
+
+Promise.reject('value').finally(() => {});
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const promise = new Promise((resolve, reject) => resolve('value'));
+promise;
+
+async function returnsPromise() {
+  return 'value';
+}
+
+returnsPromise().then(() => {});
+
+Promise.reject('value').catch();
+
+Promise.reject('value').finally();
+```
+
+### No Invalid Void Type
+
+----------
+
+void in TypeScript refers to a function return that is meant to be ignored. Attempting to use a void type outside of
+a return type or generic type argument is often a sign of programmer error.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-invalid-void-type.md>
+
+👍 Examples of correct code
+
+```typescript
+type NoOp = () => void;
+
+function noop(): void {}
+
+let trulyUndefined = void 0;
+
+async function promiseMeSomething(): Promise<void> {}
+
+type stillVoid = void | never;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+type PossibleValues = string | number | void;
+type MorePossibleValues = string | ((number & any) | (string | void));
+
+function logSomething(thing: void) {}
+function printArg<T = void>(arg: T) {}
+
+logAndReturn<void>(undefined);
+
+interface Interface {
+  lambda: () => void;
+  prop: void;
+}
+
+class MyClass {
+  private readonly propName: void;
+}
+```
+
+### No Non Null Asserted Nullish Coalescing
+
+----------
+
+The ?? nullish coalescing runtime operator allows providing a default value when dealing with null or undefined.
+Using a ! non-null assertion type operator in the left operand of a nullish coalescing operator is redundant,
+and likely a sign of programmer error or confusion over the two operators.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-non-null-asserted-nullish-coalescing.md>
+
+👍 Examples of correct code
+
+```typescript
+foo ?? bar;
+foo ?? bar!;
+foo!.bazz ?? bar;
+foo!.bazz ?? bar!;
+foo() ?? bar;
+
+// This is considered correct code because there's no way for the user to satisfy it.
+let x: string;
+x! ?? '';
+```
+
+👎 Examples of incorrect code
+
+```typescript
+foo! ?? bar;
+foo.bazz! ?? bar;
+foo!.bazz! ?? bar;
+foo()! ?? bar;
+
+let x!: string;
+x! ?? '';
+
+let x: string;
+x = foo();
+x! ?? '';
+```
+
+### No Non Null Asserted Optional Chain
+
+----------
+
+?. optional chain expressions provide undefined if an object is null or undefined.
+Using a ! non-null assertion to assert the result of an ?. optional chain expression is non-nullable is likely wrong.
+
+Most of the time, either the object was not nullable and did not need the ?. for its property lookup,
+or the ! is incorrect and introducing a type safety hole.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-non-null-asserted-optional-chain.md>
+
+👍 Examples of correct code
+
+```typescript
+foo?.bar;
+foo?.bar();
+
+foo.bar!;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+foo?.bar!;
+foo?.bar()!;
+```
+
+## No Unsafe Declaration Merging
+
+----------
+
+TypeScript's "declaration merging" supports merging separate declarations with the same name.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-unsafe-declaration-merging.md>
+
+👍 Examples of correct code
+
+```typescript
+interface Foo {}
+class Bar implements Foo {}
+
+namespace Baz {}
+namespace Baz {}
+enum Baz {}
+
+namespace Qux {}
+function Qux() {}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+interface Foo {}
+
+class Foo {}
+```
+
+## No Useless Empty Export
+
+----------
+
+An empty export {} statement is sometimes useful in TypeScript code to turn a file that would otherwise be a script
+file into a module file.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-useless-empty-export.md>
+
+👍 Examples of correct code
+
+```typescript
+export const value = 'Hello, world!';
+export {};
+// or
+import 'some-other-module';
+export {};
+```
+
+👎 Examples of incorrect code
+
+```typescript
+export const value = 'Hello, world!';
+// or
+import 'some-other-module';
 ```
 
 ## Yaml Json

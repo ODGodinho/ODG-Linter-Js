@@ -90,6 +90,8 @@ module.exports = {
             extends: [
                 "./rules/typescript/best-practices.js",
                 "./rules/typescript/errors.js",
+                "./rules/typescript/security.js",
+                "./rules/typescript/possible-errors.js",
             ],
             parser: "@typescript-eslint/parser",
             parserOptions: {

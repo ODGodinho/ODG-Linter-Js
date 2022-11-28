@@ -29,7 +29,13 @@ module.exports = {
         "default-param-last": [ "off" ], // Parâmetros default devem ficar no final
         "@typescript-eslint/default-param-last": [ "error" ], // Parâmetros default devem ficar no final
         "comma-spacing": [ "off" ],
-        "@typescript-eslint/comma-spacing": [ "error" ], // Espaço apos a virgula
+        "@typescript-eslint/comma-spacing": [
+            "error",
+            {
+                before: false,
+                after: true,
+            },
+        ], // Espaço apos a virgula
         "comma-dangle": [ "off" ],
         "@typescript-eslint/comma-dangle": [ "error", {
             arrays: "always-multiline",
@@ -60,12 +66,57 @@ module.exports = {
             checksConditionals: false, // Bloqueia condições if de promises sem await
         } ],
         "@typescript-eslint/no-misused-new": [ "error" ], // Não utilize new de forma incorreta em classes/interface
-        "@typescript-eslint/ban-types": [ "error" ], // Troques String -> string, Number -> number e etc
+        "@typescript-eslint/ban-types": [
+            "error",
+            {
+                extendDefaults: false,
+                types: {
+                    "BigInt": {
+                        message: "Use `bigint` instead.",
+                        fixWith: "bigint",
+                    },
+                    "Boolean": {
+                        message: "Use `boolean` instead.",
+                        fixWith: "boolean",
+                    },
+                    "Number": {
+                        message: "Use `number` instead.",
+                        fixWith: "number",
+                    },
+                    "Object": {
+                        message: "The `Object` type is mostly the same as `unknown`. You probably want `Record<string, unknown>` instead. See https://github.com/typescript-eslint/typescript-eslint/pull/848",
+                        fixWith: "Record<string, unknown>",
+                    },
+                    "String": {
+                        message: "Use `string` instead.",
+                        fixWith: "string",
+                    },
+                    "Symbol": {
+                        message: "Use `symbol` instead.",
+                        fixWith: "symbol",
+                    },
+                    "{}": {
+                        // eslint-disable-next-line max-len
+                        message: "The `{}` type is mostly the same as `unknown`. You probably want `Record<string, unknown>` instead.",
+                        fixWith: "Record<string, unknown>",
+                    },
+                    "object": {
+                        message: "The `object` type is hard to use. Use `Record<string, unknown>` instead. See: https://github.com/typescript-eslint/typescript-eslint/pull/848",
+                        fixWith: "Record<string, unknown>",
+                    },
+                    "Function": "Use a specific function type instead, like `() => void`.",
+                    "[]": "Don't use the empty array type `[]`. It only allows empty arrays. Use `SomeType[]` instead.",
+                    "[[]]": "Don't use `[[]]`. Use `SomeType[][]` instead.",
+                    "[[[]]]": "Don't use `[[[]]]`. Use `SomeType[][][]` instead.",
+                    "[[[[]]]]": "🗿🍷 Senhores. Convocando uma reunião",
+                    "[[[[[]]]]]": "🗿🍷 Senhores. Temos um código todo cracudo 🦄🔥",
+                },
+            },
+        ], // Troques String -> string, Number -> number e etc
         "@typescript-eslint/no-explicit-any": [ "error" ], // Não permite usar any
         "no-empty-function": [ "off" ], // Não permite funções vazias
         "@typescript-eslint/no-empty-function": [ "error" ], // Não permite funções vazias
         "no-duplicate-imports": [ "off" ], // Bloqueia import duplicado
-        "@typescript-eslint/no-duplicate-imports": [ "error" ], // Bloqueia import Duplicado
         "@typescript-eslint/no-unnecessary-type-constraint": [
             "error",
         ], // Não permite restrições de tipo desnecessárias <T extends any>
@@ -122,5 +173,318 @@ module.exports = {
             { "blankLine": "always", "prev": "type", "next": "*" }, // Uma linha em branco apos o type
             { "blankLine": "always", "prev": "multiline-block-like", "next": "*" },
         ],
-    },
+        "@typescript-eslint/adjacent-overload-signatures": [ "error" ], // Força overload interface ficarem juntos
+        "@typescript-eslint/ban-ts-comment": [
+            "error",
+            {
+                "ts-expect-error": "allow-with-description",
+                "minimumDescriptionLength": 4,
+            },
+        ], // Bloqueia o uso de // ts-ignore
+        "@typescript-eslint/ban-tslint-comment": [ "error" ], // Não use Tslint comentários
+        "@typescript-eslint/class-literal-property-style": [
+            "error",
+            "fields",
+        ], // De preferencia a field readonly nas classes
+        "@typescript-eslint/consistent-generic-constructors": [
+            "error",
+            "constructor",
+        ],
+        "@typescript-eslint/consistent-indexed-object-style": [
+            "error",
+            "record",
+        ], // Use Record ao invés de [key: string]: any
+        "@typescript-eslint/consistent-type-assertions": [
+            "error",
+            {
+                assertionStyle: "as",
+                objectLiteralTypeAssertions: "allow-as-parameter",
+            },
+        ], // Use as somente necessário
+        "@typescript-eslint/consistent-type-definitions": [ "error", "interface" ], // Use interface ao invés de type
+        "@typescript-eslint/consistent-type-exports": [
+            "error",
+            {
+                fixMixedExportsWithInlineTypeSpecifier: true,
+            },
+        ],
+        "@typescript-eslint/consistent-type-imports": [
+            "error",
+            {
+                fixStyle: "inline-type-imports",
+            },
+        ],
+        "@typescript-eslint/member-delimiter-style": [
+            "error",
+            {
+                multiline: {
+                    delimiter: "semi",
+                    requireLast: true,
+                },
+                singleline: {
+                    delimiter: "semi",
+                    requireLast: false,
+                },
+            },
+        ], // Type e interface usa ;
+        "@typescript-eslint/member-ordering": [
+            "error",
+            {
+                "default": [
+                    "signature",
+                    "call-signature",
+
+                    "public-static-field",
+                    "protected-static-field",
+                    "private-static-field",
+
+                    "public-decorated-field",
+                    "protected-decorated-field",
+                    "private-decorated-field",
+
+                    "public-instance-field",
+                    "protected-instance-field",
+                    "private-instance-field",
+
+                    "public-abstract-field",
+                    "protected-abstract-field",
+
+                    "public-field",
+                    "protected-field",
+                    "private-field",
+
+                    "static-field",
+                    "instance-field",
+                    "abstract-field",
+
+                    "decorated-field",
+
+                    "field",
+
+                    // Static initialization
+                    "static-initialization",
+
+                    // Constructors
+                    "public-constructor",
+                    "protected-constructor",
+                    "private-constructor",
+
+                    "constructor",
+
+                    // Getters
+                    "public-static-get",
+                    "protected-static-get",
+                    "private-static-get",
+
+                    "public-decorated-get",
+                    "protected-decorated-get",
+                    "private-decorated-get",
+
+                    "public-instance-get",
+                    "protected-instance-get",
+                    "private-instance-get",
+
+                    "public-abstract-get",
+                    "protected-abstract-get",
+
+                    "public-get",
+                    "protected-get",
+                    "private-get",
+
+                    "static-get",
+                    "instance-get",
+                    "abstract-get",
+
+                    "decorated-get",
+
+                    "get",
+
+                    // Setters
+                    "public-static-set",
+                    "protected-static-set",
+                    "private-static-set",
+
+                    "public-decorated-set",
+                    "protected-decorated-set",
+                    "private-decorated-set",
+
+                    "public-instance-set",
+                    "protected-instance-set",
+                    "private-instance-set",
+
+                    "public-abstract-set",
+                    "protected-abstract-set",
+
+                    "public-set",
+                    "protected-set",
+                    "private-set",
+
+                    "static-set",
+                    "instance-set",
+                    "abstract-set",
+
+                    "decorated-set",
+
+                    "set",
+
+                    // Methods
+                    "public-static-method",
+                    "protected-static-method",
+                    "private-static-method",
+
+                    "public-decorated-method",
+                    "protected-decorated-method",
+                    "private-decorated-method",
+
+                    "public-instance-method",
+                    "protected-instance-method",
+                    "private-instance-method",
+
+                    "public-abstract-method",
+                    "protected-abstract-method",
+
+                    "public-method",
+                    "protected-method",
+                    "private-method",
+
+                    "static-method",
+                    "instance-method",
+                    "abstract-method",
+
+                    "decorated-method",
+
+                    "method",
+                ],
+            },
+        ],
+        "camelcase": [ "off" ], // Desliga camelcase usa convention
+        "@typescript-eslint/naming-convention": [
+            "error",
+            {
+
+                selector: [
+                    "variable",
+                    "function",
+                    "parameterProperty",
+                    "classMethod",
+                    "objectLiteralMethod",
+                    "typeMethod",
+                    "accessor",
+                ],
+                format: [
+                    "strictCamelCase",
+                ],
+
+                // We allow double underscore because of GraphQL type names and some React names.
+                leadingUnderscore: "allowSingleOrDouble",
+                trailingUnderscore: "allow",
+
+                // Ignore `{'Retry-After': retryAfter}` type properties.
+                filter: {
+                    regex: "[- ]",
+                    match: false,
+                },
+            },
+            {
+                selector: "classProperty",
+                format: [
+                    "strictCamelCase",
+                    "UPPER_CASE",
+                ],
+            },
+            {
+                selector: "typeLike",
+                format: [
+                    "StrictPascalCase",
+                ],
+            },
+            {
+                selector: "variable",
+                types: [
+                    "boolean",
+                ],
+                format: [
+                    "StrictPascalCase",
+                ],
+                prefix: [
+                    "is",
+                    "has",
+                    "can",
+                    "should",
+                    "will",
+                    "did",
+                ],
+            },
+            {
+
+                // Interface name should not be prefixed with `I`.
+                selector: "interface",
+                filter: /^(?!I)[A-Z]/.source,
+                format: [
+                    "StrictPascalCase",
+                ],
+            },
+            {
+
+                // Type parameter name should either be `T` or a descriptive name.
+                selector: "typeParameter",
+                filter: /^T$|^[A-Z][A-Za-z]+$/.source,
+                format: [
+                    "StrictPascalCase",
+                ],
+            },
+
+            // Allow these in non-camel-case when quoted.
+            {
+                selector: [
+                    "classProperty",
+                    "objectLiteralProperty",
+                ],
+                format: null,
+                modifiers: [
+                    "requiresQuotes",
+                ],
+            },
+        ],
+        "@typescript-eslint/no-confusing-non-null-assertion": [ "error" ], // Não faça afirmações de não nulo confusas
+        "@typescript-eslint/no-extra-non-null-assertion": [ "error" ], // Não faça afirmações extras "var!!!!.var2"
+        "@typescript-eslint/no-for-in-array": [ "error" ], // Não faça for in array
+        "@typescript-eslint/no-inferrable-types": [
+            "error",
+            { "ignoreParameters": true, "ignoreProperties": true },
+        ], // Não coloca type em props desnecessárias
+        "no-redeclare": [ "off" ], // Desliga JS
+        "@typescript-eslint/no-redeclare": [ "error" ], // Não faça redeclaração de variáveis
+        "@typescript-eslint/no-this-alias": [
+            "error",
+            {
+                allowDestructuring: true,
+            },
+        ], // Não faça alias de this
+
+        "@typescript-eslint/no-unnecessary-qualifier": [ "error" ],
+        "@typescript-eslint/no-unnecessary-type-arguments": [ "error" ],
+        "@typescript-eslint/no-unsafe-return": [ "error" ], // Sem return any
+        "@typescript-eslint/non-nullable-type-assertion-style": [ "error" ], // Prefira ! em vez de Cast
+        "@typescript-eslint/parameter-properties": [
+            "error",
+            {
+                prefer: "parameter-property",
+            },
+        ], // Prefira declaração param props
+        "@typescript-eslint/prefer-enum-initializers": [ "error" ], // Inicie as enums com valores
+        "@typescript-eslint/prefer-function-type": [ "error" ], // Prefira Type function ao invés de object
+        "@typescript-eslint/prefer-includes": [ "error" ], // Prefira Includes no typescript
+        "@typescript-eslint/prefer-namespace-keyword": [ "error" ], // Prefira namespace ao invés de module
+        "@typescript-eslint/prefer-nullish-coalescing": [
+            "error",
+            {
+                ignoreTernaryTests: false,
+                ignoreConditionalTests: false,
+                ignoreMixedLogicalExpressions: false,
+            },
+        ], // Use ?? em vez de ternário com &&
+        "@typescript-eslint/prefer-optional-chain": [ "error" ], // Prefira Optional chain ao invés de &&.
+        "@typescript-eslint/prefer-readonly": [ "error" ], // Prefira readonly
+    }, // Convenção de nomes
 };

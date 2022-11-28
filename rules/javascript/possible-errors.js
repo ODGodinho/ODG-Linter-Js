@@ -26,13 +26,6 @@ module.exports = {
         "no-octal-escape": [ "error" ], // Não use 071
         "no-octal": [ "error" ], // Use \ em unicode e hexadecimal
         "no-case-declarations": [ "error" ], // Use chaves em caso de declaração em switch case
-        "no-restricted-syntax": [
-            "error",
-            {
-                selector: "ImportDeclaration[specifiers.length = 0]",
-                message: "Empty imports are not allowed",
-            }, // Bloqueia imports vazios
-        ], // Bloqueio de syntax informadas
         "regex/invalid": [
             "error",
             [

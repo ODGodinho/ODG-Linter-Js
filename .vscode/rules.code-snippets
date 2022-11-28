@@ -1,0 +1,38 @@
+{
+    "@typescript-rule": {
+        "body": [ "\"@typescript-eslint/${1:rule}\": [ \"error\"${2:, ${3|\"\",{}|}} ], // ${4:Description}" ],
+        "description": "Log output to console",
+        "prefix": [
+            "@typescript-eslint",
+            "add-rule"
+        ],
+        "scope": "javascript,typescript"
+    },
+    "Readme Instruction": {
+        "body": [
+            "## ${1/^(.)(.*)$/${1:/upcase}${2}/}",
+            "",
+            "----------",
+            "",
+            "${2:description}",
+            "",
+            "<${3:http://link.com}>",
+            "",
+            "👍 Examples of correct code",
+            "",
+            "```typescript",
+            "${4}",
+            "```",
+            "",
+            "👎 Examples of incorrect code",
+            "",
+            "```typescript",
+            "${5}",
+            "```",
+            ""
+        ],
+        "description": "Readme Instruction",
+        "prefix": "add-rule",
+        "scope": "markdown"
+    }
+}
