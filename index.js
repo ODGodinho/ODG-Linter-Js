@@ -98,6 +98,7 @@ module.exports = {
                 ecmaFeatures: {
                     jsx: true,
                 },
+                warnOnUnsupportedTypeScriptVersion: false,
                 ecmaVersion: 2022,
                 sourceType: "module",
                 project: [ "tsconfig.json", "@odg/tsconfig/tsconfig.json" ], // Specify it only for TypeScript files

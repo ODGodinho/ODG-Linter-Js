@@ -11,5 +11,18 @@ module.exports = {
         ], // Não misture not null assert com optional
         "@typescript-eslint/no-unsafe-declaration-merging": [ "error" ], // Evita unir automaticamente tipos
         "@typescript-eslint/no-useless-empty-export": [ "error" ], // Bloqueia export vazio
+        "@typescript-eslint/restrict-template-expressions": [
+            "error",
+            {
+                allowNumber: true,
+                allowBoolean: true,
+            },
+        ], // Não concatene strings com tipos inválidos
+        "@typescript-eslint/return-await": [ "error" ], // Ao retornar um promise em try catch, use await evitando erros
+        "@typescript-eslint/switch-exhaustiveness-check": [
+            "error",
+        ], // Switch com typo coloque default ou todos os casos
+        "brace-style": [ "off" ], // Força formatação {}
+        "@typescript-eslint/brace-style": [ "error" ], // Força formatação {}
     },
 };

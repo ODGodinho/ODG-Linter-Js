@@ -143,7 +143,7 @@ module.exports = {
             after: true,
         } ],
         "no-underscore-dangle": [ "error" ], // Não permite _ no nome
-        "@typescript-eslint/prefer-return-this-type": [ "error" ], // Não permite _ no nome
+        "@typescript-eslint/prefer-return-this-type": [ "error" ], // Return this ao invés do nome classe
         "for-direction": [ "error" ], // Não faça for contador infinito.
         "no-shadow": [ "off" ], // Erro caso ja esteja declarado escopo a cima
         "@typescript-eslint/no-shadow": [ "error" ], // Erro caso ja esteja declarado escopo a cima
@@ -373,6 +373,7 @@ module.exports = {
                 ],
                 format: [
                     "strictCamelCase",
+                    "camelCase",
                 ],
 
                 // We allow double underscore because of GraphQL type names and some React names.
@@ -389,6 +390,7 @@ module.exports = {
                 selector: "classProperty",
                 format: [
                     "strictCamelCase",
+                    "camelCase",
                     "UPPER_CASE",
                 ],
             },
@@ -396,6 +398,7 @@ module.exports = {
                 selector: "typeLike",
                 format: [
                     "StrictPascalCase",
+                    "camelCase",
                 ],
             },
             {
@@ -486,5 +489,12 @@ module.exports = {
         ], // Use ?? em vez de ternário com &&
         "@typescript-eslint/prefer-optional-chain": [ "error" ], // Prefira Optional chain ao invés de &&.
         "@typescript-eslint/prefer-readonly": [ "error" ], // Prefira readonly
+        "@typescript-eslint/prefer-reduce-type-parameter": [ "error" ], // Use <> em reduce em vez de as default type
+        "@typescript-eslint/prefer-regexp-exec": [ "error" ], // Prefira regex exec
+        "@typescript-eslint/prefer-string-starts-ends-with": [ "error" ], // Prefira startsWith e endsWith
+        "@typescript-eslint/promise-function-async": [ "error" ], // Prefira async function quando retorna Promise
+        "@typescript-eslint/require-array-sort-compare": [ "error" ], // Passe parâmetro array sort
+        "@typescript-eslint/sort-type-constituents": [ "error" ], // Ordene agrupação de tipos
+        "@typescript-eslint/space-before-blocks": [ "error" ], // Espaço apos antes {} interface e enum
     }, // Convenção de nomes
 };

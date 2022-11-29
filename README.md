@@ -300,6 +300,7 @@
   - [Sort Character Class Elements](#sort-character-class-elements)
   - [Sort Flags](#sort-flags)
   - [Prefer Named Capture Group](#prefer-named-capture-group)
+  - [Prefer Regexp Exec](#prefer-regexp-exec)
 - [Security](#security)
   - [Eval Disabled](#eval-disabled)
   - [Detect Unsafe Regex](#detect-unsafe-regex)
@@ -396,6 +397,11 @@
 - [Prefer Nullish Coalescing](#prefer-nullish-coalescing)
 - [Prefer Optional Chain](#prefer-optional-chain)
 - [Prefer Readonly](#prefer-readonly)
+- [Prefer Reduce Type Parameter](#prefer-reduce-type-parameter)
+- [Promise Function Async](#promise-function-async)
+- [Require Array Sort Compare](#require-array-sort-compare)
+- [Sort Type Constituents](#sort-type-constituents)
+- [Space Before Blocks](#space-before-blocks)
 - [Performance](#performance)
   - [No Alert](#no-alert)
   - [No Loop Func](#no-loop-func)
@@ -457,6 +463,9 @@
   - [No Non Null Asserted Optional Chain](#no-non-null-asserted-optional-chain)
   - [No Unsafe Declaration Merging](#no-unsafe-declaration-merging)
   - [No Useless Empty Export](#no-useless-empty-export)
+  - [Restrict Template Expressions](#restrict-template-expressions)
+  - [Return Await Try Catch](#return-await-try-catch)
+  - [Switch Exhaustiveness Check](#switch-exhaustiveness-check)
 - [YAML / JSON](#yaml-json)
 
 ## Introduction
@@ -993,6 +1002,7 @@ class Foo {
 
 Enforces default parameters to be last.
 
+<https://eslint.org/docs/latest/rules/space-before-function-paren>
 <https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/space-before-function-paren.md>
 
 👍 Examples of correct code
@@ -10362,6 +10372,39 @@ var foo = /\b(?:foo)+\b/;
 var foo = /\b(foo)+\b/;
 ```
 
+### Prefer Regexp Exec
+
+----------
+
+RegExp#exec is faster than String#match and both work the same when not using the /g flag.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/prefer-regexp-exec.html>
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/prefer-regexp-exec.md>
+
+👍 Examples of correct code
+
+```typescript
+/thing/.exec('something');
+
+'some things are just things'.match(/thing/g);
+
+const text = 'something';
+const search = /thing/;
+search.exec(text);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+'something'.match(/thing/);
+
+'some things are just things'.match(/thing/);
+
+const text = 'something';
+const search = /thing/;
+text.match(search);
+```
+
 ## Security
 
 ### Eval Disabled
@@ -12473,6 +12516,7 @@ string.replace(/Works for u flag too/gu, "");
 Prefer String#startsWith() & String#endsWith() over RegExp#test()
 
 <https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-string-starts-ends-with.md>
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/prefer-string-starts-ends-with.md>
 
 👍 Examples of correct code
 
@@ -12490,6 +12534,28 @@ const foo = /^bar/i.test(baz);
 ```typescript
 const foo = /^bar/.test(baz);
 const foo = /bar$/.test(baz);
+
+// or
+
+declare const foo: string;
+
+// starts with
+foo[0] === 'b';
+foo.charAt(0) === 'b';
+foo.indexOf('bar') === 0;
+foo.slice(0, 3) === 'bar';
+foo.substring(0, 3) === 'bar';
+foo.match(/^bar/) != null;
+/^bar/.test(foo);
+
+// ends with
+foo[foo.length - 1] === 'b';
+foo.charAt(foo.length - 1) === 'b';
+foo.lastIndexOf('bar') === foo.length - 3;
+foo.slice(-3) === 'bar';
+foo.substring(foo.length - 3) === 'bar';
+foo.match(/bar$/) != null;
+/bar$/.test(foo);
 ```
 
 ## Prefer String Trim Start End
@@ -12966,21 +13032,6 @@ Instead, it's generally better to correct the types of code, to make directives 
 
 ```typescript
 if (false) {
-  // @ts-ignore: Unreachable code error
-  console.log('hello');
-}
-if (false) {
-  /*
-  @ts-ignore: Unreachable code error
-  */
-  console.log('hello');
-}
-```
-
-👎 Examples of incorrect code
-
-```typescript
-if (false) {
   // Compiler warns about unreachable code error
   console.log('hello');
 }
@@ -12992,6 +13043,21 @@ if (false) {
 if (false) {
   /*
   @ts-expect-error: Unreachable code error
+  */
+  console.log('hello');
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+if (false) {
+  // @ts-ignore: Unreachable code error
+  console.log('hello');
+}
+if (false) {
+  /*
+  @ts-ignore: Unreachable code error
   */
   console.log('hello');
 }
@@ -13957,6 +14023,256 @@ class Container {
   ) {
     this.onlyModifiedInConstructor = onlyModifiedInConstructor;
   }
+}
+```
+
+## Prefer Reduce Type Parameter
+
+----------
+
+It's common to call Array#reduce with a generic type, such as an array or object, as the initial value.
+Since these values are empty, their types are not usable:
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/prefer-reduce-type-parameter.md>
+
+👍 Examples of correct code
+
+```typescript
+[1, 2, 3].reduce<number[]>((arr, num) => arr.concat(num * 2), []);
+
+['a', 'b'].reduce<Record<string, boolean>>(
+  (accum, name) => ({
+    ...accum,
+    [name]: true,
+  }),
+  {},
+);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+[1, 2, 3].reduce((arr, num) => arr.concat(num * 2), [] as number[]);
+
+['a', 'b'].reduce(
+  (accum, name) => ({
+    ...accum,
+    [name]: true,
+  }),
+  {} as Record<string, boolean>,
+);
+```
+
+## Promise Function Async
+
+----------
+
+In contrast, non-async Promise - returning functions are technically capable of either.
+Code that handles the results of those functions will often need to handle both cases,
+which can get complex. This rule's practice removes a requirement for creating code to handle both cases.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/promise-function-async.md>
+
+👍 Examples of correct code
+
+```typescript
+const arrowFunctionReturnsPromise = async () => Promise.resolve('value');
+
+async function functionReturnsPromise() {
+  return Promise.resolve('value');
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const arrowFunctionReturnsPromise = () => Promise.resolve('value');
+
+function functionReturnsPromise() {
+  return Promise.resolve('value');
+}
+```
+
+## Require Array Sort Compare
+
+----------
+
+When called without a compare function, Array#sort() converts all non-undefined array elements
+into strings and then compares said strings based off their UTF-16
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/require-array-sort-compare.md>
+
+👍 Examples of correct code
+
+```typescript
+const array: any[];
+const userDefinedType: { sort(): void };
+
+array.sort((a, b) => a - b);
+array.sort((a, b) => a.localeCompare(b));
+
+userDefinedType.sort();
+
+const one = '1';
+const two = '2';
+const three = '3';
+[one, two, three].sort();
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const array: any[];
+const stringArray: string[];
+
+array.sort();
+
+// String arrays should be sorted using `String#localeCompare`.
+stringArray.sort();
+```
+
+## Sort Type Constituents
+
+----------
+
+Sorting union (|) and intersection (&) types can help:
+
+keep your codebase standardized
+find repeated types
+reduce diff churn
+This rule reports on any types that aren't sorted alphabetically.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/sort-type-constituents.md>
+
+👍 Examples of correct code
+
+```typescript
+type T1 = A | B;
+
+type T2 = { a: string } & { b: string };
+
+type T3 = [1, 2, 3] & [1, 2, 4];
+
+type T4 =
+  | any
+  | string
+  | A
+  | B
+  | number[]
+  | string[]
+  | readonly number[]
+  | readonly string[]
+  | 'a'
+  | 'b'
+  | 'a'
+  | 'b'
+  | (() => string)
+  | (() => void)
+  | { a: string }
+  | { b: string }
+  | [1, 2, 3]
+  | [1, 2, 4];
+```
+
+👎 Examples of incorrect code
+
+```typescript
+type T1 = B | A;
+
+type T2 = { b: string } & { a: string };
+
+type T3 = [1, 2, 4] & [1, 2, 3];
+
+type T4 =
+  | [1, 2, 4]
+  | [1, 2, 3]
+  | { b: string }
+  | { a: string }
+  | (() => void)
+  | (() => string)
+  | 'b'
+  | 'a'
+  | 'b'
+  | 'a'
+  | readonly string[]
+  | readonly number[]
+  | string[]
+  | number[]
+  | B
+  | A
+  | string
+  | any;
+```
+
+## Space Before Blocks
+
+----------
+
+Consistency is an important part of any style guide. While it is a personal preference where to put the opening
+brace of blocks, it should be consistent across a whole project. Having an inconsistent style distracts the reader
+from seeing the important parts of the code.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/space-before-blocks.md>
+
+👍 Examples of correct code
+
+```typescript
+if (a) {
+    b();
+}
+
+if (a) {
+    b();
+} else{ /*no error. this is checked by `keyword-spacing` rule.*/
+    c();
+}
+
+class C {
+    static{} /*no error. this is checked by `keyword-spacing` rule.*/
+}
+
+function a() {}
+
+for (;;) {
+    b();
+}
+
+try {} catch(a) {}
+
+enum Breakpoint {
+  Large, Medium;
+}
+
+interface State {
+  currentBreakpoint: Breakpoint;
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+if (a){
+    b();
+}
+
+function a(){}
+
+for (;;){
+    b();
+}
+
+try {} catch(a){}
+
+class Foo{
+  constructor(){}
+}
+
+enum Breakpoint{
+  Large, Medium;
+}
+
+interface State{
+  currentBreakpoint: Breakpoint;
 }
 ```
 
@@ -16655,7 +16971,7 @@ foo?.bar!;
 foo?.bar()!;
 ```
 
-## No Unsafe Declaration Merging
+### No Unsafe Declaration Merging
 
 ----------
 
@@ -16685,7 +17001,7 @@ interface Foo {}
 class Foo {}
 ```
 
-## No Useless Empty Export
+### No Useless Empty Export
 
 ----------
 
@@ -16710,6 +17026,229 @@ export {};
 export const value = 'Hello, world!';
 // or
 import 'some-other-module';
+```
+
+### Restrict Template Expressions
+
+----------
+
+JavaScript will call toString() on an object when it is converted to a string,
+such as when + adding to a string or in ${} template literals. The default Object .toString() returns "[object Object]",
+ which is often not what was intended. This rule reports on values used in a template literal string that aren't strings.
+ primitives and don't define a more useful .toString() method.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/restrict-template-expressions.md>
+
+👍 Examples of correct code
+
+```typescript
+const arg = 'foo';
+const msg1 = `arg = ${arg}`;
+const msg2 = `arg = ${arg || 'default'}`;
+
+const stringWithKindProp: string & { _kind?: 'MyString' } = 'foo';
+const msg3 = `stringWithKindProp = ${stringWithKindProp}`;
+
+const arg = 123;
+const msg1 = `arg = ${arg}`;
+const msg2 = `arg = ${arg || 'zero'}`;
+
+const arg = true;
+const msg1 = `arg = ${arg}`;
+const msg2 = `arg = ${arg || 'not truthy'}`;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const arg1 = [1, 2];
+const msg1 = `arg1 = ${arg1}`;
+
+const arg2 = { name: 'Foo' };
+const msg2 = `arg2 = ${arg2 || null}`;
+```
+
+### Return Await Try Catch
+
+----------
+
+Returning an awaited promise can make sense for better stack trace information as well as for consistent error
+handling (returned promises will not be caught in an async function try/catch).
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/return-await.md>
+
+👍 Examples of correct code
+
+```typescript
+async function validInTryCatch1() {
+  try {
+    return await Promise.resolve('try');
+  } catch (e) {}
+}
+
+async function validInTryCatch2() {
+  try {
+    throw new Error('error');
+  } catch (e) {
+    return Promise.resolve('catch');
+  }
+}
+
+async function validInTryCatch3() {
+  try {
+    throw new Error('error');
+  } catch (e) {
+    return await Promise.resolve('catch');
+  } finally {
+    console.log('cleanup');
+  }
+}
+
+async function validInTryCatch4() {
+  try {
+    throw new Error('error');
+  } catch (e) {
+    throw new Error('error2');
+  } finally {
+    return Promise.resolve('finally');
+  }
+}
+
+async function validInTryCatch5() {
+  return Promise.resolve('try');
+}
+
+async function validInTryCatch6() {
+  return 'value';
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+async function invalidInTryCatch1() {
+  try {
+    return Promise.resolve('try');
+  } catch (e) {}
+}
+
+async function invalidInTryCatch2() {
+  try {
+    throw new Error('error');
+  } catch (e) {
+    return await Promise.resolve('catch');
+  }
+}
+
+async function invalidInTryCatch3() {
+  try {
+    throw new Error('error');
+  } catch (e) {
+    return Promise.resolve('catch');
+  } finally {
+    console.log('cleanup');
+  }
+}
+
+async function invalidInTryCatch4() {
+  try {
+    throw new Error('error');
+  } catch (e) {
+    throw new Error('error2');
+  } finally {
+    return await Promise.resolve('finally');
+  }
+}
+
+async function invalidInTryCatch5() {
+  return await Promise.resolve('try');
+}
+
+async function invalidInTryCatch6() {
+  return await 'value';
+}
+```
+
+### Switch Exhaustiveness Check
+
+----------
+
+When working with union types in TypeScript, it's common to want to write a switch statement intended to contain a
+case for each constituent (possible type in the union). However, if the union type changes,
+it's easy to forget to modify the cases to account for any new types.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/switch-exhaustiveness-check.md>
+
+👍 Examples of correct code
+
+```typescript
+type Day =
+  | 'Monday'
+  | 'Tuesday'
+  | 'Wednesday'
+  | 'Thursday'
+  | 'Friday'
+  | 'Saturday'
+  | 'Sunday';
+
+const day = 'Monday' as Day;
+let result = 0;
+
+switch (day) {
+  case 'Monday':
+    result = 1;
+    break;
+  case 'Tuesday':
+    result = 2;
+    break;
+  case 'Wednesday':
+    result = 3;
+    break;
+  case 'Thursday':
+    result = 4;
+    break;
+  case 'Friday':
+    result = 5;
+    break;
+  case 'Saturday':
+    result = 6;
+    break;
+  case 'Sunday':
+    result = 7;
+    break;
+}
+
+// OR default
+
+switch (day) {
+  case 'Monday':
+    result = 1;
+    break;
+  default:
+    result = 42;
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+type Day =
+  | 'Monday'
+  | 'Tuesday'
+  | 'Wednesday'
+  | 'Thursday'
+  | 'Friday'
+  | 'Saturday'
+  | 'Sunday';
+
+const day = 'Monday' as Day;
+let result = 0;
+
+switch (day) {
+  case 'Monday':
+    result = 1;
+    break;
+}
 ```
 
 ## Yaml Json
