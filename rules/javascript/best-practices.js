@@ -525,5 +525,6 @@ module.exports = {
             "error",
             "getBeforeSet",
         ],
+        "no-sequences": [ "error" ], // Não faça a = (2, 4)
     },
 };
