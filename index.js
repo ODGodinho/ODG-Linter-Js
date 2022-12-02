@@ -13,7 +13,6 @@ module.exports = {
         "no-constructor-bind",
         "anti-trojan-source",
         "sonar",
-        "jsonc",
         "regex",
     ],
     env: {
@@ -27,7 +26,6 @@ module.exports = {
         "./rules/javascript/security.js",
         "./rules/javascript/performance.js",
         "./rules/javascript/possible-errors.js",
-        "./rules/json/base.js",
     ],
     ignorePatterns: [
         "!.*",
@@ -102,6 +100,24 @@ module.exports = {
                 ecmaVersion: 2022,
                 sourceType: "module",
                 project: [ "tsconfig.json", "@odg/tsconfig/tsconfig.json" ], // Specify it only for TypeScript files
+            },
+        },
+        {
+            files: [ "*.json", "*.json5", "*.jsonc", ".eslintrc", "*.code-*" ],
+            plugins: [
+                "jsonc",
+            ],
+            extends: [
+                "./rules/json/base.js",
+            ],
+        },
+        {
+            files: [ "package.json" ],
+            extends: [
+                "./rules/json/base.js",
+            ],
+            rules: {
+                "jsonc/sort-keys": [ "off" ],
             },
         },
         {

@@ -10,6 +10,7 @@
         "Refactor",
         "Typescript",
         "Json",
-        "Sonar"
+        "Sonar",
+        "Performance"
     ]
 }
