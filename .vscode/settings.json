@@ -9,6 +9,7 @@
         "Files",
         "Refactor",
         "Typescript",
-        "Json"
+        "Json",
+        "Sonar"
     ]
 }
