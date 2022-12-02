@@ -40,5 +40,22 @@ module.exports = {
                 }, // BLoqueia import vazios
             ],
         ],
+        "sonar/generator-without-yield": [ "error" ], // Força ter yield em funções generator
+        "sonar/existing-groups": [ "error" ], // Verifica se o grupo da regex existe
+        "sonar/destructuring-assignment-syntax": [ "error" ], // Força desestruturação
+        "sonar/function-inside-loop": [ "error" ], // Não faça função loop
+        "sonar/index-of-compare-to-positive-number": [ "error" ], // Não faça index of > 0 use >= 0
+        "sonar/no-commented-code": [ "error" ], // Não Comente código
+        "sonar/no-duplicate-in-composite": [ "error" ], // Não Repeat tipos
+        "for-direction": [ "error" ], // Não faça for contador infinito.
+        "sonar/no-equals-in-for-termination": [ "error" ], // Loop Infinitos
+        "sonar/no-in-misuse": [ "error" ], // Não use in em array
+        "sonar/no-incomplete-assertions": [ "error" ], // Sem assert incompleto
+        "sonar/no-incorrect-string-concat": [ "error" ], // Não concatene numero com string
+        "sonar/no-infinite-loop": [ "error" ], // Não faça loop infinito
+        "sonar/no-invariant-returns": [ "error" ], // Não faça loop infinito
+        "sonar/no-misleading-array-reverse": [ "error" ], // Não salva array.revert variável
+        "sonar/strings-comparison": [ "error" ], // Não faça comparação de string com < ou >
+        "sonar/useless-string-operation": [ "error" ], // Não use função string sem salvar variável
     },
 };

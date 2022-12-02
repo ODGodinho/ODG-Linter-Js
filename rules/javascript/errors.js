@@ -1,8 +1,6 @@
 module.exports = {
     rules: {
         "regexp/no-contradiction-with-assertion": [ "error" ], // Não coloque opcional em uma das condições
-        "regexp/no-control-character": [ "error" ], // Não use caracteres especiais da tabela ASCII 0 - 31
-        "no-control-regex": [ "error" ], // Não use caracteres especiais da tabela ASCII 0 - 31
         "regexp/no-dupe-disjunctions": [ "error" ], // Não permite condições duplicadas em regex
         "regexp/no-empty-alternative": [ "error" ], // Não coloque alternativas vazias
         "regexp/no-empty-capturing-group": [ "error" ], // Grupos devem ter assertion
@@ -69,5 +67,12 @@ module.exports = {
                 "classes": true,
             },
         ], // Não use antes de definir
+        "sonar/in-operator-type-error": [ "error" ], // Não use IN em tipos primitivos
+        "sonar/inconsistent-function-call": [ "error" ], // Não use IN em tipos primitivos
+        "sonar/no-associative-arrays": [ "error" ], // Não atribua a um array
+        "sonar/no-same-argument-assert": [ "error" ], // Não faça assert com mesmo param
+        "sonar/no-useless-intersection": [ "error" ], // Não faça assert com mesmo param
+        "sonar/stateful-regex": [ "error" ], // Não faça regex global mais de 1 vez
+        "sonar/super-invocation": [ "error" ], // Não faça mais de 1 super
     },
 };

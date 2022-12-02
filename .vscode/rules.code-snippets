@@ -1,6 +1,6 @@
 {
     "@typescript-rule": {
-        "body": [ "\"@typescript-eslint/${1:rule}\": [ \"error\"${2:, ${3|\"\",{}|}} ], // ${4:Description}" ],
+        "body": [ "\"${1|@typescript-eslint/,sonar/|}${2:rule}\": [ \"error\"${3:, ${4|\"\",{}|}} ], // ${5:Description}" ],
         "description": "Log output to console",
         "prefix": [
             "@typescript-eslint",

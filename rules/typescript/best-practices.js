@@ -144,12 +144,10 @@ module.exports = {
         } ],
         "no-underscore-dangle": [ "error" ], // Não permite _ no nome
         "@typescript-eslint/prefer-return-this-type": [ "error" ], // Return this ao invés do nome classe
-        "for-direction": [ "error" ], // Não faça for contador infinito.
         "no-shadow": [ "off" ], // Erro caso ja esteja declarado escopo a cima
         "@typescript-eslint/no-shadow": [ "error" ], // Erro caso ja esteja declarado escopo a cima
         "import/no-commonjs": [ "error" ], // Não use module.exports
         "unicorn/prefer-module": [ "error" ], // Prefira module js
-        "sonar/array-callback-without-return": [ "off" ], // Não use new Array
         "no-constructor-bind/no-constructor-bind": [ "error" ], // Não use bind no construtor para própria classe
         "no-constructor-bind/no-constructor-state": [ "error" ],
         "func-call-spacing": [ "off" ], // Não use espaço antes dos parens função

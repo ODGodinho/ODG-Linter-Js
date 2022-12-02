@@ -31,5 +31,47 @@ module.exports = {
         "sonar/disabled-resource-integrity": [ "error" ], // Use integridade para scripts
         "sonar/dns-prefetching": [ "error" ], // DNS rules
         "no-prototype-builtins": [ "error" ], // Object.prototype.hasOwnProperty.call no lugar obj.hasOwnProperty
+        "sonar/encryption-secure-mode": [ "error" ], // Criptografia dados
+        "sonar/file-permissions": [ "error" ], // Proíbe 777
+        "sonar/file-uploads": [ "error" ], // Force file path
+        "sonar/frame-ancestors": [ "error" ], // Frame Security
+        "sonar/hidden-files": [ "error" ], // Server-static security rule
+        "sonar/cors": [ "error" ], // Cors Sonar
+        "sonar/hashing": [ "error" ], // Palavras reservadas futuras bloqueadas
+        "sonar/aws-apigateway-public-api": [ "error" ], // API Segura
+        "sonar/aws-ec2-rds-dms-public": [ "error" ], // Alerta segurança AWS Publico
+        "sonar/aws-ec2-unencrypted-ebs-volume": [ "error" ], // Força encryption AWS
+        "sonar/aws-efs-unencrypted": [ "error" ], // Força encryption AWS
+        "sonar/aws-iam-all-privileges": [ "error" ], // Não gere token com privilegio total
+        "sonar/aws-iam-all-resources-accessible": [ "error" ], // AWS regras
+        "sonar/aws-iam-privilege-escalation": [ "error" ], // AWS regras
+        "sonar/aws-iam-public-access": [ "error" ], // AWS regras
+        "sonar/aws-opensearchservice-domain": [ "error" ], // AWS regras
+        "sonar/aws-rds-unencrypted-databases": [ "error" ], // AWS regras
+        "sonar/aws-restricted-ip-admin-access": [ "error" ], // AWS regras
+        "sonar/aws-s3-bucket-granted-access": [ "error" ], // AWS regras
+        "sonar/aws-s3-bucket-versioning": [ "error" ], // AWS regras
+        "sonar/aws-sagemaker-unencrypted-notebook": [ "error" ], // AWS regras
+        "sonar/aws-sns-unencrypted-topics": [ "error" ], // Criptografia SNS
+        "sonar/aws-sqs-unencrypted-queue": [ "error" ], // Criptografia SQS
+        "sonar/csrf": [ "error" ], // Padrão ao usar csrf express
+        "sonar/insecure-cookie": [ "error" ], // Cookie com secure = true
+        "sonar/no-clear-text-protocols": [ "error" ], // Use ftp telnet, http encrypt;
+        "sonar/no-hardcoded-credentials": [ "error" ], // Não escreva senha código
+        "sonar/no-hardcoded-ip": [ "error" ], // Não escreva IP no código
+        "sonar/no-os-command-from-path": [ "error" ], // Ao executar um comando passe caminho completo
+        "sonar/no-referrer-policy": [ "error" ], // Helmet policy
+        "sonar/no-unsafe-unzip": [ "error" ], // Unsafe zip
+        "sonar/no-weak-keys": [ "error" ], // Compilar 2048 bits
+        "sonar/os-command": [ "error" ], // Compilar 2048 bits
+        "sonar/pseudo-random": [ "error" ], // Pseudo random
+        "sonar/publicly-writable-directories": [ "error" ], // Pseudo random
+        "sonar/sockets": [ "error" ], // Socket rules sensitive
+        "sonar/sql-queries": [ "error" ], // Evite SQL injection
+        "sonar/strict-transport-security": [ "error" ], // Helmet Rules
+        "sonar/unverified-certificate": [ "error" ], // Verifica certificados
+        "sonar/weak-ssl": [ "error" ],
+        "sonar/xml-parser-xxe": [ "error" ],
+        "sonar/xpath": [ "error" ],
     },
 };

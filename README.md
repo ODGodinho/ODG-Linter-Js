@@ -82,6 +82,14 @@
 - [Disallow Undefined](#disallow-undefined)
 - [Function Name](#function-name)
 - [Function Name Match](#function-name-match)
+- [No Use Future Reserved Words](#no-use-future-reserved-words)
+- [No Generator Without Yield](#no-generator-without-yield)
+- [Inverted Assertion Arguments](#inverted-assertion-arguments)
+- [Max Union Size](#max-union-size)
+- [No Redundant Optional](#no-redundant-optional)
+- [Prefer Type Guard](#prefer-type-guard)
+- [No Production Debug](#no-production-debug)
+- [Unused Named Groups](#unused-named-groups)
 - [Get And Setters](#get-and-setters)
 - [Function Style](#function-style)
 - [No Else Return](#no-else-return)
@@ -301,6 +309,7 @@
   - [Sort Flags](#sort-flags)
   - [Prefer Named Capture Group](#prefer-named-capture-group)
   - [Prefer Regexp Exec](#prefer-regexp-exec)
+  - [Existing Groups](#existing-groups)
 - [Security](#security)
   - [Eval Disabled](#eval-disabled)
   - [Detect Unsafe Regex](#detect-unsafe-regex)
@@ -324,7 +333,27 @@
   - [Force Integrity](#force-integrity)
   - [DNS prefetching](#dns-prefetching)
   - [No Prototype Builtins](#no-prototype-builtins)
+  - [File Permissions](#file-permissions)
+  - [File Upload](#file-upload)
+  - [Frame Ancestors](#frame-ancestors)
+  - [Hashing Insecurity](#hashing-insecurity)
+  - [Hidden Files](#hidden-files)
   - [No Dynamic Delete](#no-dynamic-delete)
+  - [Cors](#cors)
+  - [Csrf](#csrf)
+  - [Aws Security](#aws-security)
+  - [Security Cookie](#security-cookie)
+  - [Insecure Cookie](#insecure-cookie)
+  - [No Clear Text Protocols](#no-clear-text-protocols)
+  - [Insecure Jwt Token](#insecure-jwt-token)
+  - [No Hardcoded Credentials](#no-hardcoded-credentials)
+  - [No Hardcoded ip](#no-hardcoded-ip)
+  - [No Os Command From Path](#no-os-command-from-path)
+  - [No Unsafe Unzip](#no-unsafe-unzip)
+  - [Sockets](#sockets)
+  - [Helmet Security](#helmet-security)
+  - [Unverified Certificate](#unverified-certificate)
+  - [Sql Queries](#sql-queries)
 - [Catch Error Name](#catch-error-name)
 - [Consistent Destructured](#consistent-destructured)
 - [Consistent Function Scope](#consistent-function-scope)
@@ -435,6 +464,11 @@
   - [Useless Construct Code](#useless-construct-code)
   - [No Use Before Define](#no-use-before-define)
   - [No Base To String](#no-base-to-string)
+  - [Not IN Primitive type](#not-in-primitive-type)
+  - [Useless String Operation](#useless-string-operation)
+  - [Super Invocation](#super-invocation)
+  - [No Useless Intersection](#no-useless-intersection)
+  - [Stateful Regex](#stateful-regex)
 - [Possible Errors](#possible-errors)
   - [For Direction](#for-direction)
   - [No Extra Bind](#no-extra-bind)
@@ -466,6 +500,9 @@
   - [Restrict Template Expressions](#restrict-template-expressions)
   - [Return Await Try Catch](#return-await-try-catch)
   - [Switch Exhaustiveness Check](#switch-exhaustiveness-check)
+  - [Index Of Compare To Positive Number](#index-of-compare-to-positive-number)
+  - [No Invariant Returns](#no-invariant-returns)
+  - [Inconsistent Function Call](#inconsistent-function-call)
 - [YAML / JSON](#yaml-json)
 
 ## Introduction
@@ -1700,6 +1737,7 @@ foo(function() { return this.a; }.bind(this));
 Require destructuring from arrays and/or objects
 
 <https://eslint.org/docs/latest/rules/prefer-destructuring>
+<https://sonarsource.github.io/rspec/#/rspec/S3514/javascript>
 
 👍 Examples of correct code
 
@@ -2291,6 +2329,7 @@ new Promise(function(resolve, reject) {
 No Unreachable code
 
 <https://eslint.org/docs/rules/no-unreachable>
+<https://sonarsource.github.io/rspec/#/rspec/S6079/javascript>
 
 👍 Examples of correct code
 
@@ -2482,6 +2521,7 @@ var bar = a + 1;
 Requires function expressions to have a name, if the name isn't assigned automatically per the ECMAScript specification.
 
 <https://eslint.org/docs/rules/func-names>
+<https://sonarsource.github.io/rspec/#/rspec/S100/javascript>
 
 👍 Examples of correct code
 
@@ -2567,6 +2607,296 @@ var obj = {foo: function bar() {}};
 
 class C {
     foo = function bar() {};
+}
+```
+
+## No Use Future Reserved Words
+
+----------
+
+"future reserved words" should not be used as identifiers
+Special identifiers should not be bound or assigned
+
+<https://sonarsource.github.io/rspec/#/rspec/S2137/javascript>
+
+👍 Examples of correct code
+
+```typescript
+var elements = document.getElementsByName("foo"); // Compliant
+var someData = { package: true };
+
+result = 17;
+++result;
+var obj = { set p(arg) { } };
+var result;
+try { } catch (args) { }
+function x(arg) { }
+function args() { }
+var y = function fun() { };
+var f = new Function("args", "return 17;");
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var package = document.getElementsByName("foo"); // Noncompliant
+eval = 17; // Noncompliant
+arguments++; // Noncompliant
+++eval; // Noncompliant
+var obj = { set p(arguments) { } }; // Noncompliant
+var eval; // Noncompliant
+try { } catch (arguments) { } // Noncompliant
+function x(eval) { } // Noncompliant
+function arguments() { } // Noncompliant
+var y = function eval() { }; // Noncompliant
+var f = new Function("arguments", "return 17;"); // Noncompliant
+```
+
+## No Generator Without Yield
+
+----------
+
+Generators should "yield" something
+
+<https://sonarsource.github.io/rspec/#/rspec/S3531/javascript>
+
+👍 Examples of correct code
+
+```typescript
+function* myGen(a, b) {
+  let answer = 0;
+  while (answer < 42) {
+    answer += a * b;
+    yield answer;
+  }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function* myGen(a, b) {  // Noncompliant
+  let answer = 0;
+  answer += a * b;
+}
+```
+
+## Inverted Assertion Arguments
+
+----------
+
+Assertion arguments should be passed in the correct order
+
+<https://sonarsource.github.io/rspec/#/rspec/S3415/javascript>
+
+👍 Examples of correct code
+
+```typescript
+const assert = require('chai').assert;
+const expect = require('chai').expect;
+const should = require('chai').should();
+
+it("inverts arguments", function() {
+    assert.equal(aNumber, 42);
+    expect(aNumber).to.equal(42);
+    should.fail(aNumber, 42);
+});
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const assert = require('chai').assert;
+const expect = require('chai').expect;
+const should = require('chai').should();
+
+it("inverts arguments", function() {
+    assert.equal(42, aNumber); // Noncompliant
+    expect(42).to.equal(aNumber); // Noncompliant
+    should.fail(42, aNumber);  // Noncompliant
+});
+```
+
+## Max Union Size
+
+----------
+
+Union types should not have too many elements
+
+<https://sonarsource.github.io/rspec/#/rspec/S4622/javascript>
+
+👍 Examples of correct code
+
+```typescript
+type MyUnionType = MyType1 | MyType2 | MyType3 | MyType4; // Compliant, "type" statements are ignored
+let x: MyUnionType;
+
+function foo(value: string, padding: MyUnionType) {
+    // ...
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+let x: MyType1 | MyType2 | MyType3 | MyType4; // Noncompliant
+
+function foo(p1: string, p2: MyType1 | MyType2 | MyType3 | MyType4) { // Noncompliant
+    // ...
+}
+```
+
+## No Redundant Optional
+
+----------
+
+Optional property declarations should not use both '?' and 'undefined' syntax
+
+<https://sonarsource.github.io/rspec/#/rspec/S4782/javascript>
+
+👍 Examples of correct code
+
+```typescript
+interface Person {
+  name: string;
+  address: string | undefined;
+  pet?: Animal;
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+interface Person {
+  name: string;
+  address? : string | undefined;   // Noncompliant, "?" should be removed
+  pet?: Animal | undefined; // Noncompliant, "undefined" should be removed
+}
+```
+
+## Prefer Type Guard
+
+----------
+
+Type guards should be used
+
+<https://sonarsource.github.io/rspec/#/rspec/S4322/javascript>
+
+👍 Examples of correct code
+
+```typescript
+function isSomething(x: BaseType) : x is Something {
+  return (<Something>x).foo !== undefined;
+}
+
+if (isSomething(v)) {
+  v.foo();
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function isSomething(x: BaseType) : boolean { // Noncompliant
+  return (<Something>x).foo !== undefined;
+}
+
+if (isSomething(v)) {
+  (<Something>v).foo();
+}
+```
+
+## No Production Debug
+
+----------
+
+Delivering code in production with debug features activated is security-sensitive
+
+<https://sonarsource.github.io/rspec/#/rspec/S4507/javascript>
+
+👍 Examples of correct code
+
+```typescript
+const express = require('express');
+const errorhandler = require('errorhandler');
+
+let app = express();
+
+if (process.env.NODE_ENV === 'development') {  // Compliant
+  app.use(errorhandler());  // Compliant
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const express = require('express');
+const errorhandler = require('errorhandler');
+
+let app = express();
+app.use(errorhandler()); // Sensitive
+```
+
+## Unused Named Groups
+
+----------
+
+Why use named groups only to never use any of them later on in the code?
+
+This rule raises issues every time named groups are:
+defined but never called anywhere in the code through their name;
+defined but called elsewhere in the code by their number instead;
+referenced while not defined.
+
+<https://sonarsource.github.io/rspec/#/rspec/S5860/javascript>
+
+👍 Examples of correct code
+
+```typescript
+const date = "01/02";
+
+const datePattern = /(?<month>[0-9]{2})\/(?<year>[0-9]{2})/;
+const dateMatched = date.match(datePattern);
+
+if (dateMatched !== null) {
+  checkValidity(dateMatched.groups.month, dateMatched.groups.year);
+}
+
+// ...
+
+const score = "14:1";
+
+const scorePattern = /(?<player1>[0-9]+):(?<player2>[0-9]+)/;
+const scoreMatched = score.match(scorePattern);
+
+if (scoreMatched !== null) {
+  checkScore(scoreMatched.groups.player1);
+  checkScore(scoreMatched.groups.player2);
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const date = "01/02";
+
+const datePattern = /(?<month>[0-9]{2})\/(?<year>[0-9]{2})/;
+const dateMatched = date.match(datePattern);
+
+if (dateMatched !== null) {
+  checkValidity(dateMatched[1], dateMatched[2]); // Noncompliant - numbers instead of names of groups are used
+  checkValidity(dateMatched.groups.day); // Noncompliant - there is no group called "day"
+}
+
+// ...
+
+const score = "14:1";
+
+const scorePattern = /(?<player1>[0-9]+):(?<player2>[0-9]+)/; // Noncompliant - named groups are never used
+const scoreMatched = score.match(scorePattern);
+
+if (scoreMatched !== null) {
+  checkScore(score);
 }
 ```
 
@@ -7382,6 +7712,7 @@ but rather the local version with a very different meaning.
 <https://eslint.org/docs/rules/no-shadow>
 <https://eslint.org/docs/rules/no-shadow-restricted-names>
 <https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-shadow.md>
+<https://sonarsource.github.io/rspec/#/rspec/S1527/javascript>
 
 👍 Examples of correct code
 
@@ -7401,6 +7732,9 @@ function b(a) {
 b(a);
 
 function f(a, b){}
+
+var elements = document.getElementsByName("foo"); // Compliant
+var someData = { package: true };                 // Compliant, as it is not used as an identifier here
 ```
 
 👎 Examples of incorrect code
@@ -7431,6 +7765,8 @@ function NaN(){}
 var undefined = 5;
 
 try {} catch(eval){}
+
+var package = document.getElementsByName("foo"); // Noncompliant
 ```
 
 ## Parentheses New Line
@@ -8996,7 +9332,6 @@ These characters are rarely used in JavaScript strings so a regular expression
 containing elements that explicitly match these characters is most likely a mistake.
 
 <https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-control-character.html>
-<https://eslint.org/docs/rules/no-control-regex>
 
 👍 Examples of correct code
 
@@ -10405,6 +10740,30 @@ const search = /thing/;
 text.match(search);
 ```
 
+### Existing Groups
+
+----------
+
+Replacement strings should reference existing regular expression groups
+
+<https://sonarsource.github.io/rspec/#/rspec/S6328/javascript>
+
+👍 Examples of correct code
+
+```typescript
+const str = 'James Bond';
+console.log(str.replace(/(\w+)\s(\w+)/, '$1, $0 $1'));
+console.log(str.replace(/(?<firstName>\w+)\s(?<lastName>\w+)/, '$<surname>, $<firstName> $<surname>'));
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const str = 'James Bond';
+console.log(str.replace(/(\w+)\s(\w+)/, '$2, $1 $2'));
+console.log(str.replace(/(?<firstName>\w+)\s(?<lastName>\w+)/, '$<lastName>, $<firstName> $<lastName>'));
+```
+
 ## Security
 
 ### Eval Disabled
@@ -10614,6 +10973,7 @@ Detects variable in filename argument of fs calls, which might allow an attacker
 Detects if pseudoRandomBytes() is in use, which might not give you the randomness you need and expect.
 
 <https://github.com/nodesecurity/eslint-plugin-security#detect-non-literal-fs-filename>
+<https://sonarsource.github.io/rspec/#/rspec/S2245/javascript>
 
 👍 Examples of correct code
 
@@ -11193,7 +11553,169 @@ var isPrototypeOfBar = foo.isPrototypeOf(bar);
 var barIsEnumerable = foo.propertyIsEnumerable("bar");
 ```
 
-## No Dynamic Delete
+### File Permissions
+
+----------
+
+Setting loose POSIX file permissions is security-sensitive
+Dont use 777
+
+<https://sonarsource.github.io/rspec/#/rspec/S2612/javascript>
+
+```typescript
+const fs = require('fs');
+
+fs.chmodSync("/tmp/fs", 0o770); // Compliant
+
+// OR
+
+const fs = require('fs');
+const fsPromises = fs.promises;
+
+fsPromises.chmod("/tmp/fsPromises", 0o770); // Compliant
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const fs = require('fs');
+
+fs.chmodSync("/tmp/fs", 0o777); // Sensitive
+
+// OR
+
+const fs = require('fs');
+const fsPromises = fs.promises;
+
+fsPromises.chmod("/tmp/fsPromises", 0o777); // Sensitive
+```
+
+### File Upload
+
+----------
+
+These minimum restrictions should be applied when handling file uploads:
+
+- the file upload folder to restrict untrusted files to a specific folder.
+- the file extension of the uploaded file to prevent remote code execution.
+
+<https://sonarsource.github.io/rspec/#/rspec/S2598/javascript>
+
+```typescript
+const Formidable = require('formidable');
+
+const form = new Formidable(); // Compliant
+form.uploadDir = "./uploads/";
+form.keepExtensions = false;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const Formidable = require('formidable');
+
+const form = new Formidable(); // Noncompliant, this form is not safe
+form.uploadDir = ""; // because upload dir is not defined (by default os temp dir: /var/tmp or /tmp)
+form.keepExtensions = true; // and file extensions are kept
+```
+
+### Frame Ancestors
+
+----------
+
+Disabling content security policy frame-ancestors directive is security-sensitive
+
+Clickjacking attacks occur when an attacker try to trick an user to click on certain buttons/links of a legit website.
+This attack can take place with malicious HTML frames well hidden in an attacker website.
+
+<https://sonarsource.github.io/rspec/#/rspec/S5732/javascript>
+
+```typescript
+const express = require('express');
+const helmet = require('helmet');
+
+let app = express();
+
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      // other directives
+      frameAncestors: ["'example.com'"] // Compliant
+    }
+  })
+);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const express = require('express');
+const helmet = require('helmet');
+
+let app = express();
+
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      // other directives
+      frameAncestors: ["'none'"] // Sensitive: frameAncestors  is set to none
+    }
+  })
+);
+```
+
+### Hashing Insecurity
+
+----------
+
+Using weak hashing algorithms is security-sensitive
+
+<https://sonarsource.github.io/rspec/#/rspec/S4790/javascript>
+
+```typescript
+const crypto = require("crypto");
+
+const hash = crypto.createHash('sha512'); // Compliant
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const crypto = require("crypto");
+
+const hash = crypto.createHash('sha1'); // Sensitive
+```
+
+### Hidden Files
+
+----------
+
+Hidden files are created automatically by many tools to save user-preferences, well-known examples are .profile,
+.bashrc, .bash_history or .git. To simplify the view these files are not displayed
+by default using operating system commands like ls.
+
+<https://sonarsource.github.io/rspec/#/rspec/S5691/javascript>
+
+👍 Examples of correct code
+
+```typescript
+let serveStatic = require("serve-static");
+let app = express();
+let serveStaticMiddleware = serveStatic('public', { 'index': false, 'dotfiles': 'ignore'});   // Compliant: ignore or deny are recommended values
+let serveStaticDefault = serveStatic('public', { 'index': false});   // Compliant: by default, "dotfiles" (file or directory that begins with a dot) are not served (with the exception that files within a directory that begins with a dot are not ignored), see serve-static module documentation
+app.use(serveStaticMiddleware);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+let serveStatic = require("serve-static");
+let app = express();
+let serveStaticMiddleware = serveStatic('public', { 'index': false, 'dotfiles': 'allow'});   // Sensitive
+app.use(serveStaticMiddleware);
+```
+
+### No Dynamic Delete
 
 ----------
 
@@ -11243,6 +11765,1104 @@ delete container['Infinity'];
 const name = 'name';
 delete container[name];
 delete container[name.toUpperCase()];
+```
+
+### Cors
+
+----------
+
+Having a permissive Cross-Origin Resource Sharing policy is security-sensitive
+
+<https://sonarsource.github.io/rspec/#/rspec/S5122/javascript>
+
+👍 Examples of correct code
+
+```typescript
+const http = require('http');
+const srv = http.createServer((req, res) => {
+  res.writeHead(200, { 'Access-Control-Allow-Origin': 'trustedwebsite.com' }); // Compliant
+  res.end('ok');
+});
+srv.listen(3000);
+
+const cors = require('cors');
+
+let corsOptions = {
+  origin: 'trustedwebsite.com' // Compliant
+};
+
+let app = express();
+app.use(cors(corsOptions));
+
+function (req, res) {
+  const origin = req.header('Origin');
+
+  if (trustedOrigins.indexOf(origin) >= 0) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+};
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function (req, res) {
+  const origin = req.header('Origin');
+  res.setHeader('Access-Control-Allow-Origin', origin); // Sensitive
+};
+
+const cors = require('cors');
+
+let app1 = express();
+app1.use(cors()); // Sensitive: by default origin is set to *
+
+let corsOptions = {
+  origin: '*' // Sensitive
+};
+
+let app2 = express();
+app2.use(cors(corsOptions));
+
+const http = require('http');
+const srv = http.createServer((req, res) => {
+  res.writeHead(200, { 'Access-Control-Allow-Origin': '*' }); // Sensitive
+  res.end('ok');
+});
+srv.listen(3000);
+```
+
+### Csrf
+
+----------
+
+Force CSRF protections is security-sensitive
+
+<https://sonarsource.github.io/rspec/#/rspec/S4502/javascript>
+
+👍 Examples of correct code
+
+```typescript
+let csrf = require('csurf');
+let express = require('express');
+
+let csrfProtection = csrf({ cookie:  true });
+
+let app = express();
+
+app.post('/money_transfer', parseForm, csrfProtection, function (req, res) { // Compliant
+  res.send('Money transferred')
+});
+
+let csrf = require('csurf');
+let express = require('express');
+
+app.use(csrf({ cookie: true, ignoreMethods: ["GET"] })); // Compliant
+```
+
+👎 Examples of incorrect code
+
+```typescript
+let csrf = require('csurf');
+let express = require('express');
+
+let csrfProtection = csrf({ cookie: true });
+
+let app = express();
+
+// Sensitive: this operation doesn't look like protected by CSURF middleware (csrfProtection is not used)
+app.post('/money_transfer', parseForm, function (req, res) {
+  res.send('Money transferred');
+});
+
+// or
+
+let csrf = require('csurf');
+let express = require('express');
+
+app.use(csrf({ cookie: true, ignoreMethods: ["POST", "GET"] })); // Sensitive as POST is unsafe method
+```
+
+### Aws Security
+
+----------
+
+Aws General Security
+
+<https://sonarsource.github.io/rspec/#/rspec/S6333/javascript>
+<https://sonarsource.github.io/rspec/#/rspec/S6329/javascript>
+<https://sonarsource.github.io/rspec/#/rspec/S6275/javascript>
+<https://sonarsource.github.io/rspec/#/rspec/S6332/javascript>
+<https://sonarsource.github.io/rspec/#/rspec/S6302/javascript>
+<https://sonarsource.github.io/rspec/#/rspec/S6304/javascript>
+<https://sonarsource.github.io/rspec/#/rspec/S6317/javascript>
+<https://sonarsource.github.io/rspec/#/rspec/S6270/javascript>
+<https://sonarsource.github.io/rspec/#/rspec/S6308/javascript>
+<https://sonarsource.github.io/rspec/#/rspec/S6303/javascript>
+<https://sonarsource.github.io/rspec/#/rspec/S6321/javascript>
+<https://sonarsource.github.io/rspec/#/rspec/S6265/javascript>
+<https://sonarsource.github.io/rspec/#/rspec/S6249/javascript>
+<https://sonarsource.github.io/rspec/#/rspec/S6281/javascript>
+<https://sonarsource.github.io/rspec/#/rspec/S6245/javascript>
+<https://sonarsource.github.io/rspec/#/rspec/S6252/javascript>
+<https://sonarsource.github.io/rspec/#/rspec/S6319/javascript>
+<https://sonarsource.github.io/rspec/#/rspec/S6327/javascript>
+<https://sonarsource.github.io/rspec/#/rspec/S6308/javascript>
+
+👍 Examples of correct code
+
+```typescript
+import {aws_apigateway as apigateway} from "aws-cdk-lib"
+
+const resource = api.root.addResource("example",{
+    defaultMethodOptions:{
+        authorizationType: apigateway.AuthorizationType.IAM
+    }
+})
+resource.addMethod(
+    "POST",
+    new apigateway.HttpIntegration("https://example.org"),
+    {
+        authorizationType: apigateway.AuthorizationType.IAM
+    }
+)
+resource.addMethod(  // authorizationType is inherited from the Resource's configured defaultMethodOptions
+    "GET"
+)
+
+// or
+
+import {aws_apigatewayv2 as apigateway} from "aws-cdk-lib"
+
+new apigateway.CfnRoute(this, "auth", {
+    apiId: api.ref,
+    routeKey: "POST /auth",
+    authorizationType: "AWS_IAM",
+    target: exampleIntegration
+})
+
+// or
+
+import { aws_opensearchservice as opensearchservice } from 'aws-cdk-lib';
+
+const exampleDomain = new opensearchservice.Domain(this, 'ExampleDomain', {
+  version: EngineVersion.OPENSEARCH_1_3,
+  encryptionAtRest: {
+    enabled: true,
+  },
+});
+
+// or
+
+import { Topic } from 'aws-cdk-lib/aws-sns';
+
+const encryptionKey = new Key(this, 'exampleKey', {
+    enableKeyRotation: true,
+});
+
+new Topic(this, 'exampleTopic', {
+    masterKey: encryptionKey
+});
+
+// or
+
+import { CfnNotebookInstance } from 'aws-cdk-lib/aws-sagemaker';
+
+const encryptionKey = new Key(this, 'example', {
+    enableKeyRotation: true,
+});
+new CfnNotebookInstance(this, 'example', {
+    instanceType: 'instanceType',
+    roleArn: 'roleArn',
+    kmsKeyId: encryptionKey.keyId
+});
+
+// or
+
+const s3 = require('aws-cdk-lib/aws-s3');
+
+new s3.Bucket(this, 'id', {
+    bucketName: 'bucket',
+    versioned: true
+});
+
+// or
+
+new s3.Bucket(this, 'id', {
+    encryption: s3.BucketEncryption.KMS_MANAGED,
+    encryptionKey: access_key
+});
+
+// or
+
+const s3 = require('aws-cdk-lib/aws-s3');
+
+const bucket = new s3.Bucket(this, 'example', {
+    bucketName: 'example',
+    versioned: true,
+    publicReadAccess: false,
+    enforceSSL: true
+});
+```
+
+👎 Examples of incorrect code
+
+```typescript
+import {aws_apigateway as apigateway} from "aws-cdk-lib"
+
+const resource = api.root.addResource("example")
+resource.addMethod(
+    "GET",
+    new apigateway.HttpIntegration("https://example.org"),
+    {
+        authorizationType: apigateway.AuthorizationType.NONE // Sensitive
+    }
+)
+
+// or
+
+import {aws_apigatewayv2 as apigateway} from "aws-cdk-lib"
+
+new apigateway.CfnRoute(this, "no-auth", {
+    apiId: api.ref,
+    routeKey: "GET /no-auth",
+    authorizationType: "NONE", // Sensitive
+    target: exampleIntegration
+})
+
+// or
+
+import { aws_opensearchservice as opensearchservice } from 'aws-cdk-lib';
+
+const exampleCfnDomain = new opensearchservice.CfnDomain(this, 'ExampleCfnDomain', {
+  engineVersion: 'OpenSearch_1.3',
+}); // Sensitive, encryption must be explicitly enabled
+
+// or
+
+import { Topic, CfnTopic } from 'aws-cdk-lib/aws-sns';
+
+new CfnTopic(this, 'exampleCfnTopic'); // Sensitive
+
+// or
+
+import { CfnNotebookInstance } from 'aws-cdk-lib/aws-sagemaker';
+
+new CfnNotebookInstance(this, 'example', {
+      instanceType: 'instanceType',
+      roleArn: 'roleArn'
+}); // Sensitive
+
+// or
+
+const s3 = require('aws-cdk-lib/aws-s3');
+
+new s3.Bucket(this, 'id', {
+    bucketName: 'bucket',
+    versioned: false // Sensitive
+});
+
+// or
+
+const s3 = require('aws-cdk-lib/aws-s3');
+
+new s3.Bucket(this, 'id', {
+    bucketName: 'default'
+}); // Sensitive
+```
+
+### Security Cookie
+
+----------
+
+When a cookie is protected with the secure attribute set to true it will not be send by the browser
+over an unencrypted HTTP request and thus cannot be observed by an unauthorized person during a
+man-in-the-middle attack.
+
+<https://sonarsource.github.io/rspec/#/rspec/S2092/javascript>
+
+👍 Examples of correct code
+
+```typescript
+let session = cookieSession({
+  secure: true,// Compliant
+});  // Compliant
+
+// or
+
+const express = require('express');
+const session = require('express-session');
+
+let app = express();
+app.use(session({
+  cookie:
+  {
+    secure: true // Compliant
+  }
+}));
+
+// or
+
+let cookies = new Cookies(req, res, { keys: keys });
+
+cookies.set('LastVisit', new Date().toISOString(), {
+  secure: true // Compliant
+}); // Compliant
+
+// or
+
+const cookieParser = require('cookie-parser');
+const csrf = require('csurf');
+const express = require('express');
+
+let csrfProtection = csrf({ cookie: { secure: true }}); // Compliant
+```
+
+👎 Examples of incorrect code
+
+```typescript
+let session = cookieSession({
+  secure: false,// Sensitive
+});  // Sensitive
+
+// or
+
+const express = require('express');
+const session = require('express-session');
+
+let app = express();
+app.use(session({
+  cookie:
+  {
+    secure: false // Sensitive
+  }
+}));
+
+// or
+
+let cookies = new Cookies(req, res, { keys: keys });
+
+cookies.set('LastVisit', new Date().toISOString(), {
+  secure: false // Sensitive
+}); // Sensitive
+
+// or
+
+const cookieParser = require('cookie-parser');
+const csrf = require('csurf');
+const express = require('express');
+
+let csrfProtection = csrf({ cookie: { secure: false }}); // Sensitive
+```
+
+### Insecure Cookie
+
+----------
+
+Creating cookies without the "secure" flag is security-sensitive
+
+<https://sonarsource.github.io/rspec/#/rspec/S2092/javascript>
+
+👍 Examples of correct code
+
+```typescript
+let session = cookieSession({
+  secure: true,// Compliant
+});  // Compliant
+
+// Or
+
+const express = require('express');
+const session = require('express-session');
+
+let app = express();
+app.use(session({
+  cookie:
+  {
+    secure: true // Compliant
+  }
+}));
+
+// or
+
+let cookies = new Cookies(req, res, { keys: keys });
+
+cookies.set('LastVisit', new Date().toISOString(), {
+  secure: true // Compliant
+}); // Compliant
+
+// or
+
+const cookieParser = require('cookie-parser');
+const csrf = require('csurf');
+const express = require('express');
+
+let csrfProtection = csrf({ cookie: { secure: true }}); // Compliant
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const cookieParser = require('cookie-parser');
+const csrf = require('csurf');
+const express = require('express');
+
+let csrfProtection = csrf({ cookie: { secure: false }}); // Sensitive
+
+// or
+
+let cookies = new Cookies(req, res, { keys: keys });
+
+cookies.set('LastVisit', new Date().toISOString(), {
+  secure: false // Sensitive
+}); // Sensitive
+
+// or
+
+const express = require('express');
+const session = require('express-session');
+
+let app = express();
+app.use(session({
+  cookie:
+  {
+    secure: false // Sensitive
+  }
+}));
+
+// or
+
+let session = cookieSession({
+  secure: false,// Sensitive
+});  // Sensitive
+```
+
+### No Clear Text Protocols
+
+----------
+
+Using clear-text protocols is security-sensitive
+
+<https://sonarsource.github.io/rspec/#/rspec/S5332/javascript>
+
+👍 Examples of correct code
+
+```typescript
+url = "https://example.com"; // use enviroment or config class
+url = "sftp://anonymous@example.com"; // use enviroment or config class
+url = "ssh://anonymous@example.com"; // use enviroment or config class
+
+// or
+
+const nodemailer = require("nodemailer");
+let transporter = nodemailer.createTransport({
+  secure: true,
+  requireTLS: true,
+  port: 465,
+  secured: true
+});
+
+// or
+
+var Client = require('ftp');
+var c = new Client();
+c.connect({
+  'secure': true
+});
+```
+
+👎 Examples of incorrect code
+
+```typescript
+url = "http://example.com"; // Sensitive
+url = "ftp://anonymous@example.com"; // Sensitive
+url = "telnet://anonymous@example.com"; // Sensitive
+
+const nodemailer = require("nodemailer");
+let transporter = nodemailer.createTransport({
+  secure: false, // Sensitive
+  requireTLS: false // Sensitive
+});
+
+var Client = require('ftp');
+var c = new Client();
+c.connect({
+  'secure': false // Sensitive
+});
+
+const Telnet = require('telnet-client'); // Sensitive
+
+```
+
+### Insecure Jwt Token
+
+----------
+
+If a JSON Web Token (JWT) is not signed with a strong cipher algorithm
+(or not signed at all) an attacker can forge it and impersonate user identities.
+
+<https://sonarsource.github.io/rspec/#/rspec/S5659/javascript>
+
+👍 Examples of correct code
+
+```typescript
+const jwt = require('jsonwebtoken');
+
+let token = jwt.sign({ foo: 'bar' }, key, { algorithm: 'HS256' }); // Compliant
+
+jwt.verify(token, key, { expiresIn: 360000 * 5, algorithms: ['HS256'] }, callbackcheck); // Compliant
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const jwt = require('jsonwebtoken');
+
+let token = jwt.sign({ foo: 'bar' }, key, { algorithm: 'none' }); // Noncompliant: 'none' cipher doesn't sign the JWT (no signature will be included)
+
+jwt.verify(token, key, { expiresIn: 360000 * 5, algorithms: ['RS256', 'none'] }, callbackcheck); // Noncompliant: 'none' cipher should not be used when verifying JWT signature
+```
+
+### No Hardcoded Credentials
+
+----------
+
+Hard-coded credentials are security-sensitive
+
+<https://sonarsource.github.io/rspec/#/rspec/S2068/javascript>
+
+👍 Examples of correct code
+
+```typescript
+var mysql = require('mysql');
+
+var connection = mysql.createConnection({
+  host: process.env.MYSQL_URL,
+  user: process.env.MYSQL_USERNAME,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE
+});
+connection.connect();
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var mysql = require('mysql');
+
+var connection = mysql.createConnection(
+{
+  host:'localhost',
+  user: "admin",
+  database: "project",
+  password: "mypassword", // sensitive
+  multipleStatements: true
+});
+```
+
+### No Hardcoded Ip
+
+----------
+
+Using hardcoded IP addresses is security-sensitive
+
+<https://sonarsource.github.io/rspec/#/rspec/S1313/javascript>
+
+👍 Examples of correct code
+
+```typescript
+ip = process.env.IP_ADDRESS; // Compliant
+
+const net = require('net');
+var client = new net.Socket();
+client.connect(80, ip, function() {
+  // ...
+});
+```
+
+👎 Examples of incorrect code
+
+```typescript
+ip = "192.168.12.42"; // Sensitive
+
+const net = require('net');
+var client = new net.Socket();
+client.connect(80, ip, function() {
+  // ...
+});
+```
+
+### No Os Command From Path
+
+----------
+
+Searching OS commands in PATH is security-Sensitive
+
+<https://sonarsource.github.io/rspec/#/rspec/S4036/javascript>
+
+👍 Examples of correct code
+
+```typescript
+const cp = require('child_process');
+cp.exec('/usr/bin/file.exe'); // Compliant
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const cp = require('child_process');
+cp.exec('file.exe'); // Sensitive
+```
+
+### No Unsafe Unzip
+
+----------
+
+Expanding archive files without controlling resource consumption is security-sensitive
+
+<https://sonarsource.github.io/rspec/#/rspec/S5042/javascript>
+
+👍 Examples of correct code
+
+```typescript
+const tar = require('tar');
+const MAX_FILES = 10000;
+const MAX_SIZE = 1000000000; // 1 GB
+
+let fileCount = 0;
+let totalSize = 0;
+
+tar.x({
+  file: 'foo.tar.gz',
+  filter: (path, entry) => {
+    fileCount++;
+    if (fileCount > MAX_FILES) {
+      throw 'Reached max. number of files';
+    }
+
+    totalSize += entry.size;
+    if (totalSize > MAX_SIZE) {
+      throw 'Reached max. size';
+    }
+
+    return true;
+  }
+});
+
+// or
+
+const AdmZip = require('adm-zip');
+const MAX_FILES = 10000;
+const MAX_SIZE = 1000000000; // 1 GB
+const THRESHOLD_RATIO = 10;
+
+let fileCount = 0;
+let totalSize = 0;
+let zip = new AdmZip("./foo.zip");
+let zipEntries = zip.getEntries();
+zipEntries.forEach(function(zipEntry) {
+    fileCount++;
+    if (fileCount > MAX_FILES) {
+        throw 'Reached max. number of files';
+    }
+
+    let entrySize = zipEntry.getData().length;
+    totalSize += entrySize;
+    if (totalSize > MAX_SIZE) {
+        throw 'Reached max. size';
+    }
+
+    let compressionRatio = entrySize / zipEntry.header.compressedSize;
+    if (compressionRatio > THRESHOLD_RATIO) {
+        throw 'Reached max. compression ratio';
+    }
+
+    if (!zipEntry.isDirectory) {
+        zip.extractEntryTo(zipEntry.entryName, ".");
+    }
+});
+
+// or
+
+const fs = require("fs");
+const pathmodule = require("path");
+const JSZip = require("jszip");
+
+const MAX_FILES = 10000;
+const MAX_SIZE = 1000000000; // 1 GB
+
+let fileCount = 0;
+let totalSize = 0;
+let targetDirectory = __dirname + '/archive_tmp';
+
+fs.readFile("foo.zip", function(err, data) {
+  if (err) throw err;
+  JSZip.loadAsync(data).then(function (zip) {
+    zip.forEach(function (relativePath, zipEntry) {
+      fileCount++;
+      if (fileCount > MAX_FILES) {
+        throw 'Reached max. number of files';
+      }
+
+      // Prevent ZipSlip path traversal (S6096)
+      const resolvedPath = pathmodule.join(targetDirectory, zipEntry.name);
+      if (!resolvedPath.startsWith(targetDirectory)) {
+        throw 'Path traversal detected';
+      }
+
+      if (!zip.file(zipEntry.name)) {
+        fs.mkdirSync(resolvedPath);
+      } else {
+        zip.file(zipEntry.name).async('nodebuffer').then(function (content) {
+          totalSize += content.length;
+          if (totalSize > MAX_SIZE) {
+            throw 'Reached max. size';
+          }
+
+          fs.writeFileSync(resolvedPath, content);
+        });
+      }
+    });
+  });
+});
+
+// or
+
+const yauzl = require('yauzl');
+
+const MAX_FILES = 10000;
+const MAX_SIZE = 1000000000; // 1 GB
+const THRESHOLD_RATIO = 10;
+
+yauzl.open('foo.zip', function (err, zipfile) {
+  if (err) throw err;
+
+  let fileCount = 0;
+  let totalSize = 0;
+
+  zipfile.on("entry", function(entry) {
+    fileCount++;
+    if (fileCount > MAX_FILES) {
+      throw 'Reached max. number of files';
+    }
+
+    // The uncompressedSize comes from the zip headers, so it might not be trustworthy.
+    // Alternatively, calculate the size from the readStream.
+    let entrySize = entry.uncompressedSize;
+    totalSize += entrySize;
+    if (totalSize > MAX_SIZE) {
+      throw 'Reached max. size';
+    }
+
+    if (entry.compressedSize > 0) {
+      let compressionRatio = entrySize / entry.compressedSize;
+      if (compressionRatio > THRESHOLD_RATIO) {
+        throw 'Reached max. compression ratio';
+      }
+    }
+
+    zipfile.openReadStream(entry, function(err, readStream) {
+      if (err) throw err;
+      // TODO: extract
+    });
+  });
+});
+
+// or
+const extract = require('extract-zip')
+
+const MAX_FILES = 10000;
+const MAX_SIZE = 1000000000; // 1 GB
+const THRESHOLD_RATIO = 10;
+
+async function main() {
+  let fileCount = 0;
+  let totalSize = 0;
+
+  let target = __dirname + '/foo';
+  await extract('foo.zip', {
+    dir: target,
+    onEntry: function(entry, zipfile) {
+      fileCount++;
+      if (fileCount > MAX_FILES) {
+        throw 'Reached max. number of files';
+      }
+
+      // The uncompressedSize comes from the zip headers, so it might not be trustworthy.
+      // Alternatively, calculate the size from the readStream.
+      let entrySize = entry.uncompressedSize;
+      totalSize += entrySize;
+      if (totalSize > MAX_SIZE) {
+        throw 'Reached max. size';
+      }
+
+      if (entry.compressedSize > 0) {
+        let compressionRatio = entrySize / entry.compressedSize;
+        if (compressionRatio > THRESHOLD_RATIO) {
+          throw 'Reached max. compression ratio';
+        }
+      }
+    }
+  });
+}
+main();
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const tar = require('tar');
+
+tar.x({ // Sensitive
+  file: 'foo.tar.gz'
+});
+
+// or
+
+const AdmZip = require('adm-zip');
+
+let zip = new AdmZip("./foo.zip");
+zip.extractAllTo("."); // Sensitive
+
+// or
+
+const fs = require("fs");
+const JSZip = require("jszip");
+
+fs.readFile("foo.zip", function(err, data) {
+  if (err) throw err;
+  JSZip.loadAsync(data).then(function (zip) { // Sensitive
+    zip.forEach(function (relativePath, zipEntry) {
+      if (!zip.file(zipEntry.name)) {
+        fs.mkdirSync(zipEntry.name);
+      } else {
+        zip.file(zipEntry.name).async('nodebuffer').then(function (content) {
+          fs.writeFileSync(zipEntry.name, content);
+        });
+      }
+    });
+  });
+});
+
+// or
+
+const yauzl = require('yauzl');
+
+yauzl.open('foo.zip', function (err, zipfile) {
+  if (err) throw err;
+
+  zipfile.on("entry", function(entry) {
+    zipfile.openReadStream(entry, function(err, readStream) {
+      if (err) throw err;
+      // TODO: extract
+    });
+  });
+});
+
+// or
+
+const extract = require('extract-zip')
+
+async function main() {
+  let target = __dirname + '/test';
+  await extract('test.zip', { dir: target }); // Sensitive
+}
+main();
+```
+
+### Sockets
+
+----------
+
+Using sockets is security-sensitive. It has led in the past to the following vulnerabilities:
+
+<https://sonarsource.github.io/rspec/#/rspec/S4818/javascript>
+
+👍 Examples of correct code
+
+```typescript
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const net = require('net');
+
+var socket = new net.Socket(); // Sensitive
+socket.connect(80, 'google.com');
+
+// net.createConnection creates a new net.Socket, initiates connection with socket.connect(), then returns the net.Socket that starts the connection
+net.createConnection({ port: port }, () => {}); // Sensitive
+
+// net.connect is an alias to net.createConnection
+net.connect({ port: port }, () => {}); // Sensitive
+```
+
+### Helmet Security
+
+----------
+
+MIME confusion attacks occur when an attacker successfully tricks a web-browser to interpret a resource as a different
+type than the one expected. To correctly interpret a resource (script, image, stylesheet …​) web browsers look for the
+Content-Type header defined in the HTTP response received from the server, but often this header is not set or is
+set with an incorrect value. To avoid content-type mismatch and to provide the best user experience, web browsers try
+to deduce the right content-type, generally by inspecting the content of the resources (the first bytes).
+This "guess mechanism" is called MIME type sniffing.
+
+<https://sonarsource.github.io/rspec/#/rspec/S5734/javascript>
+
+👍 Examples of correct code
+
+```typescript
+const express = require('express');
+const helmet= require('helmet');
+
+let app = express();
+
+app.use(helmet.noSniff());
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const express = require('express');
+const helmet = require('helmet');
+
+let app = express();
+
+app.use(
+  helmet({
+    noSniff: false, // Sensitive
+  })
+);
+```
+
+### Unverified Certificate
+
+----------
+
+The certificate chain validation includes these steps:
+The certificate is issued by its parent Certificate Authority or the root CA trusted by the system.
+Each CA is allowed to issue certificates.
+Each certificate in the chain is not expired.
+
+<https://sonarsource.github.io/rspec/#/rspec/S4830/javascript>
+
+👍 Examples of correct code
+
+```typescript
+let options = {
+  hostname: 'www.example.com',
+  port: 443,
+  path: '/',
+  method: 'GET',
+  secureProtocol: 'TLSv1_2_method'
+};
+
+let req = https.request(options, (res) => {
+  res.on('data', (d) => {
+    process.stdout.write(d);
+  });
+}); // Compliant: by default rejectUnauthorized  is set to true
+
+// or
+
+let options = {
+    secureProtocol: 'TLSv1_2_method'
+};
+
+let socket = tls.connect(443, "www.example.com", options, () => {
+  process.stdin.pipe(socket);
+  process.stdin.resume();
+}); // Compliant: by default rejectUnauthorized  is set to true
+
+// or
+
+let socket = request.get({
+    url: 'https://www.example.com/',
+    secureProtocol: 'TLSv1_2_method' // Compliant
+}); // Compliant: by default rejectUnauthorized  is set to true
+```
+
+👎 Examples of incorrect code
+
+```typescript
+let options = {
+  hostname: 'www.example.com',
+  port: 443,
+  path: '/',
+  method: 'GET',
+  secureProtocol: 'TLSv1_2_method',
+  rejectUnauthorized: false ; // Noncompliant
+};
+
+let req = https.request(options, (res) => {
+  res.on('data', (d) => {
+    process.stdout.write(d);
+  });
+}); // Noncompliant
+
+// or
+
+let options = {
+    secureProtocol: 'TLSv1_2_method',
+    rejectUnauthorized: false ; // Noncompliant
+};
+
+let socket = tls.connect(443, "www.example.com", options, () => {
+  process.stdin.pipe(socket);
+  process.stdin.resume();
+});  // Noncompliant
+
+// or
+
+let socket = request.get({
+    url: 'www.example.com',
+    secureProtocol: 'TLSv1_2_method',
+    rejectUnauthorized: false ; // Noncompliant
+});
+```
+
+### Sql Queries
+
+----------
+
+Formatted SQL queries can be difficult to maintain, debug and can increase the risk of SQL injection when concatenating
+untrusted values into the query. However, this rule doesn’t detect SQL injections
+
+<https://sonarsource.github.io/rspec/#/rspec/S2077/javascript>
+
+👍 Examples of correct code
+
+```typescript
+// === MySQL ===
+const mysql = require('mysql');
+const mycon = mysql.createConnection({ host: host, user: user, password: pass, database: db });
+mycon.connect(function(err) {
+  mycon.query('SELECT name FROM users WHERE id = ?', [userinput], (err, res) => {});
+});
+
+// === PostgreSQL ===
+const pg = require('pg');
+const pgcon = new pg.Client({ host: host, user: user, password: pass, database: db });
+pgcon.connect();
+pgcon.query('SELECT name FROM users WHERE id = $1', [userinput], (err, res) => {});
+```
+
+👎 Examples of incorrect code
+
+```typescript
+// === MySQL ===
+const mysql = require('mysql');
+const mycon = mysql.createConnection({ host: host, user: user, password: pass, database: db });
+mycon.connect(function(err) {
+  mycon.query('SELECT * FROM users WHERE id = ' + userinput, (err, res) => {}); // Sensitive
+});
+
+// === PostgreSQL ===
+const pg = require('pg');
+const pgcon = new pg.Client({ host: host, user: user, password: pass, database: db });
+pgcon.connect();
+pgcon.query('SELECT * FROM users WHERE id = ' + userinput, (err, res) => {}); // Sensitive
 ```
 
 ## Catch Error Name
@@ -14325,6 +15945,7 @@ prompt("What's your name?", "John Doe");
 Disallow function declarations that contain unsafe references inside loop statements
 
 <https://eslint.org/docs/latest/rules/no-loop-func>
+<https://sonarsource.github.io/rspec/#/rspec/S1515/javascript>
 
 👍 Examples of correct code
 
@@ -15894,6 +17515,174 @@ value + '';
 ({}.toString());
 ```
 
+### Not IN Primitive type
+
+----------
+
+"in" should not be used with primitive types
+
+<https://sonarsource.github.io/rspec/#/rspec/S3785/javascript>
+
+👍 Examples of correct code
+
+```typescript
+const x = "Foo";
+if(typeof x === "string")
+    x.length
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var x = "Foo";
+"length" in x; // Noncompliant: TypeError
+0 in x;        // Noncompliant: TypeError
+```
+
+## Useless String Operation
+
+----------
+
+Results of operations on strings should not be ignored
+
+<https://sonarsource.github.io/rspec/#/rspec/S1154/javascript>
+
+👍 Examples of correct code
+
+```typescript
+var str = "..."
+str = str.toUpperCase();
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var str = "..."
+str.toUpperCase(); // Noncompliant
+```
+
+### Super Invocation
+
+----------
+
+There are situations where super() must be invoked and situations where super() cannot be invoked.
+The basic rule is: a constructor in a non-derived class cannot invoke super(); a constructor in a derived class must invoke super().
+
+Furthermore:
+super() must be invoked before the this and super keywords can be used.
+super() must be invoked with the same number of arguments as the base class' constructor.
+super() can only be invoked in a constructor - not in any other method.
+super() cannot be invoked multiple times in the same constructor.
+
+<https://sonarsource.github.io/rspec/#/rspec/S3854/javascript>
+
+👍 Examples of correct code
+
+```typescript
+class Dog extends Animal {
+  constructor(name) {
+    super();
+    this.name = name;
+    super.doSomething();
+  }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+class Dog extends Animal {
+  constructor(name) {
+    super();
+    this.name = name;
+    super();         // Noncompliant
+    super.doSomething();
+  }
+}
+```
+
+
+### No Useless Intersection
+
+----------
+
+Types without members, 'any' and 'never' should not be used in type intersections
+
+<https://sonarsource.github.io/rspec/#/rspec/S4335/javascript>
+
+👍 Examples of correct code
+
+```typescript
+function foo(p: MyType | null) {
+ // ...
+}
+// or
+function foo(p: MyType & AnotherType) {
+ // ...
+}
+
+function bar(p: any) {
+ // ...
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function foo(p: MyType & null) { // Noncompliant
+ // ...
+}
+
+function bar(p: MyType & any) { // Noncompliant
+ // ...
+}
+```
+
+### Stateful Regex
+
+----------
+
+Regular expressions with the global flag turned on can be a source of tricky bugs for uninformed users, and should
+therefore be used with caution. Such regular expressions are stateful, that is, they maintain an internal state through
+the lastIndex property, which is updated and used as starting point on every call to
+RegExp.prototype.test() and RegExp.prototype.exec(), even when testing a different string.
+The lastIndex property is eventually reset when these functions return false and null respectively.
+
+<https://sonarsource.github.io/rspec/#/rspec/S6351/javascript>
+
+👍 Examples of correct code
+
+```typescript
+const datePattern = /\d{4}-\d{2}-\d{2}/;
+datePattern.test('2020-08-06');
+datePattern.test('2019-10-10'); // Compliant
+
+const reg = /foo*/g;
+const str = 'foodie fooled football';
+while ((result = reg.exec(str)) !== null) { // Compliant
+  /* ... */
+}
+
+const stickyPattern = /abc/y; // Compliant
+stickyPattern.test(/* ... */);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const datePattern = /\d{4}-\d{2}-\d{2}/g;
+datePattern.test('2020-08-06');
+datePattern.test('2019-10-10'); // Noncompliant: the regex will return "false" despite the date being well-formed
+
+const str = 'foodie fooled football';
+while ((result = /foo*/g.exec(str)) !== null) { // Noncompliant: a regex is defined at each iteration causing an infinite loop
+  /* ... */
+}
+
+const stickyPattern = /abc/gy; // Noncompliant: a regex defined as both sticky and global ignores the global flag
+stickyPattern.test(/* ... */);
+```
+
 ## Possible Errors
 
 ### For Direction
@@ -15903,6 +17692,7 @@ value + '';
 Enforces for loop update clause moving the counter in the right direction.
 
 <https://eslint.org/docs/latest/rules/for-direction>
+<https://sonarsource.github.io/rspec/#/rspec/S888/javascript>
 
 👍 Examples of correct code
 
@@ -17249,6 +19039,118 @@ switch (day) {
     result = 1;
     break;
 }
+```
+
+### Index Of Compare To Positive Number
+
+----------
+
+Most checks against an indexOf call against an array compare it with -1 because 0 is a valid index. Any checks which look for values >0 ignore the first element, which is likely a bug. If you’re merely checking the presence of the element, consider using includes instead. Before using includes method make sure that your browser version is supporting it.
+
+<https://sonarsource.github.io/rspec/#/rspec/S2692/javascript>
+
+👍 Examples of correct code
+
+```typescript
+var color = "blue";
+var name = "ishmael";
+
+var arr = [color, name];
+
+if (arr.indexOf("blue") >= 0) {
+  // ...
+}
+if (arr.includes("blue")) {
+  // ...
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var color = "blue";
+var name = "ishmael";
+
+var arr = [color, name];
+
+if (arr.indexOf("blue") > 0) { // Noncompliant
+  // ...
+}
+```
+
+### No Invariant Returns
+
+----------
+
+Function returns should not be invariant
+
+<https://sonarsource.github.io/rspec/#/rspec/S3516/javascript>
+
+👍 Examples of correct code
+
+```typescript
+function foo(a) {  // Noncompliant
+  let b = 12;
+  if (a) {
+    return b + a; // Not equals
+  }
+  return b;
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function foo(a) {  // Noncompliant
+  let b = 12;
+  if (a) {
+    return b;
+  }
+  return b;
+}
+```
+
+### Inconsistent Function Call
+
+----------
+
+Constructor functions, which create new object instances, must only be called with new.
+Non-constructor functions must not. Mixing these two usages could lead to unexpected results at runtime.
+
+<https://sonarsource.github.io/rspec/#/rspec/S3686/javascript>
+
+👍 Examples of correct code
+
+```typescript
+function getNum() {
+  return 5;
+}
+
+function Num(numeric, alphabetic) {
+  this.numeric = numeric;
+  this.alphabetic = alphabetic;
+}
+
+var myFirstNum = getNum();
+
+var myNumObj1 = new Num(1, "A");
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function getNum() {
+  return 5;
+}
+
+function Num(numeric, alphabetic) {
+  this.numeric = numeric;
+  this.alphabetic = alphabetic;
+}
+
+var my2ndNum = new getNum();  // Noncompliant. An empty object is returned, NOT 5
+
+var myNumObj2 = Num();  // Noncompliant. undefined is returned, NOT an object
 ```
 
 ## Yaml Json
