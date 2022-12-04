@@ -537,5 +537,13 @@ module.exports = {
         "sonar/regex-complexity": [ "error" ], // Regex Complexidade
         "sonar/shorthand-property-grouping": [ "error" ], // Agrupe { a, b, c:1, d:2}
         "sonar/unused-named-groups": [ "error" ], // Grupos não usados de regex
+        "sonarjs/no-identical-functions": [ "error" ], // Não faça funções iguais
+        "sonarjs/no-inverted-boolean-check": [ "error" ], // Não faça funções iguais
+        "sonarjs/no-nested-switch": [ "error" ], // Não faça switch dentro do outro
+        "sonarjs/no-nested-template-literals": [ "error" ], // Não faça string Template dentro de outra
+        "sonarjs/no-redundant-boolean": [ "error" ], // Não faça !false ou `boolReturnFunc() || false`
+        "sonarjs/prefer-immediate-return": [ "error" ], // Prefira retornar imediatamente a variável
+        "sonarjs/prefer-object-literal": [ "error" ], // Prefira declarar dentro do objeto inicial ao invés de injetar
+        "sonarjs/prefer-single-boolean-return": [ "error" ], // Retorne a boolean em vez de fazer if e else
     },
 };

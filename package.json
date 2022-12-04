@@ -1,6 +1,6 @@
 {
     "name": "@odg/eslint-config",
-    "version": "1.4.1",
+    "version": "1.5.0",
     "description": "Linter for JavaScript And Typescript project",
     "main": "index.js",
     "author": "Dragons Gamers <https://www.linkedin.com/in/victor-alves-odgodinho>",
@@ -38,6 +38,7 @@
         "eslint-plugin-regexp": "*",
         "eslint-plugin-security": "*",
         "eslint-plugin-sonar": "*",
+        "eslint-plugin-sonarjs": "*",
         "eslint-plugin-unicorn": "*",
         "eslint-plugin-yml": "*",
         "toml-eslint-parser": "*"

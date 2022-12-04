@@ -113,7 +113,7 @@
 - [Prefer Logical Operator Over Ternary](#prefer-logical-operator-over-ternary)
 - [Prefer Event Target](#prefer-event-target)
 - [Prefer Object From Entries](#prefer-object-from-entries)
-- [Prefer Array From.Map](#prefer-array-from-map)
+- [Prefer Array From Map](#prefer-array-from-map)
 - [Prefer Array Flat](#prefer-array-flat)
 - [This Pattern](#this-pattern)
 - [Use Dot](#use-dot)
@@ -191,7 +191,7 @@
 - [No Unnecessary Type Assertion](#no-unnecessary-type-assertion)
 - [No Unsafe Call](#no-unsafe-call)
 - [No Var](#no-var)
-- [Operator BreakLine](#operator-break-line)
+- [Operator Break-Line](#operator-break-line)
 - [Generator Function Stars](#generator-function-stars)
 - [No Unsafe Optional Chaining](#no-unsafe-optional-chaining)
 - [Array Callback](#array-callback)
@@ -202,7 +202,16 @@
 - [Comma Style](#comma-style)
 - [Object Break Line](#object-break-line)
 - [Object Curly Newline](#object-curly-newline)
-- [No Negative Condition](#no-negated-condition)
+- [No Negative Condition](#no-negative-condition)
+- [No Duplicated Branches](#no-duplicated-branches)
+- [No Identical Functions](#no-identical-functions)
+- [No Inverted Boolean Check](#no-inverted-boolean-check)
+- [No Nested Switch](#no-nested-switch)
+- [No Nested Template Literals](#no-nested-template-literals)
+- [No Redundant Boolean](#no-redundant-boolean)
+- [Prefer Immediate Return](#prefer-immediate-return)
+- [Prefer Object Literal](#prefer-object-literal)
+- [Prefer Single Boolean Return](#prefer-single-boolean-return)
 - [No Shadow](#no-shadow)
 - [Parentheses New Line](#parentheses-new-line)
 - [No Func Call Spacing](#no-func-call-spacing)
@@ -503,6 +512,16 @@
   - [Index Of Compare To Positive Number](#index-of-compare-to-positive-number)
   - [No Invariant Returns](#no-invariant-returns)
   - [Inconsistent Function Call](#inconsistent-function-call)
+  - [Duplicate Conditions](#duplicate-conditions)
+  - [No Element Overwrite](#no-element-overwrite)
+  - [No Empty Collection](#no-empty-collection)
+  - [No Extra Arguments](#no-extra-arguments)
+  - [No Identical Expressions](#no-identical-expressions)
+  - [No Ignored Return](#no-ignored-return)
+  - [No Use Of Empty Return Value](#no-use-of-empty-return-value)
+  - [No Collection Size Mischeck](#no-collection-size-mischeck)
+  - [No Gratuitous Expressions](#no-gratuitous-expressions)
+  - [No Unused Collection](#no-unused-collection)
 - [YAML / JSON](#yaml-json)
 
 ## Introduction
@@ -3799,7 +3818,7 @@ const object = pairs.reduce(
 const object = _.fromPairs(pairs);
 ```
 
-## Prefer Array From.Map
+## Prefer Array From Map
 
 ----------
 
@@ -3989,7 +4008,7 @@ class Foo {
 }
 ```
 
-## Use IsNan
+## Use Is-Nan
 
 ----------
 
@@ -4935,7 +4954,7 @@ var items = [,];
 var colors = [ "red",, "blue" ];
 ```
 
-## Valid TypeOf
+## Valid Type-Of
 
 ----------
 
@@ -7026,7 +7045,7 @@ if (CONFIG.y) {
 console.log(y);
 ```
 
-## Operator BreakLine
+## Operator Break-Line
 
 ----------
 
@@ -7698,6 +7717,351 @@ if (a !== b) {
 }
 
 !a ? c : b
+```
+
+## No Duplicated Branches
+
+----------
+
+Having two cases in a switch statement or two branches in an if chain with the same implementation
+is at best duplicate code, and at worst a coding error. If the same logic is truly needed for both instances,
+then in an if chain they should be combined, or for a switch, one should fall through to the other.
+
+<https://github.com/SonarSource/eslint-plugin-sonarjs/blob/HEAD/docs/rules/no-duplicated-branches.md>
+
+👍 Examples of correct code
+
+```typescript
+switch (i) {
+  case 1:
+  case 3:
+    doFirstThing();
+    doSomething();
+    break;
+  case 2:
+    doSomethingDifferent();
+    break;
+  default:
+    doTheRest();
+}
+
+if ((a >= 0 && a < 10) || (a >= 20 && a < 50)) {
+  doFirstThing();
+  doTheThing();
+} else if (a >= 10 && a < 20) {
+  doTheOtherThing();
+} else {
+  doTheRest();
+}
+
+// Or
+
+switch (i) {
+  case 1:
+    doFirstThing();
+    doSomething();
+    break;
+  case 2:
+    doSomethingDifferent();
+    break;
+  case 3:
+    doFirstThing();
+    doThirdThing();
+    break;
+  default:
+    doTheRest();
+}
+
+if (a >= 0 && a < 10) {
+  doFirstThing();
+  doTheThing();
+} else if (a >= 10 && a < 20) {
+  doTheOtherThing();
+} else if (a >= 20 && a < 50) {
+  doFirstThing();
+  doTheThirdThing();
+} else {
+  doTheRest();
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+switch (i) {
+  case 1:
+    doFirstThing();
+    doSomething();
+    break;
+  case 2:
+    doSomethingDifferent();
+    break;
+  case 3: // Noncompliant; duplicates case 1's implementation
+    doFirstThing();
+    doSomething();
+    break;
+  default:
+    doTheRest();
+}
+
+if (a >= 0 && a < 10) {
+  doFirstThing();
+  doTheThing();
+} else if (a >= 10 && a < 20) {
+  doTheOtherThing();
+} else if (a >= 20 && a < 50) {
+  // Noncompliant; duplicates first condition
+  doFirstThing();
+  doTheThing();
+} else {
+  doTheRest();
+}
+```
+
+## No Identical Functions
+
+----------
+
+When two functions have the same implementation, either it was a mistake -
+something else was intended - or the duplication was intentional, but may be confusing to maintainers.
+In the latter case, the code should be refactored.
+
+<https://github.com/SonarSource/eslint-plugin-sonarjs/blob/HEAD/docs/rules/no-identical-functions.md>
+
+👍 Examples of correct code
+
+```typescript
+function calculateCode() {
+  doTheThing();
+  doOtherThing();
+  return code;
+}
+
+function getName() {
+  return calculateCode();
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function calculateCode() {
+  doTheThing();
+  doOtherThing();
+  return code;
+}
+
+function getName() { // Noncompliant
+  doTheThing();
+  doOtherThing();
+  return code;
+}
+```
+
+## No Inverted Boolean Check
+
+----------
+
+It is needlessly complex to invert the result of a boolean comparison. The opposite comparison should be made instead.
+
+<https://github.com/SonarSource/eslint-plugin-sonarjs/blob/HEAD/docs/rules/no-inverted-boolean-check.md>
+
+👍 Examples of correct code
+
+```typescript
+if (a !== 2) { ... }
+```
+
+👎 Examples of incorrect code
+
+```typescript
+if (!(a === 2)) { ... }  // Noncompliant
+```
+
+## No Nested Switch
+
+----------
+
+Nested switch structures are difficult to understand because you can easily confuse the cases of an inner switch
+as belonging to an outer statement. Therefore nested switch statements should be avoided.
+
+<https://github.com/SonarSource/eslint-plugin-sonarjs/blob/HEAD/docs/rules/no-nested-switch.md>
+
+👍 Examples of correct code
+
+```typescript
+function foo(n, m) {
+  switch (n) {
+    case 0:
+      return bar(m);
+    case 1:
+      // ...
+    default:
+      // ...
+  }
+}
+
+function bar(m) {
+  switch(m) {
+    // ...
+  }
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function foo(n, m) {
+  switch (n) {
+    case 0:
+      switch (m) {  // Noncompliant; nested switch
+        // ...
+      }
+    case 1:
+      // ...
+    default:
+      // ...
+  }
+}
+```
+
+## No Nested Template Literals
+
+----------
+
+Template literals (previously named "template strings") are an elegant way to build a string
+without using the + operator to make strings concatenation more readable.
+
+<https://github.com/SonarSource/eslint-plugin-sonarjs/blob/HEAD/docs/rules/no-nested-template-literals.md>
+
+👍 Examples of correct code
+
+```typescript
+let color = "red";
+let count = 3;
+let apples = color ? `${count} ${color}` : count;
+let message = `I have ${apples} apples`;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+let color = "red";
+let count = 3;
+let message = `I have ${color ? `${count} ${color}` : count} apples`;
+```
+
+## No Redundant Boolean
+
+----------
+
+Redundant Boolean literals should be removed from expressions to improve readability.
+
+<https://github.com/SonarSource/eslint-plugin-sonarjs/blob/HEAD/docs/rules/no-redundant-boolean.md>
+
+👍 Examples of correct code
+
+```typescript
+if (booleanMethod()) { /* ... */ }
+if (!booleanMethod()) { /* ... */ }
+if (booleanMethod()) { /* ... */ }
+doSomething(true);
+doSomething(booleanMethod());
+```
+
+👎 Examples of incorrect code
+
+```typescript
+if (booleanMethod() == true) { /* ... */ }
+if (booleanMethod() == false) { /* ... */ }
+if (booleanMethod() || false) { /* ... */ }
+doSomething(!false);
+doSomething(booleanMethod() == true);
+```
+
+## Prefer Immediate Return
+
+----------
+
+Declaring a variable only to immediately return or throw it is a bad practice.
+
+<https://github.com/SonarSource/eslint-plugin-sonarjs/blob/HEAD/docs/rules/prefer-immediate-return.md>
+
+👍 Examples of correct code
+
+```typescript
+function ms(hours, minutes, seconds) {
+  return ((hours * 60 + minutes) * 60 + seconds) * 1000;
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function ms(hours, minutes, seconds) {
+  const duration = ((hours * 60 + minutes) * 60 + seconds) * 1000;
+
+  return duration;
+}
+```
+
+## Prefer Object Literal
+
+----------
+
+Object literal syntax, which initializes an object's properties inside the object declaration is cleaner and clearer
+than the alternative: creating an empty object, and then giving it properties one by one.
+
+<https://github.com/SonarSource/eslint-plugin-sonarjs/blob/HEAD/docs/rules/prefer-object-literal.md>
+
+👍 Examples of correct code
+
+```typescript
+var person = {
+  firstName: "John",
+  middleInitial: "Q",
+  lastName: "Public",
+};
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var person = {}; // Noncompliant
+person.firstName = "John";
+person.middleInitial = "Q";
+person.lastName = "Public";
+```
+
+## Prefer Single Boolean Return
+
+----------
+
+Return of boolean literal statements wrapped into if-then-else flow should be simplified.
+
+<https://github.com/SonarSource/eslint-plugin-sonarjs/blob/HEAD/docs/rules/prefer-single-boolean-return.md>
+
+👍 Examples of correct code
+
+```typescript
+return expression;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+if (expression) {
+  return true;
+} else {
+  return false;
+}
+
+// or
+
+if (expression) {
+  return true;
+}
+return false;
 ```
 
 ## No Shadow
@@ -19151,6 +19515,365 @@ function Num(numeric, alphabetic) {
 var my2ndNum = new getNum();  // Noncompliant. An empty object is returned, NOT 5
 
 var myNumObj2 = Num();  // Noncompliant. undefined is returned, NOT an object
+```
+
+### Duplicate Conditions
+
+----------
+
+Having all branches in a switch or if chain with the same implementation is an error.
+Either a copy-paste error was made and something different should be executed
+
+<https://github.com/SonarSource/eslint-plugin-sonarjs/blob/HEAD/docs/rules/no-all-duplicated-branches.md>
+
+👍 Examples of correct code
+
+```typescript
+if (b == 0) { // Noncompliant
+  doOneMoreThing();
+} else {
+  doOneMoreThing();
+}
+
+let a = b === 0 ? getValue() : getDefaultValue(); // Noncompliant
+
+switch (i) { // Noncompliant
+  case 1:
+    doSomethingOne();
+    break;
+  case 2:
+    doSomethingTwo();
+    break;
+  case 3:
+  default:
+    doSomething();
+}
+
+```
+
+👎 Examples of incorrect code
+
+```typescript
+if (b == 0) { // Noncompliant
+  doOneMoreThing();
+} else {
+  doSomethingElse();
+}
+
+let a = b === 0 ? getValue() : getValue(); // Noncompliant
+
+switch (i) { // Noncompliant
+  case 1:
+    doSomething();
+    break;
+  case 2:
+    doSomething();
+    break;
+  case 3:
+    doSomething();
+    break;
+  default:
+    doSomething();
+}
+```
+
+## No Element Overwrite
+
+----------
+
+It is highly suspicious when a value is saved for a key or index and then unconditionally overwritten.
+Such replacements are likely in error.
+
+<https://github.com/SonarSource/eslint-plugin-sonarjs/blob/HEAD/docs/rules/no-element-overwrite.md>
+
+👍 Examples of correct code
+
+```typescript
+fruits[1] = "banana";
+
+myMap.set("key", 1);
+
+mySet.add(1);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+fruits[1] = "banana";
+fruits[1] = "apple";  // Noncompliant - value on index 1 is overwritten
+
+myMap.set("key", 1);
+myMap.set("key", 2); // Noncompliant - value for key "key" is replaced
+
+mySet.add(1);
+mySet.add(1); // Noncompliant - element is already in the set
+```
+
+## No Empty Collection
+
+----------
+
+When a collection is empty it makes no sense to access or iterate it. Doing so anyway is surely an error;
+either population was accidentally omitted or the developer doesn’t understand the situation.
+
+<https://github.com/SonarSource/eslint-plugin-sonarjs/blob/HEAD/docs/rules/no-empty-collection.md>
+
+👍 Examples of correct code
+
+```typescript
+let strings = [ ...anotherArray ];
+
+if (strings.includes("foo")) {}
+
+for (str of strings) {}
+
+strings.forEach(str => doSomething(str));
+```
+
+👎 Examples of incorrect code
+
+```typescript
+let strings = [];
+
+if (strings.includes("foo")) {}  // Noncompliant
+
+for (str of strings) {}  // Noncompliant
+
+strings.forEach(str => doSomething(str)); // Noncompliant
+```
+
+## No Extra Arguments
+
+----------
+
+You can easily call a JavaScript function with more arguments than the function needs,
+but the extra arguments will be just ignored by function execution.
+
+<https://github.com/SonarSource/eslint-plugin-sonarjs/blob/HEAD/docs/rules/no-extra-arguments.md>
+
+👍 Examples of correct code
+
+```typescript
+function doSomething(a, b) {
+  compute(arguments);
+}
+
+doSomething(1, 2, 3);
+
+// Or
+
+function say(a, b) {
+  print(a + " " + b);
+}
+
+say("hello", "world");
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function say(a, b) {
+  print(a + " " + b);
+}
+
+say("hello", "world", "!"); // Noncompliant; last argument is not used
+```
+
+## No Identical Expressions
+
+----------
+
+Using the same value on either side of a binary operator is almost always a mistake. In the case of logical operators,
+it is either a copy/paste error and therefore a bug, or it is simply wasted code, and should be simplified.
+In the case of bitwise operators and most binary mathematical operators, having the same value on both sides of
+an operator yields predictable results, and should be simplified.
+
+<https://github.com/SonarSource/eslint-plugin-sonarjs/blob/HEAD/docs/rules/no-identical-expressions.md>
+
+👍 Examples of correct code
+
+```typescript
+if (a == b) {
+  doX();
+}
+if (a > b) {
+  doW();
+}
+
+var j = 1; //always 1
+var k = 0; //always 0
+```
+
+👎 Examples of incorrect code
+
+```typescript
+if (a == b && a == b) { // if the first one is true, the second one is too
+  doX();
+}
+if (a > a) { // always false
+  doW();
+}
+
+var j = 5 / 5; //always 1
+var k = 5 - 5; //always 0
+```
+
+## No Ignored Return
+
+----------
+
+When the call to a function doesn’t have any side effects,
+what is the point of making the call if the results are ignored?
+In such case, either the function call is useless and should be dropped or the source code doesn’t behave as expected.
+
+<https://github.com/SonarSource/eslint-plugin-sonarjs/blob/HEAD/docs/rules/no-ignored-return.md>
+
+👍 Examples of correct code
+
+```typescript
+let char = 'hello'.lastIndexOf('e');
+```
+
+👎 Examples of incorrect code
+
+```typescript
+'hello'.lastIndexOf('e'); // Noncompliant
+```
+
+### No Use Of Empty Return Value
+
+----------
+
+If a function does not return anything, it makes no sense to use its output.
+Specifically, passing it to another function, or assigning its "result" to a variable is probably a bug because such
+functions return undefined, which is probably not what was intended.
+
+<https://github.com/SonarSource/eslint-plugin-sonarjs/blob/HEAD/docs/rules/no-use-of-empty-return-value.md>
+
+👍 Examples of correct code
+
+```typescript
+function foo() {
+  console.log("Hello, World!");
+}
+
+foo();
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function foo() {
+  console.log("Hello, World!");
+}
+
+a = foo();
+```
+
+## No Collection Size Mischeck
+
+----------
+
+The size of a collection and the length of an array are always greater than or equal to zero.
+So testing that a size or length is greater than or equal to zero doesn't make sense, since the result is always true.
+Similarly testing that it is less than zero will always return false.
+Perhaps the intent was to check the non-emptiness of the collection or array instead.
+
+<https://github.com/SonarSource/eslint-plugin-sonarjs/blob/HEAD/docs/rules/no-collection-size-mischeck.md>
+
+👍 Examples of correct code
+
+```typescript
+if (someSet.size > 0) {...}
+
+if (someMap.size == 0) {...}
+
+const result = someArray.length > 0;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+if (someSet.size >= 0) {...} // Noncompliant
+
+if (someMap.size < 0) {...} // Noncompliant
+
+const result = someArray.length >= 0;  // Noncompliant
+```
+
+## No Gratuitous Expressions
+
+----------
+
+If a boolean expression doesn’t change the evaluation of the condition, then it is entirely unnecessary,
+and can be removed. If it is gratuitous because it does not match the programmer’s intent,
+then it’s a bug and the expression should be fixed.
+
+<https://github.com/SonarSource/eslint-plugin-sonarjs/blob/HEAD/docs/rules/no-gratuitous-expressions.md>
+
+👍 Examples of correct code
+
+```typescript
+if (a) {
+  if (b) {
+    doSomething();
+  }
+}
+
+// or
+if (a) {
+  doSomething();
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+if (a) {
+  if (a) { // Noncompliant
+    doSomething();
+  }
+}
+
+// Or
+
+if (a) {
+  console.log("anything");
+
+  if (a) { // Noncompliant
+    doSomething();
+  }
+}
+```
+
+### No Unused Collection
+
+----------
+
+When a collection is populated but its contents are never used, then it is surely some kind of mistake.
+Either refactoring has rendered the collection moot, or an access is missing.
+
+<https://github.com/SonarSource/eslint-plugin-sonarjs/blob/HEAD/docs/rules/no-unused-collection.md>
+
+👍 Examples of correct code
+
+```typescript
+function getLength(a, b, c) {
+  return a.length + b.length + c.length;
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+function getLength(a, b, c) {
+  const strings = [];  // Noncompliant
+  strings.push(a);
+  strings.push(b);
+  strings.push(c);
+
+  return a.length + b.length + c.length;
+}
 ```
 
 ## Yaml Json

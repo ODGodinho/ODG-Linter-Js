@@ -57,5 +57,17 @@ module.exports = {
         "sonar/no-misleading-array-reverse": [ "error" ], // Não salva array.revert variável
         "sonar/strings-comparison": [ "error" ], // Não faça comparação de string com < ou >
         "sonar/useless-string-operation": [ "error" ], // Não use função string sem salvar variável
+        "sonarjs/no-all-duplicated-branches": [ "error" ], // Não faça condições duplicadas
+        "sonarjs/no-element-overwrite": [ "error" ], // Não sobrescreva variável de forma desnecessária
+        "sonarjs/no-empty-collection": [ "error" ], // Não interaja com array vazios
+        "sonarjs/no-extra-arguments": [ "error" ], // Não passe argumentos extra
+        "sonarjs/no-identical-expressions": [ "error" ], // Não faça condições iguais
+        "sonarjs/no-ignored-return": [ "error" ], // Use retorno das funções
+        "sonarjs/no-use-of-empty-return-value": [ "error" ], // Não atribua void em uma variável
+        "sonarjs/no-collection-size-mischeck": [ "error" ], // Não atribua void em uma variável
+        "sonarjs/no-duplicate-string": [ "error" ], // Não permite string duplicadas
+        "sonarjs/no-duplicated-branches": [ "error" ], // Em vez de if else igual faça um ||
+        "sonarjs/no-gratuitous-expressions": [ "error" ], // Não faça a mesma condição dentro de outra
+        "sonarjs/no-unused-collection": [ "error" ], // Não faça array que não é usado
     },
 };

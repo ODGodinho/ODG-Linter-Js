@@ -14,6 +14,7 @@ module.exports = {
         "anti-trojan-source",
         "sonar",
         "regex",
+        "sonarjs",
     ],
     env: {
         node: true,
