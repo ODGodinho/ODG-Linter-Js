@@ -1,4 +1,5 @@
 const indentSize = 4;
+const alwaysMultiline = "always-multiline";
 
 module.exports = {
     rules: {
@@ -28,11 +29,11 @@ module.exports = {
             },
         ],
         "comma-dangle": [ "error", {
-            arrays: "always-multiline",
-            objects: "always-multiline",
-            imports: "always-multiline",
-            exports: "always-multiline",
-            functions: "always-multiline",
+            arrays: alwaysMultiline,
+            objects: alwaysMultiline,
+            imports: alwaysMultiline,
+            exports: alwaysMultiline,
+            functions: alwaysMultiline,
         } ], // Virgula no final de tudo
         "no-array-constructor": [ "error" ], // Não permite usar new Array()
         "no-throw-literal": [ "error" ], // Não permite throw "string" ou diferente de classe

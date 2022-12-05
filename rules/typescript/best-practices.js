@@ -1,4 +1,6 @@
 const indentSize = 4;
+const alwaysMultiline = "always-multiline";
+const recordObject = "Record<string, unknown>";
 
 module.exports = {
     rules: {
@@ -38,14 +40,14 @@ module.exports = {
         ], // Espaço apos a virgula
         "comma-dangle": [ "off" ],
         "@typescript-eslint/comma-dangle": [ "error", {
-            arrays: "always-multiline",
-            objects: "always-multiline",
-            imports: "always-multiline",
-            exports: "always-multiline",
-            functions: "always-multiline",
-            enums: "always-multiline",
-            generics: "always-multiline",
-            tuples: "always-multiline",
+            arrays: alwaysMultiline,
+            objects: alwaysMultiline,
+            imports: alwaysMultiline,
+            exports: alwaysMultiline,
+            functions: alwaysMultiline,
+            enums: alwaysMultiline,
+            generics: alwaysMultiline,
+            tuples: alwaysMultiline,
         } ], // Virgula no final de tudo
         "no-array-constructor": [ "off" ], // Não permite usar new Array()
         "@typescript-eslint/no-array-constructor": [ "error" ], // Não permite usar new Array()
@@ -85,7 +87,7 @@ module.exports = {
                     },
                     "Object": {
                         message: "The `Object` type is mostly the same as `unknown`. You probably want `Record<string, unknown>` instead. See https://github.com/typescript-eslint/typescript-eslint/pull/848",
-                        fixWith: "Record<string, unknown>",
+                        fixWith: recordObject,
                     },
                     "String": {
                         message: "Use `string` instead.",
@@ -98,11 +100,11 @@ module.exports = {
                     "{}": {
                         // eslint-disable-next-line max-len
                         message: "The `{}` type is mostly the same as `unknown`. You probably want `Record<string, unknown>` instead.",
-                        fixWith: "Record<string, unknown>",
+                        fixWith: recordObject,
                     },
                     "object": {
                         message: "The `object` type is hard to use. Use `Record<string, unknown>` instead. See: https://github.com/typescript-eslint/typescript-eslint/pull/848",
-                        fixWith: "Record<string, unknown>",
+                        fixWith: recordObject,
                     },
                     "Function": "Use a specific function type instead, like `() => void`.",
                     "[]": "Don't use the empty array type `[]`. It only allows empty arrays. Use `SomeType[]` instead.",
