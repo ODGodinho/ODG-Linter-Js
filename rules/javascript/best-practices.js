@@ -236,7 +236,7 @@ module.exports = {
         "regexp/sort-character-class-elements": [ "error" ], // Coloque [] em ordem Alfabética
         "regexp/sort-flags": [ "error" ], // Flag em ordem alfabética
         "regexp/prefer-named-capture-group": [ "error" ], // Prefira group com nomes
-        "regexp/prefer-regexp-exec": [ "error" ], // Prefira exec em regex
+        // "regexp/prefer-regexp-exec": [ "error" ], // Prefira exec em regex // ? Desabilitado falso positivo
         "max-statements-per-line": [ "error", { "max": 1 } ], // Máximo operação em 1 linha
         "arrow-parens": [ "error", "always" ], // Arrow Function sempre com parentese
         "padding-line-between-statements": [

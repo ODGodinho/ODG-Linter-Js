@@ -397,7 +397,6 @@ module.exports = {
             {
                 selector: "typeLike",
                 format: [
-                    "StrictPascalCase",
                     "camelCase",
                 ],
             },
@@ -490,7 +489,7 @@ module.exports = {
         "@typescript-eslint/prefer-optional-chain": [ "error" ], // Prefira Optional chain ao invés de &&.
         "@typescript-eslint/prefer-readonly": [ "error" ], // Prefira readonly
         "@typescript-eslint/prefer-reduce-type-parameter": [ "error" ], // Use <> em reduce em vez de as default type
-        "@typescript-eslint/prefer-regexp-exec": [ "error" ], // Prefira regex exec
+        // "@typescript-eslint/prefer-regexp-exec": [ "error" ], // Prefira regex exec // ? Desabilitado falso positivo
         "@typescript-eslint/prefer-string-starts-ends-with": [ "error" ], // Prefira startsWith e endsWith
         "@typescript-eslint/promise-function-async": [ "error" ], // Prefira async function quando retorna Promise
         "@typescript-eslint/require-array-sort-compare": [ "error" ], // Passe parâmetro array sort
