@@ -397,6 +397,7 @@ module.exports = {
             {
                 selector: "typeLike",
                 format: [
+                    "StrictPascalCase",
                     "camelCase",
                 ],
             },
