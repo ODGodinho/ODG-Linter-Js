@@ -17,7 +17,8 @@ module.exports = {
         "yml/flow-sequence-bracket-newline": [ "error" ], // Quebre a linha multi-line array
         "yml/key-spacing": [ "error" ], // Disable key spacing
         "yml/no-irregular-whitespace": [ "error" ], // Sem Espaços em brancos irregular caracteres especiais
-        "spaced-comment": [ "off" ],
-        "yml/spaced-comment": [ "error" ],
+        "spaced-comment": [ "off" ], // Desliga regra JS
+        "yml/spaced-comment": [ "error" ], // Comentarios com espaço
+        "filenames/match-regex": [ "off" ], // Desliga validação de nomes
     },
 };

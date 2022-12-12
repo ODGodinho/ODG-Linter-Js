@@ -174,6 +174,9 @@ module.exports = {
                 "*.yml",
                 "*.yaml",
             ],
+            plugins: [
+                "yml",
+            ],
             extends: [
                 "./rules/yaml/base.js",
             ],
