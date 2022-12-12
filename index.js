@@ -185,6 +185,15 @@ module.exports = {
                 defaultYAMLVersion: "1.2",
             },
         },
+        {
+            files: [
+                ".github/**/*.yml",
+                ".github/**/*.yaml",
+            ],
+            extends: [
+                "./rules/yaml/github.js",
+            ],
+        },
     ],
     rules: {},
 };
