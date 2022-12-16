@@ -6,7 +6,13 @@ module.exports = {
     rules: {
         "strict": [ "off" ], // Strict javascript disable
         "indent": [ "off" ], // 4 spaces
-        "@typescript-eslint/indent": [ "error", indentSize ], // Força indent com 4 espaços
+        "@typescript-eslint/indent": [
+            "error",
+            indentSize,
+            {
+                "ignoredNodes": [ "TSTypeParameterInstantiation" ],
+            },
+        ], // Força indent com 4 espaços
         "quotes": [ "off" ], // Aspas duplas
         "@typescript-eslint/quotes": [ "error", "double" ], // Força aspas dupla
         "lines-between-class-members": [ "off" ], // Força linha em branco entre props classe e funções
@@ -397,7 +403,7 @@ module.exports = {
             {
                 selector: "typeLike",
                 format: [
-                    "StrictPascalCase",
+                    "PascalCase",
                     "camelCase",
                 ],
             },
@@ -420,11 +426,9 @@ module.exports = {
             },
             {
 
-                // Interface name should not be prefixed with `I`.
                 selector: "interface",
-                filter: /^(?!I)[A-Z]/.source,
                 format: [
-                    "StrictPascalCase",
+                    "PascalCase",
                 ],
             },
             {
