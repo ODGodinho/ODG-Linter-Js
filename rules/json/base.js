@@ -15,5 +15,11 @@ module.exports = {
             "error",
             { "consistent": true },
         ], // Força quebrar linha em todos #4 os itens objeto
+        "max-len": [ "warn", {
+            code: 120,
+            ignoreUrls: true,
+            ignoreStrings: true,
+            ignoreTemplateLiterals: true,
+        } ], // Caracteres máximo por linhas
     },
 };

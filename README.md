@@ -544,7 +544,17 @@ Add extends in your `.eslintrc` file
 }
 ```
 
-Test: `npm run eslint` or `yarn eslint`
+Add script in your `package.json` file
+
+```json
+{
+    "scripts": {
+        "lint": "eslint \"**/*.+(js|jsx|ts|tsx|json|jsonc|json5|yml|yaml|xml|txt|svg|properties|gradle|java|cpp|c|cs|html|css|groovy|gitignore|npmignore|toml|env|example|sample|ini|php|bat|powershell|ps1|sh|bash)\"",
+    }
+}
+```
+
+Test: `npm run lint` or `yarn lint`
 
 ## File Name Convention
 

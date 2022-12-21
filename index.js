@@ -15,6 +15,7 @@ module.exports = {
         "sonar",
         "regex",
         "sonarjs",
+        "json-schema-validator",
     ],
     env: {
         node: true,
@@ -64,8 +65,7 @@ module.exports = {
             ".mjs",
             ".jsx",
         ],
-        "import/core-modules": [
-        ],
+        "import/core-modules": [],
         "import/ignore": [
             "node_modules",
             "\\.(coffee|scss|css|less|hbs|svg|json)$",
@@ -105,27 +105,19 @@ module.exports = {
         },
         {
             files: [ "*.json", "*.json5", "*.jsonc", ".eslintrc", "*.code-*" ],
-            plugins: [
-                "jsonc",
-            ],
-            extends: [
-                "./rules/json/base.js",
-            ],
+            plugins: [ "jsonc" ],
+            extends: [ "./rules/json/base.js" ],
         },
         {
             files: [ "package.json" ],
-            extends: [
-                "./rules/json/base.js",
-            ],
+            extends: [ "./rules/json/base.js" ],
             rules: {
                 "jsonc/sort-keys": [ "off" ],
             },
         },
         {
             files: [ "**.php" ],
-            plugins: [
-                "php-markup",
-            ],
+            plugins: [ "php-markup" ],
             globals: {
                 "lintPHPCode": true,
             },
@@ -138,7 +130,7 @@ module.exports = {
                 "php/keep-eol": true,
                 "php/remove-whitespace": false,
                 "php/remove-empty-line": false,
-                "php/remove-php-lint": true,
+                "php/remove-php-lint": false,
             },
         },
         {
@@ -152,21 +144,22 @@ module.exports = {
                 "*.e2e.*",
                 "*.e2e-spec.*",
             ],
-            extends: [
-                "./rules/typescript/tests.js",
-            ],
+            extends: [ "./rules/typescript/tests.js" ],
         },
         {
             files: [
+                ".env.example",
                 ".env.*",
                 "*.env",
+                ".env.sample",
                 "*.properties",
                 "*.ini",
                 "*.toml",
             ],
-            extends: [
-                "./rules/ini/base.js",
+            plugins: [
+                "toml",
             ],
+            extends: [ "./rules/ini/base.js" ],
             parser: "toml-eslint-parser",
         },
         {
@@ -174,12 +167,8 @@ module.exports = {
                 "*.yml",
                 "*.yaml",
             ],
-            plugins: [
-                "yml",
-            ],
-            extends: [
-                "./rules/yaml/base.js",
-            ],
+            plugins: [ "yml" ],
+            extends: [ "./rules/yaml/base.js" ],
             parser: "yaml-eslint-parser",
             parserOptions: {
                 defaultYAMLVersion: "1.2",
@@ -190,9 +179,15 @@ module.exports = {
                 ".github/**/*.yml",
                 ".github/**/*.yaml",
             ],
-            extends: [
-                "./rules/yaml/github.js",
+            extends: [ "./rules/yaml/github.js" ],
+        },
+        {
+            files: [
+                ".gitignore",
+                ".npmignore",
             ],
+            parser: "any-eslint-parser",
+            extends: [ "./rules/any/base.js" ],
         },
     ],
     rules: {},

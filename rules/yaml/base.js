@@ -20,5 +20,11 @@ module.exports = {
         "spaced-comment": [ "off" ], // Desliga regra JS
         "yml/spaced-comment": [ "error" ], // Comentarios com espaço
         "filenames/match-regex": [ "off" ], // Desliga validação de nomes
+        "max-len": [ "warn", {
+            code: 120,
+            ignoreUrls: true,
+            ignoreStrings: true,
+            ignoreTemplateLiterals: true,
+        } ], // Caracteres máximo por linhas
     },
 };

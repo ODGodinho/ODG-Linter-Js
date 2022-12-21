@@ -104,8 +104,8 @@ module.exports = {
                         fixWith: "symbol",
                     },
                     "{}": {
-                        // eslint-disable-next-line max-len
-                        message: "The `{}` type is mostly the same as `unknown`. You probably want `Record<string, unknown>` instead.",
+                        message: "The `{}` type is mostly the same as `unknown`. "
+                            + "You probably want `Record<string, unknown>` instead.",
                         fixWith: recordObject,
                     },
                     "object": {
