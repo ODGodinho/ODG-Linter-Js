@@ -3,7 +3,6 @@ module.exports = {
         "spaced-comment": [ "error", "always", {
             exceptions: [ "-", "+" ],
         } ], // Força espaço apos do // comentário
-        "capitalized-comments": [ "error" ], // Comentários devem ser iniciados em letras maiúsculas
         "jsdoc/check-access": [ "error" ],
         "jsdoc/check-alignment": [ "error" ], // Não desalinhe o * da docblock
         "jsdoc/check-indentation": [ "error" ], // Força formatação na docblock

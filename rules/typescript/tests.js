@@ -8,5 +8,8 @@ module.exports = {
         "max-statements": [ "error", MAX_STATEMENTS ],
         "sonar/no-code-after-done": [ "error" ], // Não coloque código depois done test
         "sonar/test-check-exception": [ "error" ], // Test exception
+        "unicorn/consistent-function-scoping": [ "error", {
+            checkArrowFunctions: false,
+        } ], // Remova sub função quando possível
     },
 };

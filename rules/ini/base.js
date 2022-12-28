@@ -23,7 +23,6 @@ module.exports = {
         "toml/array-bracket-spacing": [ "error" ], // Espaço declarar array
         "toml/array-element-newline": [ "error", "consistent" ], // Array multipla linhas
         "toml/comma-style": [ "error" ], // Virgula a direita
-        "capitalized-comments": [ "off" ], // Virgula a direita
         "toml/spaced-comment": [ "error" ], // Espaço a esquerda comentário
         "toml/inline-table-curly-spacing": [ "error", "always", {
             arraysInObjects: true,
