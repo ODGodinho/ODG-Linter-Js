@@ -50,6 +50,7 @@ module.exports = {
                 "extensions": [ ".mjs", ".js", ".jsx", ".json", ".ts", ".tsx", ".d.ts" ],
             },
         },
+        "import/external-module-folders": [ "@types" ],
         "import/extensions": [
             ".js",
             ".mjs",
@@ -85,6 +86,7 @@ module.exports = {
                 "regex",
                 "sonarjs",
                 "json-schema-validator",
+                "sort-class-members",
             ],
             extends: [
                 "./rules/javascript/best-practices.js",
@@ -101,6 +103,7 @@ module.exports = {
                 "promise",
                 "regexp",
                 "filenames",
+                "sort-class-members",
             ],
             extends: [
                 "./rules/typescript/best-practices.js",

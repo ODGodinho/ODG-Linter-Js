@@ -1,11 +1,11 @@
 {
     "name": "@odg/eslint-config",
-    "version": "1.8.0",
+    "version": "1.9.0",
     "description": "Linter for JavaScript And Typescript project",
     "main": "index.js",
     "author": "Dragons Gamers <https://www.linkedin.com/in/victor-alves-odgodinho>",
     "scripts": {
-        "lint": "eslint \"**/*.+(js|jsx|ts|tsx|json|jsonc|json5|yml|yaml|xml|txt|svg|properties|gradle|java|cpp|c|cs|html|css|groovy|gitignore|npmignore|toml|env|example|sample|ini|php|bat|powershell|ps1|sh|bash)\""
+        "lint": "eslint --ext .js,.jsx,.ts,.tsx,.json,.jsonc,.json5,.yml,.yaml,.xml,.txt,.svg,.properties,.gradle,.java,.cpp,.c,.cs,.html,.css,.groovy,.gitignore,.npmignore,.toml,.env,.example,.sample,.ini,.php,.bat,.powershell,.ps1,.sh,.bash"
     },
     "repository": {
         "type": "git",
@@ -44,6 +44,7 @@
         "eslint-plugin-security": "^1.5.0",
         "eslint-plugin-sonar": "^0.10.0",
         "eslint-plugin-sonarjs": "^0.17.0",
+        "eslint-plugin-sort-class-members": "^1.16.0",
         "eslint-plugin-toml": "^0.3.1",
         "eslint-plugin-unicorn": "^45.0.2",
         "eslint-plugin-yml": "^1.3.0",
