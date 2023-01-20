@@ -30,7 +30,7 @@ module.exports = {
             [
                 {
                     "id": "EmptyImport",
-                    "message": "errorMessageN",
+                    "message": "Empty import is not allowed",
                     "regex": "import(.*{\\s*}.*)from.*\\n",
                     "replacement": {
                         "function":
@@ -68,6 +68,6 @@ module.exports = {
         "sonarjs/no-duplicated-branches": [ "error" ], // Em vez de if else igual faça um ||
         "sonarjs/no-gratuitous-expressions": [ "error" ], // Não faça a mesma condição dentro de outra
         "sonarjs/no-unused-collection": [ "error" ], // Não faça array que não é usado
-        "json-schema-validator/no-invalid": [ "warn" ], // Validação de schema
+        "regexp/no-extra-lookaround-assertions": [ "error" ], // Look around invalido em regex
     },
 };

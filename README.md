@@ -248,6 +248,9 @@
   - [Prefer Node Protocol](#prefer-node-protocol)
   - [Prefer export from](#prefer-export-from)
   - [No Empty Import](#no-empty-import)
+  - [Export End File](#export-end-file)
+  - [Import First](#import-first)
+  - [No Named Default](#no-named-default)
 - [Documentation](#documentation)
   - [Space Comment](#spaced-comment)
   - [Capitalized Comments](#capitalized-comments)
@@ -319,6 +322,8 @@
   - [Prefer Named Capture Group](#prefer-named-capture-group)
   - [Prefer Regexp Exec](#prefer-regexp-exec)
   - [Existing Groups](#existing-groups)
+  - [No Misleading Capturing Group](#no-misleading-capturing-group)
+  - [No Extra Lookaround Assertions](#no-extra-lookaround-assertions)
 - [Security](#security)
   - [Eval Disabled](#eval-disabled)
   - [Detect Unsafe Regex](#detect-unsafe-regex)
@@ -9302,6 +9307,80 @@ import a from './foo.js';
 ```typescript
 import { } from './foo.js';
 import t, { } from './foo.js';
+import type { } from './foo.js';
+```
+
+### Export End File
+
+----------
+
+Ensure all exports appear after other statements.
+
+<https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/exports-last.md>
+
+👍 Examples of correct code
+
+```typescript
+import { a } from './foo.js';
+import a from './foo.js';
+```
+
+👎 Examples of incorrect code
+
+```typescript
+import { } from './foo.js';
+import t, { } from './foo.js';
+```
+
+### Import First
+
+----------
+
+This rule reports any imports that come after non-import statements.
+
+<https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/first.md>
+
+👍 Examples of correct code
+
+```typescript
+import foo from './foo'
+import bar from './bar' // <- reported
+
+initWith(foo)
+```
+
+👎 Examples of incorrect code
+
+```typescript
+import foo from './foo'
+
+// some module-level initializer
+initWith(foo)
+
+import bar from './bar' // <- reported
+```
+
+### No Named Default
+
+----------
+
+Reports use of a default export as a locally named import.
+
+<https://github.com/import-js/eslint-plugin-import/blob/main/docs/rules/no-named-default.md>
+
+👍 Examples of correct code
+
+```typescript
+import foo from './foo.js';
+import foo, { bar } from './foo.js';
+```
+
+👎 Examples of incorrect code
+
+```typescript
+// message: Using exported name 'bar' as identifier for default export.
+import { default as foo } from './foo.js';
+import { default as foo, bar } from './foo.js';
 ```
 
 ## Documentation
@@ -11138,6 +11217,60 @@ console.log(str.replace(/(\w+)\s(\w+)/, '$2, $1 $2'));
 console.log(str.replace(/(?<firstName>\w+)\s(?<lastName>\w+)/, '$<lastName>, $<firstName> $<lastName>'));
 ```
 
+### No Misleading Capturing Group
+
+----------
+
+This rule reports capturing groups that capture less text than their pattern might suggest.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-misleading-capturing-group.html>
+
+👍 Examples of correct code
+
+```typescript
+var foo = /a+(b*)/
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var foo = /a+(a*)/
+var foo = /\w+(\d*)/
+var foo = /^(a*).+/
+```
+
+### No Extra Lookaround Assertions
+
+----------
+
+The last positive lookahead assertion within a lookahead assertion is the same without lookahead assertions.
+Also, The first positive lookbehind assertion within a lookbehind assertion is the same without lookbehind assertions.
+They can be inlined or converted to group.
+
+<https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-extra-lookaround-assertions.html>
+
+👍 Examples of correct code
+
+```typescript
+var ts = 'JavaScript'.replace(/Java(?=Script)/u, 'Type');
+var java = 'JavaScript'.replace(/(?<=Java)Script/u, '');
+var re1 = /a(?=bc)/u;
+var re2 = /a(?=b(?:c|C))/u;
+var re3 = /(?<=ab)c/u;
+var re4 = /(?<=(?:a|A)b)c/u;
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var ts = 'JavaScript'.replace(/Java(?=Scrip(?=t))/u, 'Type');
+var java = 'JavaScript'.replace(/(?<=(?<=J)ava)Script/u, '');
+var re1 = /a(?=b(?=c))/u;
+var re2 = /a(?=b(?=c|C))/u;
+var re3 = /(?<=(?<=a)b)c/u;
+var re4 = /(?<=(?<=a|A)b)c/u;
+```
+
 ## Security
 
 ### Eval Disabled
@@ -11655,6 +11788,7 @@ These visually reordered tokens can be used to display logic that, while semanti
 
 <https://trojansource.codes/>
 <https://github.com/lirantal/eslint-plugin-anti-trojan-source>
+<https://github.com/eslint-community/eslint-plugin-security/blob/main/docs/rules/detect-bidi-characters.md>
 
 ### Cookie Httponly
 

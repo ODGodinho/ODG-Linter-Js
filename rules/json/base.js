@@ -7,6 +7,7 @@ module.exports = {
         "jsonc/array-bracket-spacing": [ "error", "always" ],
         "jsonc/key-name-casing": [ "off" ],
         "strict": [ "off" ],
+        "no-unused-vars": [ "off" ],
         "no-unused-expressions": [ "off" ],
         "import/unambiguous": [ "off" ],
         "filenames/match-regex": [ "off" ],
@@ -21,5 +22,6 @@ module.exports = {
             ignoreStrings: true,
             ignoreTemplateLiterals: true,
         } ], // Caracteres máximo por linhas
+        "jsonc/no-irregular-whitespace": [ "error" ], // Não faça espaço irregular
     },
 };

@@ -1,5 +1,6 @@
 module.exports = {
     rules: {
+        "no-unused-vars": [ "off" ],
         "yml/block-mapping-colon-indicator-newline": [ "error" ], // Não quebre linha apos os :
         "yml/block-mapping-question-indicator-newline": [ "error" ], // Nã o quebre linha apos ?
         "yml/block-mapping": [ "error", "always" ], // Use - em lista ao invés {}

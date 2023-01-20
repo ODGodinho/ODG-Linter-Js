@@ -274,8 +274,8 @@ module.exports = {
         "import/no-mutable-exports": [ "error" ], // Não export var nem let
         "import/no-amd": [ "error" ], // Não require, define array
         "import/max-dependencies": [ "error", {
-            "max": 25,
-            "ignoreTypeImports": false,
+            "max": 20,
+            "ignoreTypeImports": true,
         } ], // Máximo de 25 dependências
         "import/no-import-module-exports": [ "error" ], // Import e export CommanJs bloqueado
         "import/no-useless-path-segments": [ "error", { "commonjs": true } ], // Não volte pasta desnecessária import
@@ -339,6 +339,11 @@ module.exports = {
             "error",
             { "allowCallExpression": false },
         ],
+        "import/exports-last": [ "error" ], // Export por ultimo
+        "import/no-deprecated": [ "error" ], // Não import deprecated
+        "import/no-empty-named-blocks": [ "error" ], // Não import bloco vazio
+        "import/first": [ "error" ], // Import por primeiro
+        "import/no-named-default": [ "error" ], // Não faça { default as NomeModulo }
         "unicorn/no-console-spaces": [ "error" ], // Separe por virgula em vez de colocar espaço no console
         "unicorn/prefer-array-flat-map": [ "error" ], // Prefira FlatMap in vez de map().flat().
         "unicorn/prefer-array-flat": [ "error" ], // Prefira usar array Flat

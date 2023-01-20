@@ -5,15 +5,14 @@ module.exports = {
     },
     plugins: [
         "file-progress",
-        "json-schema-validator",
         "regexp",
         "import",
         "sonar",
         "sonarjs",
         "security",
-        "anti-trojan-source",
     ],
     extends: [
+        "plugin:json-schema-validator/recommended",
         "./rules/global/base.js",
         "./rules/global/errors.js",
         "./rules/global/possible-errors.js",
@@ -45,6 +44,7 @@ module.exports = {
     settings: {
         "html/report-bad-indent": "error",
         "html/indent": "+4",
+        "import/docstyle": [ "jsdoc", "tomdoc" ],
         "import/resolver": {
             "node": {
                 "extensions": [ ".mjs", ".js", ".jsx", ".json", ".ts", ".tsx", ".d.ts" ],
@@ -81,15 +81,14 @@ module.exports = {
                 "n",
                 "array-func",
                 "no-constructor-bind",
-                "anti-trojan-source",
                 "sonar",
                 "regex",
                 "sonarjs",
-                "json-schema-validator",
                 "sort-class-members",
             ],
             extends: [
                 "./rules/javascript/best-practices.js",
+                "./rules/javascript/errors.js",
                 "./rules/javascript/js-documentation.js",
                 "./rules/javascript/performance.js",
             ],

@@ -74,5 +74,6 @@ module.exports = {
         "sonar/no-useless-intersection": [ "error" ], // Não faça assert com mesmo param
         "sonar/stateful-regex": [ "error" ], // Não faça regex global mais de 1 vez
         "sonar/super-invocation": [ "error" ], // Não faça mais de 1 super
+        "regexp/no-misleading-capturing-group": [ "error" ], // Não use grupos de captura enganosos
     },
 };
