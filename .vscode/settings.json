@@ -12,6 +12,7 @@
         "Json",
         "Sonar",
         "Performance",
-        "Format"
+        "Format",
+        "Packages"
     ]
 }
