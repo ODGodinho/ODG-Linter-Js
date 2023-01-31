@@ -17,7 +17,11 @@ module.exports = {
             ignoreComments: false,
         } ], // 4 spaces
         "quotes": [ "error", "double" ], // Aspas duplas
-        "capitalized-comments": [ "error" ], // Comentários devem ser iniciados em letras maiúsculas
+        "capitalized-comments": [ "error", "always", {
+            "line": {
+                "ignorePattern": "region",
+            },
+        } ], // Comentários devem ser iniciados em letras maiúsculas
         "space-before-function-paren": [ "error", {
             anonymous: "never",
             named: "never",

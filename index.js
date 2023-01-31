@@ -111,6 +111,21 @@ module.exports = {
                 "./rules/typescript/possible-errors.js",
             ],
             parser: "@typescript-eslint/parser",
+            settings: {
+                "import/extensions": [ ".mjs", ".js", ".jsx", ".json", ".ts", ".tsx", ".d.ts" ],
+                "import/external-module-folders": [ "node_modules", "node_modules/@types" ],
+                "import/parsers": {
+                    "@typescript-eslint/parser": [ ".ts", ".tsx" ],
+                },
+                "import/resolver": {
+                    "typescript": {
+                        "project": [ "tsconfig.json" ],
+                    },
+                    "node": {
+                        "extensions": [ ".mjs", ".js", ".jsx", ".json", ".ts", ".tsx", ".d.ts" ],
+                    },
+                },
+            },
             parserOptions: {
                 ecmaFeatures: {
                     jsx: true,

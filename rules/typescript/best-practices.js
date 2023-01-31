@@ -22,7 +22,7 @@ const allAccessibility = [
  * @param {Array<string>} accessibilityList Accessibility list
  * @returns {Array<string>}
  */
-function orderMember (types, tag, accessibilityList) {
+function orderMember(types, tag, accessibilityList) {
     return [ ...accessibilityList.flatMap((accessibility) => types.map(
         (type) => {
             const accessibilityName = accessibility ? `${accessibility}-` : "";
@@ -383,6 +383,9 @@ module.exports = {
                     "should",
                     "will",
                     "did",
+                    "does",
+                    "are",
+                    "do",
                 ],
             },
             {
@@ -472,5 +475,7 @@ module.exports = {
                 "ignoreReadonlyClassProperties": true,
             },
         ], // Não permite numero mágicos
+        "@typescript-eslint/prefer-for-of": "error",
+        "@typescript-eslint/restrict-plus-operands": [ "error", { "checkCompoundAssignments": true } ],
     }, // Convenção de nomes
 };

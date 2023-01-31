@@ -20,5 +20,6 @@ module.exports = {
             "error",
         ], // Não coloque dentro de string algo q n pode ser convertido
         "@typescript-eslint/no-loss-of-precision": [ "error" ], // Não permite números com perda de precisão
+        "@typescript-eslint/no-unsafe-argument": [ "error" ], // Não permite argumentos inseguros função
     },
 };

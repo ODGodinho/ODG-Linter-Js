@@ -456,6 +456,7 @@
   - [No Setter Return](#no-setter-return)
   - [Useless Loop](#useless-loop)
   - [No Loss Of Precision](#no-loss-of-precision)
+  - [No Unsafe Argument](#no-unsafe-argument)
   - [No Dupe Class Members](#no-dupe-class-members)
   - [No Dupe Keys](#no-dupe-keys)
   - [Import Default Not Fount](#import-default-not-fount)
@@ -17131,6 +17132,59 @@ const x = 1230000000000000000000000.0
 const x = .1230000000000000000000000
 const x = 0X20000000000001
 const x = 0X2_000000000_0001;
+```
+
+### No Unsafe Argument
+
+----------
+
+Disallow calling a function with a value with type `any`.
+
+<https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-unsafe-argument.md>
+
+👍 Examples of correct code
+
+```typescript
+declare function foo(arg1: string, arg2: number, arg3: string): void;
+
+foo('a', 1, 'b');
+
+const tuple1 = ['a', 1, 'b'] as const;
+foo(...tuple1);
+
+declare function bar(arg1: string, arg2: number, ...rest: string[]): void;
+const array: string[] = ['a'];
+bar('a', 1, ...array);
+
+declare function baz(arg1: Set<string>, arg2: Map<string, string>): void;
+foo(new Set<string>(), new Map<string, string>());
+```
+
+👎 Examples of incorrect code
+
+```typescript
+declare function foo(arg1: string, arg2: number, arg3: string): void;
+
+const anyTyped = 1 as any;
+
+foo(...anyTyped);
+foo(anyTyped, 1, 'a');
+
+const anyArray: any[] = [];
+foo(...anyArray);
+
+const tuple1 = ['a', anyTyped, 'b'] as const;
+foo(...tuple1);
+
+const tuple2 = [1] as const;
+foo('a', ...tuple, anyTyped);
+
+declare function bar(arg1: string, arg2: number, ...rest: string[]): void;
+const x = [1, 2] as [number, ...number[]];
+foo('a', ...x, anyTyped);
+
+declare function baz(arg1: Set<string>, arg2: Map<string, string>): void;
+foo(new Set<any>(), new Map<any, string>());
 ```
 
 ### Import Default Not Fount
