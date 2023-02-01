@@ -3,6 +3,7 @@ module.exports = {
         node: true,
         browser: true,
     },
+    parser: "any-eslint-parser",
     plugins: [
         "file-progress",
         "regexp",
@@ -69,6 +70,7 @@ module.exports = {
     overrides: [
         {
             files: [ "*.js", "*.jsx", "*.mjs", "*.cjs", "*.ts", "*.tsx", "*.mts", "*.cts" ],
+            parser: "espree",
             plugins: [
                 "import",
                 "jsdoc",
