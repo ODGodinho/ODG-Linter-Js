@@ -122,5 +122,6 @@ module.exports = {
             "error",
             { "max": 1, "maxEOF": 0, "maxBOF": 0 },
         ], // Não permita varias linhas em branco
+        "no-trailing-spaces": [ "error" ], // Não permite espaço apos ou antes do ponto
     },
 };

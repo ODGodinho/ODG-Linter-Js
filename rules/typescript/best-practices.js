@@ -261,7 +261,8 @@ module.exports = {
         "@typescript-eslint/consistent-type-imports": [
             "error",
             {
-                fixStyle: "inline-type-imports",
+                prefer: "type-imports",
+                fixStyle: "separate-type-imports",
             },
         ],
         "@typescript-eslint/member-delimiter-style": [
@@ -477,5 +478,5 @@ module.exports = {
         ], // Não permite numero mágicos
         "@typescript-eslint/prefer-for-of": "error",
         "@typescript-eslint/restrict-plus-operands": [ "error", { "checkCompoundAssignments": true } ],
-    }, // Convenção de nomes
+    },
 };

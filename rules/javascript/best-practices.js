@@ -73,7 +73,6 @@ module.exports = {
         "consistent-this": [ "error", "that" ], // Não permite this em locais inconsistente.
         "dot-notation": [ "error" ], // Força usar dot em objeto em vez de object["key"]
         "no-whitespace-before-property": [ "error" ], // Não permite espaço antes de property
-        "no-trailing-spaces": [ "error" ], // Não permite espaço apos ou antes do ponto
         "no-extra-boolean-cast": [
             "error",
             { "enforceForLogicalOperands": true },
@@ -447,5 +446,8 @@ module.exports = {
         "sonar/production-debug": [ "error" ], // Não use debug em prod
         "sonar/shorthand-property-grouping": [ "error" ], // Agrupe { a, b, c:1, d:2}
         "sonar/unused-named-groups": [ "error" ], // Grupos não usados de regex
+        "antfu/generic-spacing": [ "error" ], // String<a,b> => String<a, b>
+        "antfu/import-dedupe": [ "error" ], // Auto fix import duplicados
+        "antfu/prefer-inline-type-import": [ "error" ], // Prefira type inline
     },
 };

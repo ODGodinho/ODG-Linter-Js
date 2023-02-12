@@ -87,6 +87,7 @@ module.exports = {
                 "regex",
                 "sonarjs",
                 "sort-class-members",
+                "antfu",
             ],
             extends: [
                 "./rules/javascript/best-practices.js",
