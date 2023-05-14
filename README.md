@@ -240,7 +240,7 @@
   - [No Amd](#no-amd)
   - [Prefer Default Export](#prefer-default-export)
   - [Max Imports](#max-imports)
-  - [No CommanJs Export](#no-comman-js-export)
+  - [No CommanJs Export](#no-commanjs-export)
   - [No Useless Path Import](#no-useless-path-import)
   - [No Extraneous Dependencies](#no-extraneous-dependencies)
   - [Import Order](#import-order)
@@ -259,7 +259,7 @@
   - [Validate Param](#validate-param)
   - [Validate Syntax](#validate-syntax)
   - [Validate Tag Name](#validate-tag-name)
-  - [Validate Types](#validate-Types)
+  - [Validate Types](#validate-types)
   - [Validate Values](#validate-values)
   - [Empty Tags](#empty-tags)
   - [Validate Block](#validate-block)
@@ -279,11 +279,11 @@
   - [No Lazy Ends](#no-lazy-ends)
   - [No Misleading Unicode Character](#no-misleading-unicode-character)
   - [No Optional Assertion](#no-optional-assertion)
-  - [No Potentially Useless BackReference](#no-potentially-useless-back-reference)
+  - [No Potentially Useless Back Reference](#no-potentially-useless-back-reference)
   - [No Useless Assertions](#no-useless-assertions)
-  - [No Useless BackReference](#no-useless-back-reference)
+  - [No Useless Back Reference](#no-useless-back-reference)
   - [No Useless Dollar Replacements](#no-useless-dollar-replacements)
-  - [strict](#strict)
+  - [Strict Regex](#strict-regex)
   - [Confusing Quantifier](#confusing-quantifier)
   - [Control Character Escape](#control-character-escape)
   - [Negation](#negation)
@@ -337,7 +337,7 @@
   - [Prevent Literal Code](#prevent-literal-code)
   - [No Import Dynamic](#no-import-dynamic)
   - [Security SSL](#security-ssl)
-  - [Security Encrypt/Access](#security-encrypt-access)
+  - [Security Encrypt Access](#security-encrypt-access)
   - [Certificate Transparency](#certificate-transparency)
   - [No Log confidential information](#no-log-confidential-information)
   - [Content Length](#content-length)
@@ -453,7 +453,6 @@
   - [Getter Return](#getter-return)
   - [No Class Assign](#no-class-assign)
   - [No Compare Neg Zero](#no-compare-neg-zero)
-  - [No Setter Return](#no-setter-return)
   - [Useless Loop](#useless-loop)
   - [No Loss Of Precision](#no-loss-of-precision)
   - [No Unsafe Argument](#no-unsafe-argument)
@@ -638,7 +637,6 @@ object.method = function() {
 class Foo {
     bar = 1
 }
-
 
 foo()
 ;[1, 2, 3].forEach(bar)
@@ -3479,7 +3477,8 @@ function togglePropertyToCalculatedValue(property: string) {
 👎 Examples of incorrect code
 
 ```typescript
-function countPositiveNumbers(arr: number[], countZero?: boolean) { // Noncompliant, default value for 'countZero' should be defined
+// Noncompliant, default value for 'countZero' should be defined
+function countPositiveNumbers(arr: number[], countZero?: boolean) {
   // ...
 }
 
@@ -3865,11 +3864,11 @@ const mappedArray = arr.map((t) => t.id);
 
 ----------
 
-Use .flat() to flatten an array of arrays. This rule currently recognizes two patterns and can replace them with a .flat() call:
+Use .flat() to flatten an array of arrays. This rule currently recognizes two patterns and can replace them with a
+.flat() call:
 
 <https://github.com/freaktechnik/eslint-plugin-array-func#prefer-flat>
 <https://github.com/sindresorhus/eslint-plugin-unicorn/blob/main/docs/rules/prefer-array-flat.md>
-
 
 👍 Examples of correct code
 
@@ -4810,7 +4809,9 @@ var quux = "\0\8";
 
 ----------
 
-Node.js allows the import of modules using an absolute path such as /home/xyz/file.js. That is a bad practice as it ties the code using it to your computer, and therefore makes it unusable in packages distributed on npm for instance.
+Node.js allows the import of modules using an absolute path such as /home/xyz/file.js.
+That is a bad practice as it ties the code using it to your computer,
+and therefore makes it unusable in packages distributed on npm for instance.
 
 <https://github.com/import-js/eslint-plugin-import/blob/HEAD/docs/rules/no-absolute-path.md>
 
@@ -5001,7 +5002,8 @@ typeof bar !== "fucntion"
 ----------
 
 Requires the use of === and !== instead of == and !=.
-It is considered good practice to use the type-safe equality operators === and !== instead of their regular counterparts == and !=.
+It is considered good practice to use the type-safe equality operators === and !== instead
+of their regular counterparts == and !=.
 
 <https://eslint.org/docs/rules/eqeqeq#eqeqeq>
 
@@ -5038,7 +5040,8 @@ foo == null
 ----------
 
 - Disallows unnecessary labels.
-- Labeled statements in JavaScript are used in conjunction with break and continue to control flow around multiple loops. For example:
+- Labeled statements in JavaScript are used in conjunction with break and continue
+to control flow around multiple loops. For example:
 
 <https://eslint.org/docs/rules/no-extra-label#no-extra-label>
 <https://eslint.org/docs/rules/no-labels#no-labels>
@@ -5182,7 +5185,9 @@ var x = Function("a", "b", "return a + b");
 var x = Function.call(null, "a", "b", "return a + b");
 var x = Function.apply(null, ["a", "b", "return a + b"]);
 var x = Function.bind(null, "a", "b", "return a + b")();
-var f = Function.bind(null, "a", "b", "return a + b"); // assuming that the result of Function.bind(...) will be eventually called.
+
+// assuming that the result of Function.bind(...) will be eventually called.
+var f = Function.bind(null, "a", "b", "return a + b");
 ```
 
 ## No Redeclare
@@ -5375,7 +5380,8 @@ Disallows "Yoda" conditions.
 
 <https://eslint.org/docs/rules/yoda#yoda>
 
-> Yoda conditions are so named because the literal value of the condition comes first while the variable comes second. For example, the following is a Yoda condition:
+> Yoda conditions are so named because the literal value of the condition comes first while the variable comes second.
+> For example, the following is a Yoda condition:
 
 👍 Examples of correct code
 
@@ -6123,7 +6129,6 @@ var o = {
     }
 };
 
-
 var myObject = { d: 1 };
 Object.defineProperty(myObject, 'c', {
     set: function(value) {
@@ -6306,16 +6311,14 @@ function bar(arg: string) {
 
 ```typescript
 function foo<T>(items: T[]) {
-
-
-
+// \r\n
+// \r\n
 }
-
-
+// \n
+// \n
 function bar(arg: string) {
-
-
-
+// \n
+// \n
 }
 ```
 
@@ -6662,7 +6665,9 @@ function QuuzUnknown<T extends unknown>() {}
 
 ----------
 
-The use of `arguments.caller` and `arguments.callee` make several code optimizations impossible. They have been deprecated in future versions of JavaScript and their use is forbidden in ECMAScript 5 while in strict mode.
+The use of `arguments.caller` and `arguments.callee` make several code optimizations impossible.
+They have been deprecated in future versions of JavaScript and their use
+is forbidden in ECMAScript 5 while in strict mode.
 
 <https://eslint.org/docs/rules/no-caller>
 
@@ -8566,7 +8571,8 @@ new Promise.all([p1, p2])
 
 ----------
 
-Ensure that inside a then() or a catch() we always return or throw a raw value instead of wrapping in Promise.resolve or Promise.reject
+Ensure that inside a then() or a catch() we always return or throw a raw value instead of wrapping in
+Promise.resolve or Promise.reject
 
 <https://github.com/xjamundx/eslint-plugin-promise/blob/development/docs/rules/no-new-statics.md>
 
@@ -8596,7 +8602,8 @@ myPromise.then(function (val) {
 
 ----------
 
-Ensure that inside a then() or a catch() we always return or throw a raw value instead of wrapping in Promise.resolve or Promise.reject
+Ensure that inside a then() or a catch() we always return or throw a raw value instead of wrapping in
+Promise.resolve or Promise.reject
 
 <https://github.com/xjamundx/eslint-plugin-promise/blob/development/docs/rules/param-names.md>
 
@@ -8620,7 +8627,8 @@ new Promise(function (_, reject) { ... }) // a simple underscore is not allowed
 
 ----------
 
-Ensure that inside a then() or a catch() we always return or throw a raw value instead of wrapping in Promise.resolve or Promise.reject
+Ensure that inside a then() or a catch() we always return or throw a raw value instead of wrapping in
+Promise.resolve or Promise.reject
 
 <https://github.com/xjamundx/eslint-plugin-promise/blob/development/docs/rules/always-return.md>
 
@@ -8917,7 +8925,6 @@ Reports use of a deprecated name, as indicated by a JSDoc block with a @deprecat
 export function multiply(six, nine) {
   return 42
 }
-
 
 import { multiply } from './answer';
 ```
@@ -9409,7 +9416,6 @@ The primary goal of these rules is to make the comments easier to read and impro
  * This is a comment with a whitespace at the beginning
  */
 
-
 /**
  * valid
  */
@@ -9618,7 +9624,7 @@ Check is valid tag docblock
  */
 ```
 
-### Validate Type
+### Validate Types
 
 ----------
 
@@ -9758,7 +9764,8 @@ function quux(foo) {
 
 ----------
 
-This rule reports elements that contradict an assertion. All elements reported by this rule fall into one of two categories:
+This rule reports elements that contradict an assertion.
+All elements reported by this rule fall into one of two categories:
 
 <https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-contradiction-with-assertion.html>
 
@@ -9951,11 +9958,11 @@ var foo = /(?:|)/;
 
 This rule reports empty lookahead assertion or empty lookbehind assertion.
 
-> What are empty lookarounds?
+> What are empty look around?
 
-An empty lookaround is a lookaround for which at least one path in the lookaround expression
+An empty look around is a look around for which at least one path in the look around expression
 contains only elements that do not consume characters and do not assert characters.
-This means that the lookaround expression will trivially accept any input string.
+This means that the look around expression will trivially accept any input string.
 
 <https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-empty-lookarounds-assertion.html>
 
@@ -10105,13 +10112,13 @@ var foo = /(?:^)?\w+/;   // warns about `^`
 var foo = /\w+(?::|$)?/; // warns about `$`
 ```
 
-### No Potentially Useless BackReference
+### No Potentially Useless Back Reference
 
 ----------
 
-If the referenced group of a backreference is not matched because some other path leads to the backreference,
-the backreference will trivially accept (e.g. /(?:(a)|b)\1/).
-The same will happen if the captured text of the referenced group was reset before reaching the backreference.
+If the referenced group of a backreference is not matched because some other path leads to the back-reference,
+the back-reference will trivially accept (e.g. /(?:(a)|b)\1/).
+The same will happen if the captured text of the referenced group was reset before reaching the back-reference.
 
 <https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-potentially-useless-backreference.html>
 <https://eslint.org/docs/latest/rules/no-useless-backreference>
@@ -10154,13 +10161,13 @@ var foo = /$foo/;      // $ will always reject
 var foo = /(?=\w)\d+/; // (?=\w) will always accept
 ```
 
-### No Useless BackReference
+### No Useless Back Reference
 
 ----------
 
-Backreferences that will always trivially accept serve no function and can be removed.
+Back references that will always trivially accept serve no function and can be removed.
 
-This rule is a based on the ESLint core no-useless-backreference rule.
+This rule is a based on the ESLint core no-useless-back-reference rule.
 It reports all the ESLint core rule reports and some more.
 
 <https://ota-meshi.github.io/eslint-plugin-regexp/rules/no-useless-backreference.html>
@@ -10218,7 +10225,7 @@ var newStr = str.replace(/(\w+)\s(\w+)/, '$<last>, $<first>');
 // newStr = "$<last>, $<first>"
 ```
 
-### Strict
+### Strict Regex
 
 ----------
 
@@ -10385,10 +10392,30 @@ var foo = / /; // SPACE (`U+0020`)
 👎 Examples of incorrect code
 
 ```typescript
-var foo = / /;
-var foo = //;
-var foo = //;
-var foo = /　/;
+// \u000B - Line Tabulation (\v) - <VT>
+// \u000C - Form Feed (\f) - <FF>
+// \u00A0 - No-Break Space - <NBSP>
+// \u0085 - Next Line
+// \u1680 - Ogham Space Mark
+// \u180E - Mongolian Vowel Separator - <MVS>
+// \ufeff - Zero Width No-Break Space - <BOM>
+// \u2000 - En Quad
+// \u2001 - Em Quad
+// \u2002 - En Space - <ENSP>
+// \u2003 - Em Space - <EMSP>
+// \u2004 - Three-Per-Em
+// \u2005 - Four-Per-Em
+// \u2006 - Six-Per-Em
+// \u2007 - Figure Space
+// \u2008 - Punctuation Space - <PUNCSP>
+// \u2009 - Thin Space
+// \u200A - Hair Space
+// \u200B - Zero Width Space - <ZWSP>
+// \u2028 - Line Separator
+// \u2029 - Paragraph Separator
+// \u202F - Narrow No-Break Space
+// \u205f - Medium Mathematical Space
+// \u3000 - Ideographic Space
 ```
 
 ### No Legacy Features
@@ -10577,7 +10604,7 @@ var foo = /^foo$/m;
 var foo = /a.*?b/s;
 
 const regex1 = /foo/y;
-const str = 'table football, foosball';
+const str = 'table football, football';
 regex1.lastIndex = 6
 var array = regex1.exec(str)
 ```
@@ -11357,7 +11384,8 @@ var expression = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+
 
 Detect calls to buffer with noAssert flag set.
 
-From the Node.js API docs: "Setting noAssert to true skips validation of the offset. This allows the offset to be beyond the end of the Buffer."
+From the Node.js API docs: "Setting noAssert to true skips validation of the offset.
+This allows the offset to be beyond the end of the Buffer."
 
 <https://github.com/nodesecurity/eslint-plugin-security#detect-buffer-noassert>
 
@@ -11593,7 +11621,7 @@ const s3 = require('aws-cdk-lib/aws-s3');
 const bucket = new s3.Bucket(this, 'example'); // Sensitive
 ```
 
-### Security Encrypt/Access
+### Security Encrypt Access
 
 ----------
 
@@ -11616,7 +11644,6 @@ new s3.Bucket(this, 'id', {
     bucketName: 'bucket',
     blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL
 });
-
 
 new s3.Bucket(this, 'id', {
     blockPublicAccess: s3.BlockPublicAccess.BLOCK_ALL,
@@ -11698,7 +11725,8 @@ web application in case of malicious activities.
 const { Signale } = require('signale');
 
 const CREDIT_CARD_NUMBERS = fetchFromWebForm()
-// here we suppose the credit card numbers are retrieved somewhere and CREDIT_CARD_NUMBERS looks like ["1234-5678-0000-9999", "1234-5678-0000-8888"]; for instance
+// here we suppose the credit card numbers are retrieved somewhere and CREDIT_CARD_NUMBERS looks like
+// ["1234-5678-0000-9999", "1234-5678-0000-8888"]; for instance
 
 const options = {
   secrets: ["([0-9]{4}-?)+"]
@@ -11717,7 +11745,8 @@ CREDIT_CARD_NUMBERS.forEach(function(CREDIT_CARD_NUMBER) {
 const { Signale } = require('signale');
 
 const CREDIT_CARD_NUMBERS = fetchFromWebForm()
-// here we suppose the credit card numbers are retrieved somewhere and CREDIT_CARD_NUMBERS looks like ["1234-5678-0000-9999", "1234-5678-0000-8888"]; for instance
+// here we suppose the credit card numbers are retrieved somewhere and CREDIT_CARD_NUMBERS looks like
+//  ["1234-5678-0000-9999", "1234-5678-0000-8888"]; for instance
 
 const options = {
   secrets: []         // empty list of secrets
@@ -11785,7 +11814,8 @@ let urlencodedParser = bodyParser.urlencoded({ extended: false, limit: "4mb" });
 ----------
 
 The trick is to use Unicode control characters to reorder tokens in source code at the encoding level.
-These visually reordered tokens can be used to display logic that, while semantically correct, diverges from the logic presented by the logical ordering of source code tokens.
+These visually reordered tokens can be used to display logic that, while semantically correct,
+diverges from the logic presented by the logical ordering of source code tokens.
 
 <https://trojansource.codes/>
 <https://github.com/lirantal/eslint-plugin-anti-trojan-source>
@@ -12210,8 +12240,13 @@ by default using operating system commands like ls.
 ```typescript
 let serveStatic = require("serve-static");
 let app = express();
-let serveStaticMiddleware = serveStatic('public', { 'index': false, 'dotfiles': 'ignore'});   // Compliant: ignore or deny are recommended values
-let serveStaticDefault = serveStatic('public', { 'index': false});   // Compliant: by default, "dotfiles" (file or directory that begins with a dot) are not served (with the exception that files within a directory that begins with a dot are not ignored), see serve-static module documentation
+// Compliant: ignore or deny are recommended values
+let serveStaticMiddleware = serveStatic('public', { 'index': false, 'dotfiles': 'ignore'});
+
+// Compliant: by default, "dotfiles" (file or directory that begins with a dot) are not served
+// (with the exception that files within a directory that begins with a dot are not ignored),
+// see serve-static module documentation
+let serveStaticDefault = serveStatic('public', { 'index': false});
 app.use(serveStaticMiddleware);
 ```
 
@@ -12826,9 +12861,11 @@ jwt.verify(token, key, { expiresIn: 360000 * 5, algorithms: ['HS256'] }, callbac
 ```typescript
 const jwt = require('jsonwebtoken');
 
-let token = jwt.sign({ foo: 'bar' }, key, { algorithm: 'none' }); // Noncompliant: 'none' cipher doesn't sign the JWT (no signature will be included)
+// Noncompliant: 'none' cipher doesn't sign the JWT (no signature will be included)
+let token = jwt.sign({ foo: 'bar' }, key, { algorithm: 'none' });
 
-jwt.verify(token, key, { expiresIn: 360000 * 5, algorithms: ['RS256', 'none'] }, callbackcheck); // Noncompliant: 'none' cipher should not be used when verifying JWT signature
+// Noncompliant: 'none' cipher should not be used when verifying JWT signature
+jwt.verify(token, key, { expiresIn: 360000 * 5, algorithms: ['RS256', 'none'] }, callbackcheck);
 ```
 
 ### No Hardcoded Credentials
@@ -13199,7 +13236,8 @@ const net = require('net');
 var socket = new net.Socket(); // Sensitive
 socket.connect(80, 'google.com');
 
-// net.createConnection creates a new net.Socket, initiates connection with socket.connect(), then returns the net.Socket that starts the connection
+// net.createConnection creates a new net.Socket, initiates connection with socket.connect(),
+// then returns the net.Socket that starts the connection
 net.createConnection({ port: port }, () => {}); // Sensitive
 
 // net.connect is an alias to net.createConnection
@@ -13211,7 +13249,7 @@ net.connect({ port: port }, () => {}); // Sensitive
 ----------
 
 MIME confusion attacks occur when an attacker successfully tricks a web-browser to interpret a resource as a different
-type than the one expected. To correctly interpret a resource (script, image, stylesheet …​) web browsers look for the
+type than the one expected. To correctly interpret a resource (script, image, stylesheet ...) web browsers look for the
 Content-Type header defined in the HTTP response received from the server, but often this header is not set or is
 set with an incorrect value. To avoid content-type mismatch and to provide the best user experience, web browsers try
 to deduce the right content-type, generally by inspecting the content of the resources (the first bytes).
@@ -13260,11 +13298,11 @@ Each certificate in the chain is not expired.
 
 ```typescript
 let options = {
-  hostname: 'www.example.com',
-  port: 443,
-  path: '/',
-  method: 'GET',
-  secureProtocol: 'TLSv1_2_method'
+    hostname: "www.example.com",
+    port: 443,
+    path: "/",
+    method: "GET",
+    secureProtocol: "TLSv1_2_method",
 };
 
 let req = https.request(options, (res) => {
@@ -15662,7 +15700,8 @@ const isEqualsNum = 1 + foo.num! == 2;
 
 ----------
 
-The ! non-null assertion operator in TypeScript is used to assert that a value's type does not include null or undefined.
+The ! non-null assertion operator in TypeScript is used to assert that a value's
+type does not include null or undefined.
 
 <https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-extra-non-null-assertion.md>
 
@@ -17222,7 +17261,8 @@ import baz from './baz' // no default export found in ./baz
 
 ----------
 
-Ensures an imported module can be resolved to a module on the local filesystem, as defined by standard Node require.resolve behavior.
+Ensures an imported module can be resolved to a module on the local filesystem,
+as defined by standard Node require.resolve behavior.
 
 <https://github.com/import-js/eslint-plugin-import/blob/HEAD/docs/rules/no-unresolved.md>
 
@@ -17639,7 +17679,6 @@ var a = { [0]: 0 };
 var a = { ['x']: 0 };
 var a = { ['x']() {} };
 ```
-
 
 ### Useless Call Code
 
@@ -18128,7 +18167,8 @@ str.toUpperCase(); // Noncompliant
 ----------
 
 There are situations where super() must be invoked and situations where super() cannot be invoked.
-The basic rule is: a constructor in a non-derived class cannot invoke super(); a constructor in a derived class must invoke super().
+The basic rule is: a constructor in a non-derived class cannot invoke super();
+a constructor in a derived class must invoke super().
 
 Furthermore:
 super() must be invoked before the this and super keywords can be used.
@@ -18162,7 +18202,6 @@ class Dog extends Animal {
   }
 }
 ```
-
 
 ### No Useless Intersection
 
@@ -18237,7 +18276,8 @@ datePattern.test('2020-08-06');
 datePattern.test('2019-10-10'); // Noncompliant: the regex will return "false" despite the date being well-formed
 
 const str = 'foodie fooled football';
-while ((result = /foo*/g.exec(str)) !== null) { // Noncompliant: a regex is defined at each iteration causing an infinite loop
+// Noncompliant: a regex is defined at each iteration causing an infinite loop
+while ((result = /foo*/g.exec(str)) !== null) {
   /* ... */
 }
 
@@ -19386,8 +19426,9 @@ import 'some-other-module';
 
 JavaScript will call toString() on an object when it is converted to a string,
 such as when + adding to a string or in ${} template literals. The default Object .toString() returns "[object Object]",
- which is often not what was intended. This rule reports on values used in a template literal string that aren't strings.
- primitives and don't define a more useful .toString() method.
+which is often not what was intended.
+This rule reports on values used in a template literal string that aren't strings.
+primitives and don't define a more useful .toString() method.
 
 <https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/restrict-template-expressions.md>
 
@@ -19607,7 +19648,10 @@ switch (day) {
 
 ----------
 
-Most checks against an indexOf call against an array compare it with -1 because 0 is a valid index. Any checks which look for values >0 ignore the first element, which is likely a bug. If you’re merely checking the presence of the element, consider using includes instead. Before using includes method make sure that your browser version is supporting it.
+Most checks against an indexOf call against an array compare it with -1 because 0 is a valid index.
+Any checks which look for values >0 ignore the first element, which is likely a bug.
+If you’re merely checking the presence of the element, consider using includes instead.
+Before using includes method make sure that your browser version is supporting it.
 
 <https://sonarsource.github.io/rspec/#/rspec/S2692/javascript>
 
