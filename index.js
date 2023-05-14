@@ -13,7 +13,6 @@ module.exports = {
         "security",
     ],
     extends: [
-        "plugin:json-schema-validator/recommended",
         "./rules/global/base.js",
         "./rules/global/errors.js",
         "./rules/global/possible-errors.js",
@@ -234,6 +233,10 @@ module.exports = {
             ],
             parser: "any-eslint-parser",
             extends: [ "./rules/any/base.js" ],
+        },
+        {
+            files: [ "./.*", "./*.*", ".github/**", ".vscode/**" ],
+            extends: "plugin:json-schema-validator/recommended",
         },
     ],
     rules: {

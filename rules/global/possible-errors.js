@@ -51,7 +51,7 @@ module.exports = {
         "sonar/no-in-misuse": [ "error" ], // Não use in em array
         "sonar/no-incomplete-assertions": [ "error" ], // Sem assert incompleto
         "sonar/no-incorrect-string-concat": [ "error" ], // Não concatene numero com string
-        "sonar/no-infinite-loop": [ "error" ], // Não faça loop infinito
+        // "sonar/no-infinite-loop": [ "error" ], // Não faça loop infinito // Commented because exception
         "sonar/no-invariant-returns": [ "error" ], // Não faça loop infinito
         "sonar/no-misleading-array-reverse": [ "error" ], // Não salva array.revert variável
         "sonar/strings-comparison": [ "error" ], // Não faça comparação de string com < ou >
