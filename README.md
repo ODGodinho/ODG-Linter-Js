@@ -527,6 +527,7 @@
   - [No Collection Size Mischeck](#no-collection-size-mischeck)
   - [No Gratuitous Expressions](#no-gratuitous-expressions)
   - [No Unused Collection](#no-unused-collection)
+  - [No Inconsistent Docblock](#no-inconsistent-docblock)
 - [YAML / JSON](#yaml-json)
 
 ## Introduction
@@ -554,7 +555,7 @@ Add script in your `package.json` file
 ```json
 {
     "scripts": {
-        "lint": "eslint --ext .js,.jsx,.ts,.tsx,.json,.jsonc,.json5,.yml,.yaml,.xml,.txt,.svg,.properties,.gradle,.java,.cpp,.c,.cs,.html,.css,.groovy,.gitignore,.npmignore,.toml,.env,.example,.sample,.ini,.php,.bat,.powershell,.ps1,.sh,.bash",
+        "lint": "eslint --ext .js,.jsx,.ts,.tsx,.json,.jsonc,.json5,.yml,.yaml,.xml,.txt,.svg,.properties,.gradle,.java,.cpp,.c,.cs,.html,.css,.groovy,.gitignore,.npmignore,.toml,.env,.example,.sample,.ini,.php,.bat,.powershell,.ps1,.sh,.bash,.eslintrc",
     }
 }
 ```
@@ -20115,6 +20116,58 @@ function getLength(a, b, c) {
   strings.push(c);
 
   return a.length + b.length + c.length;
+}
+```
+
+### No Inconsistent Docblock
+
+----------
+
+Check a valid typescript and docblock
+
+<https://github.com/ODGodinho/ODGEslintPlugin#no-inconsistent-docblock>
+
+👍 Examples of correct code
+
+```typescript
+/**
+ * Valid Param
+ *
+ * @param {string} param
+ */
+function name(param: string) {
+
+}
+
+/**
+ * Valid return
+ *
+ * @returns {string}
+ */
+function name2(): string {
+
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+/**
+ * Valid Param
+ *
+ * @param {number} param
+ */
+function name(param: string) {
+
+}
+
+/**
+ * Valid return
+ *
+ * @returns {number}
+ */
+function name2(): string {
+
 }
 ```
 

@@ -11,6 +11,7 @@ module.exports = {
         "sonar",
         "sonarjs",
         "security",
+        "@odg",
     ],
     extends: [
         "./rules/global/base.js",

@@ -1,6 +1,6 @@
 {
     "name": "@odg/eslint-config",
-    "version": "1.15.1",
+    "version": "1.16.0",
     "description": "Linter for JavaScript And Typescript project",
     "main": "index.js",
     "author": "Dragons Gamers <https://www.linkedin.com/in/victor-alves-odgodinho>",
@@ -22,6 +22,7 @@
     },
     "dependencies": {
         "@babel/core": "*",
+        "@odg/eslint-plugin": "*",
         "@typescript-eslint/eslint-plugin": "*",
         "@typescript-eslint/parser": "*",
         "any-eslint-parser": "^1.0.1",
