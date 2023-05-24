@@ -5659,6 +5659,7 @@ function foo() {
 Enforce a maximum number of parameters in function definitions
 
 <https://eslint.org/docs/latest/rules/max-params>
+<https://www.npmjs.com/package/eslint-plugin-better-max-params>
 
 👍 Examples of correct code
 
@@ -5690,7 +5691,7 @@ let foo = (bar, baz, qux, qxx) => {
 
 Enforce a maximum number of parameters in function definitions
 
-<https://eslint.org/docs/latest/rules/max-params>
+<https://eslint.org/docs/latest/rules/max-statements>
 
 👍 Examples of correct code
 

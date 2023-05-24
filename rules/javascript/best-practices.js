@@ -242,7 +242,13 @@ module.exports = {
         } ], // Tamanho mínimo das variáveis
         "no-template-curly-in-string": [ "error" ], // Não faça templete string de forma incorreta
         "max-depth": [ "error", { "max": 3 } ], // Tamanho máximo do Hadouken
-        "max-params": [ "error", { "max": 4 } ], // Máximo de parâmetros
+        "better-max-params/better-max-params": [
+            "error",
+            {
+                "func": 4,
+                "constructor": 8,
+            },
+        ],
         "max-statements": [ "error" ], // Máximo atribuição em função
         "operator-assignment": [ "error", "always" ], // Prefira atribuição curtas +=
         "prefer-rest-params": [ "error" ], // Prefira ..args em vez de arguments

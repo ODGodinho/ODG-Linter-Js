@@ -88,6 +88,7 @@ module.exports = {
                 "sonarjs",
                 "sort-class-members",
                 "antfu",
+                "better-max-params",
             ],
             extends: [
                 "./rules/javascript/best-practices.js",
