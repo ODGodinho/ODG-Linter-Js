@@ -14,7 +14,7 @@
     "license": "MIT",
     "devDependencies": {
         "@odg/tsconfig": "*",
-        "@types/node": "^16",
+        "@types/node": "^20",
         "typescript": "*"
     },
     "peerDependencies": {
