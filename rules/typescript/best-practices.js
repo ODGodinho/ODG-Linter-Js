@@ -477,6 +477,6 @@ module.exports = {
             },
         ], // Não permite numero mágicos
         "@typescript-eslint/prefer-for-of": "error",
-        "@typescript-eslint/restrict-plus-operands": [ "error", { "checkCompoundAssignments": true } ],
+        "@typescript-eslint/restrict-plus-operands": [ "error" ],
     },
 };
