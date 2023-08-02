@@ -27,5 +27,6 @@ module.exports = {
         "sonarjs/no-extra-arguments": [ "off" ], // Argumentos extra ja é tratado por typescript
         "sonarjs/no-use-of-empty-return-value": [ "off" ], // Não atribua void em uma variável
         "@odg/no-inconsistent-docblock": [ "error" ], // Valida Docblock @param e @return com tipagem
+        "antfu/no-const-enum": [ "error" ], // Não coloque enum em constant
     },
 };

@@ -455,5 +455,7 @@ module.exports = {
         "antfu/generic-spacing": [ "error" ], // String<a,b> => String<a, b>
         "antfu/import-dedupe": [ "error" ], // Auto fix import duplicados
         "antfu/prefer-inline-type-import": [ "error" ], // Prefira type inline
+        "antfu/named-tuple-spacing": [ "error" ], // Solicita espaço depois do : no Typescript types
+        "antfu/no-import-node-modules-by-path": [ "error" ], // Não importe de dentro da node_modules,
     },
 };

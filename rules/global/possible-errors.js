@@ -68,6 +68,7 @@ module.exports = {
         "sonarjs/no-duplicated-branches": [ "error" ], // Em vez de if else igual faça um ||
         "sonarjs/no-gratuitous-expressions": [ "error" ], // Não faça a mesma condição dentro de outra
         "sonarjs/no-unused-collection": [ "error" ], // Não faça array que não é usado
+        "sonar/redundant-type-aliases": [ "error" ], // Não crie tipos redundantes
         "regexp/no-extra-lookaround-assertions": [ "error" ], // Look around invalido em regex
     },
 };

@@ -518,6 +518,7 @@
   - [No Invariant Returns](#no-invariant-returns)
   - [Inconsistent Function Call](#inconsistent-function-call)
   - [Duplicate Conditions](#duplicate-conditions)
+  - [Redundant Type Aliases](#redundant-type-aliases)
   - [No Element Overwrite](#no-element-overwrite)
   - [No Empty Collection](#no-empty-collection)
   - [No Extra Arguments](#no-extra-arguments)
@@ -19821,7 +19822,34 @@ switch (i) { // Noncompliant
 }
 ```
 
-## No Element Overwrite
+### Redundant Type Aliases
+
+----------
+
+Redundant type aliases should not be used
+
+<https://sonarsource.github.io/rspec/#/rspec/S6564/javascript>
+
+👍 Examples of correct code
+
+```typescript
+function isPalindrom(s: string): boolean {
+    return s === s.split('').reverse().join('');
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+type MyString  = string;
+type MyBoolean = boolean;
+
+function isPalindrom(s: MyString): MyBoolean {
+    return s === s.split('').reverse().join('');
+}
+```
+
+### No Element Overwrite
 
 ----------
 
@@ -19853,7 +19881,7 @@ mySet.add(1);
 mySet.add(1); // Noncompliant - element is already in the set
 ```
 
-## No Empty Collection
+### No Empty Collection
 
 ----------
 
@@ -19886,7 +19914,7 @@ for (str of strings) {}  // Noncompliant
 strings.forEach(str => doSomething(str)); // Noncompliant
 ```
 
-## No Extra Arguments
+### No Extra Arguments
 
 ----------
 
@@ -19923,7 +19951,7 @@ function say(a, b) {
 say("hello", "world", "!"); // Noncompliant; last argument is not used
 ```
 
-## No Identical Expressions
+### No Identical Expressions
 
 ----------
 
@@ -20014,7 +20042,7 @@ function foo() {
 a = foo();
 ```
 
-## No Collection Size Mischeck
+### No Collection Size Mischeck
 
 ----------
 
@@ -20045,7 +20073,7 @@ if (someMap.size < 0) {...} // Noncompliant
 const result = someArray.length >= 0;  // Noncompliant
 ```
 
-## No Gratuitous Expressions
+### No Gratuitous Expressions
 
 ----------
 
