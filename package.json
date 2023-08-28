@@ -13,7 +13,7 @@
     },
     "license": "MIT",
     "devDependencies": {
-        "@odg/tsconfig": "*",
+        "@odg/tsconfig": "1.2.0",
         "@types/node": "^16",
         "typescript": "*"
     },
