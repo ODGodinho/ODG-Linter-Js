@@ -493,7 +493,7 @@
     semver "^7.5.4"
     ts-api-utils "^1.0.1"
 
-"@typescript-eslint/utils@*", "@typescript-eslint/utils@6.8.0", "@typescript-eslint/utils@^6.4.1":
+"@typescript-eslint/utils@*", "@typescript-eslint/utils@6.8.0", "@typescript-eslint/utils@^6.7.2":
   version "6.8.0"
   resolved "https://registry.yarnpkg.com/@typescript-eslint/utils/-/utils-6.8.0.tgz#d42939c2074c6b59844d0982ce26a51d136c4029"
   integrity sha512-dKs1itdE2qFG4jr0dlYLQVppqTE+Itt7GmIf/vX6CSvsW+3ov8PbWauVKyyfNngokhIO9sKZeRGCUo1+N7U98Q==
@@ -1180,12 +1180,12 @@ eslint-module-utils@^2.7.4, eslint-module-utils@^2.8.0:
   dependencies:
     debug "^3.2.7"
 
-eslint-plugin-antfu@^0.40.3:
-  version "0.40.3"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-antfu/-/eslint-plugin-antfu-0.40.3.tgz#59107195ffea4fb7932e5f140d4c97840b28275c"
-  integrity sha512-1f0OifSyaIQNHAHNzh0wHfUKkc3cP3fDDOk51WtCBL7ffgd4dSEq95FJIRUyGKecq4CY3d3gHpOOUbClcHiV1w==
+eslint-plugin-antfu@^0.43.1:
+  version "0.43.1"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-antfu/-/eslint-plugin-antfu-0.43.1.tgz#2a3f1a418b1945e9f60a1cd1bd33c518b5b93bfb"
+  integrity sha512-Nak+Qpy5qEK10dCXtVaabPTUmLBPLhsVKAFXAtxYGYRlY/SuuZUBhW2YIsLsixNROiICGuov8sN+eNOCC7Wb5g==
   dependencies:
-    "@typescript-eslint/utils" "^6.4.1"
+    "@typescript-eslint/utils" "^6.7.2"
 
 eslint-plugin-array-func@^3.1.8:
   version "3.1.8"
