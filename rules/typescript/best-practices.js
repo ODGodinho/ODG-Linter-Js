@@ -323,6 +323,7 @@ module.exports = {
                     "[conventional-private-methods]",
                 ],
                 "accessorPairPositioning": "getThenSet",
+                "sortInterfaces": true,
             },
         ],
         "camelcase": [ "off" ], // Desliga camelcase usa convention
