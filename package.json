@@ -19,7 +19,7 @@
     },
     "peerDependencies": {
         "@typescript-eslint/parser": "*",
-        "eslint": "*"
+        "eslint": "^8"
     },
     "dependencies": {
         "@babel/core": "*",
