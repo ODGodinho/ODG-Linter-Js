@@ -914,6 +914,7 @@ if (a) {
 Enforces consistent spacing before function parenthesis.
 
 <https://eslint.org/docs/rules/lines-between-class-members#lines-between-class-members>
+<https://eslint.style/rules/ts/lines-between-class-members>
 
 👍 Examples of correct code
 
@@ -1076,6 +1077,7 @@ Enforces default parameters to be last.
 
 <https://eslint.org/docs/latest/rules/space-before-function-paren>
 <https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/space-before-function-paren.md>
+<https://eslint.style/rules/ts/space-before-function-paren>
 
 👍 Examples of correct code
 
@@ -1211,6 +1213,7 @@ Enforces consistent spacing before and after keywords.
 
 <https://eslint.org/docs/rules/keyword-spacing#keyword-spacing>
 <https://eslint.org/docs/rules/yield-star-spacing>
+<https://eslint.style/rules/ts/keyword-spacing>
 
 👍 Examples of correct code
 
@@ -1642,6 +1645,7 @@ function getY([x, y]) {
 Putting default parameter at last allows function calls to omit optional tail arguments.
 
 <https://eslint.org/docs/rules/comma-spacing#options>
+<https://eslint.style/rules/ts/comma-spacing>
 
 👍 Examples of correct code
 
@@ -1677,6 +1681,7 @@ This rule enforces consistent use of trailing commas in object and array literal
 
 <https://eslint.org/docs/rules/comma-dangle#comma-dangle>
 <https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/comma-dangle.md>
+<https://eslint.style/rules/ts/comma-dangle>
 
 👍 Examples of correct code
 
@@ -2017,6 +2022,7 @@ Disallows unnecessary parentheses.
 
 <https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/no-extra-parens.md>
 <https://eslint.org/docs/rules/no-extra-parens#no-extra-parens>
+<https://eslint.style/rules/ts/no-extra-parens>
 
 👍 Examples of correct code
 
@@ -4155,6 +4161,7 @@ class A {
 Require consistent spacing around type annotations.
 
 <https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/type-annotation-spacing.md>
+<https://eslint.style/rules/ts/type-annotation-spacing>
 
 👍 Examples of correct code
 
@@ -7316,7 +7323,9 @@ Requires spacing around infix operators.
 
 <https://eslint.org/docs/rules/space-infix-ops>
 <https://github.com/typescript-eslint/typescript-eslint/blob/main/packages/eslint-plugin/docs/rules/space-infix-ops.md>
+<https://eslint.style/rules/ts/space-infix-ops>
 <https://eslint.org/docs/rules/key-spacing>
+<https://eslint.style/rules/ts/key-spacing>
 
 👍 Examples of correct code
 
@@ -8267,6 +8276,7 @@ baz("one", "two",
 Disallows space between the function name and the opening parenthesis.
 
 <https://eslint.org/docs/latest/rules/func-call-spacing>
+<https://eslint.style/rules/ts/function-call-spacing>
 
 👍 Examples of correct code
 

@@ -12,6 +12,8 @@ module.exports = {
         "sonarjs",
         "security",
         "@odg",
+        "@stylistic/plus",
+        "@stylistic/js",
     ],
     extends: [
         "./rules/global/base.js",
@@ -108,6 +110,7 @@ module.exports = {
                 "regexp",
                 "filenames",
                 "sort-class-members",
+                "@stylistic/ts",
             ],
             extends: [
                 "./rules/typescript/best-practices.js",

@@ -1,4 +1,5 @@
 const indentSize = 4;
+const complexity = 15;
 
 module.exports = {
     rules: {
@@ -16,6 +17,20 @@ module.exports = {
             flatTernaryExpressions: false,
             ignoreComments: false,
         } ], // 4 spaces
+        "@stylistic/js/indent": [ "error", indentSize, {
+            SwitchCase: 1,
+            VariableDeclarator: 1,
+            outerIIFEBody: 1,
+            MemberExpression: 1,
+            FunctionDeclaration: { parameters: 1, body: 1 },
+            FunctionExpression: { parameters: 1, body: 1 },
+            CallExpression: { arguments: 1 },
+            ArrayExpression: 1,
+            ObjectExpression: 1,
+            ImportDeclaration: 1,
+            flatTernaryExpressions: false,
+            ignoreComments: false,
+        } ], // Ajuda indent
         "quotes": [ "error", "double" ], // Aspas duplas
         "capitalized-comments": [ "error", "always", {
             "ignorePattern": "\\s*region.*|\\s*endregion.*",
@@ -43,6 +58,11 @@ module.exports = {
         "semi-spacing": [ "error", { before: false, after: true } ], // Não permite espaço antes do ;
         "no-undef": [ "error", { "typeof": true } ], // Não chame variáveis não definidas
         "regexp/negation": [ "error" ], // This rule enforces use of \D, \W, \S and \P on negation.
+        "regexp/prefer-set-operation": [ "error" ],
+        "regexp/no-useless-set-operand": [ "error" ],
+        "regexp/simplify-set-operations": [ "error" ], // Força simplifica a regex
+        "regexp/no-empty-string-literal": [ "error" ], // Não faça blocos vazios de literal
+        "regexp/no-useless-string-literal": [ "error" ], // Literal não usada
         "regexp/confusing-quantifier": [ "error" ], // No Especifique quantidade em opcional
         "regexp/control-character-escape": [ "error" ], // Use \r ao invés de \u0009
         "regexp/no-dupe-characters-character-class": [ "error" ], // Rvita condições duplicada em []
@@ -118,6 +138,7 @@ module.exports = {
         "sonarjs/prefer-immediate-return": [ "error" ], // Prefira retornar imediatamente a variável
         "sonarjs/prefer-object-literal": [ "error" ], // Prefira declarar dentro do objeto inicial ao invés de injetar
         "sonarjs/prefer-single-boolean-return": [ "error" ], // Retorne a boolean em vez de fazer if e else
+        "sonarjs/cognitive-complexity": [ "error", complexity ], // Complexidade do codigo
         "no-multiple-empty-lines": [
             "error",
             { "max": 1, "maxEOF": 0, "maxBOF": 0 },

@@ -205,7 +205,10 @@ module.exports = {
         "unicorn/no-useless-length-check": [ "error" ], // Desabilita não usado opcional literals ...
         "unicorn/no-useless-spread": [ "error" ], // Desabilita ... em array desnecessário
         "unicorn/no-useless-switch-case": [ "error" ], // Desabilita Case não usado
-        "unicorn/no-useless-undefined": [ "error" ], // Desabilita undefined desnecessário
+        "unicorn/no-useless-undefined": [
+            "error",
+            { checkArrowFunctionBody: false },
+        ], // Desabilita undefined desnecessário
         "unicorn/number-literal-case": [ "error" ],
         "unicorn/prefer-add-event-listener": [ "error" ], // Prefira AddEventListener em vez de onclick props
         "unicorn/prefer-array-find": [ "error" ], // Prefira array Find quando possível
@@ -225,6 +228,12 @@ module.exports = {
         "unicorn/prefer-string-trim-start-end": [ "error" ], // Prefira trim Start/End invés de Left/Right
         "unicorn/prefer-switch": [ "error" ], // Prefira switch
         "unicorn/prefer-ternary": [ "error" ], // Prefira ternário em vez de if else
+        "unicorn/no-single-promise-in-promise-methods": [ "error" ], // Promise.all precisa ter mais de 1 promise
+        "unicorn/no-await-in-promise-methods": [ "error" ], // Não coloque await dentro Promise.all
+        "unicorn/no-invalid-fetch-options": [ "error" ], // Valida função fetch
+        "unicorn/consistent-empty-array-spread": [ "error" ], // ... no ternário deve ser 2 dados tipos iguais
+        "unicorn/no-negation-in-equality-check": [ "error" ], // Evite if(!a !== b) evite isso
+        "unicorn/no-length-as-slice-end": [ "error" ], // Não coloque fim no slice igual ao length
         "unicorn/prevent-abbreviations": [ "error", {
             "ignore": [
                 "\\.env$",
@@ -466,5 +475,7 @@ module.exports = {
         "antfu/prefer-inline-type-import": [ "error" ], // Prefira type inline
         "antfu/named-tuple-spacing": [ "error" ], // Solicita espaço depois do : no Typescript types
         "antfu/no-import-node-modules-by-path": [ "error" ], // Não importe de dentro da node_modules,
+        "@stylistic/plus/type-generic-spacing": [ "error" ], // De type Foo<T,K> para type Foo<T, K>
+        "@stylistic/plus/type-named-tuple-spacing": [ "error" ], // De [i?   :number] para [i?: number]
     },
 };

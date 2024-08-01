@@ -23,7 +23,7 @@ module.exports = {
             "error",
         ], // Switch com typo coloque default ou todos os casos
         "brace-style": [ "off" ], // Força formatação {}
-        "@typescript-eslint/brace-style": [ "error" ], // Força formatação {}
+        "@stylistic/ts/brace-style": [ "error" ], // Força formatação {}
         "sonarjs/no-extra-arguments": [ "off" ], // Argumentos extra ja é tratado por typescript
         "sonarjs/no-use-of-empty-return-value": [ "off" ], // Não atribua void em uma variável
         "@odg/no-inconsistent-docblock": [ "error" ], // Valida Docblock @param e @return com tipagem
