@@ -91,7 +91,6 @@ module.exports = {
                 "sort-class-members",
                 "antfu",
                 "better-max-params",
-                "unused-imports",
             ],
             extends: [
                 "./rules/javascript/best-practices.js",

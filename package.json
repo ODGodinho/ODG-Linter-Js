@@ -1,6 +1,6 @@
 {
     "name": "@odg/eslint-config",
-    "version": "2.0.0",
+    "version": "2.0.1",
     "description": "Linter for JavaScript And Typescript project",
     "main": "index.js",
     "author": "Dragons Gamers <https://www.linkedin.com/in/victor-alves-odgodinho>",
@@ -54,7 +54,6 @@
         "eslint-plugin-sort-class-members": "^1.20.0",
         "eslint-plugin-toml": "^0.11.1",
         "eslint-plugin-unicorn": "^55.0.0",
-        "eslint-plugin-unused-imports": "^4.0.1",
         "eslint-plugin-yml": "^1.14.0",
         "toml-eslint-parser": "^0.10.0"
     },

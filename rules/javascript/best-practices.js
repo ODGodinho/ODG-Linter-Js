@@ -1,18 +1,9 @@
 const alwaysMultiline = "always-multiline";
-const isInEditor = (process.env.VSCODE_PID || process.env.JETBRAINS_IDE) && !process.env.CI;
-const offInEditor = isInEditor ? "off" : "error";
 
 module.exports = {
     rules: {
         "semi": [ "error", "always" ], // Força usar ponto-virgula ;
         "lines-between-class-members": [ "error", "always" ], // Força linha em branco entre props classe e funções
-        "unused-imports/no-unused-imports": offInEditor,
-        "unused-imports/no-unused-vars": [
-            "warn",
-            {
-                vars: "all", varsIgnorePattern: "^_", args: "after-used", argsIgnorePattern: "^_",
-            },
-        ],
         "no-unused-vars": [ "error", {
             "vars": "all",
             "args": "after-used",
