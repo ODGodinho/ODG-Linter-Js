@@ -119,7 +119,6 @@ module.exports = {
         "@typescript-eslint/no-explicit-any": [ "error" ], // Não permite usar any
         "no-empty-function": [ "off" ], // Não permite funções vazias
         "@typescript-eslint/no-empty-function": [ "error" ], // Não permite funções vazias
-        "no-duplicate-imports": [ "off" ], // Bloqueia import duplicado
         "@typescript-eslint/no-unnecessary-type-constraint": [
             "error",
         ], // Não permite restrições de tipo desnecessárias <T extends any>

@@ -31,7 +31,7 @@ module.exports = {
         "no-throw-literal": [ "error" ], // Não permite throw "string" ou diferente de classe
         "no-empty-function": [ "error" ], // Não permite funções vazias
         "no-duplicate-imports": [ "error" ], // Bloqueia import duplicado
-        "import/no-duplicates": [ "error" ], // Bloqueia import duplicado
+        "import/no-duplicates": [ "error", { "prefer-inline": true } ], // Bloqueia import duplicado
         "prefer-const": [ "error" ], // Preferir constantes
         "generator-star-spacing": [ "error", { before: true, after: false } ], // Espaço Funções Yield;
         "no-unsafe-optional-chaining": [
