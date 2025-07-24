@@ -1,6 +1,6 @@
 {
     "name": "@odg/eslint-config",
-    "version": "2.0.3",
+    "version": "2.0.4",
     "description": "Linter for JavaScript And Typescript project",
     "main": "index.js",
     "author": "Dragons Gamers <https://www.linkedin.com/in/victor-alves-odgodinho>",
