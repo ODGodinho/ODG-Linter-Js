@@ -332,7 +332,6 @@ module.exports = {
                 "optionalDependencies": true,
                 "peerDependencies": true,
                 "bundledDependencies": true,
-                "bundleDependencies": true,
             },
         ], // Não dependa de pacotes em devDependencies
         "import/order": [
