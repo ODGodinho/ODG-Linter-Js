@@ -144,6 +144,132 @@ module.exports = {
             },
         },
         {
+            files: [ "*.tsx" ],
+            rules: {
+                "import/no-anonymous-default-export": [ "off" ],
+                "@typescript-eslint/naming-convention": [
+                    "error",
+                    {
+
+                        selector: [
+                            "function",
+                        ],
+                        format: [
+                            "PascalCase",
+                            "camelCase",
+                        ],
+
+                        // We allow double underscore because of GraphQL type names and some React names.
+                        leadingUnderscore: "allowSingleOrDouble",
+                        trailingUnderscore: "allow",
+
+                        // Ignore `{'Retry-After': retryAfter}` type properties.
+                        filter: {
+                            regex: "[- ]",
+                            match: false,
+                        },
+                    },
+                    {
+
+                        selector: [
+                            "variable",
+                            "function",
+                            "parameterProperty",
+                            "classMethod",
+                            "objectLiteralMethod",
+                            "typeMethod",
+                            "accessor",
+                        ],
+                        format: [
+                            "strictCamelCase",
+                            "camelCase",
+                        ],
+
+                        // We allow double underscore because of GraphQL type names and some React names.
+                        leadingUnderscore: "allowSingleOrDouble",
+                        trailingUnderscore: "allow",
+
+                        // Ignore `{'Retry-After': retryAfter}` type properties.
+                        filter: {
+                            regex: "[- ]",
+                            match: false,
+                        },
+                    },
+                    {
+                        selector: "classProperty",
+                        format: [
+                            "strictCamelCase",
+                            "camelCase",
+                            "UPPER_CASE",
+                        ],
+                    },
+                    {
+                        selector: "typeLike",
+                        format: [
+                            "PascalCase",
+                            "camelCase",
+                        ],
+                    },
+                    {
+                        selector: "variable",
+                        types: [
+                            "boolean",
+                        ],
+                        format: [
+                            "StrictPascalCase",
+                        ],
+                        prefix: [
+                            "is",
+                            "has",
+                            "can",
+                            "should",
+                            "will",
+                            "did",
+                            "does",
+                            "are",
+                            "do",
+                        ],
+                    },
+                    {
+
+                        selector: "interface",
+                        format: [
+                            "PascalCase",
+                        ],
+                    },
+                    {
+
+                        // Type parameter name should either be `T` or a descriptive name.
+                        selector: "typeParameter",
+                        filter: /^T$|^[A-Z][A-Za-z]+$/.source,
+                        format: [
+                            "StrictPascalCase",
+                        ],
+                    },
+
+                    // Allow these in non-camel-case when quoted.
+                    {
+                        selector: [
+                            "classProperty",
+                            "objectLiteralProperty",
+                        ],
+                        format: null,
+                        modifiers: [
+                            "requiresQuotes",
+                        ],
+                    },
+                ],
+            },
+        },
+        {
+            files: [ "*.config.ts", "*.config.mts" ],
+            rules: {
+                "import/no-anonymous-default-export": [ "off" ],
+                "filenames/match-exported": [ "off" ],
+                "import/no-extraneous-dependencies": [ "off" ],
+            },
+        },
+        {
             files: [ "*.json", "*.json5", "*.jsonc", ".eslintrc", "*.code-*" ],
             plugins: [ "jsonc" ],
             extends: [ "./rules/json/base.js" ],

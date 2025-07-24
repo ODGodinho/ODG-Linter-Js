@@ -324,10 +324,15 @@ module.exports = {
                     "**/vue.config.{js,ts}",
                     "**/webpack.config.*.{js,ts}",
                     "**/webpack.config.{js,ts}",
+                    "*.config.ts",
+                    "*.config.mts",
+                    "electron",
+                    "electron**",
                 ],
                 "optionalDependencies": true,
-                "peerDependencies": false,
-                "bundledDependencies": false,
+                "peerDependencies": true,
+                "bundledDependencies": true,
+                "bundleDependencies": true,
             },
         ], // Não dependa de pacotes em devDependencies
         "import/order": [
