@@ -42,9 +42,6 @@ module.exports = {
             },
         ], // Import não encontrado
         "import/named": [ "error", { "commonjs": true } ], // Import apenas objetos existente no modulo
-        "sonar/argument-type": [ "error" ], // Caso a tipagem no arquivo Js não bate
-        "sonar/anchor-precedence": [ "error" ], // Valida melhora de regex
-        "sonar/different-types-comparison": [ "error" ], // Não compare tipos diferentes
         "no-invalid-this": [ "error" ], // Desliga invalid this Js
         "no-this-before-super": [ "error" ], // Não faça this antes super
         "no-obj-calls": [ "error" ], // Não execute objetos
@@ -67,13 +64,6 @@ module.exports = {
                 "classes": true,
             },
         ], // Não use antes de definir
-        "sonar/in-operator-type-error": [ "error" ], // Não use IN em tipos primitivos
-        "sonar/inconsistent-function-call": [ "error" ], // Não use IN em tipos primitivos
-        "sonar/no-associative-arrays": [ "error" ], // Não atribua a um array
-        "sonar/no-same-argument-assert": [ "error" ], // Não faça assert com mesmo param
-        "sonar/no-useless-intersection": [ "error" ], // Não faça assert com mesmo param
-        "sonar/stateful-regex": [ "error" ], // Não faça regex global mais de 1 vez
-        "sonar/super-invocation": [ "error" ], // Não faça mais de 1 super
         "regexp/no-misleading-capturing-group": [ "error" ], // Não use grupos de captura enganosos
     },
 };

@@ -122,14 +122,13 @@ module.exports = {
         "regexp/sort-flags": [ "error" ], // Flag em ordem alfabética
         "regexp/prefer-named-capture-group": [ "error" ], // Prefira group com nomes
         // "regexp/prefer-regexp-exec": [ "error" ], // Prefira exec em regex // ? Desabilitado falso positivo
-        "unicorn/no-empty-file": [ "error" ], // Não crie arquivo vazio
+        // "unicorn/no-empty-file": [ "error" ], // Não crie arquivo vazio
         "no-magic-numbers": [
             "warn",
             { "ignore": [ 0, 1, -1 ], "enforceConst": true, "ignoreDefaultValues": true },
         ], // Não permite numero mágicos
         "semi-style": [ "error", "last" ], // Local do ponto e virgula
         "no-negated-condition": [ "error" ], // Não negue condições
-        "sonar/regex-complexity": [ "error" ], // Regex Complexidade
         "sonarjs/no-identical-functions": [ "error" ], // Não faça funções iguais
         "sonarjs/no-inverted-boolean-check": [ "error" ], // Não faça funções iguais
         "sonarjs/no-nested-switch": [ "error" ], // Não faça switch dentro do outro

@@ -156,15 +156,11 @@ module.exports = {
             { "blankLine": "always", "prev": "class", "next": "*" }, // Uma linha em branco Apos da classe
             { "blankLine": "always", "prev": "multiline-block-like", "next": "*" },
         ],
-        "filenames/match-regex": [
-            "error",
-            "^[a-zA-Z][a-zA-Z0-9_-]+((\\.[a-z]+)?)+$",
-        ], // Nome de arquivo deve ser alfanumérico
-        "filenames/match-exported": [
-            "error",
-            "^[a-zA-Z0-9_-]+$",
-            "\\.[a-z]+$",
-        ], // Nome do arquivo igual export default
+        // "filenames/match-exported": [
+        //     "error",
+        //     "^[a-zA-Z0-9_-]+$",
+        //     "\\.[a-z]+$",
+        // ], // Nome do arquivo igual export default
         "unicorn/catch-error-name": [
             "error",
             {
@@ -383,13 +379,6 @@ module.exports = {
         "array-func/from-map": [ "error" ], // Use .map invés do segundo parâmetro do From
         "array-func/no-unnecessary-this-arg": [ "error" ], // Não passe parâmetro desnecessário
         "array-func/avoid-reverse": [ "error" ], // Não passe parâmetro desnecessário
-        "sonar/bool-param-default": [ "error" ], // Param do tipo boolean deve ter um valor padrão e não optional
-        "sonar/call-argument-line": [ "error" ], // Chamada função anonima auto executável deve ter ;
-        "sonar/class-name": [ "error", { format: "^[A-Z][a-zA-Z0-9]*$" } ], // Convenção nome Classe
-        "sonar/class-prototype": [ "error" ], // No Prototype in class
-        "sonar/comma-or-logical-or-case": [ "error" ], // Switch Case logica invalida
-        "sonar/conditional-indentation": [ "error" ], // Formatação IF
-        "sonar/deprecation": [ "warn" ], // Alerta em funções depreciadas
         "object-curly-spacing": [ "error", "always", { "arraysInObjects": true } ], // Espaço declarar objeto
         "function-paren-newline": [ "error", "multiline-arguments" ], // Força formatação parentese quebre todos params
         "function-call-argument-newline": [ "error", "consistent" ], // Força formatação parentese quebre todos params
@@ -454,17 +443,6 @@ module.exports = {
             "getBeforeSet",
         ],
         "no-sequences": [ "error" ], // Não faça a = (2, 4)
-        "sonar/future-reserved-words": [ "error" ], // Palavras reservadas futuras bloqueadas
-        "sonar/arguments-usage": [ "error" ], // Evite protótipo Array.prototype.slice
-        "sonar/inverted-assertion-arguments": [ "error" ], // Não inverta parâmetro no assert test
-        "sonar/max-union-size": [ "error", { max: 3 } ], // Max union types
-        "sonar/no-mime-sniff": [ "error" ], // Helmet segurança express
-        "sonar/no-mixed-content": [ "error" ], // Helmet segurança express
-        "sonar/no-redundant-optional": [ "error" ], // Não use ? e undefined
-        "sonar/prefer-type-guard": [ "error" ], // Força retorna is boolean
-        "sonar/production-debug": [ "error" ], // Não use debug em prod
-        "sonar/shorthand-property-grouping": [ "error" ], // Agrupe { a, b, c:1, d:2}
-        "sonar/unused-named-groups": [ "error" ], // Grupos não usados de regex
         "antfu/generic-spacing": [ "error" ], // String<a,b> => String<a, b>
         "antfu/import-dedupe": [ "error" ], // Auto fix import duplicados
         "antfu/prefer-inline-type-import": [ "error" ], // Prefira type inline

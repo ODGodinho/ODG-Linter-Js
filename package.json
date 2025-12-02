@@ -19,7 +19,7 @@
     },
     "peerDependencies": {
         "@typescript-eslint/parser": "*",
-        "eslint": "^8"
+        "eslint": "^9"
     },
     "dependencies": {
         "@babel/core": "*",
@@ -30,8 +30,11 @@
         "@typescript-eslint/eslint-plugin": "^8.0.0",
         "@typescript-eslint/parser": "^8.0.0",
         "any-eslint-parser": "^1.0.1",
-        "eslint": "^8",
+        "eslint": "^9",
         "eslint-import-resolver-typescript": "^3.6.1",
+        "espree": "^10.0.0",
+        "globals": "^15.0.0",
+        "yaml-eslint-parser": "^1.2.2",
         "eslint-plugin-antfu": "^0.40.3",
         "eslint-plugin-array-func": "^4.0.0",
         "eslint-plugin-better-max-params": "^0.0.1",
