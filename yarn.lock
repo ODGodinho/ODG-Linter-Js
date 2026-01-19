@@ -1418,9 +1418,9 @@ eslint-plugin-sort-class-members@^1.21.0:
   integrity sha512-QKV4jvGMu/ge1l4s1TUBC6rqqV/fbABWY7q2EeNpV3FRikoX6KuLhiNvS8UuMi+EERe0hKGrNU9e6ukFDxNnZQ==
 
 eslint-plugin-toml@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/eslint-plugin-toml/-/eslint-plugin-toml-1.0.1.tgz#becc0a72529db1eb428be69162799a6691521128"
-  integrity sha512-UaplIcGkSeM0nbKeYy3W98AnS+Oc8eh8StjXrSBpEqS/4d7DeRzgjEMDbXqfpRRumIYkU5vFMffk0mD4cgojxw==
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/eslint-plugin-toml/-/eslint-plugin-toml-1.0.3.tgz#6aea2f70992025a20521fa1c90bf5ce149edc95a"
+  integrity sha512-GlCBX+R313RvFY2Tj0ZmvzCEv8FDp1z2itvTFTV4bW/Bkbl3xEp9inWNsRWH3SiDUlxo8Pew31ILEp/3J0WxaA==
   dependencies:
     "@eslint/core" "^1.0.1"
     "@eslint/plugin-kit" "^0.5.1"

@@ -180,6 +180,25 @@ export default {
         "unicorn/no-immediate-mutation": [ "error" ], // Não edite array logo em sequencia
         "unicorn/no-useless-collection-argument": [ "error" ], // Não passe parâmetro array vazio no set
         "unicorn/prefer-response-static-json": [ "error" ], // Prefira Response.Json ao invés de stringify
+        "unicorn/expiring-todo-comments": [ "error" ], // Alertas em docs com TO-D + data
+        "unicorn/no-array-reverse": [ "error" ], // Prefira toReversed ao invés array.reverse() ao salvar em variável
+        "unicorn/no-array-sort": [ "error" ], // Prefira toSort ao invés array.sort() ao salvar em variável
+        "unicorn/no-named-default": [ "error" ], // Não import com name default
+        "unicorn/no-unnecessary-slice-end": [ "error" ], // Não coloque end slice desnecessário
+        "unicorn/no-zero-fractions": [ "error" ], // Não use decimal se terminar .0
+        "unicorn/prefer-at": [ "error" ], // Use at acessar ultima posição
+        "unicorn/prefer-blob-reading-methods": [ "error" ], // Prefira BufferArray em blob
+        "unicorn/prefer-bigint-literals": [ "error" ], // Prefira BigInt literal ao invés de BigInt function
+        "unicorn/prefer-date-now": [ "error" ], // Prefira usar date.now() ao invés dos outros
+        "unicorn/prefer-dom-node-dataset": [ "error" ], // Prefira .dataset ao invés de .getAttribute(data-*)
+        "unicorn/prefer-modern-math-apis": [ "error" ], // Prefira Math api modernas
+        "unicorn/prefer-object-from-entries": [ "error" ], // Prefira Object entries ao invés de loop
+        "unicorn/prefer-reflect-apply": [ "error" ], // Prefira Reflect ao invés Function.prototype.apply
+        "unicorn/prefer-set-has": [ "error" ], // Prefira Set.has ao invés array.includes
+        "unicorn/prefer-set-size": [ "error" ], // Prefira Set.size ao invés array.length
+        "unicorn/prefer-single-call": [ "error" ], // Prefira class
+        "unicorn/require-module-specifiers": [ "error" ], // Não faça import vazio
+        "unicorn/throw-new-error": [ "error" ], // Faça um new na hora do throw
         "no-shadow": [ "error" ], // Erro caso ja esteja declarado escopo a cima
         "no-delete-var": [ "error" ], // Não delete variáveis
         "no-lone-blocks": [ "error" ], // Não crie bloco desnecessários

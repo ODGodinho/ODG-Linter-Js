@@ -76,6 +76,7 @@ export default {
         "unicorn/consistent-assert": [ "error" ], // Use assert.ok ao invés de assert(value)
         "unicorn/no-unnecessary-array-splice-count": [ "error" ], // N faça splice com .length ele ja pega tudo
         "unicorn/no-useless-error-capture-stack-trace": [ "error" ], // N faça Error.captureStackTrace se n precisa
+        "unicorn/no-unnecessary-polyfills": [ "error" ], // Valida recursos suportados
         "regexp/no-extra-lookaround-assertions": [ "error" ], // Look around invalido em regex
         "n/no-unsupported-features/es-builtins": [ "error", { "ignores": [] } ],
         "n/no-unsupported-features/es-syntax": [ "error", { "ignores": [] } ],
