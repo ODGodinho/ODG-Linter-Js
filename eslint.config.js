@@ -1,7 +1,11 @@
-import { defineConfig } from "eslint/config";
+import rules from "./index.mjs";
 
-import rules from "./index.js";
-
-export default defineConfig([
-    rules,
-]);
+export default [
+    ...rules,
+    {
+        files: [ "**" ],
+        rules: {
+            "import/no-anonymous-default-export": [ "off" ],
+        },
+    },
+];

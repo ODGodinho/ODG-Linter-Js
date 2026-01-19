@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     rules: {
         "regexp/no-contradiction-with-assertion": [ "error" ], // Não coloque opcional em uma das condições
         "regexp/no-dupe-disjunctions": [ "error" ], // Não permite condições duplicadas em regex
@@ -18,7 +18,9 @@ module.exports = {
         "regexp/no-useless-backreference": [ "error" ],
         "regexp/no-useless-dollar-replacements": [ "error" ],
         "regexp/strict": [ "error" ], // Regex strict
-        "unicorn/no-instanceof-array": [ "error" ], // Não use instanceof Array
+        "unicorn/no-instanceof-builtins": [ "error" ], // Não use instanceof Array,Function,String etc
+        "unicorn/no-accessor-recursion": [ "error" ], // Não use recursão em getters e setters
+        "unicorn/require-module-attributes": [ "error" ], // Não use with {} import sem atributos
         "constructor-super": [ "error" ], // Bloqueia Super construtor quando invalido
         "getter-return": [ "error" ], // Getter tem q ter return
         "no-class-assign": [ "error" ], // Não atribua variável com nome classe
@@ -32,6 +34,7 @@ module.exports = {
         "no-import-assign": [ "error" ], // Não reatribua variável de import
         "no-loss-of-precision": [ "error" ], // Não permite numero que pode quebrar precisão
         "no-unreachable-loop": [ "error" ], // Não permite unreachable loop,
+        "no-useless-assignment": [ "error" ], // Não reatribua uma variável se n for usada em sequencia,
         "import/no-self-import": [ "error" ], // Não import o próprio arquivo
         "import/export": [ "error" ], // Não permite export de mesmo nome
         "import/no-unresolved": [
@@ -41,7 +44,7 @@ module.exports = {
                 "caseSensitiveStrict": true,
             },
         ], // Import não encontrado
-        "import/named": [ "error", { "commonjs": true } ], // Import apenas objetos existente no modulo
+        // "import/named": [ "error", { "commonjs": true } ], // Import apenas objetos existente no modulo // ? slower
         "no-invalid-this": [ "error" ], // Desliga invalid this Js
         "no-this-before-super": [ "error" ], // Não faça this antes super
         "no-obj-calls": [ "error" ], // Não execute objetos
@@ -53,11 +56,14 @@ module.exports = {
         "no-useless-return": [ "error" ], // Não permite retornos desnecessários
         "no-useless-escape": [ "error" ], // Não permite usar escape desnecessárias
         "no-useless-rename": [ "error" ], // Disable Rename desnecessários
-        "no-unused-expressions": [ "error", {
-            allowTernary: true,
-            allowShortCircuit: true,
-            enforceForJSX: true,
-        } ],
+        "no-unused-expressions": [
+            "error",
+            {
+                allowTernary: true,
+                allowShortCircuit: true,
+                enforceForJSX: true,
+            },
+        ],
         "no-use-before-define": [
             "error",
             {
@@ -65,5 +71,18 @@ module.exports = {
             },
         ], // Não use antes de definir
         "regexp/no-misleading-capturing-group": [ "error" ], // Não use grupos de captura enganosos
+        "sonarjs/bitwise-operators": [ "error" ], // Bloqueia operadores bitwise em if
+        "sonarjs/different-types-comparison": [ "error" ], // Bloqueia comparação ed tipos diferentes com ===
+        "sonarjs/existing-groups": [ "error" ], // Impede replace regex impossíveis
+        "sonarjs/fixme-tag": [ "error" ], // Corrigir comentário de fix
+        "sonarjs/in-operator-type-error": [ "error" ], // Use IN corretamente
+        "sonarjs/index-of-compare-to-positive-number": [ "error" ], // Index of zero é valido
+        "sonarjs/no-associative-arrays": [ "error" ], // Não crie key com nome no array
+        "sonarjs/no-case-label-in-switch": [ "error" ], // Não crie label dentro do switch case
+        "sonarjs/no-collection-size-mischeck": [ "error" ], // Não verifique tamanho de array incorretamente
+        "sonarjs/no-duplicate-in-composite": [ "error" ], // Não concatene 2 tipos iguais
+        "sonarjs/no-hook-setter-in-body": [ "error" ], // Não faça loop infinito react
+        "sonarjs/no-literal-call": [ "error" ], // Não faça um tipo literal de função
+        "sonarjs/no-useless-react-setstate": [ "error" ], // Botão react sem efeito state
     },
 };

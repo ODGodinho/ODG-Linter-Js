@@ -1,84 +1,51 @@
-const alwaysMultiline = "always-multiline";
+const maxHadoukenDepth = 3;
+const maxStatements = 12;
 
-module.exports = {
+export default {
     rules: {
-        "semi": [ "error", "always" ], // Força usar ponto-virgula ;
-        "lines-between-class-members": [ "error", "always" ], // Força linha em branco entre props classe e funções
-        "no-unused-vars": [ "error", {
-            "vars": "all",
-            "args": "after-used",
-            "caughtErrors": "all",
-            "ignoreRestSiblings": true,
-            "varsIgnorePattern": "^_",
-            "argsIgnorePattern": "^_",
-        } ],
-        "default-param-last": [ "error" ],
-        "comma-spacing": [
+        "no-unexpected-multiline": [ "error" ], // Desabilita multiline possíveis erros operadores ;
+        "no-cond-assign": [ "error" ], // Não atribua variável na condição do IF
+        "object-shorthand": [ "error" ], // Não permite labels não usadas
+        "no-unused-labels": [ "error" ], // Não permite labels não usadas
+        "no-unused-vars": [
             "error",
             {
-                before: false,
-                after: true,
+                vars: "all",
+                args: "after-used",
+                caughtErrors: "all",
+                ignoreRestSiblings: true,
+                varsIgnorePattern: "^_",
+                argsIgnorePattern: "^_",
             },
         ],
-        "comma-dangle": [ "error", {
-            arrays: alwaysMultiline,
-            objects: alwaysMultiline,
-            imports: alwaysMultiline,
-            exports: alwaysMultiline,
-            functions: alwaysMultiline,
-        } ], // Virgula no final de tudo
+        "default-param-last": [ "error" ],
         "no-array-constructor": [ "error" ], // Não permite usar new Array()
         "no-throw-literal": [ "error" ], // Não permite throw "string" ou diferente de classe
         "no-empty-function": [ "error" ], // Não permite funções vazias
         "no-duplicate-imports": [ "error" ], // Bloqueia import duplicado
         "import/no-duplicates": [ "error", { "prefer-inline": true } ], // Bloqueia import duplicado
         "prefer-const": [ "error" ], // Preferir constantes
-        "generator-star-spacing": [ "error", { before: true, after: false } ], // Espaço Funções Yield;
         "no-unsafe-optional-chaining": [
             "error",
             { disallowArithmeticOperators: true },
         ], // Protege de optional que pode gerar errors
         "camelcase": [ "error" ], // Força camelCase
-        "padded-blocks": [ "error", {
-            classes: "always",
-            blocks: "never",
-            switches: "never",
-        } ], // Força não usar blocos com espaços
         "no-multi-assign": [ "error" ], // Força não usar atribuição múltipla
-        "keyword-spacing": [ "error", {
-            before: true,
-            after: true,
-        } ], // Requer espaço apos try {}
-        "space-before-blocks": [ "error" ], // Requer espaço antes das chaves
-        "space-unary-ops": [
-            "error", {
-                words: true, // Espaço apos Await e palavras chaves
-                nonwords: false, // Força nao ter espaço antes de operadores unários !, -, +
-                overrides: {
-                    "new": false,
-                    "++": false, // Nao permite espaço no ++
-                },
-            },
-        ],
-        "space-in-parens": [ "error", "never" ], // Não permite espaço entre parenteses
-        "no-multi-spaces": [ "error" ], // Nao permite vários espaços if(  i  )
-        "computed-property-spacing": [ "error", "never" ], // Desliga espaço ao recuperar item $a[ 'I' ] ou $a[ ] = 12;
         "prefer-arrow-callback": [ "error" ], // Força arrow function
         "arrow-body-style": [ "error", "as-needed" ], // Força arrow function sem body
         "no-empty": [ "error" ], // Não permite blocos vazios (if, while, for, function, etc)
         "newline-before-return": [ "error" ], // Força retorno de função com \n antes
-        "multiline-comment-style": [ "error", "starred-block" ], // Força /* comentário */ ao invés de // varias vezes
         "no-unreachable": [ "error" ], // Não permite unreachable code
         "no-multi-str": [ "error" ], // Não quebre linha dentro de uma string
         "consistent-this": [ "error", "that" ], // Não permite this em locais inconsistente.
         "dot-notation": [ "error" ], // Força usar dot em objeto em vez de object["key"]
-        "no-whitespace-before-property": [ "error" ], // Não permite espaço antes de property
         "no-extra-boolean-cast": [
             "error",
-            { "enforceForLogicalOperands": true },
+            { enforceForLogicalOperands: true },
         ], // Não permite cast de boolean extra !!!
         "no-constant-condition": [ "error" ], // Não permite condições constantes if (true)
         "no-debugger": [ "error" ], // Não permite usar debugger
+        "no-console": [ "error" ], // Não permite usar console use https://github.com/ODGodinho/ODGLog
         "no-duplicate-case": [ "error" ], // Não permite duplicar case em switch
         "no-empty-character-class": [ "error" ], // Não permite classe de caracteres vazia em regex
         "no-ex-assign": [ "error" ], // Não permite atribuição de exceção
@@ -114,11 +81,7 @@ module.exports = {
         "promise/no-return-in-finally": [ "error" ], // No Return in finally
         "promise/valid-params": [ "error" ], // Valida Parâmetros da promise
         "import/newline-after-import": [ "error", { count: 1 } ], // Linhas em branco apos o import
-        "operator-linebreak": [
-            "error",
-            "before",
-            { overrides: { "+=": "none", "=": "none" } },
-        ], // Sem quebra de linha em operadores
+
         "array-callback-return": [ "error" ], // Força returno em array callback
         "space-infix-ops": [ "error" ], // Espaço em operadores
         "curly": [ "off" ], // Utilize chaves em multi linhas
@@ -126,50 +89,28 @@ module.exports = {
         "n/handle-callback-err": [
             "error",
             "^(err|error|\\w+Error|\\w+Exception|exception)$",
+
         ], // Funções que recebem error deve ser tratado
         "new-cap": [ "error", { newIsCap: true } ], // New require first Letter uppercase
         "no-caller": [ "error" ], // Não permite usar callee
         "no-script-url": [ "error" ], // Não permite usar script url
         "func-names": [ "error", "as-needed" ], // Nome de funções somente quando necessário
         "no-param-reassign": [ "error" ], // Não permite reatribuição de parâmetros
-        "quote-props": [ "error", "consistent" ], // Aspas no objeto somente se algum for necessário
         "block-scoped-var": [ "error" ], // INFO: Bloqueia Vars for escopo, mas ainda sim prefira Lets
-        "brace-style": [ "error" ], // Força formatação {}
-        "comma-style": [ "error", "last" ], // Separa variável por virgula alinhando a direita
-        "key-spacing": [
-            "error",
-            {
-                beforeColon: false,
-                afterColon: true,
-            },
-        ], // Espaçamento propriedade objects
-        "object-property-newline": [ "error", {
-            allowAllPropertiesOnSameLine: true,
-        } ], // Quebre todos objetos ou nenhum
-        "max-statements-per-line": [ "error", { "max": 1 } ], // Máximo operação em 1 linha
-        "arrow-parens": [ "error", "always" ], // Arrow Function sempre com parentese
-        "padding-line-between-statements": [
-            "error",
-            { "blankLine": "always", "prev": "*", "next": "export" }, // Uma linha em branco antes do export
-            { "blankLine": "always", "prev": "export", "next": "*" }, // Uma linha em branco apos do export
-            { "blankLine": "always", "prev": "*", "next": "class" }, // Uma linha em branco antes da classe
-            { "blankLine": "always", "prev": "class", "next": "*" }, // Uma linha em branco Apos da classe
-            { "blankLine": "always", "prev": "multiline-block-like", "next": "*" },
-        ],
-        // "filenames/match-exported": [
-        //     "error",
-        //     "^[a-zA-Z0-9_-]+$",
-        //     "\\.[a-z]+$",
-        // ], // Nome do arquivo igual export default
+
+        /*
+         * "filenames/match-exported": [
+         *     "error",
+         *     "^[a-zA-Z0-9_-]+$",
+         *     "\\.[a-z]+$",
+         * ], // Nome do arquivo igual export default
+         */
+
         "unicorn/catch-error-name": [
             "error",
             {
-                "name": "exception",
-                "ignore": [
-                    "^error\\w*$",
-                    "^error$",
-                    "^exception\\w*$",
-                ],
+                name: "exception",
+                ignore: [ "^error\\w*$", "^error$", "^exception\\w*$" ],
             },
         ], // Chame todos os catch erros de exception
         "unicorn/consistent-destructuring": [ "error" ], // Usa destructuring ou usa acesso direto sem alternar
@@ -221,40 +162,49 @@ module.exports = {
         "unicorn/consistent-empty-array-spread": [ "error" ], // ... no ternário deve ser 2 dados tipos iguais
         "unicorn/no-negation-in-equality-check": [ "error" ], // Evite if(!a !== b) evite isso
         "unicorn/no-length-as-slice-end": [ "error" ], // Não coloque fim no slice igual ao length
-        "unicorn/prevent-abbreviations": [ "error", {
-            "ignore": [
-                "\\.env$",
-                ".env.*",
-                "^Arr$",
-                "^Num$",
-                "^Str$",
-            ],
-        } ], // Prefira ternário em vez de if else
+        "unicorn/prevent-abbreviations": [
+            "error",
+            {
+                ignore: [ "\\.env$", ".env.*", "^Arr$", "^Num$", "^Str$" ],
+            },
+        ], // Prefira ternário em vez de if else
         "unicorn/relative-url-style": [ "error" ], // Não coloque ./ em new URL
         "unicorn/require-array-join-separator": [ "error" ], // Sempre passe parâmetro Array#join
         "unicorn/require-number-to-fixed-digits-argument": [ "error" ], // Passe quantidade em ToFixed
         "unicorn/template-indent": [ "error" ], // Indenter em template string
         "unicorn/no-nested-ternary": [ "error" ], // Ternário ilegível
+        "unicorn/prefer-math-min-max": [ "error" ], // Use Math.Min e Max ao invés de ternário
+        "unicorn/prefer-import-meta-properties": [ "error" ], // Pega o nome ou dirname do arquivo de forma nativa
+        "unicorn/no-unnecessary-array-flat-depth": [ "error" ], // Não passe parâmetro no flat se for o default
+        "unicorn/prefer-class-fields": [ "error" ], // Prefira inicializar atributo na classe não construtor
+        "unicorn/prefer-classlist-toggle": [ "error" ], // Prefira class toggle ao invés de if-else
+        "unicorn/no-immediate-mutation": [ "error" ], // Não edite array logo em sequencia
+        "unicorn/no-useless-collection-argument": [ "error" ], // Não passe parâmetro array vazio no set
+        "unicorn/prefer-response-static-json": [ "error" ], // Prefira Response.Json ao invés de stringify
         "no-shadow": [ "error" ], // Erro caso ja esteja declarado escopo a cima
         "no-delete-var": [ "error" ], // Não delete variáveis
         "no-lone-blocks": [ "error" ], // Não crie bloco desnecessários
         "no-proto": [ "error" ], // Não use __proto__ depreciada desde ECMA 3.1
-        "id-length": [ "error", {
-            "min": 3,
-            "exceptions": [ "i", "fs", "os", "id", "ip" ],
-            // eslint-disable-next-line no-template-curly-in-string
-            "exceptionPatterns": [ "^\\${1,2}[a-z]?$" ],
-        } ], // Tamanho mínimo das variáveis
+        "id-length": [
+            "error",
+            {
+                min: 3,
+                exceptions: [ "i", "fs", "os", "id", "ip" ],
+                // eslint-disable-next-line no-template-curly-in-string
+                exceptionPatterns: [ "^\\${1,2}[a-z]?$" ],
+            },
+        ], // Tamanho mínimo das variáveis
         "no-template-curly-in-string": [ "error" ], // Não faça templete string de forma incorreta
-        "max-depth": [ "error", { "max": 3 } ], // Tamanho máximo do Hadouken
+        "max-depth": [ "error", { max: maxHadoukenDepth } ], // Tamanho máximo do Hadouken
+        "max-nested-callbacks": [ "error", maxHadoukenDepth ], // Tamanho máximo do Hadouken callback
         "better-max-params/better-max-params": [
             "error",
             {
-                "func": 4,
-                "constructor": 8,
+                func: 4,
+                constructor: 8,
             },
         ],
-        "max-statements": [ "error" ], // Máximo atribuição em função
+        "max-statements": [ "error", maxStatements ], // Máximo atribuição em função
         "operator-assignment": [ "error", "always" ], // Prefira atribuição curtas +=
         "prefer-rest-params": [ "error" ], // Prefira ..args em vez de arguments
         "symbol-description": [ "error" ], // Symbol deve ter descrição
@@ -264,35 +214,36 @@ module.exports = {
         "prefer-exponentiation-operator": [ "error" ], // Prefira ** em vez de Math.pow
         "prefer-object-spread": [ "error" ], // Prefira Desestruturar para concatenar objetos
         "default-case-last": [ "error" ], // Default switch case por ultimo
-        "no-new-symbol": [ "error" ], // Use apenas Symbol()
+        "no-new-native-nonconstructor": [ "error" ], // Use apenas Symbol()
         "accessor-pairs": [ "error" ], // Crie o get e set
         "no-promise-executor-return": [ "error" ], // Não coloque um retorno em new Promise()
         "no-nonoctal-decimal-escape": [ "error" ], // Não coloque scape em numero decimais
         "prefer-destructuring": [ "error" ], // Prefira desestruturar array ao invés
-        "complexity": [ "error", { "max": 10 } ], // Complexidade código
+        "complexity": [ "error", { "max": 15 } ], // Complexidade código
         "func-style": [ "error", "declaration" ], // Declare function name() em vez de var = function()
         "no-else-return": [ "error" ], // Não use else se tem retorno
-        "use-isnan": [
-            "error",
-            { "enforceForSwitchCase": true, "enforceForIndexOf": true },
-        ], // Use a função isNan
-        "prefer-regex-literals": [ "error", { "disallowRedundantWrapping": true } ], // Use a função isNan
+        "use-isnan": [ "error", { enforceForSwitchCase: true, enforceForIndexOf: true } ], // Use a função isNan
+        "n/no-deprecated-api": [ "error" ], // Não use API depreciada do NodeJS
+        "prefer-regex-literals": [ "error", { disallowRedundantWrapping: true } ], // Use a função isNan
         "import/no-absolute-path": [ "error" ], // Não informa caminho absoluto
         "import/no-webpack-loader-syntax": [ "error" ], // Bloqueia syntax webpack import
         "import/no-named-as-default": [ "error" ],
         "import/no-named-as-default-member": [ "error" ],
         "import/no-mutable-exports": [ "error" ], // Não export var nem let
         "import/no-amd": [ "error" ], // Não require, define array
-        "import/max-dependencies": [ "error", {
-            "max": 20,
-            "ignoreTypeImports": true,
-        } ], // Máximo de 25 dependências
+        "import/max-dependencies": [
+            "error",
+            {
+                max: 20,
+                ignoreTypeImports: true,
+            },
+        ], // Máximo de 25 dependências
         "import/no-import-module-exports": [ "error" ], // Import e export CommanJs bloqueado
-        "import/no-useless-path-segments": [ "error", { "commonjs": true } ], // Não volte pasta desnecessária import
+        "import/no-useless-path-segments": [ "error", { commonjs: true } ], // Não volte pasta desnecessária import
         "import/no-extraneous-dependencies": [
             "error",
             {
-                "devDependencies": [
+                devDependencies: [
                     "**/*.e2e-spec.*",
                     "**/*.e2e.*",
                     "**/*.spec.*",
@@ -325,36 +276,25 @@ module.exports = {
                     "electron",
                     "electron**",
                 ],
-                "optionalDependencies": true,
-                "peerDependencies": true,
-                "bundledDependencies": true,
+                optionalDependencies: true,
+                peerDependencies: true,
+                bundledDependencies: true,
             },
         ], // Não dependa de pacotes em devDependencies
         "import/order": [
             "error",
             {
                 "alphabetize": {
-                    "caseInsensitive": true,
-                    "order": "asc",
+                    caseInsensitive: true,
+                    order: "asc",
                 },
-                "groups": [
-                    "builtin",
-                    "external",
-                    "internal",
-                    "unknown",
-                    "parent",
-                    "sibling",
-                    "index",
-                ],
+                "groups": [ "builtin", "external", "internal", "unknown", "parent", "sibling", "index" ],
                 "newlines-between": "always",
             },
         ], // Força essa ordem no import
-        "import/no-anonymous-default-export": [
-            "error",
-            { "allowCallExpression": false },
-        ],
+        "import/no-anonymous-default-export": [ "error", { allowCallExpression: false } ],
         "import/exports-last": [ "error" ], // Export por ultimo
-        "import/no-deprecated": [ "error" ], // Não import deprecated
+        // "import/no-deprecated": [ "error" ], // Não import deprecated // ? slower
         "import/no-empty-named-blocks": [ "error" ], // Não import bloco vazio
         "import/first": [ "error" ], // Import por primeiro
         "import/no-named-default": [ "error" ], // Não faça { default as NomeModulo }
@@ -375,61 +315,18 @@ module.exports = {
         "unicorn/prefer-native-coercion-functions": [ "error" ], // Prefira função cast nativa
         "unicorn/prefer-logical-operator-over-ternary": [ "error" ], // Mude "a ? a : b" para "a || b"
         "unicorn/prefer-event-target": [ "error" ], // Use EventTarget no Lugar de EventEmitter
-        "unicorn/prefer-export-from": [ "error", { "ignoreUsedVariables": true } ], // Prefira Export From
+        "unicorn/prefer-export-from": [ "error", { ignoreUsedVariables: true } ], // Prefira Export From
         "array-func/from-map": [ "error" ], // Use .map invés do segundo parâmetro do From
         "array-func/no-unnecessary-this-arg": [ "error" ], // Não passe parâmetro desnecessário
         "array-func/avoid-reverse": [ "error" ], // Não passe parâmetro desnecessário
-        "object-curly-spacing": [ "error", "always", { "arraysInObjects": true } ], // Espaço declarar objeto
-        "function-paren-newline": [ "error", "multiline-arguments" ], // Força formatação parentese quebre todos params
-        "function-call-argument-newline": [ "error", "consistent" ], // Força formatação parentese quebre todos params
         "func-call-spacing": [ "error", "never" ],
-        "array-element-newline": [ "error", "consistent" ],
-        "wrap-iife": [ "error", "inside" ], // Coloque parentese em função auto excetuável
-        "template-tag-spacing": [ "error", "never" ], // Sem espaço em template " sql`` "
-        "template-curly-spacing": [ "error" ], // Não coloque espaço em template string
-        "rest-spread-spacing": [ "error", "never" ], // Não faça fun(... space)
-        "nonblock-statement-body-position": [ "error", "beside" ], // If sem chaves deve ser inline
-        "no-tabs": [ "error" ], // Não use tabs
-        "new-parens": [ "error" ], // New Sempre precisa ter parenteses
-        "multiline-ternary": [ "error", "always-multiline" ], // Força múltiplas linhas em ternários múltiplos
-        "lines-around-comment": [
-            "error",
-            { "beforeLineComment": true, "allowBlockStart": true },
-        ], // Linha em branco antes do comentário
         "jsx-quotes": [ "error", "prefer-double" ], // Aspas duplas em jsx html
-        "implicit-arrow-linebreak": [ "error", "beside" ], // Não quebre arrow function
-        "arrow-spacing": [ "error", { "before": true, "after": true } ], // Espaço seta arrow function
         "vars-on-top": [ "error" ], // Caso a regra de var seja desativa elas devem ficar no topo
         "strict": [ "error" ], // Strict javascript top file
         "no-shadow-restricted-names": [ "error" ], // Sem variável com palavra reservada
         "logical-assignment-operators": [ "error", "always" ], // Faça ||= ao invés a = a || b
         "no-with": [ "error" ], // Não use with
-        "object-curly-newline": [
-            "error",
-            {
-                "ExportDeclaration": {
-                    "consistent": true,
-                    "minProperties": 4,
-                    "multiline": true,
-                },
-                "ImportDeclaration": {
-                    "consistent": true,
-                    "minProperties": 4,
-                    "multiline": true,
-                },
-                "ObjectExpression": {
-                    "consistent": true,
-                    "minProperties": 4,
-                    "multiline": true,
-                },
-                "ObjectPattern": {
-                    "consistent": true,
-                    "minProperties": 4,
-                    "multiline": true,
-                },
-            },
-        ],
-        "no-mixed-spaces-and-tabs": [ "error" ],
+
         "func-name-matching": [
             "error",
             {
@@ -438,17 +335,30 @@ module.exports = {
         ],
         "no-new-wrappers": [ "error" ],
         "no-misleading-character-class": [ "error" ],
-        "grouped-accessor-pairs": [
-            "error",
-            "getBeforeSet",
-        ],
+        "grouped-accessor-pairs": [ "error", "getBeforeSet" ],
         "no-sequences": [ "error" ], // Não faça a = (2, 4)
-        "antfu/generic-spacing": [ "error" ], // String<a,b> => String<a, b>
+        "antfu/consistent-chaining": [ "error" ], // Ou quebra todos os pontos ou nenhum arr.map().filter().flat() etc
+        "antfu/consistent-list-newline": [ "error" ], // Quebre todos ou nenhum item do object
         "antfu/import-dedupe": [ "error" ], // Auto fix import duplicados
-        "antfu/prefer-inline-type-import": [ "error" ], // Prefira type inline
-        "antfu/named-tuple-spacing": [ "error" ], // Solicita espaço depois do : no Typescript types
+        "antfu/indent-unindent": [ "error" ], // Ident template strings
+        "antfu/no-import-dist": [ "error" ], // Não importe a pasta dist
         "antfu/no-import-node-modules-by-path": [ "error" ], // Não importe de dentro da node_modules,
-        "@stylistic/plus/type-generic-spacing": [ "error" ], // De type Foo<T,K> para type Foo<T, K>
-        "@stylistic/plus/type-named-tuple-spacing": [ "error" ], // De [i?   :number] para [i?: number]
+
+        "sonarjs/block-scoped-var": [ "error" ], // Bloqueia variáveis fora do escopo do bloco
+        "sonarjs/deprecation": [ "warn" ], // Não use função depreciadas
+        "sonarjs/max-union-size": [ "error" ], // Não une mais de 3 tipos sem criar um type
+        "sonarjs/no-async-constructor": [ "error" ], // Não coloque coisas async no construtor
+        "sonarjs/no-collapsible-if": [ "error" ], // Unir os if desnecessários
+        "sonarjs/no-nested-functions": [ "error" ], // Sem Hadouken de função
+        "sonarjs/no-parameter-reassignment": [ "error" ], // Não reatribua um parâmetro sem usar
+        "sonarjs/no-redundant-jump": [ "error" ], // Não coloque return desnecessário na função
+        "sonarjs/no-redundant-optional": [ "error" ], // Não Coloque optional e undefined juntos
+        "sonarjs/prefer-promise-shorthand": [ "error" ], // Promise.resolve ao invés new Promise resolve
+        "sonarjs/public-static-readonly": [ "error" ], // Use Readonly no static
+        "sonarjs/redundant-type-aliases": [ "error" ], // Não crie um ja existe
+        "sonarjs/todo-tag": [ "warn" ], // Doc TO-D devem ser resolvidos alerta
+        "sonarjs/updated-loop-counter": [ "error" ], // Não reatribua variável do loop
+        "sonarjs/use-type-alias": [ "error" ], // Crie um alias se repetir muita concatenação de tipo
+        "sonarjs/void-use": [ "error" ], // Não use void em lugar malucos
     },
 };

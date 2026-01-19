@@ -1,22 +1,45 @@
 import { createRequire } from "node:module";
 
+import * as toml from "eslint-plugin-toml";
+
+import stylistic from "@stylistic/eslint-plugin";
+import antfu from "eslint-plugin-antfu";
+import arrayFunc from "eslint-plugin-array-func";
+import fileProgress from "eslint-plugin-file-progress";
+import unicorn from "eslint-plugin-unicorn";
 import globals from "globals";
+import * as tomlParser from "toml-eslint-parser";
+import * as yamlParser from "yaml-eslint-parser";
+
+import anyBase from "./rules/any/base.mjs";
+import globalBase from "./rules/global/base.mjs";
+import globalErrors from "./rules/global/errors.mjs";
+import globalPossibleErrors from "./rules/global/possible-errors.mjs";
+import globalSecurity from "./rules/global/security.mjs";
+import iniBase from "./rules/ini/base.mjs";
+import javascriptBestPractices from "./rules/javascript/best-practices.mjs";
+import javascriptErrors from "./rules/javascript/errors.mjs";
+import javascriptJsDocumentation from "./rules/javascript/js-documentation.mjs";
+import javascriptPerformance from "./rules/javascript/performance.mjs";
+import jsonBase from "./rules/json/base.mjs";
+import typescriptBestPractices from "./rules/typescript/best-practices.mjs";
+import typescriptErrors from "./rules/typescript/errors.mjs";
+import typescriptPossibleErrors from "./rules/typescript/possible-errors.mjs";
+import typescriptSecurity from "./rules/typescript/security.mjs";
+import typescriptTests from "./rules/typescript/tests.mjs";
+import yamlBase from "./rules/yaml/base.mjs";
+import yamlGithub from "./rules/yaml/github.mjs";
 
 const require = createRequire(import.meta.url);
 
 // Import plugins (most are CommonJS)
+
 const typescriptParser = require("@typescript-eslint/parser");
 
 const odgPlugin = require("@odg/eslint-plugin");
-const stylisticJs = require("@stylistic/eslint-plugin-js");
-const stylisticPlus = require("@stylistic/eslint-plugin-plus");
-const stylisticTs = require("@stylistic/eslint-plugin-ts");
 const typescriptEslint = require("@typescript-eslint/eslint-plugin");
 const anyParser = require("any-eslint-parser");
-const antfu = require("eslint-plugin-antfu");
-const arrayFunc = require("eslint-plugin-array-func");
 const betterMaxParams = require("eslint-plugin-better-max-params");
-const fileProgress = require("eslint-plugin-file-progress");
 const filenames = require("eslint-plugin-filenames");
 const html = require("eslint-plugin-html");
 const importPlugin = require("eslint-plugin-import");
@@ -32,35 +55,10 @@ const regexp = require("eslint-plugin-regexp");
 const security = require("eslint-plugin-security");
 const sonarjs = require("eslint-plugin-sonarjs");
 const sortClassMembers = require("eslint-plugin-sort-class-members");
-const toml = require("eslint-plugin-toml");
-const unicorn = require("eslint-plugin-unicorn");
 const yml = require("eslint-plugin-yml");
 const espree = require("espree");
 const jsoncParser = require("jsonc-eslint-parser");
-const tomlParser = require("toml-eslint-parser");
-const yamlParser = require("yaml-eslint-parser");
 
-// Import rule configurations (CommonJS)
-const anyBase = require("./rules/any/base.js");
-const globalBase = require("./rules/global/base.js");
-const globalErrors = require("./rules/global/errors.js");
-const globalPossibleErrors = require("./rules/global/possible-errors.js");
-const globalSecurity = require("./rules/global/security.js");
-const iniBase = require("./rules/ini/base.js");
-const javascriptBestPractices = require("./rules/javascript/best-practices.js");
-const javascriptErrors = require("./rules/javascript/errors.js");
-const javascriptJsDocumentation = require("./rules/javascript/js-documentation.js");
-const javascriptPerformance = require("./rules/javascript/performance.js");
-const jsonBase = require("./rules/json/base.js");
-const typescriptBestPractices = require("./rules/typescript/best-practices.js");
-const typescriptErrors = require("./rules/typescript/errors.js");
-const typescriptPossibleErrors = require("./rules/typescript/possible-errors.js");
-const typescriptSecurity = require("./rules/typescript/security.js");
-const typescriptTests = require("./rules/typescript/tests.js");
-const yamlBase = require("./rules/yaml/base.js");
-const yamlGithub = require("./rules/yaml/github.js");
-
-// eslint-disable-next-line import/no-anonymous-default-export
 export default [
 
     // Base configuration
@@ -81,6 +79,7 @@ export default [
             "dist/",
             "tmp/",
             "**/*.min.*",
+            "**/*.png",
             "package-lock.json",
             "yarn.lock",
         ],
@@ -100,50 +99,48 @@ export default [
             },
         },
         plugins: {
-            "file-progress": fileProgress,
-            "regexp": regexp,
-            "regex": regex,
+            "progress": fileProgress,
             "import": importPlugin,
-            "sonarjs": sonarjs,
-            "security": security,
-            "unicorn": unicorn,
             "@odg": odgPlugin,
-            "@stylistic/plus": stylisticPlus,
-            "@stylistic/js": stylisticJs,
+            "@stylistic": stylistic,
+            "n": pluginN,
+            regexp,
+            regex,
+            sonarjs,
+            security,
+            unicorn,
         },
         settings: {
             "html/report-bad-indent": "error",
             "html/indent": "+4",
             "import/docstyle": [ "jsdoc", "tomdoc" ],
             "import/resolver": {
-                "node": {
-                    "extensions": [ ".mjs", ".js", ".jsx", ".json", ".ts", ".tsx", ".d.ts" ],
+                node: {
+                    extensions: [ ".mjs", ".js", ".jsx", ".json", ".ts", ".tsx", ".d.ts" ],
                 },
             },
             "import/external-module-folders": [ "@types" ],
-            "import/extensions": [
-                ".js",
-                ".mjs",
-                ".jsx",
-            ],
+            "import/extensions": [ ".js", ".mjs", ".jsx" ],
             "import/core-modules": [],
-            "import/ignore": [
-                "node_modules",
-                "\\.(coffee|scss|css|less|hbs|svg|json)$",
-            ],
+            "import/ignore": [ "node_modules", "\\.(coffee|scss|css|less|hbs|svg|json)$" ],
+            "progress": {
+                hide: false, // Use this to hide the progress message, can be useful in CI
+                hideFileName: false, // Use this to hide the file name, would simply show "Linting..."
+                successMessage: "Lint done...",
+            },
         },
         rules: {
             ...globalBase.rules,
             ...globalErrors.rules,
             ...globalPossibleErrors.rules,
             ...globalSecurity.rules,
-            "file-progress/activate": 1,
+            "progress/activate": 1,
         },
     },
 
     // JavaScript/TypeScript files
     {
-        files: [ "*.js", "*.jsx", "*.mjs", "*.cjs", "*.ts", "*.tsx", "*.mts", "*.cts" ],
+        files: [ "**/*.js", "**/*.jsx", "**/*.mjs", "**/*.cjs", "**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts" ],
         languageOptions: {
             parser: espree,
             parserOptions: {
@@ -153,21 +150,21 @@ export default [
         },
         plugins: {
             "import": importPlugin,
-            "jsdoc": jsdoc,
-            "promise": promise,
-            "regexp": regexp,
-            "filenames": filenames,
-            "security": security,
-            "unicorn": unicorn,
-            "html": html,
             "n": pluginN,
             "array-func": arrayFunc,
             "no-constructor-bind": noConstructorBind,
-            "regex": regex,
-            "sonarjs": sonarjs,
             "sort-class-members": sortClassMembers,
-            "antfu": antfu,
             "better-max-params": betterMaxParams,
+            jsdoc,
+            promise,
+            regexp,
+            filenames,
+            security,
+            unicorn,
+            html,
+            regex,
+            sonarjs,
+            antfu,
         },
         rules: {
             ...javascriptBestPractices.rules,
@@ -179,7 +176,7 @@ export default [
 
     // TypeScript files
     {
-        files: [ "*.ts", "*.tsx", "*.mts", "*.cts" ],
+        files: [ "**/*.ts", "**/*.tsx", "**/*.mts", "**/*.cts" ],
         languageOptions: {
             parser: typescriptParser,
             parserOptions: {
@@ -199,12 +196,11 @@ export default [
         plugins: {
             "@typescript-eslint": typescriptEslint,
             "import": importPlugin,
-            "jsdoc": jsdoc,
-            "promise": promise,
-            "regexp": regexp,
-            "filenames": filenames,
             "sort-class-members": sortClassMembers,
-            "@stylistic/ts": stylisticTs,
+            jsdoc,
+            promise,
+            regexp,
+            filenames,
         },
         settings: {
             "import/extensions": [ ".mjs", ".js", ".jsx", ".json", ".ts", ".tsx", ".d.ts" ],
@@ -213,11 +209,11 @@ export default [
                 "@typescript-eslint/parser": [ ".ts", ".tsx" ],
             },
             "import/resolver": {
-                "typescript": {
-                    "project": [ "tsconfig.json" ],
+                typescript: {
+                    project: [ "tsconfig.json" ],
                 },
-                "node": {
-                    "extensions": [ ".mjs", ".js", ".jsx", ".json", ".ts", ".tsx", ".d.ts" ],
+                node: {
+                    extensions: [ ".mjs", ".js", ".jsx", ".json", ".ts", ".tsx", ".d.ts" ],
                 },
             },
         },
@@ -231,7 +227,7 @@ export default [
 
     // TSX files
     {
-        files: [ "*.tsx" ],
+        files: [ "**/*.tsx" ],
         rules: {
             "import/no-anonymous-default-export": [ "off" ],
             "@typescript-eslint/naming-convention": [
@@ -305,7 +301,14 @@ export default [
         rules: jsonSchemaValidator.configs?.recommended?.rules || {},
     },
     {
-        files: [ "*.config.ts", "*.config.mts" ],
+        files: [
+            "**/*.config.ts",
+            "**/*.config.mts",
+            "**/*.config.js",
+            "**/*.config.mjs",
+            "**/index.mjs",
+            "**/index.mts",
+        ],
         rules: {
             "import/no-anonymous-default-export": [ "off" ],
             "filenames/match-exported": [ "off" ],
@@ -315,12 +318,12 @@ export default [
 
     // JSON files
     {
-        files: [ "*.json", "*.json5", "*.jsonc", ".eslintrc", "*.code-*" ],
+        files: [ "**/*.json", "**/*.json5", "**/*.jsonc", ".eslintrc", "**/*.code-*" ],
         languageOptions: {
             parser: jsoncParser,
         },
         plugins: {
-            "jsonc": jsonc,
+            jsonc,
         },
         rules: {
             ...jsonc.configs?.all?.rules,
@@ -333,7 +336,7 @@ export default [
             parser: jsoncParser,
         },
         plugins: {
-            "jsonc": jsonc,
+            jsonc,
         },
         rules: {
             ...jsonc.configs.all.rules,
@@ -373,10 +376,10 @@ export default [
             "**/tests/**",
             "**/spec/**",
             "**/__tests__/**",
-            "*.test.*",
-            "*.spec.*",
-            "*.e2e.*",
-            "*.e2e-spec.*",
+            "**/*.test.*",
+            "**/*.spec.*",
+            "**/*.e2e.*",
+            "**/*.e2e-spec.*",
         ],
         rules: {
             ...typescriptTests.rules,
@@ -385,20 +388,12 @@ export default [
 
     // INI/TOML files
     {
-        files: [
-            ".env.example",
-            ".env.*",
-            "*.env",
-            ".env.sample",
-            "*.properties",
-            "*.ini",
-            "*.toml",
-        ],
+        files: [ ".env.example", ".env.*", "*.env", ".env.sample", "**/*.properties", "**/*.ini", "**/*.toml" ],
         languageOptions: {
             parser: tomlParser,
         },
         plugins: {
-            "toml": toml,
+            toml,
         },
         rules: {
             ...iniBase.rules,
@@ -407,7 +402,7 @@ export default [
 
     // YAML files
     {
-        files: [ "*.yml", "*.yaml" ],
+        files: [ "**/*.yml", "**/*.yaml" ],
         languageOptions: {
             parser: yamlParser,
             parserOptions: {
@@ -415,7 +410,7 @@ export default [
             },
         },
         plugins: {
-            "yml": yml,
+            yml,
         },
         rules: {
             ...yamlBase.rules,
@@ -430,7 +425,7 @@ export default [
             },
         },
         plugins: {
-            "yml": yml,
+            yml,
         },
         rules: {
             ...yamlGithub.rules,
@@ -442,14 +437,14 @@ export default [
         files: [
             ".gitignore",
             ".npmignore",
-            "*ignore",
-            "*.md",
-            "*.bash",
-            "*.sh",
-            "*.ps1",
-            "*.powershell",
-            "*.java",
-            "*.tf",
+            "**/*ignore",
+            "**/*.md",
+            "**/*.bash",
+            "**/*.sh",
+            "**/*.ps1",
+            "**/*.powershell",
+            "**/*.java",
+            "**/*.tf",
             "Jenkinsfile",
             "Dockerfile",
         ],
