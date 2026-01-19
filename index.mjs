@@ -381,6 +381,11 @@ export default [
             "**/*.e2e.*",
             "**/*.e2e-spec.*",
         ],
+        languageOptions: {
+            globals: {
+                ...globals.vitest,
+            },
+        },
         rules: {
             ...typescriptTests.rules,
         },
