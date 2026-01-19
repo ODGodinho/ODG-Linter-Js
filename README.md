@@ -34,6 +34,7 @@
   - [Installation](#installation)
 - [File Name Convention](#file-name-convention)
 - [Semi Rule](#semi-rule)
+- [Cond Assign](#cond-assign)
 - [Quotes Rule](#quotes-rule)
 - [Indent Rule](#indent-rule)
 - [Line Break Rule](#line-break-rule)
@@ -42,6 +43,8 @@
 - [Camel Case Rule](#camel-case-rule)
 - [Strict](#strict)
 - [Padded Block Rule](#padded-block-rule)
+- [Object Shorthand](#object-shorthand)
+- [No Unused Labels](#no-unused-labels)
 - [Lines Between Class Members](#lines-between-class-members)
 - [No Multi Assign Rule](#no-multi-assign-rule)
 - [Explicit Member Accessibility Rule](#explicit-member-accessibility-rule)
@@ -125,6 +128,8 @@
 - [Max Statements Per Line](#max-statements-per-line)
 - [No Constant Condition](#no-constant-condition)
 - [No Debugger](#no-debugger)
+- [No Console](#no-console)
+- [No deprecated](#no-deprecated)
 - [Not Duplicate Case](#not-duplicate-case)
 - [Regex Block](#regex-block)
 - [No Overwrite Exception](#no-overwrite-exception)
@@ -156,7 +161,7 @@
 - [No Undefined declare](#no-undefined-declare)
 - [No New require](#no-new-require)
 - [No New Object](#no-new-object)
-- [No New Symbol](#no-new-symbol)
+- [No New Native Nonconstructor](#no-new-native-nonconstructor)
 - [Var Size](#var-size)
 - [Max Depth](#max-depth)
 - [Max Params](#max-params)
@@ -448,6 +453,7 @@
 - [Performance](#performance)
   - [No Alert](#no-alert)
   - [No Loop Func](#no-loop-func)
+  - [No Sync](#no-sync)
 - [Errors](#errors)
   - [Construtor Super Invalid](#construtor-super-invalid)
   - [Getter Return](#getter-return)
@@ -538,17 +544,20 @@
 Add dependence to package.json
 
 ```bash
-npm install eslint @odg/eslint-config
+npm install @odg/eslint-config
 # or
-yarn add -D eslint @odg/eslint-config
+yarn add -D @odg/eslint-config
 ```
 
-Add extends in your `.eslintrc` file
+Create the `eslint.config.js` file in the root directory of your project.
 
-```json
-{
-    "extends": [ "@odg" ]
-}
+```js
+import odgLinter from "@odg/eslint-config";
+
+export default [
+    ...odgLinter,
+];
+
 ```
 
 Add script in your `package.json` file
@@ -556,12 +565,14 @@ Add script in your `package.json` file
 ```json
 {
     "scripts": {
-        "lint": "eslint --ext .js,.jsx,.ts,.tsx,.json,.jsonc,.json5,.yml,.yaml,.xml,.txt,.svg,.properties,.gradle,.java,.cpp,.c,.cs,.html,.css,.groovy,.gitignore,.npmignore,.toml,.env,.example,.sample,.ini,.php,.bat,.powershell,.ps1,.sh,.bash,.eslintrc",
+        "lint": "eslint",
+        "lint:fix": "eslint --fix",
     }
 }
 ```
 
-Test: `npm run lint` or `yarn lint`
+Test List: `npm run lint .` or `yarn lint .`
+Start Fix: `npm run lint:fix .` or `yarn lint:fix .`
 
 ## File Name Convention
 
@@ -595,6 +606,7 @@ Requires semicolons at the end of statements
 
 <https://eslint.org/docs/rules/semi#semi>
 <https://eslint.org/docs/rules/semi-style>
+<https://eslint.org/docs/latest/rules/no-unexpected-multiline>
 
 👍 Examples of correct code
 
@@ -625,6 +637,24 @@ class C {
         foo();
     }
 }
+
+const foo = bar;
+(1 || 2).baz();
+
+const baz = bar
+;(1 || 2).baz()
+
+const hello = 'world';
+[1, 2, 3].forEach(addNumber);
+
+const hi = 'world'
+void [1, 2, 3].forEach(addNumber);
+
+const x = function() {};
+`hello`
+
+const tag = function() {}
+tag `hello`
 ```
 
 👎 Examples of incorrect code
@@ -656,6 +686,71 @@ class C {
         foo()
         ;bar()
     }
+}
+
+const foo = bar
+(1 || 2).baz();
+
+const hello = 'world'
+[1, 2, 3].forEach(addNumber);
+
+const x = function() {}
+`hello`
+
+const y = function() {}
+y
+`hello`
+
+const z = foo
+/regex/g.test(bar)
+```
+
+## Cond Assign
+
+----------
+
+In conditional statements, it is very easy to mistype a comparison operator (such as ==) as an assignment operator
+(such as =). For example:
+
+<https://eslint.org/docs/latest/rules/no-cond-assign>
+
+👍 Examples of correct code
+
+```typescript
+// Assignment replaced by comparison
+let x;
+if (x === 0) {
+    const b = 1;
+}
+
+// Practical example that wraps the assignment in parentheses
+const setHeight = function (someNode) {
+    do {
+        someNode.height = "100px";
+    } while ((someNode = someNode.parentNode));
+}
+
+// Practical example that wraps the assignment and tests for 'null'
+const set_height = function (someNode) {
+    do {
+        someNode.height = "100px";
+    } while ((someNode = someNode.parentNode) !== null);
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+let x;
+if (x = 0) {
+    const b = 1;
+}
+
+// Practical example that is similar to an error
+const setHeight = function (someNode) {
+    do {
+        someNode.height = "100px";
+    } while (someNode = someNode.parentNode);
 }
 ```
 
@@ -905,6 +1000,78 @@ if (a) {
 
 }
 
+```
+
+## Object Shorthand
+
+----------
+
+Require or disallow method and property shorthand syntax for object literals
+
+<https://eslint.org/docs/latest/rules/object-shorthand>
+
+👍 Examples of correct code
+
+```typescript
+const foo = {
+    w() {},
+    *x() {},
+    [y]() {},
+    z
+};
+```
+
+👎 Examples of incorrect code
+
+```typescript
+const foo = {
+    w: function() {},
+    x: function *() {},
+    [y]: function() {},
+    z: z
+};
+```
+
+## No Unused Labels
+
+----------
+
+Labels that are declared and not used anywhere in the code are most likely an error due to incomplete refactoring.
+
+<https://eslint.org/docs/latest/rules/no-unused-labels>
+
+👍 Examples of correct code
+
+```typescript
+A: {
+    if (foo()) {
+        break A;
+    }
+    bar();
+}
+
+B:
+for (let i = 0; i < 10; ++i) {
+    if (foo()) {
+        break B;
+    }
+    bar();
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+A: var foo = 0;
+
+B: {
+    foo();
+}
+
+C:
+for (let i = 0; i < 10; ++i) {
+    foo();
+}
 ```
 
 ## Lines Between Class Members
@@ -2371,6 +2538,7 @@ No Unreachable code
 
 <https://eslint.org/docs/rules/no-unreachable>
 <https://sonarsource.github.io/rspec/#/rspec/S6079/javascript>
+<https://eslint.org/docs/latest/rules/no-useless-assignment>
 
 👍 Examples of correct code
 
@@ -2392,6 +2560,41 @@ function bar() {
 switch (foo) {
     case 1:
         break;
+}
+
+function fn1() {
+    let v = 'used';
+    doSomething(v);
+    v = 'used-2';
+    doSomething(v);
+}
+
+function fn2() {
+    let v = 'used';
+    if (condition) {
+        v = 'used-2';
+        doSomething(v);
+        return
+    }
+    doSomething(v);
+}
+
+function fn3() {
+    let v = 'used';
+    if (condition) {
+        doSomething(v);
+    } else {
+        v = 'used-2';
+        doSomething(v);
+    }
+}
+
+function fn4() {
+    let v = 'used';
+    for (let i = 0; i < 10; i++) {
+        doSomething(v);
+        v = 'used in next iteration';
+    }
 }
 ```
 
@@ -2427,6 +2630,49 @@ function baz() {
 
 for (;;) {}
 console.log("done");
+
+function fn1() {
+    let v = 'used';
+    doSomething(v);
+    v = 'unused';
+}
+
+function fn2() {
+    let v = 'used';
+    if (condition) {
+        v = 'unused';
+        return
+    }
+    doSomething(v);
+}
+
+function fn3() {
+    let v = 'used';
+    if (condition) {
+        doSomething(v);
+    } else {
+        v = 'unused';
+    }
+}
+
+function fn4() {
+    let v = 'unused';
+    if (condition) {
+        v = 'used';
+        doSomething(v);
+        return
+    }
+}
+
+function fn5() {
+    let v = 'used';
+    if (condition) {
+        let v = 'used';
+        console.log(v);
+        v = 'unused';
+    }
+    console.log(v);
+}
 ```
 
 ## No Multiline String
@@ -4342,6 +4588,63 @@ function isTruthy(x) {
 }
 ```
 
+## No Console
+
+----------
+
+Disallow the use of console
+
+<https://eslint.org/docs/latest/rules/no-console>
+
+👍 Examples of correct code
+
+```typescript
+import { ConsoleLogger, Logger } from "@odg/log"
+
+const log = new Logger();
+log.pushHandler(new ConsoleLogger());
+
+log.debug("This is a debug message");
+```
+
+👎 Examples of incorrect code
+
+```typescript
+console.log("Log a debug level message.");
+console.warn("Log a warn level message.");
+console.error("Log an error level message.");
+console.log = foo();
+```
+
+## No Deprecated
+
+----------
+
+Node has many deprecated API. The community is going to remove those API from Node in future,
+so we should not use those.
+
+<https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/no-deprecated-api.md>
+
+👍 Examples of correct code
+
+```typescript
+var fs = require("fs");
+fs.stat(...);
+fs.access(...);
+```
+
+👎 Examples of incorrect code
+
+```typescript
+var fs = require("fs");
+fs.exists("./foo.js", function() {});
+
+// Also, it can report the following patterns.
+var exists = require("fs").exists;
+const {exists} = require("fs");
+
+```
+
 ## Not Duplicate Case
 
 ----------
@@ -5526,29 +5829,34 @@ var myObject = new Object();
 new Object();
 ```
 
-## No New Symbol
+## No New Native Nonconstructor
 
 ----------
 
-Disallow new operators with the Symbol object
+Disallow new operators with the Symbol and BigInt object
 
-<https://eslint.org/docs/latest/rules/no-new-symbol>
+<https://eslint.org/docs/latest/rules/no-new-native-nonconstructor>
 
 👍 Examples of correct code
 
 ```typescript
-var foo = Symbol('foo');
+const foo = Symbol('foo');
+const bar = BigInt(9007199254740991);
 
 // Ignores shadowed Symbol.
-function bar(Symbol) {
-    const baz = new Symbol("baz");
+function baz(Symbol) {
+    const qux = new Symbol("baz");
+}
+function quux(BigInt) {
+    const corge = new BigInt(9007199254740991);
 }
 ```
 
 👎 Examples of incorrect code
 
 ```typescript
-var foo = new Symbol('foo');
+const foo = new Symbol('foo');
+const bar = new BigInt(9007199254740991);
 ```
 
 ## Var Size
@@ -5629,6 +5937,7 @@ var { prop: a} = {};
 Enforce a maximum depth that blocks can be nested
 
 <https://eslint.org/docs/latest/rules/max-depth>
+<https://eslint.org/docs/latest/rules/max-nested-callbacks>
 
 👍 Examples of correct code
 
@@ -5641,6 +5950,14 @@ function foo() {
         }
     }
 }
+
+foo1(function() { // Nested 1 deep
+    foo2(function() { // Nested 2 deep
+        foo3(function() { // Nested 3 deep
+
+        });
+    });
+});
 ```
 
 👎 Examples of incorrect code
@@ -5658,6 +5975,16 @@ function foo() {
         }
     }
 }
+
+foo1(function() { // Nested 1 deep
+    foo2(function() { // Nested 2 deep
+        foo3(function() { // Nested 3 deep
+            foo4(function() { // Nested 4 deep
+                // Do something
+            });
+        });
+    });
+});
 ```
 
 ## Max Params
@@ -9326,9 +9653,8 @@ import a from './foo.js';
 👎 Examples of incorrect code
 
 ```typescript
-import { } from './foo.js';
-import t, { } from './foo.js';
-import type { } from './foo.js';
+import t from './foo.js';
+import type from './foo.js';
 ```
 
 ### Export End File
@@ -9349,8 +9675,7 @@ import a from './foo.js';
 👎 Examples of incorrect code
 
 ```typescript
-import { } from './foo.js';
-import t, { } from './foo.js';
+import t from './foo.js';
 ```
 
 ### Import First
@@ -10300,6 +10625,7 @@ var foo = /(a?b*)+/; // warns about `+`
 This rule reports control characters that were not escaped using a control escape (\0, t, \n, \v, f, \r).
 
 <https://ota-meshi.github.io/eslint-plugin-regexp/rules/control-character-escape.html>
+<https://eslint.org/docs/latest/rules/no-control-regex>
 
 👍 Examples of correct code
 
@@ -10307,6 +10633,15 @@ This rule reports control characters that were not escaped using a control escap
 var foo = /[\n\r]/;
 var foo = /\t/;
 var foo = RegExp("\t+\n");
+
+const pattern1 = /\x20/;
+const pattern2 = /\u0020/;
+const pattern3 = /\u{20}/u;
+const pattern4 = /\t/;
+const pattern5 = /\n/;
+const pattern6 = new RegExp("\x20");
+const pattern7 = new RegExp("\\t");
+const pattern8 = new RegExp("\\n");
 ```
 
 👎 Examples of incorrect code
@@ -10316,6 +10651,14 @@ var foo = / /;
 var foo = /\u0009/;
 var foo = /\u{a}/u;
 var foo = RegExp("\\u000a");
+
+const pattern1 = /\x00/;
+const pattern2 = /\x0C/;
+const pattern3 = /\x1F/;
+const pattern4 = /\u000C/;
+const pattern5 = /\u{C}/u;
+const pattern6 = new RegExp("\x0C"); // raw U+000C character in the pattern
+const pattern7 = new RegExp("\\x0C"); // \x0C pattern
 ```
 
 ### Negation
@@ -16547,6 +16890,92 @@ for (let i = 0; i < 10; ++i) {
     setTimeout(() => console.log(foo));
 }
 foo = 100;
+```
+
+### No Sync
+
+----------
+
+In Node.js, most I/O is done through asynchronous methods. However,
+there are often synchronous versions of the asynchronous methods. For example, fs.exists() and fs.existsSync()
+
+<https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/no-sync.md>
+<https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/prefer-promises/dns.md>
+<https://github.com/eslint-community/eslint-plugin-n/blob/master/docs/rules/prefer-promises/fs.md>
+
+👍 Examples of correct code
+
+```typescript
+fs.exists()
+
+/*eslint n/prefer-promises/dns: [error]*/
+const { promises: dns } = require("dns")
+
+async function lookup(hostname) {
+    const { address, family } = await dns.lookup(hostname)
+    //...
+}
+
+import { promises as dns } from "dns"
+
+async function lookup(hostname) {
+    const { address, family } = await dns.lookup(hostname)
+    //...
+}
+
+const { promises: fs } = require("fs")
+
+async function readData(filePath) {
+    const content = await fs.readFile(filePath, "utf8")
+    //...
+}
+
+import { promises as fs } from "fs"
+
+async function readData(filePath) {
+    const content = await fs.readFile(filePath, "utf8")
+    //...
+}
+```
+
+👎 Examples of incorrect code
+
+```typescript
+fs.existsSync()
+
+/*eslint n/prefer-promises/dns: [error]*/
+import dns from "dns"
+
+function lookup(hostname) {
+    dns.lookup(hostname, (error, address, family) => {
+        //...
+    })
+}
+
+/*eslint n/prefer-promises/dns: [error]*/
+const dns = require("dns")
+
+function lookup(hostname) {
+    dns.lookup(hostname, (error, address, family) => {
+        //...
+    })
+}
+
+import fs from "fs"
+
+function readData(filePath) {
+    fs.readFile(filePath, "utf8", (error, content) => {
+        //...
+    })
+}
+
+const fs = require("fs")
+
+function readData(filePath) {
+    fs.readFile(filePath, "utf8", (error, content) => {
+        //...
+    })
+}
 ```
 
 ## Errors

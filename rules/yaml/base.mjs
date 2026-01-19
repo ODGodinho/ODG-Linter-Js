@@ -1,4 +1,4 @@
-module.exports = {
+export default {
     rules: {
         "no-unused-vars": [ "off" ],
         "yml/block-mapping-colon-indicator-newline": [ "error" ], // Não quebre linha apos os :
@@ -19,14 +19,17 @@ module.exports = {
         "yml/key-spacing": [ "error" ], // Disable key spacing
         "yml/no-irregular-whitespace": [ "error" ], // Sem Espaços em brancos irregular caracteres especiais
         "yml/no-trailing-zeros": [ "error" ], // Use 1.2 ao invés de 1.20
-        "spaced-comment": [ "off" ], // Desliga regra JS
         "yml/spaced-comment": [ "error" ], // Comentarios com espaço
         "filenames/match-regex": [ "off" ], // Desliga validação de nomes
-        "max-len": [ "warn", {
-            code: 120,
-            ignoreUrls: true,
-            ignoreStrings: true,
-            ignoreTemplateLiterals: true,
-        } ], // Caracteres máximo por linhas
+        "@stylistic/max-len": [
+            "warn",
+            {
+                code: 120,
+                ignoreUrls: true,
+                ignoreStrings: true,
+                ignoreTemplateLiterals: true,
+                ignoreRegExpLiterals: true,
+            },
+        ], // Caracteres máximo por linhas
     },
 };

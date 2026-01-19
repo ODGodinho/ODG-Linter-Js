@@ -1,12 +1,16 @@
-module.exports = {
+export default {
     rules: {
         "filenames/match-regex": [ "off" ],
-        "max-len": [ "warn", {
-            code: 120,
-            ignoreUrls: true,
-            ignoreStrings: true,
-            ignoreTemplateLiterals: true,
-        } ], // Caracteres máximo por linhas
+        "@stylistic/max-len": [
+            "warn",
+            {
+                code: 120,
+                ignoreUrls: true,
+                ignoreStrings: true,
+                ignoreTemplateLiterals: true,
+                ignoreRegExpLiterals: true,
+            },
+        ], // Caracteres máximo por linhas
         "toml/indent": [ "error" ], // Indent
         "toml/keys-order": [ "error" ], // Indent
         "toml/no-non-decimal-integer": [ "error" ], // No decimal int
@@ -24,13 +28,20 @@ module.exports = {
         "toml/array-element-newline": [ "error", "consistent" ], // Array multipla linhas
         "toml/comma-style": [ "error" ], // Virgula a direita
         "toml/spaced-comment": [ "error" ], // Espaço a esquerda comentário
-        "toml/inline-table-curly-spacing": [ "error", "always", {
-            arraysInObjects: true,
-            objectsInObjects: true,
-        } ], // Espaço em declarar {}
-        "toml/key-spacing": [ "error", {
-            beforeEqual: false,
-            afterEqual: false,
-        } ], // Sem espaço antes de depois do igual
+        "toml/inline-table-curly-spacing": [
+            "error",
+            "always",
+            {
+                arraysInObjects: true,
+                objectsInObjects: true,
+            },
+        ], // Espaço em declarar {}
+        "toml/key-spacing": [
+            "error",
+            {
+                beforeEqual: false,
+                afterEqual: false,
+            },
+        ], // Sem espaço antes de depois do igual
     },
 };
