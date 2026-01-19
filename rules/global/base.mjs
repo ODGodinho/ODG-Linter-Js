@@ -8,7 +8,7 @@ export default {
             "error",
             "always",
             {
-                ignorePattern: "\\s*region.*|\\s*endregion.*|\\s*var.*|\\s*let.*|\\s*const.*",
+                ignorePattern: String.raw`\s*region.*|\s*endregion.*|\s*var.*|\s*let.*|\s*const.*`,
             },
         ], // Comentários devem ser iniciados em letras maiúsculas
         "unicode-bom": [ "error", "never" ], // Disabled "unicode-bom"

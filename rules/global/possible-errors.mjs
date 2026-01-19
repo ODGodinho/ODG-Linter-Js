@@ -24,10 +24,10 @@ export default {
                 {
                     "id": "EmptyImport",
                     "message": "Empty import is not allowed",
-                    "regex": "import(.*{\\s*}.*)from.*\\n",
+                    "regex": String.raw`import(.*{\s*}.*)from.*\n`,
                     "replacement": {
                         "function":
-                            "return $[1].replace(/\\s/g, '') !== '{}' ? $[0].replace(/,?\\s{\\s*}\\s/, ' ') : ''",
+                            String.raw`return $[1].replace(/\s/g, '') !== '{}' ? $[0].replace(/,?\s{\s*}\s/, ' ') : ''`,
                     },
                 }, // BLoqueia import vazios
             ],

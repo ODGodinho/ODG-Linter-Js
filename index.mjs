@@ -122,7 +122,7 @@ export default [
             "import/external-module-folders": [ "@types" ],
             "import/extensions": [ ".js", ".mjs", ".jsx" ],
             "import/core-modules": [],
-            "import/ignore": [ "node_modules", "\\.(coffee|scss|css|less|hbs|svg|json)$" ],
+            "import/ignore": [ "node_modules", String.raw`\.(coffee|scss|css|less|hbs|svg|json)$` ],
             "progress": {
                 hide: false, // Use this to hide the progress message, can be useful in CI
                 hideFileName: false, // Use this to hide the file name, would simply show "Linting..."

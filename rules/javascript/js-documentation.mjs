@@ -16,7 +16,10 @@ export default {
         "jsdoc/check-tag-names": [
             "error",
             {
-                definedTags: [ "task", // Create @task [name](LINK)
+                definedTags: [
+
+                    // Create @task [name](LINK)
+                    "task",
                 ],
             },
         ],

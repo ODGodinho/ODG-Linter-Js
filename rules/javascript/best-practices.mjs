@@ -88,8 +88,7 @@ export default {
         "handle-callback-err": [ "error" ], // Funções que recebem error deve ser tratado
         "n/handle-callback-err": [
             "error",
-            "^(err|error|\\w+Error|\\w+Exception|exception)$",
-
+            String.raw`^(err|error|\w+Error|\w+Exception|exception)$`,
         ], // Funções que recebem error deve ser tratado
         "new-cap": [ "error", { newIsCap: true } ], // New require first Letter uppercase
         "no-caller": [ "error" ], // Não permite usar callee
@@ -110,7 +109,7 @@ export default {
             "error",
             {
                 name: "exception",
-                ignore: [ "^error\\w*$", "^error$", "^exception\\w*$" ],
+                ignore: [ String.raw`^error\w*$`, "^error$", String.raw`^exception\w*$` ],
             },
         ], // Chame todos os catch erros de exception
         "unicorn/consistent-destructuring": [ "error" ], // Usa destructuring ou usa acesso direto sem alternar
@@ -165,7 +164,7 @@ export default {
         "unicorn/prevent-abbreviations": [
             "error",
             {
-                ignore: [ "\\.env$", ".env.*", "^Arr$", "^Num$", "^Str$" ],
+                ignore: [ String.raw`\.env$`, ".env.*", "^Arr$", "^Num$", "^Str$" ],
             },
         ], // Prefira ternário em vez de if else
         "unicorn/relative-url-style": [ "error" ], // Não coloque ./ em new URL
@@ -316,6 +315,7 @@ export default {
         "unicorn/prefer-logical-operator-over-ternary": [ "error" ], // Mude "a ? a : b" para "a || b"
         "unicorn/prefer-event-target": [ "error" ], // Use EventTarget no Lugar de EventEmitter
         "unicorn/prefer-export-from": [ "error", { ignoreUsedVariables: true } ], // Prefira Export From
+        "unicorn/prefer-string-raw": [ "error" ], // Use String.raw`` ao invés de scape no código
         "array-func/from-map": [ "error" ], // Use .map invés do segundo parâmetro do From
         "array-func/no-unnecessary-this-arg": [ "error" ], // Não passe parâmetro desnecessário
         "array-func/avoid-reverse": [ "error" ], // Não passe parâmetro desnecessário
