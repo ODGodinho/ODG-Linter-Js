@@ -128,6 +128,9 @@ export default [
                 hideFileName: false, // Use this to hide the file name, would simply show "Linting..."
                 successMessage: "Lint done...",
             },
+            "node": {
+                "version": ">=24.0.0",
+            },
         },
         rules: {
             ...globalBase.rules,
