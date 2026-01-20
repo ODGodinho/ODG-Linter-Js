@@ -83,7 +83,7 @@ export default {
         "regexp/sort-character-class-elements": [ "error" ], // Coloque [] em ordem Alfabética
         "regexp/sort-flags": [ "error" ], // Flag em ordem alfabética
         "regexp/prefer-named-capture-group": [ "error" ], // Prefira group com nomes
-        "regexp/prefer-regexp-exec": [ "error" ], // Prefira exec em regex
+        // "regexp/prefer-regexp-exec": [ "error" ], // Prefira exec em regex // Match retorna 1 resultado apenas
 
         "unicorn/no-empty-file": [ "error" ], // Não crie arquivo vazio
         "no-magic-numbers": [

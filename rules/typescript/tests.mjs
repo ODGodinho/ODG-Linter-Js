@@ -1,4 +1,5 @@
 const MAX_STATEMENTS = 20;
+const maxHadoukenDepth = 5;
 
 export default {
     rules: {
@@ -7,6 +8,7 @@ export default {
         "no-magic-numbers": [ "off" ], // Desliga magic number em test
         "@typescript-eslint/no-magic-numbers": [ "off" ], // Desliga magic number em test
         "max-statements": [ "error", MAX_STATEMENTS ],
+        "max-nested-callbacks": [ "error", maxHadoukenDepth ], // Tamanho máximo do Hadouken callback
         "unicorn/consistent-function-scoping": [
             "error",
             {
