@@ -1,6 +1,6 @@
 {
     "name": "@odg/eslint-config",
-    "version": "3.0.1",
+    "version": "3.0.2",
     "description": "Linter for JavaScript And Typescript project",
     "type": "module",
     "main": "index.mjs",
