@@ -549,7 +549,9 @@ npm install @odg/eslint-config
 yarn add -D @odg/eslint-config
 ```
 
-Create the `eslint.config.js` file in the root directory of your project.
+Create the `eslint.config.mjs` file in the root directory of your project.
+
+> Use .mjs file to avoid warn errors
 
 ```js
 import odgLinter from "@odg/eslint-config";
@@ -567,6 +569,9 @@ Add script in your `package.json` file
     "scripts": {
         "lint": "eslint",
         "lint:fix": "eslint --fix",
+    },
+    "engines": {
+        "node": ">=24"
     }
 }
 ```
