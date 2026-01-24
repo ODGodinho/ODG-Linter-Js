@@ -1,9 +1,16 @@
 {
     "name": "@odg/eslint-config",
-    "version": "3.0.2",
+    "version": "3.0.3",
     "description": "Linter for JavaScript And Typescript project",
     "type": "module",
     "main": "index.mjs",
+    "types": "index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./index.d.ts",
+            "import": "./index.mjs"
+        }
+    },
     "author": "Dragons Gamers <https://www.linkedin.com/in/victor-alves-odgodinho>",
     "scripts": {
         "lint": "eslint",
@@ -63,6 +70,7 @@
         "yaml-eslint-parser": "^2.0.0"
     },
     "files": [
+        "./index.d.ts",
         "./index.mjs",
         "./rules/"
     ],
