@@ -1,6 +1,6 @@
 {
     "name": "@odg/eslint-config",
-    "version": "3.0.3",
+    "version": "3.0.4",
     "description": "Linter for JavaScript And Typescript project",
     "type": "module",
     "main": "index.mjs",
@@ -28,10 +28,6 @@
         "@odg/tsconfig": "*",
         "@types/node": ">=24",
         "typescript": "*"
-    },
-    "peerDependencies": {
-        "@typescript-eslint/parser": "*",
-        "eslint": "^9"
     },
     "dependencies": {
         "@babel/core": "*",
