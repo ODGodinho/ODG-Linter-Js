@@ -1,6 +1,15 @@
 const indentSize = 4;
 const complexity = 15;
 const alwaysMultiline = "always-multiline";
+const multiLineBlock = "multiline-block-like";
+
+// 1. DEFINIÇÕES (Para deixar a regra limpa)
+const VARIABLES = [ "const", "let", "var" ];
+const EXPORTS = [ "export", "cjs-export" ];
+const IMPORTS = [ "import", "cjs-import" ];
+const TYPES = [ "interface", "type", "enum", "class" ];
+const FLOW_CONTROL = [ "if", "switch", "try", "for", "do", "while" ];
+const BLOCK_LIKE = [ "block-like", multiLineBlock ];
 
 export default {
     rules: {
@@ -86,6 +95,48 @@ export default {
         // "regexp/prefer-regexp-exec": [ "error" ], // Prefira exec em regex // Match retorna 1 resultado apenas
 
         "unicorn/no-empty-file": [ "error" ], // Não crie arquivo vazio
+        "unicorn/filename-case": [
+            "error",
+            {
+                "cases": {
+                    "kebabCase": true,
+                    "pascalCase": true,
+                },
+                "ignore": [ "\.md$" ],
+            },
+        ],
+        "no-restricted-syntax": [
+            "error",
+            {
+                "selector": "NewExpression[callee.name='Error']",
+                "message": "Do not use 'new Error()'. Use the exception classes from the @odg/exception"
+                    + " package to maintain logging standardization.",
+            },
+            {
+                "selector": "CallExpression[callee.property.name='log']",
+                "message": "Do not use console.log. Use the @odg/log injected in the container to ensure traceability.",
+            },
+            {
+                "selector": "CallExpression[callee.property.name='forEach'][arguments.0.async=true]",
+                "message": "Do not use `.forEach` with async functions. `.forEach` does not wait for Promises."
+                    + " Use `for...of` or`Promise.all()` instead.",
+            },
+            {
+                "selector": "CallExpression[callee.property.name='waitForTimeout']",
+                "message": "The use of 'waitForTimeout' is prohibited because it's intimidating."
+                    + " Use 'waitForSelector', 'waitForResponse', or 'waitForFunction' instead.",
+            },
+            {
+                "selector": String.raw`CallExpression[callee.property.name=/^(click|waitForSelector|\$|\$\$|eval|type)$/][arguments.0.type='Literal'][arguments.0.value=/^[.#].*/]`,
+                "message": "Do not use hardcoded selectors."
+                    + " Move a string to a file in the 'Selectors' folder to ensure decoupling.",
+            },
+            {
+                "selector": "BinaryExpression[operator='instanceof'][right.name='Error']",
+                "message": "Avoid 'error instances'. Use the specific specifications of your @odg/exception "
+                    + "or structural type checking for greater security between packets.",
+            },
+        ],
         "no-magic-numbers": [
             "warn",
             {
@@ -205,9 +256,11 @@ export default {
             {
                 code: 120,
                 ignoreUrls: true,
-                ignoreStrings: true,
+                ignoreStrings: false,
                 ignoreTemplateLiterals: true,
                 ignoreRegExpLiterals: true,
+                ignoreComments: false,
+                ignoreTrailingComments: false,
             },
         ], // Caracteres máximo por linhas
         "@stylistic/max-statements-per-line": [ "error", { max: 1 } ], // Máximo operação em 1 linha
@@ -323,16 +376,85 @@ export default {
         ], // Força não usar blocos com espaços
         "@stylistic/padding-line-between-statements": [
             "error",
-            { "blankLine": "always", "prev": "*", "next": "export" }, // Uma linha em branco antes do export
-            { "blankLine": "always", "prev": "export", "next": "*" }, // Uma linha em branco apos o export
-            { "blankLine": "always", "prev": "*", "next": "class" }, // Uma linha em branco antes da classe
-            { "blankLine": "always", "prev": "class", "next": "*" }, // Uma linha em branco apos a classe
-            { "blankLine": "always", "prev": "*", "next": "interface" }, // Uma linha em branco antes da interface
-            { "blankLine": "always", "prev": "interface", "next": "*" }, // Uma linha em branco apos a interface
-            { "blankLine": "always", "prev": "*", "next": "type" }, // Uma linha em branco antes do type
-            { "blankLine": "always", "prev": "type", "next": "*" }, // Uma linha em branco apos o type
-            { "blankLine": "always", "prev": "multiline-block-like", "next": "*" },
-            { "blankLine": "always", "prev": "*", "next": [ "enum", "interface", "type" ] },
+
+            /*
+             * ------------------------------------------------------
+             * 1. DIRETIVAS (ex: "use strict")
+             * ------------------------------------------------------
+             * Separa diretivas do resto do código
+             */
+            { "blankLine": "always", "prev": "directive", "next": "*" },
+            { "blankLine": "any", "prev": "directive", "next": "directive" },
+
+            /*
+             * ------------------------------------------------------
+             * 2. IMPORTS
+             * ------------------------------------------------------
+             * Imports sempre separados do código que vem depois
+             */
+            { "blankLine": "always", "prev": IMPORTS, "next": "*" },
+
+            // Entre imports, não força espaço (deixa agrupar)
+            { "blankLine": "any", "prev": IMPORTS, "next": IMPORTS },
+
+            /*
+             * ------------------------------------------------------
+             * 3. VARIÁVEIS
+             * ------------------------------------------------------
+             * A. REGRA GERAL: Variável seguida de *Qualquer coisa* = Espaço
+             */
+            { "blankLine": "always", "prev": VARIABLES, "next": "*" },
+
+            // B. EXCEÇÃO 1: Variável seguida de Variável = Pode colar
+            { "blankLine": "any", "prev": VARIABLES, "next": VARIABLES },
+
+            // C. EXCEÇÃO 2: Variável seguida de IF = Pode colar (Guard Clauses)
+            { "blankLine": "any", "prev": VARIABLES, "next": "if" },
+
+            /*
+             * ------------------------------------------------------
+             * 4. ESTRUTURAS DE TIPO (Types, Interfaces, Enums, Classes)
+             * ------------------------------------------------------
+             * Sempre dá espaço antes de declarar um tipo/classe
+             */
+            { "blankLine": "always", "prev": "*", "next": TYPES },
+
+            // Sempre dá espaço depois de declarar um tipo/classe
+            { "blankLine": "always", "prev": TYPES, "next": "*" },
+
+            /*
+             * ------------------------------------------------------
+             * 5. FLUXO E LÓGICA (If, For, While, Return)
+             * ------------------------------------------------------
+             * Espaço antes de comandos de saída (return, throw, break)
+             */
+            { "blankLine": "always", "prev": "*", "next": [ "return", "throw", "break", "continue" ] },
+
+            // Espaço ao redor de blocos de controle (if, for, while)
+            { "blankLine": "always", "prev": "*", "next": [ ...BLOCK_LIKE, ...FLOW_CONTROL ] },
+            { "blankLine": "always", "prev": [ ...BLOCK_LIKE, ...FLOW_CONTROL ], "next": "*" },
+
+            // EXCEÇÃO: IF seguido de IF (if-inline vai funcionar)
+            { "blankLine": "any", "prev": "if", "next": "if" },
+
+            /*
+             * ------------------------------------------------------
+             * 6. EXPORTS
+             * ------------------------------------------------------
+             * Export sempre isolado (antes e depois)
+             */
+            { "blankLine": "always", "prev": "*", "next": EXPORTS },
+            { "blankLine": "any", "prev": EXPORTS, "next": EXPORTS },
+
+            /*
+             * ------------------------------------------------------
+             * 7. O MARTELO (Regras de Segurança para Blocos Grandes)
+             * ------------------------------------------------------
+             * Se qualquer coisa for seguida por um bloco multilinha, OBRIGA espaço.
+             * Isso garante que se o seu 'if' colado crescer e virar um bloco, ele ganha espaço.
+             */
+            { "blankLine": "always", "prev": "*", "next": multiLineBlock },
+            { "blankLine": "always", "prev": multiLineBlock, "next": "*" },
         ],
         "@stylistic/quote-props": [ "error", "consistent" ], // Objeto com aspas ou sem consistent
         "@stylistic/quotes": [ "error", "double" ], // Força aspas dupla
@@ -358,7 +480,6 @@ export default {
                 words: true, // Espaço apos Await e palavras chaves
                 nonwords: false, // Força nao ter espaço antes de operadores unários !, -, +
                 overrides: {
-                    "new": false,
                     "++": false, // Nao permite espaço no ++
                 },
             },

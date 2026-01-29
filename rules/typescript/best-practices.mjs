@@ -61,6 +61,7 @@ export default {
         ], // Não Crie tipos vazios
         "@typescript-eslint/no-import-type-side-effects": [ "error" ], // Coloque type fora para n importar no build
         "@typescript-eslint/explicit-function-return-type": [ "error" ], // Força tipo de retorno
+        "@typescript-eslint/explicit-module-boundary-types": [ "error" ], // Força tipo de retorno
         "no-unused-vars": [ "off" ], // Não permite variáveis não utilizadas
         "@typescript-eslint/no-unused-vars": [
             "error",
@@ -104,7 +105,7 @@ export default {
             "error",
             "method",
         ], // Use arrow function em method signature interface
-        "@typescript-eslint/no-unnecessary-type-assertion": [ "error" ], // Não permite declaração que não altera expressão
+        "@typescript-eslint/no-unnecessary-type-assertion": [ "error" ], // Não As declaração que não altera expressão
         "@typescript-eslint/no-unsafe-call": [ "error" ], // Não permite chamadas de funções em tipo any
         "space-infix-ops": [ "off" ], // Espaço na separação operadores
         "no-underscore-dangle": [ "error" ], // Não permite _ no nome
