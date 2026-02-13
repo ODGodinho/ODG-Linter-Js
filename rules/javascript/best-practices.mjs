@@ -411,7 +411,6 @@ export default {
             "implements",
 
             // Genéricos proibidos
-            "data",
             "val",
             "obj",
             "item",
