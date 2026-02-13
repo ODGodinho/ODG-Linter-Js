@@ -102,7 +102,7 @@ export default {
                     "kebabCase": true,
                     "pascalCase": true,
                 },
-                "ignore": [ "\.md$" ],
+                "ignore": [ ".md$" ],
             },
         ],
         "no-restricted-syntax": [
@@ -133,8 +133,8 @@ export default {
             },
             {
                 "selector": "BinaryExpression[operator='instanceof'][right.name='Error']",
-                "message": "Avoid 'error instances'. Use the specific specifications of your @odg/exception "
-                    + "or structural type checking for greater security between packets.",
+                "message": "Avoid 'error instances'. Use the specific specifications of your @odg/exception"
+                    + "(Exception.isError) or structural type checking for greater security between packets.",
             },
         ],
         "no-magic-numbers": [
@@ -244,6 +244,7 @@ export default {
                 allowBlockStart: true,
                 allowInterfaceStart: true,
                 allowTypeStart: true,
+                allowArrayStart: true,
             },
         ], // Linha em branco antes do comentário
         "@stylistic/lines-between-class-members": [
@@ -444,7 +445,7 @@ export default {
              * Export sempre isolado (antes e depois)
              */
             { "blankLine": "always", "prev": "*", "next": EXPORTS },
-            { "blankLine": "any", "prev": EXPORTS, "next": EXPORTS },
+            { "blankLine": "always", "prev": EXPORTS, "next": EXPORTS },
 
             /*
              * ------------------------------------------------------
@@ -466,10 +467,10 @@ export default {
         "@stylistic/space-before-function-paren": [
             "error",
             {
-                anonymous: "never",
-                named: "never",
-                asyncArrow: "always",
-                catch: "always",
+                "anonymous": "never",
+                "named": "never",
+                "asyncArrow": "always",
+                "catch": "always",
             },
         ], // Não permite espaço antes dos parenteses
         "@stylistic/space-in-parens": [ "error", "never" ], // Não permite espaço entre parenteses

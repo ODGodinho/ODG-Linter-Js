@@ -343,6 +343,84 @@ export default {
         "vars-on-top": [ "error" ], // Caso a regra de var seja desativa elas devem ficar no topo
         "strict": [ "error" ], // Strict javascript top file
         "no-shadow-restricted-names": [ "error" ], // Sem variável com palavra reservada
+        "id-denylist": [
+            "error",
+
+            // Tipos TS
+            "number",
+            "string",
+            "boolean",
+            "any",
+            "void",
+            "never",
+            "unknown",
+
+            // Controle de Fluxo
+            "yield",
+            "await",
+            "async",
+
+            // Modificadores de Acesso
+            "public",
+            "protected",
+            "private",
+            "readonly",
+            "static",
+
+            // Estrutura
+            "class",
+            "interface",
+            "type",
+            "enum",
+            "namespace",
+            "module",
+
+            // Declaração
+            "function",
+            "var",
+            "let",
+            "const",
+
+            // Condicionais/Loops
+            "if",
+            "else",
+            "for",
+            "while",
+            "do",
+            "switch",
+            "case",
+            "default",
+
+            // Exceções
+            "try",
+            "catch",
+            "finally",
+            "throw",
+
+            // Módulos
+            "import",
+            "export",
+            "from",
+            "as",
+
+            // POO
+            "this",
+            "super",
+            "new",
+            "extends",
+            "implements",
+
+            // Genéricos proibidos
+            "data",
+            "val",
+            "obj",
+            "item",
+            "list",
+            "res",
+            "req",
+
+            // "callback", Callback parâmetro é bloqueado tb
+        ], // Sem variável com palavra reservada
         "logical-assignment-operators": [ "error", "always" ], // Faça ||= ao invés a = a || b
         "no-with": [ "error" ], // Não use with
 

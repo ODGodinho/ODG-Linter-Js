@@ -14,20 +14,20 @@ const allAccessibility = [
 /**
  * Order member of class
  *
- * @param {Array<string>} types Tags name position
+ * @param {Array<string>} propertyTypes Tags name position
  * @param {string} tag Type of order
  * @param {Array<string>} accessibilityList Accessibility list of class
  * @returns {Array<string>}
  */
-function orderMember(types, tag, accessibilityList) {
+function orderMember(propertyTypes, tag, accessibilityList) {
     return [
-        ...accessibilityList.flatMap((accessibility) => types.map(
-            (type) => {
+        ...accessibilityList.flatMap((accessibility) => propertyTypes.map(
+            (propertyType) => {
                 const accessibilityName = accessibility ? `${accessibility}-` : "";
 
-                if (accessibility === "private" && type === "abstract") return "";
+                if (accessibility === "private" && propertyType === "abstract") return "";
 
-                return `${accessibilityName}${type}-${tag}`;
+                return `${accessibilityName}${propertyType}-${tag}`;
             },
         )).filter(Boolean),
         `${tag}`,
@@ -95,8 +95,8 @@ export default {
         "@typescript-eslint/array-type": [
             "error",
             {
-                default: "array-simple",
-                readonly: "array-simple",
+                "default": "array-simple",
+                "readonly": "array-simple",
             },
         ], // Não permite tipos de array incorretos
         "jsdoc/require-returns-check": [ "off" ],
@@ -167,6 +167,7 @@ export default {
                     "call-signature",
 
                     ...orderMember([ "static", "decorated", "instance" ], "field", allAccessibility),
+                    ...orderMember([ "abstract" ], "field", allAccessibility),
 
                     // Static initialization
                     "static-initialization",
@@ -185,7 +186,6 @@ export default {
 
                     // Methods
                     ...orderMember([ "static", "decorated", "instance" ], "method", allAccessibility),
-                    ...orderMember([ "abstract" ], "field", allAccessibility),
                     ...orderMember([ "abstract" ], "method", allAccessibility),
                 ],
             },
@@ -203,6 +203,7 @@ export default {
                     "[accessors]",
                     "[setters]",
                     "[non-accessors]",
+                    "[static-methods]",
                     "[methods]",
                     "[conventional-private-methods]",
                     "[readonly]",
