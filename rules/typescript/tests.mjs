@@ -27,5 +27,6 @@ export default {
         "sonarjs/prefer-type-guard": [ "error" ], // Use is no return boolean type
         "sonarjs/stable-tests": [ "error" ], // Testes devem funcionar de primeira tentativa
         "sonarjs/test-check-exception": [ "error" ], // Testes devem testar exceção
+        "@typescript-eslint/unbound-method": [ "off" ], // Preserve bind class
     },
 };
