@@ -490,6 +490,7 @@ export default {
             "always",
             {
                 exceptions: [ "-", "+" ],
+                block: { "balanced": true },
             },
         ], // Força espaço apos do // comentário
         "@stylistic/switch-colon-spacing": [
