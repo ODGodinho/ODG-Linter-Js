@@ -299,6 +299,16 @@ export default {
                 bundledDependencies: true,
             },
         ], // Não dependa de pacotes em devDependencies
+        "sort-imports": [
+            "error",
+            {
+                "ignoreCase": true,
+                "ignoreDeclarationSort": true,
+                "ignoreMemberSort": false,
+                "memberSyntaxSortOrder": [ "none", "all", "multiple", "single" ],
+                "allowSeparatedGroups": true,
+            },
+        ],
         "import/order": [
             "error",
             {
@@ -310,6 +320,14 @@ export default {
                 "newlines-between": "always",
             },
         ], // Força essa ordem no import
+        "@stylistic/spaced-comment": [
+            "error",
+            "always",
+            {
+                exceptions: [ "-", "+" ],
+                block: { "balanced": true },
+            },
+        ], // Força espaço apos do // comentário
         "import/no-anonymous-default-export": [ "error", { allowCallExpression: false } ],
         "import/exports-last": [ "error" ], // Export por ultimo
         // "import/no-deprecated": [ "error" ], // Não import deprecated // ? slower

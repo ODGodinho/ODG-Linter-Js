@@ -20,6 +20,7 @@ export default {
         "yml/no-irregular-whitespace": [ "error" ], // Sem Espaços em brancos irregular caracteres especiais
         "yml/no-trailing-zeros": [ "error" ], // Use 1.2 ao invés de 1.20
         "yml/spaced-comment": [ "error" ], // Comentarios com espaço
+        "@stylistic/spaced-comment": [ "off" ], // Força espaço apos do // comentário
         "filenames/match-regex": [ "off" ], // Desliga validação de nomes
         "@stylistic/max-len": [
             "warn",
