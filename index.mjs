@@ -35,6 +35,7 @@ const require = createRequire(import.meta.url);
 // Import plugins (most are CommonJS)
 
 const typescriptParser = require("@typescript-eslint/parser");
+const jsoncParser = require("jsonc-eslint-parser");
 
 const odgPlugin = require("@odg/eslint-plugin");
 const typescriptEslint = require("@typescript-eslint/eslint-plugin");
@@ -57,7 +58,6 @@ const sonarjs = require("eslint-plugin-sonarjs");
 const sortClassMembers = require("eslint-plugin-sort-class-members");
 const yml = require("eslint-plugin-yml");
 const espree = require("espree");
-const jsoncParser = require("jsonc-eslint-parser");
 
 export default [
 
@@ -66,6 +66,7 @@ export default [
         ignores: [
             "!.*",
             ".git/",
+            ".yarn/",
             "node_modules/",
             "bower_components/",
             "jspm_packages/",
