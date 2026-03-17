@@ -136,6 +136,16 @@ export default {
                 "message": "Avoid 'error instances'. Use the specific specifications of your @odg/exception"
                     + "(Exception.isError) or structural type checking for greater security between packets.",
             },
+            {
+                "selector": "CallExpression[callee.name='sleep']",
+                "message": "Do not use 'sleep()' with timestamps. Use async/await patterns, Promise.race"
+                    + ", timeout function or other async timing mechanisms instead.",
+            },
+            {
+                "selector": "CallExpression[callee.property.name='waitFor']",
+                "message": "Do not use 'page.waitFor()' with timestamps. Use 'waitForSelector', 'waitForResponse',"
+                    + " or 'waitForFunction' instead.",
+            },
         ],
         "no-magic-numbers": [
             "warn",
