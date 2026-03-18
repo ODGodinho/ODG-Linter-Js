@@ -141,11 +141,6 @@ export default {
                 "message": "Do not use 'sleep()' with timestamps. Use async/await patterns, Promise.race"
                     + ", timeout function or other async timing mechanisms instead.",
             },
-            {
-                "selector": "CallExpression[callee.property.name='waitFor']",
-                "message": "Do not use 'page.waitFor()' with timestamps. Use 'waitForSelector', 'waitForResponse',"
-                    + " or 'waitForFunction' instead.",
-            },
         ],
         "no-magic-numbers": [
             "warn",
