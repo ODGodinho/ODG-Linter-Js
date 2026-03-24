@@ -480,6 +480,8 @@ __metadata:
     ts-api-utils: "npm:^2.4.0"
     typescript: "npm:*"
     yaml-eslint-parser: "npm:^2.0.0"
+  bin:
+    odg-lint: ./lint.mjs
   languageName: unknown
   linkType: soft
 

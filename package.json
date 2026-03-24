@@ -1,6 +1,6 @@
 {
     "name": "@odg/eslint-config",
-    "version": "3.2.10",
+    "version": "3.2.11",
     "description": "Linter for JavaScript And Typescript project",
     "type": "module",
     "main": "index.mjs",
@@ -71,6 +71,15 @@
         "ts-api-utils": "^2.4.0",
         "yaml-eslint-parser": "^2.0.0"
     },
+    "bundledDependencies": [
+        "eslint",
+        "eslint-plugin-sonarjs",
+        "globals",
+        "ts-api-utils",
+        "@odg/eslint-plugin",
+        "@typescript-eslint/eslint-plugin",
+        "@typescript-eslint/parser"
+    ],
     "files": [
         "./index.d.ts",
         "./index.mjs",
