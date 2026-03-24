@@ -1,12 +1,12 @@
 {
     "name": "@odg/eslint-config",
-    "version": "3.2.8",
+    "version": "3.2.9",
     "description": "Linter for JavaScript And Typescript project",
     "type": "module",
     "main": "index.mjs",
     "types": "index.d.ts",
     "bin": {
-        "odg:lint": "./lint.mjs"
+        "odg-lint": "./lint.mjs"
     },
     "exports": {
         ".": {
@@ -18,7 +18,7 @@
     "scripts": {
         "lint": "eslint",
         "lint:fix": "eslint --fix",
-        "odg:lint": "eslint"
+        "odg-lint": "eslint"
     },
     "engines": {
         "node": ">=24.0.0"
