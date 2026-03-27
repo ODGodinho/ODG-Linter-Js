@@ -233,5 +233,14 @@ export default {
             },
         ], // Ordem dos params da docblock
         "jsdoc/no-blank-blocks": [ "error", { "enableFixer": true } ], // Não faça comentários vazios
+        "jsdoc/type-formatting": [
+            "error",
+            {
+                objectFieldSeparator: "semicolon-and-linebreak",
+                objectFieldSeparatorTrailingPunctuation: false,
+                trailingPunctuationMultilineOnly: true,
+                objectTypeBracketSpacing: " ",
+            },
+        ], // Formate tipos da docblock
     },
 };

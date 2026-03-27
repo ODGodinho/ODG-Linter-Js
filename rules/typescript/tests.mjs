@@ -1,3 +1,5 @@
+import { restrictSyntaxTest } from "../global/restrict-syntax.mjs";
+
 const MAX_STATEMENTS = 20;
 const maxHadoukenDepth = 5;
 
@@ -28,5 +30,9 @@ export default {
         "sonarjs/stable-tests": [ "error" ], // Testes devem funcionar de primeira tentativa
         "sonarjs/test-check-exception": [ "error" ], // Testes devem testar exceção
         "@typescript-eslint/unbound-method": [ "off" ], // Preserve bind class
+        "no-restricted-syntax": [
+            "error",
+            ...restrictSyntaxTest,
+        ],
     },
 };

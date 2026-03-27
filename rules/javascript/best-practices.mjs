@@ -90,6 +90,7 @@ export default {
             "error",
             String.raw`^(err|error|\w+Error|\w+Exception|exception)$`,
         ], // Funções que recebem error deve ser tratado
+        "n/prefer-global/timers": [ "error", "always" ], // Prefira usar setTimeout, setInterval ... globais
         "new-cap": [ "error", { newIsCap: true } ], // New require first Letter uppercase
         "no-caller": [ "error" ], // Não permite usar callee
         "no-script-url": [ "error" ], // Não permite usar script url

@@ -1,12 +1,32 @@
 import { createRequire } from "node:module";
 
+import typescriptParser from "@typescript-eslint/parser";
+import jsonSchemaValidator from "eslint-plugin-json-schema-validator";
 import * as toml from "eslint-plugin-toml";
 
 import stylistic from "@stylistic/eslint-plugin";
+import typescriptEslint from "@typescript-eslint/eslint-plugin";
+import anyParser from "any-eslint-parser";
 import antfu from "eslint-plugin-antfu";
 import arrayFunc from "eslint-plugin-array-func";
+import betterMaxParams from "eslint-plugin-better-max-params";
 import fileProgress from "eslint-plugin-file-progress";
+import filenames from "eslint-plugin-filenames";
+import html from "eslint-plugin-html";
+import importPlugin from "eslint-plugin-import";
+import jsdoc from "eslint-plugin-jsdoc";
+import jsonc from "eslint-plugin-jsonc";
+import pluginN from "eslint-plugin-n";
+import noConstructorBind from "eslint-plugin-no-constructor-bind";
+import phpMarkup from "eslint-plugin-php-markup";
+import promise from "eslint-plugin-promise";
+import regex from "eslint-plugin-regex";
+import regexp from "eslint-plugin-regexp";
+import security from "eslint-plugin-security";
+import sonarjs from "eslint-plugin-sonarjs";
+import sortClassMembers from "eslint-plugin-sort-class-members";
 import unicorn from "eslint-plugin-unicorn";
+import yml from "eslint-plugin-yml";
 import globals from "globals";
 import * as tomlParser from "toml-eslint-parser";
 import * as yamlParser from "yaml-eslint-parser";
@@ -30,33 +50,13 @@ import typescriptTests from "./rules/typescript/tests.mjs";
 import yamlBase from "./rules/yaml/base.mjs";
 import yamlGithub from "./rules/yaml/github.mjs";
 
-const require = createRequire(import.meta.url);
-
 // Import plugins (most are CommonJS)
 
-const typescriptParser = require("@typescript-eslint/parser");
+const require = createRequire(import.meta.url);
+
 const jsoncParser = require("jsonc-eslint-parser");
 
 const odgPlugin = require("@odg/eslint-plugin");
-const typescriptEslint = require("@typescript-eslint/eslint-plugin");
-const anyParser = require("any-eslint-parser");
-const betterMaxParams = require("eslint-plugin-better-max-params");
-const filenames = require("eslint-plugin-filenames");
-const html = require("eslint-plugin-html");
-const importPlugin = require("eslint-plugin-import");
-const jsdoc = require("eslint-plugin-jsdoc");
-const jsonSchemaValidator = require("eslint-plugin-json-schema-validator");
-const jsonc = require("eslint-plugin-jsonc");
-const pluginN = require("eslint-plugin-n");
-const noConstructorBind = require("eslint-plugin-no-constructor-bind");
-const phpMarkup = require("eslint-plugin-php-markup");
-const promise = require("eslint-plugin-promise");
-const regex = require("eslint-plugin-regex");
-const regexp = require("eslint-plugin-regexp");
-const security = require("eslint-plugin-security");
-const sonarjs = require("eslint-plugin-sonarjs");
-const sortClassMembers = require("eslint-plugin-sort-class-members");
-const yml = require("eslint-plugin-yml");
 const espree = require("espree");
 
 export default [
@@ -322,7 +322,7 @@ export default [
 
     // JSON files
     {
-        files: [ "**/*.json", "**/*.json5", "**/*.jsonc", ".eslintrc", "**/*.code-*" ],
+        files: [ "*.json", "**/*.json", "*.json5", "**/*.json5", "*.jsonc", "**/*.jsonc", ".eslintrc", "**/*.code-*" ],
         languageOptions: {
             parser: jsoncParser,
         },

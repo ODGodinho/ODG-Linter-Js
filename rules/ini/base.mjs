@@ -27,9 +27,14 @@ export default {
         "toml/vue-custom-block/no-parsing-error": [ "error" ], // Valide toml em vue file
         "toml/array-bracket-newline": [ "error" ], // Faça array em quebra de linhas
         "toml/array-bracket-spacing": [ "error" ], // Espaço declarar array
-        "toml/array-element-newline": [ "error", "consistent" ], // Array multipla linhas
+        "toml/array-element-newline": [ "error", "consistent" ], // Array múltipla linhas
         "toml/comma-style": [ "error" ], // Virgula a direita
         "toml/spaced-comment": [ "error" ], // Espaço a esquerda comentário
+        "toml/inline-table-curly-newline": [ "error" ], // Quebra todos parameters ou nenhum
+        "toml/inline-table-key-value-newline": [
+            "error",
+            { allowAllPropertiesOnSameLine: true },
+        ], // Quebre todas linha ou nenhuma em inline table
         "toml/inline-table-curly-spacing": [
             "error",
             "always",

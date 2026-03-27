@@ -14,10 +14,10 @@ const allAccessibility = [
 /**
  * Order member of class
  *
- * @param {Array<string>} propertyTypes Tags name position
+ * @param {string[]} propertyTypes Tags name position
  * @param {string} tag Type of order
- * @param {Array<string>} accessibilityList Accessibility list of class
- * @returns {Array<string>}
+ * @param {string[]} accessibilityList Accessibility list of class
+ * @returns {string[]}
  */
 function orderMember(propertyTypes, tag, accessibilityList) {
     return [

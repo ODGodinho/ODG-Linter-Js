@@ -486,7 +486,6 @@
   - [No Base To String](#no-base-to-string)
   - [Not IN Primitive type](#not-in-primitive-type)
   - [Useless String Operation](#useless-string-operation)
-  - [Super Invocation](#super-invocation)
   - [No Useless Intersection](#no-useless-intersection)
   - [Stateful Regex](#stateful-regex)
 - [Possible Errors](#possible-errors)

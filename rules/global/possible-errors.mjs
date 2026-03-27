@@ -68,7 +68,6 @@ export default {
         "sonarjs/non-number-in-arithmetic-expression": [ "error" ], // Valida Matemática dado errado
         "sonarjs/reduce-initial-value": [ "error" ], // Reduce tem q ter o segundo parâmetro
         "sonarjs/stateful-regex": [ "error" ], // Valida regex podem ser sempre false
-        "sonarjs/super-invocation": [ "error" ], // Não chama super mais de 1 vez
         "sonarjs/table-header": [ "error" ], // Table html deve ter header
         "sonarjs/table-header-reference": [ "error" ], // Table html deve ter header
         "unicorn/consistent-existence-index-check": [ "error" ], // Valide o indexOf() de forma correta
@@ -81,5 +80,15 @@ export default {
         "n/no-unsupported-features/es-builtins": [ "error", { "ignores": [] } ],
         "n/no-unsupported-features/es-syntax": [ "error", { "ignores": [] } ],
         "n/no-unsupported-features/node-builtins": [ "error", { "ignores": [] } ],
+        "unicorn/isolated-functions": [
+            "error",
+            {
+                comments: [ "@isolated" ],
+                selectors: [
+                    "FunctionDeclaration[id.name=/lambdaHandler.*/]",
+                    String.raw`:matches(ArrowFunctionExpression, FunctionExpression)[parent.type='CallExpression'][parent.callee.type='MemberExpression'][parent.callee.property.name=/^(evaluate|\$eval|\$\$eval)$/]`,
+                ],
+            },
+        ], // Ao usar Docblock isolate n permite usar variáveis de fora
     },
 };
