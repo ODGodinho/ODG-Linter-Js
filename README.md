@@ -1,3 +1,12 @@
+> ⚠️ **Archived Project**
+>
+> This repository has been **archived** and is no longer actively maintained.  
+> The project has been migrated to a **monorepo**.
+>
+> 👉 **New repository:** https://github.com/ODGodinho/ODGMono
+>
+> Please update your references and use the monorepo for the latest code and updates.
+
 <h1 align="center">
   <a href="https://github.com/ODGodinho">
     <img src="public/images/quality.png" alt="Stanley Imagem" width="200"/>
